@@ -1,0 +1,8 @@
+### 配置 数据库的信息
+### 属性是默认读取，也就是固定格式
+spring:
+  datasource:
+    url: jdbc:mysql:///onlineexamsystem?useSSL=false
+    username: root
+    password: root
+    driver-class-name: com.mysql.jdbc.Driver
