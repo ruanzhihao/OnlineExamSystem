@@ -17,12 +17,18 @@ public class QuestionController {
 
     @Autowired
     private QuestionService ques;
-
+//进入试题管理页面
     @RequestMapping(value = "/testManage",method = RequestMethod.GET)
     public String goQuestion(Model model){
        List<Question> list=ques.getAllQuestion();
         model.addAttribute("list",list);
         return "QuestionManagement";
     }
+
+    //试题增加
+      public String addQuestion(){
+
+        return "addQuestion";
+      }
 
 }
