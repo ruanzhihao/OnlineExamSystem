@@ -19,4 +19,7 @@ public class Question {
     private String courseName;
     private Integer majorId;
     private String majorName;
+    private Integer questionType;
+    private Integer questionClass;
+
 }
