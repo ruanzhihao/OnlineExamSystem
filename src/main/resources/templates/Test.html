@@ -4,6 +4,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title>在线考试平台后台管理</title>
     <link th:href="@{/layui/css/layui.css}" rel="stylesheet" />
+
 </head>
 <body class="layui-layout-body">
 <div class="layui-layout layui-layout-admin">
@@ -72,7 +73,15 @@
 
                 <li class="layui-nav-item"><a  href="javascript:";>学生管理</a></li>
 
-                <li class="layui-nav-item"><a  href="javascript:";>试题管理</a></li>
+                <li class="layui-nav-item"><a  href="javascript:";>试题库</a>
+                    <dl class="layui-nav-child">
+                        <dd>
+                            <a href="./testManage">试题管理</a>
+                        </dd>
+
+                    </dl>
+
+                </li>
 
                 <li class="layui-nav-item"><a  href="javascript:";>试卷中心</a></li>
 
@@ -88,12 +97,11 @@
     </div>
 
     <div class="layui-footer">
-        <!-- 底部固定区域 -->
-        © layui.com - 底部固定区域
+欢迎您 管理员
     </div>
 </div>
 <script th:src="@{/layui/layui.js}"></script>
-<script src="../js/jquery-1.8.2.min.js"></script>
+<script th:src="@{/js/jquery-1.8.2.min.js}"></script>
 <script>
     //JavaScript代码区域
     layui.use('element', function() {
@@ -107,6 +115,10 @@
             e.preventDefault();
             $("#iframeMain").attr("src",$(this).attr("href"));
         });
+        /*$("li>a").click(function (e) {
+            e.preventDefault();
+            $("#iframeMain").attr("src",$(this).attr("href"));
+        });*/
     });
 
 </script>

@@ -1,42 +1,82 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>试题管理</title>
-    <link rel="stylesheet" href="/layui/css/layui.css" media="all">
+    <link rel="stylesheet" th:href="@{/layui/css/layui.css}" media="all">
+    <script th:src="@{/layui/layui.js}"></script>
+    <script th:src="@{/Wjl/jquery-3.4.1.js}"></script>
 </head>
 <body>
-<div class="layui-body">
-    <!-- 内容主体区域 -->
-    <div style="padding: 15px;">
-        <table lay-filter="demo">
-            <thead>
-            <tr>
-                <th lay-data="{field:'username', width:100}">昵称</th>
-                <th lay-data="{field:'experience', width:80, sort:true}">积分</th>
-                <th lay-data="{field:'sign'}">签名</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td>贤心1</td>
-                <td>66</td>
-                <td>人生就像是一场修行a</td>
-            </tr>
-            <tr>
-                <td>贤心2</td>
-                <td>88</td>
-                <td>人生就像是一场修行b</td>
-            </tr>
-            <tr>
-                <td>贤心3</td>
-                <td>33</td>
-                <td>人生就像是一场修行c</td>
-            </tr>
-            </tbody>
-        </table>
-
- </div>
+<div class="demoTable" style="padding: 15px">
+    <div class="layui-inline">
+        <input placeholder="输入试题关键字" class="layui-input" id="find" autocomplete="off">
+    </div>
+    <button class="layui-btn" data-type="reload" id="queryRole" >搜索</button>
+    <button type="button" class="layui-btn layui-btn ">
+        <i class="layui-icon">&#x1002;</i>手动录入试题
+    </button>
+&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;
+    <button type="button" class="layui-btn">
+        <i class="layui-icon">&#xe608;</i> 导入题目
+    </button>
 </div>
+
+<hr>
+<table lay-filter="demo">
+    <thead>
+    <tr>
+        <th lay-data="{field:'1', width:40, sort:true}">ID</th>
+        <th lay-data="{field:'2', width:260}">&nbsp;&nbsp;&nbsp;&nbsp;试&nbsp;&nbsp;&nbsp;&nbsp;题&nbsp;&nbsp;&nbsp;&nbsp;内&nbsp;&nbsp;&nbsp;&nbsp;容</th>
+        <th lay-data="{field:'3', width:80}">选项A</th>
+        <th lay-data="{field:'4', width:80}">选项B</th>
+        <th lay-data="{field:'5', width:80}">选项C</th>
+        <th lay-data="{field:'6', width:80}">选项D</th>
+        <th lay-data="{field:'7', width:80}">答案</th>
+        <th lay-data="{field:'8', width:80}">分值</th>
+        <th lay-data="{field:'9', width:160}">考试科目</th>
+        <th lay-data="{field:'10',width:80}">班级</th>
+        <th lay-data="{field:'11'}">&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;操&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;作</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each ="question :${list}">
+        <td th:text="${question.questionId}"></td>
+        <td th:text="${question.questionName}"></td>
+        <td th:text="${question.optionA}"></td>
+        <td th:text="${question.optionB}"></td>
+        <td th:text="${question.optionC}"></td>
+        <td th:text="${question.optionD}"></td>
+        <td th:text="${question.answer}"></td>
+        <td th:text="${question.questionScore}"></td>
+        <td th:text="${question.courseId}"></td>
+        <td th:text="${question.majorId}"></td>
+        <td> &nbsp;&nbsp;&nbsp;&nbsp;
+
+            <button type="button" class="layui-btn layui-btn-sm layui-btn-warm">
+                <i class="layui-icon">&#xe642;</i>
+            </button>
+            <button type="button" class="layui-btn layui-btn-sm layui-btn-danger">
+                <i class="layui-icon">&#xe640;</i>
+            </button>
+
+        </td>
+    </tr>
+    </tbody>
+</table>
+<script type="text/javascript" th:src="@{/layui/layui.js}"></script>
+<script>
+    //静态表格
+    layui.use('table',function(){
+        var table = layui.table;//加载表格模块
+        table.init('demo', {
+            height: 550 //设置高度
+            ,page: true //开启分页
+        });
+
+    });
+    </script>
 </body>
 </html>
