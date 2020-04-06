@@ -50,10 +50,10 @@
                                                                href="javascript:;">基本信息</a>
                     <dl class="layui-nav-child">
                         <dd>
-                            <a href="javascript:;">院系管理</a>
+                            <a href="./test2">院系管理</a>
                         </dd>
                         <dd>
-                            <a href="javascript:;">专业方向</a>
+                            <a href="./login">专业方向</a>
                         </dd>
 
 
@@ -84,8 +84,7 @@
 
     <div class="layui-body">
         <!-- 内容主体区域 -->
-        <div style="padding: 15px;">
-            内容主体区域</div>
+        <iframe id="iframeMain" src=" " frameborder="0" height="100%" width="100%"></iframe>
     </div>
 
     <div class="layui-footer">
@@ -94,12 +93,22 @@
     </div>
 </div>
 <script th:src="@{/layui/layui.js}"></script>
+<script src="../js/jquery-1.8.2.min.js"></script>
 <script>
     //JavaScript代码区域
     layui.use('element', function() {
         var element = layui.element;
 
     });
+
+
+    $(document).ready(function(){
+        $("dd>a").click(function (e) {
+            e.preventDefault();
+            $("#iframeMain").attr("src",$(this).attr("href"));
+        });
+    });
+
 </script>
 </body>
 </html>
