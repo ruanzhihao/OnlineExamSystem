@@ -5,6 +5,9 @@
     <title>Title</title>
 </head>
 <body>
-<h1 th:text="${test}">测试界面</h1>
+<h3 th:text="'欢迎您: : '+${session.uname}"></h3>
+<p>如果你看到这个页面，代表你成功登录了</p>
+
+<!--<h1 th:text="${test}">测试界面</h1>-->
 </body>
 </html>
