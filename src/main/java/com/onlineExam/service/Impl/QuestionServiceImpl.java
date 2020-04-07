@@ -1,5 +1,7 @@
 package com.onlineExam.service.Impl;
 
+import com.onlineExam.domain.Course;
+import com.onlineExam.domain.Major;
 import com.onlineExam.domain.Question;
 import com.onlineExam.mapper.QuestionMapper;
 import com.onlineExam.service.QuestionService;
@@ -17,5 +19,20 @@ public class QuestionServiceImpl implements QuestionService {
     @Override
     public List<Question> getAllQuestion() {
         return questionMapper.getAllQuestion();
+    }
+
+    @Override
+    public List<Course> getCourse() {
+        return questionMapper.getCourse();
+    }
+
+    @Override
+    public List<Major> getMajor() {
+        return questionMapper.getMajor();
+    }
+
+    @Override
+    public int addQuestion(String questionName, String optionA, String optionB, String optionC, String optionD, String answer, int questionScore, int courseId, int majorId, String questionType, String questionClass) {
+        return questionMapper.addQuestion(questionName,optionA,optionB,optionC,optionD,answer,questionScore,courseId,majorId,questionType,questionClass);
     }
 }

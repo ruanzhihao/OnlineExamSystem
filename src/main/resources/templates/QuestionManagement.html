@@ -5,22 +5,170 @@
     <title>试题管理</title>
     <link rel="stylesheet" th:href="@{/layui/css/layui.css}" media="all">
     <script th:src="@{/layui/layui.js}"></script>
-    <script th:src="@{/Wjl/jquery-3.4.1.js}"></script>
+    <script th:src="@{https://code.jquery.com/jquery-3.3.1.min.js}"></script>
 </head>
 <body>
+
 <div class="demoTable" style="padding: 15px">
     <div class="layui-inline">
         <input placeholder="输入试题关键字" class="layui-input" id="find" autocomplete="off">
     </div>
     <button class="layui-btn" data-type="reload" id="queryRole" >搜索</button>
-    <button type="button" class="layui-btn layui-btn ">
+
+    <button type="button" class="layui-btn layui-btn " id="addQuestion" >
         <i class="layui-icon">&#x1002;</i>手动录入试题
     </button>
-&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;
+
+    &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;
     <button type="button" class="layui-btn">
         <i class="layui-icon">&#xe608;</i> 导入题目
     </button>
 </div>
+
+<div class="layui-row" id="popSearchRoleTest" style="display:none;">
+    <div class="layui-col-md11">
+        <form class="layui-form" lay-filter="formTestFilter2121" >
+            <div class="layui-form-item">
+                <label class="layui-form-label">试题内容：</label>
+                <div class="layui-input-block" style="width: 520px">
+                    <textarea placeholder="请输入试题内容" class="layui-textarea" name="questionName" id="questionName"></textarea>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">选项A：</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="optionA" id="optionA" class="layui-input">
+                </div>
+                <label class="layui-form-label">选项B：</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="optionB" id="optionB" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">选项C：</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="optionC" id="optionC" class="layui-input">
+                </div>
+                <label class="layui-form-label">选项D：</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="optionD" id="optionD" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">正确答案：</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="answer" id="answer" class="layui-input">
+                </div>
+                <div class="layui-input-inline" style="color:red;">
+                    提示：请把保持答案内容与选项内容一致
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">考试科目：</label>
+                <div class="layui-input-inline" style="width: 180px" >
+                    <select name="courseId" id="courseId" lay-verify="required" >
+                        <option value=""></option>
+                        <option  th:each="course :${courseList}" th:text="${course.courseName}" th:value="${course.courseId}"></option>
+                    </select>
+                </div>
+
+                <label class="layui-form-label">专业：</label>
+                <div class="layui-input-inline" style="width: 180px">
+                    <select name="majorId" id="majorId"  lay-verify="required" >
+                        <option value=""></option>
+                        <option th:each="major:${majorList}" th:text="${major.majorName}" th:value="${major.majorId}"></option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">该题题型：</label>
+                <div class="layui-input-inline" style="width: 180px">
+                    <select name="questionType" id="questionType" lay-verify="required">
+                        <option value=""></option>
+                        <option value="单选">单选</option>
+                        <option value="多选">多选</option>
+                    </select>
+
+                </div>
+                <label class="layui-form-label">分值分配：</label>
+                <div class="layui-input-inline" style="width: 80px">
+                    <input type="text" name="questionScore" id="questionScore" class="layui-input" placeholder="单位：分">
+                </div>
+
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">试题难度：</label>
+                <div class="layui-input-block" style="width: 180px">
+                    <select name="city" id="questionClass" lay-verify="required">
+                        <option value=""></option>
+                        <option value="简单">简单</option>
+                        <option value="中等">中等</option>
+                        <option value="困难">困难</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <div class="layui-input-block" >
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+                    <button type="button" onclick="addQues()" class="layui-btn layui-btn-normal">确定新增</button>
+                    <script type="text/javascript">
+                        function addQues(){
+                            //获取不到值 为空值
+                            var questionName=$('#questionName').val()
+                            alert(questionName);
+                            var optionA=$('#optionA').val();
+                            var optionB=$('#optionB').val();
+                            var optionC=$('#optionC').val();
+                            var optionD=$('#optionD').val();
+                            var answer=$('#answer').val();
+                            var courseId=$('#courseId option:selected').val();
+                            var majorId=$('#majorId option:selected').val();
+                            var questionType=$('#questionType').val();
+                            var questionClass=$('#questionClass').val();
+                            var questionScore=$('#questionScore').val();
+                            $.ajax({
+                                url:'/addQuestion',
+                                type:"get",
+                                contentType: "application/json;charset=UTF-8",
+                                data:{
+                                    questionName:questionName,
+                                    optionA:optionA,
+                                    optionB:optionB,
+                                    optionC:optionC,
+                                    optionD:optionD,
+                                    answer:answer,
+                                    questionScore:questionScore,
+                                    courseId:courseId,
+                                    majorId:majorId,
+                                    questionType:questionType,
+                                    questionClass:questionClass,
+
+                                },
+                                success:function(data){
+                                    layer.msg('添加成功',1000);
+                                    /*window.location.href="/testManage";*/
+                                }
+                            })
+                        }
+
+                    </script>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
 
 <hr>
 <table lay-filter="demo">
@@ -34,9 +182,11 @@
         <th lay-data="{field:'6', width:80}">选项D</th>
         <th lay-data="{field:'7', width:80}">答案</th>
         <th lay-data="{field:'8', width:80}">分值</th>
-        <th lay-data="{field:'9', width:160}">考试科目</th>
-        <th lay-data="{field:'10',width:80}">班级</th>
-        <th lay-data="{field:'11'}">&nbsp;&nbsp;
+        <th lay-data="{field:'9', width:80}">学科</th>
+        <th lay-data="{field:'10',width:80}">专业</th>
+        <th lay-data="{field:'11',width:80}">题型</th>
+        <th lay-data="{field:'12',width:80}">难度</th>
+        <th lay-data="{field:'13'}">&nbsp;&nbsp;
             &nbsp;&nbsp;&nbsp;&nbsp;
             &nbsp;&nbsp;操&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;作</th>
     </tr>
@@ -51,8 +201,10 @@
         <td th:text="${question.optionD}"></td>
         <td th:text="${question.answer}"></td>
         <td th:text="${question.questionScore}"></td>
-        <td th:text="${question.courseId}"></td>
-        <td th:text="${question.majorId}"></td>
+        <td th:text="${question.courseName}"></td>
+        <td th:text="${question.majorName}"></td>
+        <td th:text="${question.questionType}"></td>
+        <td th:text="${question.questionClass}"></td>
         <td> &nbsp;&nbsp;&nbsp;&nbsp;
 
             <button type="button" class="layui-btn layui-btn-sm layui-btn-warm">
@@ -67,16 +219,34 @@
     </tbody>
 </table>
 <script type="text/javascript" th:src="@{/layui/layui.js}"></script>
+
 <script>
-    //静态表格
+    //静态表格布局
     layui.use('table',function(){
         var table = layui.table;//加载表格模块
         table.init('demo', {
             height: 550 //设置高度
             ,page: true //开启分页
         });
-
     });
-    </script>
+
+</script>
+<script>
+    //对弹出层的form 进行渲染
+    layui.use('form', function(){
+        var form = layui.form;
+        $('#addQuestion').click(function(){
+            layer.open({
+                //layer提供了5种层类型。可传入的值有：0（信息框，默认）1（页面层）2（iframe层）3（加载层）4（tips层）
+                type:1,
+                title:"录入试题",
+                area: ['82%','82%'],
+                content:$("#popSearchRoleTest").html(),
+            });
+            form.render();
+        });
+    });
+</script>
+
 </body>
 </html>

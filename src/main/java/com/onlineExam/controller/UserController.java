@@ -35,35 +35,4 @@ public class UserController {
         }
 
     }
-
-
-
-   /* @PostMapping(value = "/findByName")
-    public User findByName(String username){
-        return userService.findByName(username);
-    }*/
-
-    /*@RequestMapping(value = "test")
-    public String getTestRes(Model model){
-        *//*model.addAttribute("test","测试");*//*
-        return "Test";
-    }
-    @RequestMapping("getUser")
-    @ResponseBody
-    public User getUser(String name){
-        User user =userService.selectUser(name);
-        return  user;
-    }
-
-    @RequestMapping("addUser")
-    @ResponseBody
-    public String addUser(User user){
-        int row=userService.addUser(user);
-        if (row>0){
-            return "插入成功";
-        }else {
-            return "插入失败";
-        }
-    }*/
-
 }
