@@ -35,4 +35,22 @@ public class QuestionServiceImpl implements QuestionService {
     public int addQuestion(String questionName, String optionA, String optionB, String optionC, String optionD, String answer, int questionScore, int courseId, int majorId, String questionType, String questionClass) {
         return questionMapper.addQuestion(questionName,optionA,optionB,optionC,optionD,answer,questionScore,courseId,majorId,questionType,questionClass);
     }
+    @Override
+    public int addImportQuestion(Integer questionId, String questionName, String optionA, String optionB,
+                                 String optionC, String optionD, String answer, Integer questionScore, Integer
+                                         courseId, Integer majorId, String questionType, String questionClass) {
+        return questionMapper.addImportQuestion(questionId, questionName, optionA, optionB,
+                optionC,  optionD,  answer, questionScore,
+                courseId,  majorId,  questionType, questionClass);
+    }
+
+    @Override
+    public List<Major> getAllMajor() {
+        return questionMapper.getAllMajor();
+    }
+
+    @Override
+    public List<Course> getAllCourse() {
+        return questionMapper.getAllCourse();
+    }
 }

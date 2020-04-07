@@ -23,4 +23,8 @@ public interface QuestionMapper {
     int addQuestion(@Param("questionName") String questionName, @Param("optionA")String optionA, @Param("optionB")String optionB, @Param("optionC")String optionC,
                     @Param("optionD")String optionD, @Param("answer")String answer, @Param("questionScore")int questionScore, @Param("courseId")int courseId, @Param("majorId")int majorId,
                     @Param("questionType")String questionType, @Param("questionClass")String questionClass);
+    List<Course> getAllCourse();
+    List<Major> getAllMajor();
+    int addImportQuestion(@Param("questionId") Integer questionId,@Param("questionName") String questionName,@Param("optionA") String optionA,@Param("optionB") String optionB,@Param("optionC") String optionC,@Param("optionD") String optionD,@Param("answer") String answer,@Param("questionScore") Integer questionScore,@Param("courseId") Integer courseId,@Param("majorId") Integer majorId,@Param("questionType") String questionType,@Param("questionClass") String questionClass);
 }
+
