@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>教师管理</title>
+    <link rel="stylesheet" th:href="@{/layui/css/layui.css}" media="all" />
+    <script th:src="@{/layui/layui.js}"></script>
+    <script th:src="@{/Skz/jquery-3.4.1.js}"></script>
+</head>
+<body>
+<div class="demoTable" style="padding: 15px">
+    <div class="layui-inline">
+        <input placeholder="输入要查找老师姓名" class="layui-input" id="find" autocomplete="off">
+    </div>
+    <button class="layui-btn" data-type="reload" id="queryRole">搜索</button>
+    <!--<button id="addStudentBtn" class="layui-btn layui-btn-normal"> <i class="layui-icon">&#xe654;</i>添加 </button>-->
+    <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right" href="./teenager" title="刷新">
+        <i class="layui-icon" style="line-height:30px">ဂ</i></a>
+
+    <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right" href="./addteacher" title="添加">
+        <i class="layui-icon" style="line-height:30px">+</i></a>
+
+</div>
+<hr>
+
+<table lay-filter="demo">
+    <thead>
+    <tr>
+        <th lay-data="{field:'1',sort:true}">ID</th>
+        <th lay-data="{field:'2', align: 'center'}">老师姓名</th>
+        <th lay-data="{field:'3', align: 'center'}">老师账号名</th>
+        <th lay-data="{field:'4', align: 'center'}">密码</th>
+        <th lay-data="{field:'5', align: 'center'}">手机号</th>
+        <th lay-data="{field:'6', align: 'center'}">email</th>
+        <th lay-data="{field:'7', align: 'center'}">&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;操&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;作</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="teacher :${list}">
+        <td th:text="${teacher.teacherid}"></td>
+        <td th:text="${teacher.teachername}"></td>
+        <td th:text="${teacher.username}"></td>
+        <td th:text="${teacher.teacherpassword}"></td>
+        <td th:text="${teacher.teacherphoneNumber}"></td>
+        <td th:text="${teacher.teacheremail}"></td>
+        <td> &nbsp;&nbsp;&nbsp;&nbsp;
+
+            <button type="button" class="layui-btn layui-btn-sm layui-btn-warm">
+                <i class="layui-icon">&#xe642;</i>
+            </button>
+            <button type="button" class="layui-btn layui-btn-sm layui-btn-danger">
+                <i class="layui-icon">&#xe640;</i>
+            </button>
+
+        </td>
+    </tr>
+    </tbody>
+
+</table>
+<script type="text/javascript" th:src="@{/layui/layui.js}"></script>
+<script th:src="@{/layui/layui.js}"></script>
+<script th:src="@{/js/jquery-1.8.2.min.js}"></script>
+<script>
+    //静态表格
+    layui.use('table',function(){
+        var table = layui.table;//加载表格模块
+        table.init('demo', {
+            height: 500 //设置高度
+            ,cellMinWidth: 80
+            ,page: true //开启分页
+        });
+
+    });
+
+
+
+</script>
+</body>
+</html>
