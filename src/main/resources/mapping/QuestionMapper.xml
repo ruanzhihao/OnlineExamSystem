@@ -28,4 +28,12 @@
      insert into t_question (questionId,questionName,optionA,optionB,optionC,optionD,answer,questionScore,courseId,majorId,questionType,questionClass) values
     (DEFAULT , #{questionName}, #{optionA}, #{optionB}, #{optionC}, #{optionD}, #{answer}, #{questionScore}, #{courseId}, #{majorId}, #{questionType}, #{questionClass})
     </insert>
+
+    <delete id="delQuestionById" parameterType="java.lang.Integer">
+    delete  from t_question where questionId = #{questionId}
+</delete>
+
+    <select id="queryQuestion" parameterType="java.lang.String" resultType="com.onlineExam.domain.Question">
+        select * from t_question,t_major,t_course where t_question.questionName like concat('%',#{questionName},'%') and t_course.courseId = t_question.courseId and t_major.majorId = t_question.majorId and t_course.majorId =t_major.majorId
+    </select>
 </mapper>

@@ -8,10 +8,7 @@ import com.onlineExam.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -59,6 +56,36 @@ public class QuestionController {
         }
         return "添加成功";
     }
+
+    //试题删除
+    @RequestMapping(value = "/delQuestionById" ,method =RequestMethod.GET)
+    @ResponseBody
+    public String delQuestionById1(@RequestParam("questionId") int questionId){
+        int i=ques.delQuestionById(questionId);
+        if (i==1){
+            return "1";
+        }
+        return "2";
+    }
+
+   //试题查找 模糊查询
+    @RequestMapping(value = "/queryQuestion",method = RequestMethod.GET)
+    @ResponseBody
+   public String queryQuestion(@RequestParam("questionName") String questionName){
+        List<Question> list=ques.queryQuestion(questionName);
+       if (list ==null){
+           return "查找失败";
+       }
+        return "查找成功";
+   }
+
+   //查看之后 显示信息
+   @RequestMapping(value = "/queryShow",method = RequestMethod.GET)
+   public String queryShow(@RequestParam("questionName") String questionName,Model model){
+       List<Question> list=ques.queryQuestion(questionName);
+      model.addAttribute("list",list);
+       return "QuestionManagement";
+   }
 
     //导入试题
     @RequestMapping(value = "getImport")

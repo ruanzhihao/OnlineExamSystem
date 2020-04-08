@@ -89,9 +89,11 @@ input[type=text], input[type=password] {
 	background:transparent;
 }
 #code input {
+	vertical-align: middle;
 	width:95px;
 }
 #code img {
+	vertical-align: middle;
 	width:100px;
 	height:40px;
 	border:none;

@@ -4,26 +4,49 @@
     <meta charset="UTF-8">
     <title>试题管理</title>
     <link rel="stylesheet" th:href="@{/layui/css/layui.css}" media="all">
-    <script th:src="@{/layui/layui.js}"></script>
     <script th:src="@{https://code.jquery.com/jquery-3.3.1.min.js}"></script>
-    <!-- <script th:src="@{/layui/lay/modules/layer.js}"></script>-->
+
 </head>
 <body>
 
 <div class="demoTable" style="padding: 15px">
-    <div class="layui-inline">
-        <input placeholder="输入试题关键字" class="layui-input" id="find" autocomplete="off">
-    </div>
-    <button class="layui-btn" data-type="reload" id="queryRole" >搜索</button>
 
+    <div class="layui-inline">
+        <input placeholder="输入试题关键字" class="layui-input" id="findQuestionKey" name="findQuestionKey" autocomplete="off">
+    </div>
+    <button class="layui-btn" data-type="reload" onclick="queryQuestion()" >搜索</button>
+    <a type="button" class="layui-btn" data-type="reload" href="/testManage" >刷新</a>
+<script>
+    function queryQuestion () {
+    var questionName = $('#findQuestionKey').val()
+        $.ajax({
+            url:'/queryQuestion',
+            type:'get',
+            data:{
+                questionName:questionName,
+            },
+            success:function () {
+                layer.msg('查询中...', {
+                    time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                }, function () {
+                    window.location.href="/queryShow?questionName="+questionName;
+                });
+            }
+        })
+
+    }
+
+</script>
+
+  <!--  <button class="layui-btn" data-type="reload" >刷新</button>-->
+    &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;
     <button type="button" class="layui-btn layui-btn " id="addQuestion" >
         <i class="layui-icon">&#x1002;</i>手动录入试题
     </button>
-
-    &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;
     <button type="button" class="layui-btn">
         <i class="layui-icon">&#xe608;</i> 导入题目
     </button>
+
 </div>
 
 <div class="layui-row" id="popSearchRoleTest" style="display:none;">
@@ -156,7 +179,7 @@
 
                                 },
                                 success:function(){
-                                    layer.msg('添加成功', {
+                                    layer.msg('添加成功', {icon:1,
                                         time: 2000 //2秒关闭（如果不配置，默认是3秒）
                                     }, function () {
                                         window.location.href="/testManage";
@@ -174,7 +197,7 @@
 
 
 <hr>
-<table lay-filter="demo">
+<table class="layui-table" lay-filter="demo">
     <thead>
     <tr>
         <th lay-data="{field:'1', width:40, sort:true}">ID</th>
@@ -210,42 +233,54 @@
         <td th:text="${question.questionClass}"></td>
         <td> &nbsp;&nbsp;&nbsp;&nbsp;
 
-            <button type="button" class="layui-btn layui-btn-sm layui-btn-warm" th:onclick="'javascript:deleteQuestion('+${question.questionId}+');'">
+            <button type="button" class="layui-btn layui-btn-sm layui-btn-warm" id="updateBtn" th:onclick="">
                 <i class="layui-icon">&#xe642;</i>
             </button>
+
+            <a title="删除" class="layui-btn layui-btn-sm layui-btn-danger" th:onclick="|javascript:deleteQuestion(this,${question.questionId})|" href="javascript:;">
+                <i class="layui-icon">&#xe640;</i>
+            </a>
             <script>
-                function deleteQuestion(id){
-                    $.ajax({
+                function deleteQuestion(obj,questionId){
+                    layer.confirm('确认要删除吗？',
+                        function(index){
+                        //发异步删除数据
+                        $.get("delQuestionById",
+                            {"questionId":questionId},
+                            function (data) {
+                              if(data == true){
+                                layer.msg('删除成功',{icon:1,time:2000});
+                                setTimeout(function () {window.location.href='/testManage';},2000);
 
-
-                    })
-
+                            }else {
+                                layer.msg('删除失败',{icon:2,time:3000});
+                                setTimeout(function () {window.location.href='/testManage';},2000);
+                            }
+                        });
+                    });
                 }
 
             </script>
-            <button type="button" class="layui-btn layui-btn-sm layui-btn-danger" >
-                <i class="layui-icon">&#xe640;</i>
-            </button>
-
         </td>
     </tr>
     </tbody>
 </table>
 <script type="text/javascript" th:src="@{/layui/layui.js}"></script>
-
+<!--<script th:src="@{/layui/layui.js}"></script>-->
 <script>
     //静态表格布局
-    layui.use('table',function(){
+    layui.use('table',function() {
         var table = layui.table;//加载表格模块
+        /*var $ = layui.jquery;*/
+        /*  var $ = layui.jquery;*/
         table.init('demo', {
-            height: 550 //设置高度
-            ,page: true //开启分页
+            height: 465 //设置高度
+            , page: true //开启分页
         });
     });
-
 </script>
 <script>
-    //对弹出层的form 进行渲染
+    //对弹出层的form 进行渲染;
     layui.use('form', function(){
         var form = layui.form;
         $('#addQuestion').click(function(){

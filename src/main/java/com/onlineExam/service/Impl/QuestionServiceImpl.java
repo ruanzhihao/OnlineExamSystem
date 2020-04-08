@@ -45,6 +45,16 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
+    public int delQuestionById(int questionId) {
+        return questionMapper.delQuestionById(questionId);
+    }
+
+    @Override
+    public List<Question> queryQuestion(String questionName) {
+        return questionMapper.queryQuestion(questionName);
+    }
+
+    @Override
     public List<Major> getAllMajor() {
         return questionMapper.getAllMajor();
     }

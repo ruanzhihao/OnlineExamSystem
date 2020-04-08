@@ -26,5 +26,11 @@ public interface QuestionMapper {
     List<Course> getAllCourse();
     List<Major> getAllMajor();
     int addImportQuestion(@Param("questionId") Integer questionId,@Param("questionName") String questionName,@Param("optionA") String optionA,@Param("optionB") String optionB,@Param("optionC") String optionC,@Param("optionD") String optionD,@Param("answer") String answer,@Param("questionScore") Integer questionScore,@Param("courseId") Integer courseId,@Param("majorId") Integer majorId,@Param("questionType") String questionType,@Param("questionClass") String questionClass);
+
+    //根据试题Id  删除
+    int delQuestionById(@Param("questionId") int questionId);
+
+    //根据试题内容模糊查询
+    List<Question> queryQuestion(@Param("questionName") String questionName);
 }
 
