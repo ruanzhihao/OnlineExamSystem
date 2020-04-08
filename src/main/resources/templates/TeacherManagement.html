@@ -6,27 +6,71 @@
     <link rel="stylesheet" th:href="@{/layui/css/layui.css}" media="all" />
     <script th:src="@{/layui/layui.js}"></script>
     <script th:src="@{/Skz/jquery-3.4.1.js}"></script>
+
 </head>
 <body>
-<div class="demoTable" style="padding: 15px">
-    <div class="layui-inline">
-        <input placeholder="输入要查找老师姓名" class="layui-input" id="find" autocomplete="off">
+<div class="x-body">
+    <div class="demoTable" style="padding: 15px">
+        <div class="layui-inline">
+            <input placeholder="输入要查找老师姓名" class="layui-input" id="find" autocomplete="off">
+        </div>
+        <button class="layui-btn" data-type="reload" id="queryRole">搜索</button>
+
+        <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right" href="./teenager" title="刷新">
+            <i class="layui-icon" style="line-height:30px">ဂ</i></a>
+        <button id="addTeacherBtn" class="layui-btn layui-btn-normal" style="line-height:1.6em;margin-top:3px;float:right"> <i class="layui-icon " style="line-height:30px">&#xe654;</i> </button>
+
     </div>
-    <button class="layui-btn" data-type="reload" id="queryRole">搜索</button>
-    <!--<button id="addStudentBtn" class="layui-btn layui-btn-normal"> <i class="layui-icon">&#xe654;</i>添加 </button>-->
-    <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right" href="./teenager" title="刷新">
-        <i class="layui-icon" style="line-height:30px">ဂ</i></a>
 
-    <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right" href="./addteacher" title="添加">
-        <i class="layui-icon" style="line-height:30px">+</i></a>
-
+    <div class="layui-row" id="test" style="display: none;">
+        <div class="layui-col-md10">
+            <form class="layui-form" id="addTeacherForm">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">账户名:</label>
+                    <div class="layui-input-block">
+                        <input type="text" lay-verify="required" name="username"   class="layui-input" placeholder="请输入账户名">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">姓名:</label>
+                    <div class="layui-input-block">
+                        <input type="text" lay-verify="required" name="teachername"   class="layui-input" placeholder="请输入姓名">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">密码:</label>
+                    <div class="layui-input-block">
+                        <input type="text" lay-verify="required" name="teacherpassword"   class="layui-input" placeholder="请输入密码">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">手机号:</label>
+                    <div class="layui-input-block">
+                        <input type="text" lay-verify="required" name="teacherphoneNumber"   class="layui-input" placeholder="请输入手机号">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">email:</label>
+                    <div class="layui-input-block">
+                        <input type="text" lay-verify="required" name="teacheremail"   class="layui-input" placeholder="请输入邮箱">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <button type="button" class="layui-btn layui-btn-normal" lay-submit lay-filter="formDemo">提交</button>
+                        <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
-<hr>
+
 
 <table lay-filter="demo">
     <thead>
     <tr>
-        <th lay-data="{field:'1',sort:true}">ID</th>
+        <th lay-data="{field:'1',align: 'center'}">ID</th>
         <th lay-data="{field:'2', align: 'center'}">老师姓名</th>
         <th lay-data="{field:'3', align: 'center'}">老师账号名</th>
         <th lay-data="{field:'4', align: 'center'}">密码</th>
@@ -45,34 +89,77 @@
         <td th:text="${teacher.teacherpassword}"></td>
         <td th:text="${teacher.teacherphoneNumber}"></td>
         <td th:text="${teacher.teacheremail}"></td>
-        <td> &nbsp;&nbsp;&nbsp;&nbsp;
-
-            <button type="button" class="layui-btn layui-btn-sm layui-btn-warm">
+        <td>&nbsp;
+            <a title="编辑"    id= "updateEdit"    th:href="@{/findTeacherById(teacherid=${teacher.teacherid})}">
                 <i class="layui-icon">&#xe642;</i>
-            </button>
-            <button type="button" class="layui-btn layui-btn-sm layui-btn-danger">
+            </a>
+            <a title="删除" th:onclick="|javascript:member_del(this,${teacher.teacherid})|" href="javascript:;">
                 <i class="layui-icon">&#xe640;</i>
-            </button>
+            </a>
 
         </td>
     </tr>
     </tbody>
-
 </table>
 <script type="text/javascript" th:src="@{/layui/layui.js}"></script>
 <script th:src="@{/layui/layui.js}"></script>
 <script th:src="@{/js/jquery-1.8.2.min.js}"></script>
 <script>
     //静态表格
-    layui.use('table',function(){
+    layui.use(['table','form','layer'],function(){
         var table = layui.table;//加载表格模块
+        var form=layui.form;
         table.init('demo', {
             height: 500 //设置高度
             ,cellMinWidth: 80
             ,page: true //开启分页
         });
 
+        $("#addTeacherBtn").click(function () {
+            layer.open({
+                type:1,
+                title:"添加老师",
+                area:["50%"],
+                anim:2,
+                content: $("#test").html()
+            });
+            $("#addTeacherForm")[0].reset();
+            form.on('submit(formDemo)',function (data) {
+                var param=data.field;
+                $.ajax({
+                    url: 'addTeacher',
+                    type: "post",
+                    data:JSON.stringify(param),
+                    contentType:"application/json;charset=utf-8",
+                    success:function () {
+                        layer.msg('添加成功',{icon:1,time:3000});
+                        setTimeout(function () {window.location.href='/teenager';},2000);
+                    },
+                    error:function () {
+                        layer.msg('添加失败',{icon:0,time:3000});
+                        setTimeout(function () {window.location.href='/teenager';},2000);
+                    }
+                });
+            });
+        });
+
     });
+    /*删除*/
+    function member_del(obj,teacherid){
+        layer.confirm('确认要删除吗？',function(index){
+            //发异步删除数据
+            $.get("deleteTeacher",{"teacherid":teacherid},function (data) {
+                if(data =true){
+                    layer.msg('删除成功!',{icon:1,time:2000});
+                    setTimeout(function () {window.location.href='/teenager';},2000);
+
+                }else {
+                    layer.msg('删除失败!',{icon:1,time:3000});
+                    setTimeout(function () {window.location.href='/teenager';},2000);
+                }
+            });
+        });
+    }
 
 
 

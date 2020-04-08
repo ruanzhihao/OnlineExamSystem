@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>教师信息修改</title>
+    <link rel="stylesheet" th:href="@{/layui/css/layui.css}" media="all" />
+    <script th:src="@{/layui/layui.js}"></script>
+    <script th:src="@{/Skz/jquery-3.4.1.js}"></script>
+</head>
+<body>
+
+<div id=”x-body”>
+
+    <form class="layui-form" action="updateTeacher" method="post" id="f-auto" accept-charset="UTF-8">
+        <input type="hidden" th:value="${session.t.teacherid}" name="teacherid" id="teacherid">
+        <div class="layui-form-item">
+            <label for="username" class="layui-form-label">
+                <span class="f_sp">账户名</span>
+            </label>
+            <div class="layui-input-inline">
+                <input type="text" id="username" name="username" autocomplete="off" th:value="${session.t.username}" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="teachername" class="layui-form-label">
+                <span class="f_sp">教师姓名</span>
+            </label>
+            <div class="layui-input-inline">
+                <input type="text" id="teachername" name="teachername" autocomplete="off" th:value="${session.t.teachername}" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="teacherpassword" class="layui-form-label">
+                <span class="f_sp">密码</span>
+            </label>
+            <div class="layui-input-inline">
+                <input type="text" id="teacherpassword" name="teacherpassword" autocomplete="off" th:value="${session.t.teacherpassword}" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="teacherphoneNumber" class="layui-form-label">
+                <span class="f_sp">手机号</span>
+            </label>
+            <div class="layui-input-inline">
+                <input type="text" id="teacherphoneNumber" name="teacherphoneNumber" autocomplete="off" th:value="${session.t.teacherphoneNumber}" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="teacheremail" class="layui-form-label">
+                <span class="f_sp">email</span>
+            </label>
+            <div class="layui-input-inline">
+                <input type="text" id="teacheremail" name="teacheremail" autocomplete="off" th:value="${session.t.teacheremail}" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item" id="btn_xg">
+            <button  class="layui-btn"  id="btn_on" lay-filter="updateForm" >
+                修改
+            </button>
+        </div>
+    </form>
+
+</div>
+
+
+
+<script>
+    layui.use(['form','layer'], function(){
+        var form = layui.form;
+
+        form.on('submit(updateForm)',function(data){
+            var param=data.field;
+            $.ajax({
+                url:'updateTeacher',
+                type:"post",
+                data:JSON.stringify(param),
+                contentType:"application/json;charset=utf-8",
+                success:function () {
+                    setTimeout(function () {
+                        layer.msg('修改成功',{icon:1,time:3000});
+                        window.location.href='/teenager';},2000);
+                },
+                error:function(){
+                    console.log($("#teacherid").val());
+                    layer.msg('修改失败',{icon:1,time:3000});
+                    setTimeout(function () {
+                        window.location.href='/teenager';},2000);
+                }
+            })
+        })
+
+    });
+
+</script>
+
+</body>
+</html>

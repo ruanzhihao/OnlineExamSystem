@@ -4,4 +4,39 @@
     <select id="getAllTeacher" resultType="com.onlineExam.domain.Teacher">
         select * from teacher
     </select>
+    <!--添加教师信息-->
+    <insert id="addTeacher" parameterType="com.onlineExam.domain.Teacher" keyProperty="teacherid" useGeneratedKeys="true">
+        insert into teacher(username,teachername,teacherpassword,teacherphoneNumber,teacheremail)
+        values (#{username},#{teachername},#{teacherpassword},#{teacherphoneNumber},#{teacheremail})
+    </insert>
+    <!--通过id删除学生信息-->
+    <delete id="deleteTeacher" parameterType="Integer">
+        delete  from teacher where teacherid=#{teacherid}
+    </delete>
+    <select id="findTeacherById" parameterType="Integer" resultType="com.onlineExam.domain.Teacher">
+        select * from teacher where teacherid=#{teacherid}
+    </select>
+    <!--修改教师信息-->
+    <update id="updateTeacher" parameterType="com.onlineExam.domain.Teacher">
+        update teacher
+        <set>
+            <if test="username!=null and username!=''">
+                username=#{username},
+            </if>
+            <if test="teachername!=null and teachername!=''">
+                teachername=#{teachername},
+            </if>
+            <if test="teacherpassword!=null and teacherpassword!=''">
+                teacherpassword=#{teacherpassword},
+            </if>
+            <if test="teacherphoneNumber!=null and teacherphoneNumber!=''">
+                teacherphoneNumber=#{teacherphoneNumber},
+            </if>
+            <if test="teacheremail!=null and teacheremail!=''">
+                teacheremail=#{teacheremail},
+            </if>
+
+        </set>
+        where teacherid=#{teacherid}
+    </update>
 </mapper>
