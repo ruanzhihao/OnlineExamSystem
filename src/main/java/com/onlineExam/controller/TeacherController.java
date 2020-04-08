@@ -1,17 +1,17 @@
 package com.onlineExam.controller;
 
 import com.onlineExam.domain.Teacher;
+import com.onlineExam.modules.common.controller.MainController;
 import com.onlineExam.service.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
+import java.util.Map;
 
 
 @Controller
@@ -55,5 +55,25 @@ public class TeacherController {
         Teacher t=teacherService.findTeacherById(teacherid);
         session.setAttribute("t",t);
         return "Teacher_edit";
+    }
+
+    @RequestMapping(value="/teacherlogin",method = {RequestMethod.POST,RequestMethod.GET})
+    public String login(HttpServletRequest request, HttpSession session, @RequestParam("validateCode")String validateCode){
+
+        MainController mainController=new MainController();
+        Map map=mainController.checkLoginValidateCode(request,validateCode);
+        String flag=map.get("status").toString();
+
+        String teachername=request.getParameter("teachername");
+        String teacherpassword=request.getParameter("teacherpassword");
+        System.out.println("账号："+teachername+"密码："+teachername);
+
+        String tname=teacherService.login(teachername,teacherpassword);
+        session.setAttribute("tname",tname);
+        if (tname!=null&&flag.equals("true")){
+            return "loginsuccess";
+        }else{
+            return "index";
+        }
     }
 }

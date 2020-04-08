@@ -39,4 +39,10 @@
         </set>
         where teacherid=#{teacherid}
     </update>
+
+    <select id="login" resultType="String">
+        select * from teacher where teachername=#{teachername} and teacherpassword=#{teacherpassword}
+    </select>
+
+
 </mapper>

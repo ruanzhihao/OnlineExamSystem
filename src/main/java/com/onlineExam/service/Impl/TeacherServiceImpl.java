@@ -36,4 +36,9 @@ public class TeacherServiceImpl implements TeacherService {
         Teacher t=teacherMapper.findTeacherById(teacherid);
         return t;
     }
+
+    @Override
+    public String login(String teachername, String teacherpassword) {
+        return teacherMapper.login(teachername,teacherpassword);
+    }
 }

@@ -1,6 +1,7 @@
 package com.onlineExam.mapper;
 
 import com.onlineExam.domain.Teacher;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -14,4 +15,6 @@ public interface TeacherMapper {
     int deleteTeacher(Integer teacherid);//删除教师信息
     int updateTeacher(Teacher teacher);//修改信息
     Teacher findTeacherById(Integer teacherid);//根据id查找
+
+    String login(@Param("teachername") String teachername,@Param("teacherpassword") String teacherpassword);
 }

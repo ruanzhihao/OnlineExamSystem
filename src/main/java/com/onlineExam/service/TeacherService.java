@@ -11,4 +11,6 @@ public interface TeacherService {
     public int deleteTeacher(Integer teacherid);
     public int updateTeacher(Teacher teacher);
     public Teacher findTeacherById(Integer teacherid);
+
+    public String login(String teachername,String teapassword);
 }
