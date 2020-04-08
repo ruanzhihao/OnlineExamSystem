@@ -6,6 +6,7 @@
     <link rel="stylesheet" th:href="@{/layui/css/layui.css}" media="all">
     <script th:src="@{/layui/layui.js}"></script>
     <script th:src="@{https://code.jquery.com/jquery-3.3.1.min.js}"></script>
+    <!-- <script th:src="@{/layui/lay/modules/layer.js}"></script>-->
 </head>
 <body>
 
@@ -20,17 +21,18 @@
     </button>
 
     &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;
-    <a th:href="@{/getImport}" ><button type="button" class="layui-btn">
+    <button type="button" class="layui-btn">
         <i class="layui-icon">&#xe608;</i> 导入题目
+    </button>
 </div>
 
 <div class="layui-row" id="popSearchRoleTest" style="display:none;">
     <div class="layui-col-md11">
-        <form class="layui-form" lay-filter="formTestFilter2121" >
+        <form class="layui-form" lay-filter="formTestFilter2121"  >
             <div class="layui-form-item">
                 <label class="layui-form-label">试题内容：</label>
                 <div class="layui-input-block" style="width: 520px">
-                    <textarea placeholder="请输入试题内容" class="layui-textarea" name="questionName" id="questionName"></textarea>
+                    <textarea placeholder="请输入试题内容" class="layui-textarea" name="questionName" id="questionName" ></textarea>
                 </div>
             </div>
             <div class="layui-form-item">
@@ -121,11 +123,10 @@
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
                     <button type="button" onclick="addQues()" class="layui-btn layui-btn-normal">确定新增</button>
-                    <script type="text/javascript">
+                    <script th:inline="javascript">
                         function addQues(){
-                            //获取不到值 为空值
-                            var questionName=$('#questionName').val()
-                            alert(questionName);
+                            //获取不到值 为空值;
+                            var questionName=$("#questionName").val();
                             var optionA=$('#optionA').val();
                             var optionB=$('#optionB').val();
                             var optionC=$('#optionC').val();
@@ -154,9 +155,12 @@
                                     questionClass:questionClass,
 
                                 },
-                                success:function(data){
-                                    layer.msg('添加成功',1000);
-                                    /*window.location.href="/testManage";*/
+                                success:function(){
+                                    layer.msg('添加成功', {
+                                        time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                                    }, function () {
+                                        window.location.href="/testManage";
+                                    });
                                 }
                             })
                         }
@@ -206,10 +210,20 @@
         <td th:text="${question.questionClass}"></td>
         <td> &nbsp;&nbsp;&nbsp;&nbsp;
 
-            <button type="button" class="layui-btn layui-btn-sm layui-btn-warm">
+            <button type="button" class="layui-btn layui-btn-sm layui-btn-warm" th:onclick="'javascript:deleteQuestion('+${question.questionId}+');'">
                 <i class="layui-icon">&#xe642;</i>
             </button>
-            <button type="button" class="layui-btn layui-btn-sm layui-btn-danger">
+            <script>
+                function deleteQuestion(id){
+                    $.ajax({
+
+
+                    })
+
+                }
+
+            </script>
+            <button type="button" class="layui-btn layui-btn-sm layui-btn-danger" >
                 <i class="layui-icon">&#xe640;</i>
             </button>
 
@@ -240,12 +254,18 @@
                 type:1,
                 title:"录入试题",
                 area: ['82%','82%'],
-                content:$("#popSearchRoleTest").html(),
+                content:$("#popSearchRoleTest"),
             });
             form.render();
         });
     });
 </script>
+<script>
+    layui.use('layer', function(){
+        var layer = layui.layer;
 
+    });
+
+</script>
 </body>
 </html>

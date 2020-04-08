@@ -31,7 +31,7 @@ public class QuestionController {
 
     @RequestMapping("/Manager")
     public String Login(){
-        return "Test";
+        return "ManagerIndex";
     }
 
     //进入试题管理页面
