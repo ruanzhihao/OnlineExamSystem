@@ -38,7 +38,7 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public String login(String teachername, String teacherpassword) {
-        return teacherMapper.login(teachername,teacherpassword);
+    public List<Teacher> queryTeacher(String teachername) {
+        return teacherMapper.queryTeacher(teachername);
     }
 }

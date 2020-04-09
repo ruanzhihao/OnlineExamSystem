@@ -53,6 +53,30 @@
                 <input type="text" id="teacheremail" name="teacheremail" autocomplete="off" th:value="${session.t.teacheremail}" class="layui-input">
             </div>
         </div>
+        <div class="layui-form-item">
+            <label for="majorId" class="layui-form-label">
+                <span class="f_sp">majorId</span>
+            </label>
+            <div class="layui-input-inline">
+                <input type="text" id="majorId" name="majorId" autocomplete="off" th:value="${session.t.majorId}" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="departId" class="layui-form-label">
+                <span class="f_sp">departId</span>
+            </label>
+            <div class="layui-input-inline">
+                <input type="text" id="departId" name="departId" autocomplete="off" th:value="${session.t.departId}" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="stateId" class="layui-form-label">
+                <span class="f_sp">departId</span>
+            </label>
+            <div class="layui-input-inline">
+                <input type="text" id="stateId" name="stateId" autocomplete="off" th:value="${session.t.stateId}" class="layui-input">
+            </div>
+        </div>
         <div class="layui-form-item" id="btn_xg">
             <button  class="layui-btn"  id="btn_on" lay-filter="updateForm" >
                 修改
@@ -68,16 +92,15 @@
     layui.use(['form','layer'], function(){
         var form = layui.form;
 
-        form.on('submit(updateForm)',function(data){
+        form.on('submit(updateForm)',function(obj,teacherid){
             var param=data.field;
             $.ajax({
                 url:'updateTeacher',
                 type:"post",
-                data:JSON.stringify(param),
-                contentType:"application/json;charset=utf-8",
+                data:{"teacherid":teacherid},
                 success:function () {
+                    layer.msg('修改成功',{icon:1,time:3000});
                     setTimeout(function () {
-                        layer.msg('修改成功',{icon:1,time:3000});
                         window.location.href='/teenager';},2000);
                 },
                 error:function(){
@@ -90,7 +113,6 @@
         })
 
     });
-
 </script>
 
 </body>

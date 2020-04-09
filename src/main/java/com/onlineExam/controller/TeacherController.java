@@ -1,17 +1,14 @@
 package com.onlineExam.controller;
 
 import com.onlineExam.domain.Teacher;
-import com.onlineExam.modules.common.controller.MainController;
 import com.onlineExam.service.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
-import java.util.Map;
 
 
 @Controller
@@ -20,7 +17,7 @@ public class TeacherController {
     private TeacherService teacherService;
 
     //进去教师管理界面
-    @RequestMapping(value = "/teenager",method = RequestMethod.GET)
+    @RequestMapping(value = "/teenager")
     public String getTeacherList(Model model){
         List<Teacher> list=teacherService.getAllTeacher();
         model.addAttribute("list",list);
@@ -30,6 +27,7 @@ public class TeacherController {
     @RequestMapping(value = "/addTeacher",method = RequestMethod.POST)
     @ResponseBody
     public String addTeacher(@RequestBody Teacher teacher){
+        //teacher.setTeacherpassword(MD5Util.MD5EncodeUtf8(teacher.getTeacherpassword()));
         int a=teacherService.addTeacher(teacher);
         return "TeacherManagement";
     }
@@ -45,8 +43,9 @@ public class TeacherController {
     //修改教师信息
     @RequestMapping(value = "/updateTeacher",method = RequestMethod.POST)
     public String updateTeacher(Teacher teacher){
+        //teacher.setTeacherpassword(MD5Util.MD5EncodeUtf8(teacher.getTeacherpassword()));
         int t=teacherService.updateTeacher(teacher);
-        return "TeacherManagement";//测试
+        return "redirect:/teenager";
     }
 
     //根据id查找学生
@@ -56,24 +55,23 @@ public class TeacherController {
         session.setAttribute("t",t);
         return "Teacher_edit";
     }
-
-    @RequestMapping(value="/teacherlogin",method = {RequestMethod.POST,RequestMethod.GET})
-    public String login(HttpServletRequest request, HttpSession session, @RequestParam("validateCode")String validateCode){
-
-        MainController mainController=new MainController();
-        Map map=mainController.checkLoginValidateCode(request,validateCode);
-        String flag=map.get("status").toString();
-
-        String teachername=request.getParameter("teachername");
-        String teacherpassword=request.getParameter("teacherpassword");
-        System.out.println("账号："+teachername+"密码："+teachername);
-
-        String tname=teacherService.login(teachername,teacherpassword);
-        session.setAttribute("tname",tname);
-        if (tname!=null&&flag.equals("true")){
-            return "loginsuccess";
+    //教师查找
+    @RequestMapping(value = "/queryTeacher",method = RequestMethod.GET)
+    @ResponseBody
+    public String queryTeacher(@RequestParam("teachername") String teachername){
+        List<Teacher> list=teacherService.queryTeacher(teachername);
+        if (list ==null){
+            return "查找失败";
         }else{
-            return "index";
+            return "查找成功";
         }
+    }
+
+    //查找后的显示信息
+    @RequestMapping(value = "/queryShowTeacher",method = RequestMethod.GET)
+    public String queryShow(@RequestParam("teachername") String teachername,Model model){
+        List<Teacher> list=teacherService.queryTeacher(teachername);
+        model.addAttribute("list",list);
+        return "TeacherManagement";
     }
 }

@@ -15,6 +15,5 @@ public interface TeacherMapper {
     int deleteTeacher(Integer teacherid);//删除教师信息
     int updateTeacher(Teacher teacher);//修改信息
     Teacher findTeacherById(Integer teacherid);//根据id查找
-
-    String login(@Param("teachername") String teachername,@Param("teacherpassword") String teacherpassword);
+    List<Teacher> queryTeacher(@Param("teachername") String teachername);//根据教师姓名查询
 }
