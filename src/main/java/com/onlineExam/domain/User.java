@@ -1,3 +1,4 @@
+/*
 package com.onlineExam.domain;
 
 import lombok.Data;
@@ -8,3 +9,4 @@ public class User {
     private  String uname;
     private  Integer password;
 }
+*/

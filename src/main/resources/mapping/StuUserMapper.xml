@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.onlineExam.mapper.StuUserMapper">
+    <select id="login"   parameterType="String" resultType="String" >
+    select roles from t_login where username = #{username} and password=#{password}
+  </select>
+
+   <!--	登录验证 -->
+    <select id="findByUsername"   parameterType="String" resultType="com.onlineExam.domain.LoginUser" >
+    select username,password,roles from t_login where username = #{value}
+  </select>
+
+	<!--	验证注册用户名是否存在 -->
+    <select id="findRegisterUsername"   parameterType="String" resultType="com.onlineExam.domain.LoginUser" >
+    select username  from t_login where username = #{value}
+  </select>
+    <!-- 添加学生用户账号 -->
+    <insert id="register" parameterType="com.onlineExam.domain.LoginUser">
+		INSERT INTO t_login(username,password,roles)
+			VALUES(#{username},#{password},#{roles})
+	</insert>
+
+	<!-- 添加学生账号 -->
+	<insert id="addStuInformation" parameterType="com.onlineExam.domain.Student">
+		INSERT INTO t_student(username,stuid,stuname,sex,clazz,phone)
+		VALUES(#{username},#{stuid},#{stuname},#{sex},#{clazz},#{phone})
+	</insert>
+
+   <!--	修改用户密码-->
+	<update id="updatePassword" parameterType="com.onlineExam.domain.LoginUser" >
+    update t_login set password = #{password} where username=#{username}
+  </update>
+
+    <!--查询用户信息	 -->
+    <select id="findInformationByUsername"   parameterType="String" resultType="com.onlineExam.domain.Student" >
+    select username,stuid,stuname,sex,clazz,phone from t_student where username = #{value}
+  </select>
+
+   <!--	修改用户信息-->
+	<update id="updateInformation" parameterType="com.onlineExam.domain.Student">
+	 update t_student set stuid = #{stuid},stuname=#{stuname},sex=#{sex},clazz=#{clazz},phone=#{phone}
+    where username=#{username}
+	</update>
+</mapper>

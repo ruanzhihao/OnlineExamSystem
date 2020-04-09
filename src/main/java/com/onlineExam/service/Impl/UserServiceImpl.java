@@ -1,3 +1,4 @@
+/*
 package com.onlineExam.service.Impl;
 
 import com.onlineExam.mapper.UserMapper;
@@ -12,17 +13,22 @@ public class UserServiceImpl {
     public  String login(String uid,String password){
         return  userMapper.login(uid,password);
     }
-    /*@Autowired
-    UserService userService;*/
+    */
+/*@Autowired
+    UserService userService;*//*
 
 
 
-   /* public int addUser(User user){
+
+   */
+/* public int addUser(User user){
         int row=userMapper.addUser(user);
         return row;
     }
     public User selectUser(String name){
         User user=userMapper.selectUser(name);
         return  user;
-    }*/
+    }*//*
+
 }
+*/
