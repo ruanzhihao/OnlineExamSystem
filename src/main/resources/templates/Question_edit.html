@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>试题修改</title>
+    <link rel="stylesheet" th:href="@{/layui/css/layui.css}" media="all" />
+    <script th:src="@{/layui/layui.js}"></script>
+    <script th:src="@{/Skz/jquery-3.4.1.js}"></script>
+</head>
+<body>
+
+<div class="layui-row" id="popUpdateQuestion" >
+    <div class="layui-col-md11">
+        <form class="layui-form" lay-filter="formTestFilter2121"  >
+            <div class="layui-form-item">
+                <label class="layui-form-label">试题内容：</label>
+                <div class="layui-input-block" style="width: 520px">
+                    <textarea  class="layui-textarea" name="newquestionName" th:value="${question.questionName}" th:text="${question.questionName}" id="newquestionName" ></textarea>
+                </div>
+                <input type="hidden" name="optionA" id="questionId" class="layui-input" th:value="${question.questionId}" >
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">选项A：</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="optionA" id="newoptionA" class="layui-input" th:value="${question.optionA}">
+                </div>
+                <label class="layui-form-label">选项B：</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="optionB" id="newoptionB" class="layui-input" th:value="${question.optionB}">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">选项C：</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="optionC" id="newoptionC" class="layui-input" th:value="${question.optionC}">
+                </div>
+                <label class="layui-form-label">选项D：</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="optionD" id="newoptionD" class="layui-input" th:value="${question.optionD}">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">正确答案：</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="answer" id="newanswer" class="layui-input" th:value="${question.answer}">
+                </div>
+                <div class="layui-input-inline" style="color:red;">
+                    提示：请把保持答案内容与选项内容一致
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">考试科目：</label>
+                <div class="layui-input-inline" style="width: 180px" >
+                    <select name="courseId" id="newcourseId" lay-verify="required" >
+                        <option value=""></option>
+                        <option  th:each="course :${courseList}" th:text="${course.courseName}" th:value="${course.courseId}"></option>
+                    </select>
+                </div>
+
+                <label class="layui-form-label">专业：</label>
+                <div class="layui-input-inline" style="width: 180px">
+                    <select name="majorId" id="newmajorId"  lay-verify="required" >
+                        <option value=""></option>
+                        <option th:each="major:${majorList}" th:text="${major.majorName}" th:value="${major.majorId}"></option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">该题题型：</label>
+                <div class="layui-input-inline" style="width: 180px">
+                    <select name="questionType" id="newquestionType" lay-verify="required">
+                        <option value=""></option>
+                        <option value="单选">单选</option>
+                        <option value="多选">多选</option>
+                    </select>
+
+                </div>
+                <label class="layui-form-label">分值分配：</label>
+                <div class="layui-input-inline" style="width: 80px">
+                    <input type="text" name="questionScore" id="newquestionScore" class="layui-input" th:value="${question.questionScore}">
+                </div>
+
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">试题难度：</label>
+                <div class="layui-input-block" style="width: 180px">
+                    <select name="city" id="newquestionClass" lay-verify="required">
+                        <option value=""></option>
+                        <option value="简单">简单</option>
+                        <option value="中等">中等</option>
+                        <option value="困难">困难</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <div class="layui-input-block" >
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+                    <button type="button" onclick="updateQues()" class="layui-btn layui-btn-normal">提交修改</button>
+                    <script th:inline="javascript">
+                        function updateQues(){
+                            //获取不到值 为空值;
+                            var questionId=$('#questionId').val()
+                            var questionName=$("#newquestionName").val();
+                            var optionA=$('#newoptionA').val();
+                            var optionB=$('#newoptionB').val();
+                            var optionC=$('#newoptionC').val();
+                            var optionD=$('#newoptionD').val();
+                            var answer=$('#newanswer').val();
+                            var courseId=$('#newcourseId option:selected').val();
+                            var majorId=$('#newmajorId option:selected').val();
+                            var questionType=$('#newquestionType').val();
+                            var questionClass=$('#newquestionClass').val();
+                            var questionScore=$('#newquestionScore').val();
+                            $.ajax({
+                                url:'/updateQuestion',
+                                type:"get",
+                                contentType: "application/json;charset=UTF-8",
+                                data:{
+                                    questionId:questionId,
+                                    questionName:questionName,
+                                    optionA:optionA,
+                                    optionB:optionB,
+                                    optionC:optionC,
+                                    optionD:optionD,
+                                    answer:answer,
+                                    questionScore:questionScore,
+                                    courseId:courseId,
+                                    majorId:majorId,
+                                    questionType:questionType,
+                                    questionClass:questionClass,
+
+                                },
+                                success:function(){
+                                    layer.msg('修改成功', {icon:1,
+                                        time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                                    }, function () {
+                                       /* window.location.href="/testManage";*/
+                                        window.parent.location.reload();
+                                    });
+                                }
+                            })
+                        }
+
+                    </script>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<script>
+    layui.use(['form','layer'], function(){
+        var form = layui.form;
+
+ /*       form.on('submit(updateForm)',function(data){
+            var param=data.field;
+            $.ajax({
+                url:'updateTeacher',
+                type:"post",
+                data:JSON.stringify(param),
+                contentType:"application/json;charset=utf-8",
+                success:function () {
+                    setTimeout(function () {
+                        layer.msg('修改成功',{icon:1,time:3000});
+                        window.location.href='/teenager';},2000);
+                },
+                error:function(){
+                    console.log($("#teacherid").val());
+                    layer.msg('修改失败',{icon:1,time:3000});
+                    setTimeout(function () {
+                        window.location.href='/teenager';},2000);
+                }
+            })
+        })*/
+
+    });
+
+</script>
+
+</body>
+</html>

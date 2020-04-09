@@ -55,6 +55,18 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
+    public Question showQuestion(Integer questionId) {
+        return questionMapper.showQuestion(questionId);
+    }
+
+    @Override
+    public int updateQuestion(Integer questionId, String questionName, String optionA, String optionB, String optionC, String optionD, String answer, Integer questionScore, Integer courseId, Integer majorId, String questionType, String questionClass) {
+        return questionMapper.updateQuestion(questionId, questionName, optionA, optionB,
+                optionC,  optionD,  answer, questionScore,
+                courseId,  majorId,  questionType, questionClass);
+    }
+
+    @Override
     public List<Major> getAllMajor() {
         return questionMapper.getAllMajor();
     }

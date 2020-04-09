@@ -1,14 +1,24 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>在线考试平台登录页面</title>
-<link th:href="@{/Ch/login.css}" rel="stylesheet" rev="stylesheet" type="text/css" media="all" />
-<script type="text/javascript" th:src="@{/js/jQuery1.7.js}"></script>
-<script type="text/javascript" th:src="@{/js/jquery-1.8.2.min.js}"></script>
-<script type="text/javascript" th:src="@{/js/jquery1.42.min.js}"></script>
-<script type="text/javascript" th:src="@{/js/jquery.SuperSlide.js}"></script>
-<script type="text/javascript" th:src="@{/js/Validform_v5.3.2_min.js}"></script>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>在线考试平台登录页面</title>
+  <link href="css/login.css" rel="stylesheet" rev="stylesheet" type="text/css" media="all" />
+  <script type="text/javascript" src="js/jQuery1.7.js"></script>
+  <script type="text/javascript" src="js/jquery-1.8.2.min.js"></script>
+  <script type="text/javascript" src="js/jquery1.42.min.js"></script>
+  <script type="text/javascript" src="js/jquery.SuperSlide.js"></script>
+  <script type="text/javascript" src="js/Validform_v5.3.2_min.js"></script>
+  <script type="text/javascript">
+      $(document).ready(function(){
+          var $tab_li = $('#tab ul li');
+          $tab_li.hover(function(){
+              $(this).addClass('selected').siblings().removeClass('selected');
+              var index = $tab_li.index(this);
+              $('div.tab_box > div').eq(index).show().siblings().hide();
+          });
+      });
+  </script>
   <script type='text/javascript'>
       $(function () {
           $("#validateCode").keyup(function(){
@@ -51,10 +61,9 @@
               error.html("请输入验证码！");
           }
       }
-      
-    function checkLogin(){
-
-    }
+      function toRegister(){
+          window.location.href="sturegister";
+      }
   </script>
 </head>
 <body>
@@ -64,19 +73,53 @@
     <li>教师登录</li>
     <li>管理员登录</li>
   </ul>
-  <div class="tab_box"> 
-    <!-- 学生登录开始 -->
+  <div class="tab_box">
+    <!-- 学生登录 -->
     <div>
       <div class="stu_error_box"></div>
       <form action="loginPage" method="post"  class="stu_login_error">
-        <div id="stuname">
+        <div id="stuid">
           <label>学&nbsp;&nbsp;&nbsp;号：</label>
           <input type="text" id="stu_username_hide" name="uid" />
-          <!--ajaxurl="demo/valid.jsp"--> 
+          <!--ajaxurl="demo/valid.jsp"-->
         </div>
         <div id="stupwd">
           <label>密&nbsp;&nbsp;&nbsp;码：</label>
           <input type="password" id="stu_password_hide" name="password" />
+        </div>
+        <div id="code">
+          <label>验证码：</label>
+          <!--<input type="text" id="tea_code_hide" name="code" />-->
+          <input type="text" id="validateCode" name="validateCode" />
+          <img  title="点击更换" alt="验证码占位图" id="loginValidateCode" height="40" width="150"  style="cursor: pointer;" src="/loginValidateCode" onclick="uploadLoginValidateCode();"/> </div>
+        <p  id="p" style="color: red"></p>
+        <div id="remember">
+          <input type="checkbox" name="rememberMe">
+          <label>记住密码</label>
+        </div>
+        <!--<div id="login">
+          <button type="submit" onclick="checkLogin()">登录</button>
+        </div>-->
+        <div class="">
+          <input type="submit"  value="登录" name="submit"
+                 style="background: red; height: 40px; width: 120px; color: white;">
+          <input type="button"  value="注册" onclick="toRegister()"
+                 style="background: red; height: 40px; width: 120px; color: white;">
+        </div>
+      </form>
+    </div>
+    <!-- 教师登录-->
+    <div class="hide">
+      <div class="tea_error_box"></div>
+      <form action="teacherlogin" method="post"  class="tea_login_error">
+        <div id="teaid">
+          <label>教工号：</label>
+          <input type="text" id="tea_username_hide" name="teachername" />
+          <!--ajaxurl="demo/valid.jsp"-->
+        </div>
+        <div id="teapwd">
+          <label>密&nbsp;&nbsp;&nbsp;码：</label>
+          <input type="password" id="tea_password_hide" name="teacherpassword" />
         </div>
         <div id="code">
           <label>验证码：</label>
@@ -85,21 +128,53 @@
           <img  title="点击更换" alt="验证码占位图" id="loginValidateCode" height="40" width="150"  style="cursor: pointer;" src="/loginValidateCode" onclick="uploadLoginValidateCode();"/> </div>
         <p  id="p" style="color: red"></p>
         <div id="remember">
-          <input type="checkbox" name="remember">
+          <input type="checkbox" name="rememberMe">
           <label>记住密码</label>
         </div>
-        <div id="login">
+        <!--<div id="login">
           <button type="submit" onclick="checkLogin()">登录</button>
+        </div>-->
+        <div class="">
+          <input type="submit"  value="登录" name="submit"
+                 style="background: red; height: 40px; width: 120px; color: white;">
+          <input type="button"  value="注册" onclick=""
+                 style="background: red; height: 40px; width: 120px; color: white;">
         </div>
       </form>
     </div>
-
+    <!-- 管理员登录-->
+    <div class="hide">
+      <div class="sec_error_box"></div>
+      <form action="loginPage" method="post"  class="stu_login_error">
+        <div id="managername">
+          <label>账&nbsp;&nbsp;&nbsp;号：</label>
+          <input type="text" id="manager_username_hide" name="uid" />
+          <!--ajaxurl="demo/valid.jsp"-->
+        </div>
+        <div id="stupwd">
+          <label>密&nbsp;&nbsp;&nbsp;码：</label>
+          <input type="password" id="manager_password_hide" name="password" />
+        </div>
+        <div id="code">
+          <label>验证码：</label>
+          <!--<input type="text" id="manager_code_hide" name="code" />-->
+          <input type="text" id="validateCode" name="validateCode" />
+          <img  title="点击更换" alt="验证码占位图" id="loginValidateCode" height="40" width="150"  style="cursor: pointer;" src="/loginValidateCode" onclick="uploadLoginValidateCode();"/> </div>
+        <p  id="p" style="color: red"></p>
+        <div id="remember">
+          <input type="checkbox" name="rememberMe">
+          <label>记住密码</label>
+        </div>
+        <div id="login">
+          <button type="submit" onclick="">登录</button>
+        </div>
+      </form>
+    </div>
   </div>
 </div>
-
 <div class="screenbg">
   <ul>
-    <li><a href="javascript:;"><img th:src="@{/images/1.jpg}"></a></li>
+    <li><a href="javascript:;"><img src="images/1.jpg"></a></li>
   </ul>
 </div>
 </body>

@@ -27,4 +27,11 @@ public interface QuestionService {
 
     //根据试题内容模糊查询
     List<Question> queryQuestion(String questionName);
+
+    //点击修改按钮 ==数据回显
+    Question showQuestion(Integer questionId);
+
+    //修改试题实现
+    int updateQuestion(@Param("questionId") Integer questionId,@Param("questionName") String questionName,@Param("optionA") String optionA,@Param("optionB") String optionB,@Param("optionC") String optionC,@Param("optionD") String optionD,@Param("answer") String answer,@Param("questionScore") Integer questionScore,@Param("courseId") Integer courseId,@Param("majorId") Integer majorId,@Param("questionType") String questionType,@Param("questionClass") String questionClass);
+
 }

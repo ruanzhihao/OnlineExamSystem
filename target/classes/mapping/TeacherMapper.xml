@@ -2,12 +2,12 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.onlineExam.mapper.TeacherMapper">
     <select id="getAllTeacher" resultType="com.onlineExam.domain.Teacher">
-        select * from teacher
+        select * from teacher,major,depart,state where teacher.majorId=major.majorId and teacher.departId=depart.departId and teacher.stateId=state.stateId
     </select>
     <!--添加教师信息-->
     <insert id="addTeacher" parameterType="com.onlineExam.domain.Teacher" keyProperty="teacherid" useGeneratedKeys="true">
-        insert into teacher(username,teachername,teacherpassword,teacherphoneNumber,teacheremail)
-        values (#{username},#{teachername},#{teacherpassword},#{teacherphoneNumber},#{teacheremail})
+        insert into teacher(username,teachername,teacherpassword,teacherphoneNumber,teacheremail,majorId,departId,stateId)
+        values (#{username},#{teachername},#{teacherpassword},#{teacherphoneNumber},#{teacheremail},#{majorId},#{departId},#{stateId})
     </insert>
     <!--通过id删除学生信息-->
     <delete id="deleteTeacher" parameterType="Integer">
@@ -35,8 +35,20 @@
             <if test="teacheremail!=null and teacheremail!=''">
                 teacheremail=#{teacheremail},
             </if>
+            <if test="majorId!=null and majorId!=0">
+                majorId=#{majorId},
+            </if>
+            <if test="departId!=null and departId!=0">
+                departId=#{departId},
+            </if>
+            <if test="stateId!=null and stateId!=0">
+                stateId=#{stateId}
+            </if>
 
         </set>
         where teacherid=#{teacherid}
     </update>
+    <select id="queryTeacher" resultType="com.onlineExam.domain.Teacher">
+        select * from teacher,major,depart,state where teachername=#{teachername} and teacher.majorId=major.majorId and teacher.departId=depart.departId and teacher.stateId=state.stateId
+    </select>
 </mapper>

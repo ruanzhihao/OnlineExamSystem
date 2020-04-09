@@ -36,4 +36,15 @@
     <select id="queryQuestion" parameterType="java.lang.String" resultType="com.onlineExam.domain.Question">
         select * from t_question,t_major,t_course where t_question.questionName like concat('%',#{questionName},'%') and t_course.courseId = t_question.courseId and t_major.majorId = t_question.majorId and t_course.majorId =t_major.majorId
     </select>
+
+    <select id="showQuestion" parameterType="java.lang.Integer" resultType="com.onlineExam.domain.Question">
+        select * from t_question  where questionId=#{questionId}
+
+    </select>
+
+    <update id="updateQuestion" parameterType="com.onlineExam.domain.Question">
+        update t_question set questionName=#{questionName},optionA=#{optionA},optionB=#{optionB},optionC=#{optionC},optionD=#{optionD},answer=#{answer},questionScore=#{questionScore},courseId=#{courseId},  majorId=#{majorId},  questionType=#{questionType},  questionClass=#{questionClass} where questionId=#{questionId}
+
+    </update>
+
 </mapper>

@@ -12,15 +12,35 @@
 <div class="x-body">
     <div class="demoTable" style="padding: 15px">
         <div class="layui-inline">
-            <input placeholder="输入要查找老师姓名" class="layui-input" id="find" autocomplete="off">
+            <input placeholder="输入要查找老师姓名" class="layui-input" id="findTeacherKey" autocomplete="off">
         </div>
-        <button class="layui-btn" data-type="reload" id="queryRole">搜索</button>
+        <button class="layui-btn" data-type="reload" onclick="queryTeacher()">搜索</button>
+
 
         <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right" href="./teenager" title="刷新">
             <i class="layui-icon" style="line-height:30px">ဂ</i></a>
         <button id="addTeacherBtn" class="layui-btn layui-btn-normal" style="line-height:1.6em;margin-top:3px;float:right"> <i class="layui-icon " style="line-height:30px">&#xe654;</i> </button>
 
     </div>
+    <script>
+        function queryTeacher(){
+            var teachername=$('#findTeacherKey').val()
+            $.ajax({
+                url:'/queryTeacher',
+                type:'get',
+                data:{
+                    teachername:teachername,
+                },
+                success:function () {
+                    layer.msg('查询中...',{
+                        time:2000
+                    },function () {
+                        window.location.href="/queryShowTeacher?teachername="+teachername;
+                    });
+                }
+            });
+        }
+    </script>
 
     <div class="layui-row" id="test" style="display: none;">
         <div class="layui-col-md10">
@@ -56,6 +76,24 @@
                     </div>
                 </div>
                 <div class="layui-form-item">
+                    <label class="layui-form-label">专业序号:</label>
+                    <div class="layui-input-block">
+                        <input type="text" lay-verify="required" name="majorId"   class="layui-input" placeholder="请输入专业序号">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">所在学院序号:</label>
+                    <div class="layui-input-block">
+                        <input type="text" lay-verify="required" name="departId"   class="layui-input" placeholder="请输入所在学院序号">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">状态:</label>
+                    <div class="layui-input-block">
+                        <input type="text" lay-verify="required" name="stateId"   class="layui-input" placeholder="请设定账号状态">
+                    </div>
+                </div>
+                <div class="layui-form-item">
                     <div class="layui-input-block">
                         <button type="button" class="layui-btn layui-btn-normal" lay-submit lay-filter="formDemo">提交</button>
                         <button type="reset" class="layui-btn layui-btn-primary">重置</button>
@@ -65,8 +103,6 @@
         </div>
     </div>
 </div>
-
-
 <table lay-filter="demo">
     <thead>
     <tr>
@@ -76,9 +112,10 @@
         <th lay-data="{field:'4', align: 'center'}">密码</th>
         <th lay-data="{field:'5', align: 'center'}">手机号</th>
         <th lay-data="{field:'6', align: 'center'}">email</th>
-        <th lay-data="{field:'7', align: 'center'}">&nbsp;&nbsp;
-            &nbsp;&nbsp;&nbsp;&nbsp;
-            &nbsp;&nbsp;操&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;作</th>
+        <th lay-data="{field:'7', align: 'center'}">教学专业</th>
+        <th lay-data="{field:'8', align: 'center'}">所在学院</th>
+        <th lay-data="{field:'9', align: 'center'}">账号状态</th>
+        <th lay-data="{field:'10', align: 'center'}">操作</th>
     </tr>
     </thead>
     <tbody>
@@ -89,6 +126,9 @@
         <td th:text="${teacher.teacherpassword}"></td>
         <td th:text="${teacher.teacherphoneNumber}"></td>
         <td th:text="${teacher.teacheremail}"></td>
+        <td th:text="${teacher.majorName}"></td>
+        <td th:text="${teacher.departName}"></td>
+        <td th:text="${teacher.state}"></td>
         <td>&nbsp;
             <a title="编辑"    id= "updateEdit"    th:href="@{/findTeacherById(teacherid=${teacher.teacherid})}">
                 <i class="layui-icon">&#xe642;</i>
@@ -131,12 +171,13 @@
                     type: "post",
                     data:JSON.stringify(param),
                     contentType:"application/json;charset=utf-8",
+
                     success:function () {
-                        layer.msg('添加成功',{icon:1,time:3000});
+                        layer.msg('添加成功',{icon:1,time:2000});
                         setTimeout(function () {window.location.href='/teenager';},2000);
                     },
                     error:function () {
-                        layer.msg('添加失败',{icon:0,time:3000});
+                        layer.msg('添加失败',{icon:0,time:2000});
                         setTimeout(function () {window.location.href='/teenager';},2000);
                     }
                 });
@@ -160,8 +201,6 @@
             });
         });
     }
-
-
 
 </script>
 </body>

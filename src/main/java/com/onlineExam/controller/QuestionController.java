@@ -79,13 +79,36 @@ public class QuestionController {
         return "查找成功";
    }
 
-   //查看之后 显示信息
-   @RequestMapping(value = "/queryShow",method = RequestMethod.GET)
-   public String queryShow(@RequestParam("questionName") String questionName,Model model){
-       List<Question> list=ques.queryQuestion(questionName);
-      model.addAttribute("list",list);
-       return "QuestionManagement";
-   }
+    //查看之后 显示信息
+    @RequestMapping(value = "/queryShow",method = RequestMethod.GET)
+    public String queryShow(@RequestParam("questionName") String questionName,Model model){
+        List<Question> list=ques.queryQuestion(questionName);
+        model.addAttribute("list",list);
+        return "QuestionManagement";
+    }
+
+    //试题修改页面弹出
+    @RequestMapping(value = "/updateQues",method = RequestMethod.GET)
+    public String editIndex(Integer questionId, Model model){
+        Question question=ques.showQuestion(questionId);
+        model.addAttribute("question",question);
+        List<Course> courseList=ques.getCourse();
+        model.addAttribute("courseList",courseList);
+        List<Major> majorList=ques.getMajor();
+        model.addAttribute("majorList",majorList);
+        return "Question_edit";
+    }
+
+    //试题修改实现
+    @RequestMapping(value = "/updateQuestion",method = RequestMethod.GET)
+    @ResponseBody
+    public String updateQues(Integer questionId, String questionName, String optionA, String optionB, String optionC, String optionD, String answer, Integer questionScore, Integer courseId, Integer majorId, String questionType, String questionClass){
+        int i=ques.updateQuestion(questionId,  questionName,  optionA,  optionB,  optionC,  optionD,  answer,  questionScore,  courseId,  majorId,  questionType,  questionClass);
+        if (i==1){
+            return "1";
+        }
+        return "0";
+    }
 
     //导入试题
     @RequestMapping(value = "getImport")
