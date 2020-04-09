@@ -1,4 +1,3 @@
-/*
 package com.onlineExam.service;
 
 import com.onlineExam.domain.User;
@@ -9,12 +8,10 @@ import org.springframework.stereotype.Service;
 @Service
 public interface UserService {
 
-    @Select("select * from t_user where username=#{username}")
-    public User findByName(@Param("username") String username);
+   /* @Select("select * from t_user where username=#{username}")
+    public User findByName(@Param("username") String username);*/
 
-  */
-/*  public int addUser(User user);
-    public User selectUser(String name);*//*
+ // public int addUser(User user);
+    public User selectUser(String name);
 
 }
-*/

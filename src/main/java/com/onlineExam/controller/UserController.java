@@ -1,4 +1,3 @@
-/*
 package com.onlineExam.controller;
 
 import com.google.code.kaptcha.impl.DefaultKaptcha;
@@ -22,12 +21,12 @@ public class UserController {
     private DefaultKaptcha defaultKaptcha;
 
 
-    @RequestMapping("/login")
+    @RequestMapping("/login1")
     public String login(){
         return "index";
     }
 
-    @RequestMapping(value="/loginPage",method = {RequestMethod.POST,RequestMethod.GET})
+   /* @RequestMapping(value="/loginPage",method = {RequestMethod.POST,RequestMethod.GET})
     public String login(HttpServletRequest request,HttpSession session,@RequestParam("validateCode")String validateCode){
 
         MainController mainController=new MainController();
@@ -45,8 +44,7 @@ public class UserController {
         }else{
             return "index";
         }
-    }
+    }*/
 
 
 }
-*/
