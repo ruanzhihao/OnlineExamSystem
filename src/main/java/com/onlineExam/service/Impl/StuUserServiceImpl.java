@@ -36,7 +36,6 @@ public class StuUserServiceImpl implements StuUserService {
             return true;
     }
 
-
     //判断注册是否增加成功
     @Override
     public boolean register(LoginUser user) {
