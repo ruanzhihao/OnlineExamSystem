@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml" xmlns="http://www.thymeleaf.org">
+<head th:replace="head::copy"></head>
+<body>
+        <!-- 内容主体区域 -->
+        <div style="padding: 15px;">
+            <hr class="layui-bg-orange">
+            <div style="padding: 20px; background-color: #F2F2F2;">
+                <div class="layui-row layui-col-space15">
+                    <div class="layui-col-md12">
+                        <div class="layui-card">
+                            <div class="layui-card-header">
+                                <form class="layui-form" onclick="return false;" id="search_form">
+                                    <button class="layui-btn layui-btn-normal" id="add_course">新增试卷</button>
+                                    <div class="layui-form-item" style="float: left;">
+                                                <div class="layui-inline">
+                                                    <div class="layui-input-inline">
+                                                        <select name="majorId" id="majorId" lay-ignore style="width: 100%; height: 38px; border: 1px solid #e6e6e6;">
+                                                            <option value="">所属专业</option>
+                                                            <option th:each="major:${major}" th:value="${major.majorId}" th:text="${major.majorName}">所属专业</option>
+                                                        </select>
+                                                    </div>
+                                        </div>
+                                        <div class="layui-inline">
+                                            <div class="layui-input-inline">
+                                                <button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="demo" id="search_btn">搜索</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="layui-card-body">
+                                <table class="layui-hide" id="test" lay-filter="demo"></table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+<script th:replace="script::copy"></script>
+<script type="text/html" id="barDemo">
+    <a class="layui-btn layui-btn-xs layui-btn-warm" lay-event="look">题目详情</a>
+    <a  class="layui-btn layui-btn-xs" lay-event="edit">修改</a>
+    <a  class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
+<script type="text/javascript" th:inline="javascript">
+
+    layui.use('table', function(){
+        var table = layui.table;
+        table.render({
+            elem: '#test'
+            ,url:'/groupPaper'
+            ,cellMinWidth: 80
+            ,cols: [[
+                {type:'checkbox', fixed: 'left'}
+                ,{field:'paperId', width:'5%', title: 'ID', sort: true}
+                ,{field:'paperName', width:'10%', title: '试卷名称'}
+                ,{field:'questionNumber', width:'9%', title: '题量'}
+                ,{field:'answerTime', width:'10%', title: '答题时间'}
+                ,{field:'sumQuestionScore', title: '总分', width:'8%'}
+                ,{field:'majorName', title: '所属专业', width:'10%'}
+                ,{field:'paperClass', title: '难度类型', width:'10%'}
+/*
+                ,{field:'username', title: '授课老师' , width:'9%'}
+*/
+                ,{fixed: 'right', title: '操作', align:'center', toolbar: '#barDemo', width:'34%'}
+            ]]
+            ,page:true
+            ,limit: 7
+            ,even: true //开启隔行背景
+
+        });
+        //监听表格复选框选择
+        table.on('checkbox(demo)', function(obj){
+            console.log(obj)
+        });
+        //监听工具条
+        table.on('tool(demo)', function(obj){
+            var data = obj.data;
+            if(obj.event === 'del'){
+                layer.confirm('确认要删除吗？', function(index){
+                    $.get("/deletePaper?paperId="+data.paperId, function(res){
+                        console.log(res);
+                        if(res.code == 100){
+                            layer.open({
+                                title: '提示'
+                                ,content: res.extend.msg
+                            })
+                            obj.del();
+                        }
+
+                    });
+                    layer.close(index);
+                });
+            } else if(obj.event === 'edit'){
+                // layer.alert('编辑行：<br>'+ JSON.stringify(data))
+                layer.open({
+                    type: 2,
+                    title: '编辑试卷信息',
+                    area: ['850px', '550px'],
+                    content: "/getPapEdit?paperId="+data.paperId
+                });
+            } else if(obj.event === 'look'){
+                layer.open({
+                    type: 2,
+                    title: '查看题目',
+                    area: ['900px', '600px'],
+                    content: "/getPaperQuestion?paperId="+data.paperId
+                });
+            }
+        });
+
+        $("#add_course").click(function(){
+            layer.open({
+                type: 2,
+                title: '添加试卷信息',
+                area: ['850px', '550px'],
+                content: "/getAddPaper"
+            });
+        });
+
+        $("#search_btn").click(function(){
+            var majorId = $("#majorId").val() ? $("#majorId").val() : "";
+            var form_data = {
+                "majorId": majorId,
+            };
+            console.log(form_data);
+            table.reload('test', {
+                url: "/searchPapers"
+                ,where: form_data
+            });
+        })
+
+    });
+</script>
+</body>
+</html>

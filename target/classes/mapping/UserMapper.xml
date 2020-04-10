@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.onlineExam.mapper.UserMapper">
-    <select id="selectUser" resultType="com.onlineExam.domain.User">
+<select id="selectUser" resultType="com.onlineExam.domain.User">
         select * from t_user where name = #{name}
     </select>
 </mapper>

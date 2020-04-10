@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.onlineExam.mapper.PaperMapper">
+ <insert id="addPaper" parameterType="com.onlineExam.domain.Paper">
+     INSERT  INTO t_paper (paperName,paperClass,questionNumber,answerTime,sumQuestionScore,majorId) values (
+     #{paperName},#{paperClass},#{questionNumber},#{answerTime},#{sumQuestionScore},#{majorId}
+     )
+ </insert>
+    <select id="getAllPaper" resultType="com.onlineExam.domain.Paper">
+select paperId,paperName,paperClass,questionNumber,answerTime,sumQuestionScore,t_major.majorId,t_major.majorName  from t_paper,t_major where t_paper.majorId=t_major.majorId
+    </select>
+    <delete id="deletePaperById" parameterType="integer">
+        delete from t_paper where paperId=#{paperId}
+    </delete>
+    <update id="updatePaper" parameterType="com.onlineExam.domain.Paper">
+        update t_paper
+        <set>
+            <if test="paperName!=null and paperName!=''">
+                paperName=#{paperName},
+            </if>
+            <if test="answerTime!=0 and answerTime!=''">
+                answerTime=#{answerTime},
+            </if>
+            <if test="majorId!=0 and majorId!=null">
+                majorId=#{majorId},
+            </if>
+            <if test="paperClass!=null and paperClass!=''">
+                paperClass=#{paperClass},
+            </if>
+        </set>
+        where paperId=#{paperId}
+    </update>
+    <select id="findPaperById" resultType="com.onlineExam.domain.Paper">
+select paperId,paperName,paperClass,questionNumber,sumQuestionScore ,answerTime ,t_major.majorId,t_major.majorName from t_paper,t_major where t_paper.majorId=t_major.majorId and paperId =#{paperId}
+    </select>
+    <select id="getAllMajor" resultType="com.onlineExam.domain.Major">
+        select majorId,majorName from t_major;
+    </select>
+    <select id="getAllEasyClass" resultType="com.onlineExam.domain.EasyClass">
+        SELECT  * FROM t_easyclass;
+    </select>
+    <select id="findPaperByMajorId" resultType="com.onlineExam.domain.Paper">
+select paperId,paperName,paperClass,questionNumber,sumQuestionScore ,answerTime ,t_major.majorId,t_major.majorName from t_paper,t_major where t_paper.majorId=t_major.majorId and t_paper.majorId =#{majorId}
+    </select>
+</mapper>
