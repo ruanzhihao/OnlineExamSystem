@@ -8,3 +8,9 @@ spring:
     driver-class-name: com.mysql.jdbc.Driver
 mybatis:
   mapper-locations: classpath:mapping/*Mapper.xml
+pagehelper:
+  helperDialect: mysql
+  reasonable: true  #开启优化，如果开启优化，在分页页码结果没有数据的时候,会显示有数据的页码数据
+  supportMethodsArguments: true
+  pageSizeZero: false
+  params: count=countSql
