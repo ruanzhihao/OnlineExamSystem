@@ -32,7 +32,7 @@ public class AdminController {
         System.out.println("账号："+username+"密码："+password);
 
         String roles=adminMapper.login(username,password);
-        System.out.println(roles);
+        //System.out.println(roles);
         session.setAttribute("roles",roles);
         if (roles!=null&&flag.equals("true")){
 

@@ -5,6 +5,7 @@ import com.onlineExam.domain.Teacher;
 import com.onlineExam.mapper.TeacherMapper;
 import com.onlineExam.modules.common.controller.MainController;
 import com.onlineExam.service.TeacherService;
+import org.apache.shiro.crypto.hash.Md5Hash;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -92,11 +93,13 @@ public class TeacherController {
         Map map = mainController.checkLoginValidateCode(request, validateCode);
         String flag = map.get("status").toString();
 
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
-        System.out.println("账号：" + username + "密码：" + password);
+        String username=request.getParameter("username");
+        String password=request.getParameter("password");
+        Md5Hash md5registepassword=new Md5Hash( password, username,5);
+        String md5password=md5registepassword.toString();
+        System.out.println("账号："+username+"密码："+password);
 
-        String roles = teacherMapper.login(username, password);
+        String roles=teacherMapper.login(username,md5password);
         session.setAttribute("roles", roles);
         if (roles != null&&flag.equals("true") ) {
             return "TeacherManagement";
