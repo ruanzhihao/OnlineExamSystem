@@ -21,15 +21,15 @@
   </script>
   <script type='text/javascript'>
       $(function () {
-          $("#validateCode,#validateCode2").keyup(function(){
+          $("#validateCode,#validateCode2,#validateCode3").keyup(function(){
               checkLoginValidateCode($(this).val());
           });
       });
       function uploadLoginValidateCode() {
-          $("#loginValidateCode,#loginValidateCode2").attr("src","/loginValidateCode?random="+new Date().getMilliseconds());
+          $("#loginValidateCode,#loginValidateCode2,#loginValidateCode3").attr("src","/loginValidateCode?random="+new Date().getMilliseconds());
       }
       function checkLoginValidateCode(validateCode) {
-          var error = $("#p,#p2");
+          var error = $("#p,#p2,#p3");
           if(validateCode != null && validateCode != ""){
               $.ajax({
                   type: "POST",
@@ -148,10 +148,10 @@
     <!-- 管理员登录-->
     <div class="hide">
       <div class="sec_error_box"></div>
-      <form action="loginPage" method="post"  class="stu_login_error">
+      <form action="adminLogin" method="post"  class="stu_login_error">
         <div id="adminname">
           <label>账&nbsp;&nbsp;&nbsp;号：</label>
-          <input type="text" id="manager_username_hide" name="uid" />
+          <input type="text" id="manager_username_hide" name="username" />
           <!--ajaxurl="demo/valid.jsp"-->
         </div>
         <div id="adminpwd">
@@ -165,11 +165,11 @@
           <img  title="点击更换" alt="验证码占位图" id="loginValidateCode3" height="40" width="150"  style="cursor: pointer;" src="/loginValidateCode" onclick="uploadLoginValidateCode();"/> </div>
         <p  id="p3" style="color: red"></p>
         <div id="remember3">
-          <input type="checkbox" name="rememberMe">
+          <input type="checkbox" name="remember">
           <label>记住密码</label>
         </div>
         <div id="login">
-          <button type="submit" onclick="">登录</button>
+          <button type="submit">登录</button>
         </div>
       </form>
     </div>
