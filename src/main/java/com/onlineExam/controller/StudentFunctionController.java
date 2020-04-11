@@ -39,4 +39,16 @@ public class StudentFunctionController {
 
         return "main";
     }
+    //进入参加考试界面
+    @RequestMapping(value = "/JoinExam",method = RequestMethod.GET)
+    public String goExam(){
+
+        return "JoinExam";
+    }
+    //点击考试界面 进入考试
+    @RequestMapping(value = "/Examing",method = RequestMethod.GET)
+    public String goExaming(){
+
+        return "Examing";
+    }
 }

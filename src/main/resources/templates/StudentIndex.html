@@ -131,11 +131,11 @@
                         <dd>
                             <a href="javascript:;" data-url="table.html">
                                 <i class="iconfont icon-yonghu1" data-icon='icon-yonghu1'></i>
-                                <span>成绩查看 （可写可删）</span>
+                                <span>考试记录</span>
                             </a>
                         </dd>
                         <dd>
-                            <a href="javascript:;"  data-url="table_1.html">
+                            <a href="./JoinExam"  id="JoinExam">
                                 <i class="iconfont icon-jiaoseguanli4" data-icon='icon-jiaoseguanli4'></i>
                                 <span>参加考试</span>
                             </a>
@@ -195,6 +195,10 @@
             $("#iframeMain").attr("src",$(this).attr("href"));
         });
         $("#myReport").click(function (e) {
+            e.preventDefault();
+            $("#iframeMain").attr("src",$(this).attr("href"));
+        });
+        $("#JoinExam").click(function (e) {
             e.preventDefault();
             $("#iframeMain").attr("src",$(this).attr("href"));
         });
