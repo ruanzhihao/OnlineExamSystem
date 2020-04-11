@@ -3,6 +3,7 @@ package com.onlineExam.controller.student;
 import com.onlineExam.domain.LoginUser;
 import com.onlineExam.domain.Student;
 import com.onlineExam.service.StuUserService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.crypto.hash.Md5Hash;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.HashMap;
 import java.util.Map;
 
-//@Api(tags = "学生注册接口")
+@Api(tags = "学生注册接口")
 @Controller
 //@RequestMapping("/student")
 public class StuRegisterController {

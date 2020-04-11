@@ -1,5 +1,6 @@
 package com.onlineExam.service.Impl;
 
+import com.onlineExam.domain.LoginUser;
 import com.onlineExam.domain.Teacher;
 import com.onlineExam.mapper.TeacherMapper;
 import com.onlineExam.service.TeacherService;
@@ -40,5 +41,41 @@ public class TeacherServiceImpl implements TeacherService {
     @Override
     public List<Teacher> queryTeacher(String teachername) {
         return teacherMapper.queryTeacher(teachername);
+    }
+
+    @Override
+    public String login(String username, String password) {
+        return teacherMapper.login(username,password);
+    }
+    //注册判断用户名是否存在
+    @Override
+    public boolean findReisterUsername(String username) {
+        if (teacherMapper.findRegisterUsername(username) == null) {
+            return false;
+        } else
+            return true;
+    }
+    //判断注册是否增加成功
+    @Override
+    public boolean register(LoginUser user) {
+        int appregister = 0;
+        appregister = teacherMapper.register(user);
+        // System.out.println("appregister:"+appregister);
+        if (appregister == 0) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+    //增加用户信息
+    @Override
+    public boolean addTeacherInfo(Teacher user) {
+        int appregister = 0;
+        appregister = teacherMapper.addTeacher(user);
+        if (appregister == 0) {
+            return false;
+        } else {
+            return true;
+        }
     }
 }

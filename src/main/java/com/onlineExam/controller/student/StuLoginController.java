@@ -18,7 +18,7 @@ import java.util.Map;
 @Controller
 public class StuLoginController {
     @Autowired
-    private StuUserMapper  stuUserMapper;
+    private StuUserMapper stuUserMapper;
     @Autowired
     private DefaultKaptcha defaultKaptcha;
 
@@ -42,7 +42,7 @@ public class StuLoginController {
         String roles=stuUserMapper.login(username,password);
         session.setAttribute("roles",roles);
         if (roles!=null&&flag.equals("true")){
-            return "loginsuccess";
+            return "StudentIndex";
         }else{
             return "index";
         }

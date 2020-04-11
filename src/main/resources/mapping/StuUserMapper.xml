@@ -20,7 +20,7 @@
 			VALUES(#{username},#{password},#{roles})
 	</insert>
 
-	<!-- 添加学生账号 -->
+	<!-- 添加用户账号信息 -->
 	<insert id="addStuInformation" parameterType="com.onlineExam.domain.Student">
 		INSERT INTO t_student(username,stuid,stuname,sex,clazz,phone)
 		VALUES(#{username},#{stuid},#{stuname},#{sex},#{clazz},#{phone})
@@ -38,7 +38,7 @@
 
    <!--	修改用户信息-->
 	<update id="updateInformation" parameterType="com.onlineExam.domain.Student">
-	 update t_student set stuid = #{stuid},stuname=#{stuname},sex=#{sex},clazz=#{clazz},phone=#{phone}
+	 update t_student set stuid = #{stuid} ,stuname=#{stuname},sex=#{sex},clazz=#{clazz},phone=#{phone}
     where username=#{username}
 	</update>
 </mapper>

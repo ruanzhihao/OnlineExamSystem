@@ -1,6 +1,8 @@
 package com.onlineExam.service;
 
+import com.onlineExam.domain.LoginUser;
 import com.onlineExam.domain.Teacher;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -12,4 +14,11 @@ public interface TeacherService {
     public int updateTeacher(Teacher teacher);
     public Teacher findTeacherById(Integer teacherid);
     List<Teacher> queryTeacher(String teachername);
+
+    public String login(@Param("username") String username, @Param("password") String password);
+    public boolean findReisterUsername(String username);
+    //注册用户账号
+    public boolean register(LoginUser user);
+    //注册教师用户账号信息存储
+    public boolean addTeacherInfo(Teacher user);
 }

@@ -21,15 +21,15 @@
   </script>
   <script type='text/javascript'>
       $(function () {
-          $("#validateCode").keyup(function(){
+          $("#validateCode,#validateCode2").keyup(function(){
               checkLoginValidateCode($(this).val());
           });
       });
       function uploadLoginValidateCode() {
-          $("#loginValidateCode").attr("src","/loginValidateCode?random="+new Date().getMilliseconds());
+          $("#loginValidateCode,#loginValidateCode2").attr("src","/loginValidateCode?random="+new Date().getMilliseconds());
       }
       function checkLoginValidateCode(validateCode) {
-          var error = $("#p");
+          var error = $("#p,#p2");
           if(validateCode != null && validateCode != ""){
               $.ajax({
                   type: "POST",
@@ -64,6 +64,9 @@
       function stuRegister(){
           window.location.href="sturegister";
       }
+      function teaRegister(){
+          window.location.href="teacherRegister";
+      }
   </script>
 </head>
 <body>
@@ -79,7 +82,7 @@
       <div class="stu_error_box"></div>
       <form action="stuLogin" method="post"  class="stu_login_error">
         <div id="stuname">
-          <label>账&nbsp;&nbsp;&nbsp;号：</label>
+          <label>用户名：</label>
           <input type="text" id="stu_username_hide" name="username" />
           <!--ajaxurl="demo/valid.jsp"-->
         </div>
@@ -92,7 +95,7 @@
           <!--<input type="text" id="tea_code_hide" name="code" />-->
           <input type="text" id="validateCode" name="validateCode" />
           <img  title="点击更换" alt="验证码占位图" id="loginValidateCode" height="40" width="150"  style="cursor: pointer;" src="/loginValidateCode" onclick="uploadLoginValidateCode();"/> </div>
-        <p  id="p" style="color: red"></p>
+        <p  id="p2" style="color: red"></p>
         <div id="remember">
           <input type="checkbox" name="rememberMe">
           <label>记住密码</label>
@@ -111,21 +114,21 @@
     <!-- 教师登录-->
     <div class="hide">
       <div class="tea_error_box"></div>
-      <form action="teacherlogin" method="post"  class="tea_login_error">
+      <form action="TeaLogin" method="post"  class="tea_login_error">
         <div id="teaid">
-          <label>教工号：</label>
-          <input type="text" id="tea_username_hide" name="teachername" />
+          <label>账&nbsp;&nbsp;&nbsp;号：</label>
+          <input type="text" id="tea_username_hide" name="username" />
           <!--ajaxurl="demo/valid.jsp"-->
         </div>
         <div id="teapwd">
           <label>密&nbsp;&nbsp;&nbsp;码：</label>
-          <input type="password" id="tea_password_hide" name="teacherpassword" />
+          <input type="password" id="tea_password_hide" name="password" />
         </div>
         <div id="code">
           <label>验证码：</label>
           <!--<input type="text" id="stu_code_hide" name="code" />-->
-          <input type="text" id="validateCode" name="validateCode" />
-          <img  title="点击更换" alt="验证码占位图" id="loginValidateCode" height="40" width="150"  style="cursor: pointer;" src="/loginValidateCode" onclick="uploadLoginValidateCode();"/> </div>
+          <input type="text" id="validateCode2" name="validateCode" />
+          <img  title="点击更换" alt="验证码占位图" id="loginValidateCode2" height="40" width="150"  style="cursor: pointer;" src="/loginValidateCode" onclick="uploadLoginValidateCode();"/> </div>
         <p  id="p" style="color: red"></p>
         <div id="remember">
           <input type="checkbox" name="rememberMe">
@@ -137,7 +140,7 @@
         <div class="">
           <input type="submit"  value="登录" name="submit"
                  style="background: red; height: 40px; width: 120px; color: white;">
-          <input type="button"  value="注册" onclick=""
+          <input type="button"  value="注册" onclick="teaRegister()"
                  style="background: red; height: 40px; width: 120px; color: white;">
         </div>
       </form>
@@ -146,22 +149,22 @@
     <div class="hide">
       <div class="sec_error_box"></div>
       <form action="loginPage" method="post"  class="stu_login_error">
-        <div id="managername">
+        <div id="adminname">
           <label>账&nbsp;&nbsp;&nbsp;号：</label>
           <input type="text" id="manager_username_hide" name="uid" />
           <!--ajaxurl="demo/valid.jsp"-->
         </div>
-        <div id="stupwd">
+        <div id="adminpwd">
           <label>密&nbsp;&nbsp;&nbsp;码：</label>
           <input type="password" id="manager_password_hide" name="password" />
         </div>
         <div id="code">
           <label>验证码：</label>
           <!--<input type="text" id="manager_code_hide" name="code" />-->
-          <input type="text" id="validateCode" name="validateCode" />
-          <img  title="点击更换" alt="验证码占位图" id="loginValidateCode" height="40" width="150"  style="cursor: pointer;" src="/loginValidateCode" onclick="uploadLoginValidateCode();"/> </div>
-        <p  id="p" style="color: red"></p>
-        <div id="remember">
+          <input type="text" id="validateCode3" name="validateCode" />
+          <img  title="点击更换" alt="验证码占位图" id="loginValidateCode3" height="40" width="150"  style="cursor: pointer;" src="/loginValidateCode" onclick="uploadLoginValidateCode();"/> </div>
+        <p  id="p3" style="color: red"></p>
+        <div id="remember3">
           <input type="checkbox" name="rememberMe">
           <label>记住密码</label>
         </div>

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>学生注册</title>
+    <title>教师注册</title>
     <script type="text/javascript" src="js/jquery1.7.js"></script>
     <script type="text/javascript" src="js/jquery-1.8.2.js"></script>
     <!-- 引入自定义css文件 style.css -->
@@ -32,7 +32,7 @@
         //提交验证
         function Vaildate(form) {
             if(form.username.value == "") {
-                alert("用户名不能为空!");
+                alert("账号不能为空!");
                 form.username.focus();
                 return false;
             }
@@ -46,14 +46,13 @@
                 form.inputPassword1.focus();
                 return false;
             }
-            if(form.stuid.value==""||form.stuname.value==""||form.clazz.value=="")
+            if(form.username.value==""||form.teachername.value==""||form.teacherphoneNumber.value=="")
             {
-                alert("学号、姓名和班级不能为空");
+                alert("用户名、姓名和手机号不能为空");
                 return false;
             }
             return true;
         }
-
 
         $(function(){
             //1.为输入框绑定事件,失去焦点获得输入框内容
@@ -88,12 +87,9 @@
                             }
                             $("#usernameInfo").html(usernameInfo);
                         },
-
                     });
-
                 }
             });
-
             //判断密码是否为空
             $("#inputPassword1").blur(function(){
                 var passwordInput = $(this).val();
@@ -105,8 +101,6 @@
                     $("#passwordInfo").html(passwordInfo);
                 }
             });
-
-
             //判断密码是否一致
             $("#inputPassword2").blur(function(){
                 var password1Input=$("#inputPassword1").val();
@@ -134,9 +128,9 @@
         <div class="col-md-2"></div>
         <div class="col-md-8"
              style="background: #fff; padding: 40px 80px; margin: 30px; border: 7px solid #ccc;">
-            <font>学生注册</font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;STUDENT REGISTER <span style="color:red" th:text="${msg}"></span>
+            <font>教师注册</font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TEACHE  REGISTER <span style="color:red" th:text="${msg}"></span>
             <form class="form-horizontal" style="margin-top: 5px;"
-                  action="StuRegister" method="post" onsubmit="return Vaildate(this);">
+                  action="TeaRegister" method="post" onsubmit="return Vaildate(this);">
                 <div class="form-group">
                     <label for="username" class="col-sm-2 control-label">用户名</label>
                     <div class="col-sm-6">
@@ -146,18 +140,18 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label  class="col-sm-2 control-label">学号</label>
+                    <label  class="col-sm-2 control-label">姓名</label>
                     <div class="col-sm-6">
-                        <input type="text" class="form-control" name="stuid" id="stuid"
-                               placeholder="请输入学号">
-                        <span id="stuidInfo"></span>
+                        <input type="text" class="form-control" name="teachername" id="teachername"
+                               placeholder="请输入姓名">
+                        <span id="teachernameInfo"></span>
                     </div>
                 </div>
                 <div class="form-group">
                     <label  class="col-sm-2 control-label">密码</label>
                     <div class="col-sm-6">
                         <input type="password" class="form-control" id="inputPassword1"
-                               name="password" placeholder="请输入密码">
+                               name="teacherpassword" placeholder="请输入密码">
                     </div>
                 </div>
                 <div class="form-group">
@@ -169,48 +163,33 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="stuname" class="col-sm-2 control-label">姓名</label>
+                    <label for="teacheremail" class="col-sm-2 control-label">邮箱</label>
                     <div class="col-sm-6">
-                        <input type="text" class="form-control" id="stuname" name="stuname"
-                               placeholder="请输入姓名">
+                        <input type="text" class="form-control" id="teacheremail" name="teacheremail"
+                               placeholder="请输入邮箱">
                     </div>
                 </div>
-                <div class="form-group opt">
-                    <label  class="col-sm-2 control-label">性别</label>
-                    <div class="col-sm-6">
-                        <label class="radio-inline">
-                            <input type="radio" name="sex" id="inlineRadio1" value="男">
-                            男</label>
-                        <label class="radio-inline">
-                            <input type="radio" name="sex" id="inlineRadio2" value="女">
-                            女</label>
-                    </div>
-                </div>
+
                 <div class="form-group">
-                    <label for="clazz" class="col-sm-2 control-label">班级</label>
+                    <label for="teacherphoneNumber" class="col-sm-2 control-label">手机号</label>
                     <div class="col-sm-6">
-                        <input type="text" class="form-control" id="clazz" name="clazz"
-                               placeholder="请输入班级">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="phone" class="col-sm-2 control-label">手机号</label>
-                    <div class="col-sm-6">
-                        <input type="text" class="form-control" id="phone" name="phone"
+                        <input type="text" class="form-control" id="teacherphoneNumber" name="teacherphoneNumber"
                                placeholder="请输入手机号">
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-10">
                         <input type="submit" width="100" value="注册" name="submit"
-                               style="background:red; height: 40px; width: 120px; color: white;">
+                               style="background:red; height: 40px; width: 135px; color: white;">
                         <input type="button" width="100" value="返回登录" onclick="tologin()"
-                               style="background: red; height: 40px; width: 120px; color: white;">
+                               style="background: red; height: 40px; width: 135px; color: white;">
                     </div>
                 </div>
             </form>
         </div>
+
         <div class="col-md-2"></div>
+
     </div>
 </div>
 </body>
