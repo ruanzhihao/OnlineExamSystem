@@ -51,10 +51,10 @@
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <span style="color: blue">XXX</span>同学 欢迎您
+                    <span style="color: cyan;size: 20px" th:text="${session.stuname}"></span>&nbsp;&nbsp;&nbsp;同学 欢迎您
                 </li>
                 <li class="layui-nav-item first">
-                    <a href="" >
+                    <a href="./personal" id="personinfo">
                         <cite>个人信息</cite>
                         <span class="layui-nav-more"></span>
                     </a>
@@ -185,6 +185,12 @@
 
     });
     $(document).ready(function(){
+
+        $("#personinfo").click(function (e) {
+            e.preventDefault();
+            $("#iframeMain").attr("src",$(this).attr("href"));
+        });
+
         $("#personal").click(function (e) {
             e.preventDefault();
             $("#iframeMain").attr("src",$(this).attr("href"));
@@ -202,6 +208,7 @@
             e.preventDefault();
             $("#iframeMain").attr("src",$(this).attr("href"));
         });
+
     });
 
 </script>

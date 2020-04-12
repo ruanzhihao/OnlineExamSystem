@@ -18,15 +18,15 @@
 <section class="layui-larry-box">
 	<div class="larry-personal">
 		<header class="larry-personal-tit">
-			<span>修改个人信息</span>
-			<!--<span style="color:red" th:text="${msg}"></span>-->
+			<span>个人信息</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<span style="color:red;font-size: 20px;" th:text="${msg}"></span>
 		</header><!-- /header -->
 		<div class="larry-personal-body clearfix">
-			<form class="layui-form col-lg-5" action="ChangeStuInformation">
+			<form class="layui-form col-lg-5" action="ChangeStuInfo" method="post">
 				<!--<div class="layui-form-item">
 					<label class="layui-form-label">用户名</label>
 					<div class="layui-input-block">  
-						<input type="text" name="title"  autocomplete="off"  class="layui-input layui-disabled" value="admin" disabled="disabled" >
+						<input type="text" name="title"  autocomplete="off"  class="layui-input layui-disabled" disabled   >
 					</div>
 				</div>-->
 				<!--<div class="layui-form-item">
@@ -38,32 +38,38 @@
 				<div class="layui-form-item">
 					<label class="layui-form-label">学号</label>
 					<div class="layui-input-block">
-						<input type="text" name="stuid"  autocomplete="off" class="layui-input" value="Larry">
+						<input type="text" name="stuid"   autocomplete="off" class="layui-input" th:placeholder="${session.stuid}">
 					</div>
 				</div>
 				<div class="layui-form-item">
 					<label class="layui-form-label">姓名</label>
 					<div class="layui-input-block">
-						<input type="text" name="stuname"  autocomplete="off" class="layui-input" value="Larry">
+						<input type="text" name="stuname"  autocomplete="off" class="layui-input" th:placeholder="${session.stuname}">
 					</div>
 				</div>
-				<div class="layui-form-item">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">性别</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="sex"  autocomplete="off" class="layui-input"  th:placeholder="${session.sex}">
+                    </div>
+                </div>
+				<!--<div class="layui-form-item">
 					<label class="layui-form-label">性别</label>
 					<div class="layui-input-block">
-						<input type="radio" name="sex" value="男" title="男" checked=""><div class="layui-unselect layui-form-radio layui-form-radioed"><i class="layui-anim layui-icon"></i><span>男</span></div>
-						<input type="radio" name="sex" value="女" title="女"><div class="layui-unselect layui-form-radio"><i class="layui-anim layui-icon"></i><span>女</span></div>
-					</div>
-				</div>
+                           <input type="radio" name="sex" value="男" title="男" checked=""><div class="layui-unselect layui-form-radio layui-form-radioed"><i class="layui-anim layui-icon"></i><span>男</span></div>
+                           <input type="radio" name="sex" value="女" title="女" ><div class="layui-unselect layui-form-radio"><i class="layui-anim layui-icon"></i><span>女</span></div>
+                    </div>
+				</div>-->
 				<div class="layui-form-item">
 					<label class="layui-form-label">班级</label>
 					<div class="layui-input-block">
-						<input type="text" name="clazz"  autocomplete="off" class="layui-input" placeholder="输入班级">
+						<input type="text" name="clazz"  autocomplete="off" class="layui-input" placeholder="输入班级" th:placeholder="${session.clazz}">
 					</div>
 				</div>
 				<div class="layui-form-item">
 					<label class="layui-form-label">手机号码</label>
 					<div class="layui-input-block">
-						<input type="text" name="phone"  autocomplete="off" class="layui-input" placeholder="输入手机号码">
+						<input type="text" name="phone"  autocomplete="off" class="layui-input" placeholder="输入手机号码" th:placeholder="${session.phone}">
 					</div>
 				</div>
 				<!--<div class="layui-form-item">
@@ -72,17 +78,15 @@
 						<input type="file" name="file" class="layui-upload-file">
 					</div>
 				</div>-->
-
 				<!--<div class="layui-form-item layui-form-text">
 					<label class="layui-form-label">座右铭</label>
 					<div class="layui-input-block">
 						<textarea placeholder="既然选择了远方，便只顾风雨兼程；路漫漫其修远兮，吾将上下而求索" value="" class="layui-textarea"></textarea>
 					</div>
 				</div>-->
-				
 				<div class="layui-form-item">
 					<div class="layui-input-block">
-						<button class="layui-btn"  lay-submit="" lay-filter="demo1">确认提交</button>
+						<button class="layui-btn"  lay-submit="" lay-filter="demo1">确认修改</button>
 						<button type="reset" class="layui-btn layui-btn-primary">重置</button>
 					</div>
 				</div>
@@ -94,7 +98,7 @@
 <script type="text/javascript">
 	layui.use(['form','upload'],function(){
          var form = layui.form();
-         layui.upload({ 
+         layui.upload({
              url: '' ,//上传接口
              success: function(res){
               //上传成功后的回调 
@@ -102,20 +106,6 @@
             } 
          });
 	});
-</script>
-<script type="text/javascript">
-	 $.ajax({
-		 url:"ChangeStuInformation",
-		 type:"POST",
-		 dataType:"JSON",
-		 data:{"username":username},
-		 success:function(data){
-		     layer.msg("修改成功");
-		 },
-		 error:function(){
-             layer.msg("修改失败");
-		 }
-	 });
 
 </script>
 </body>

@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -52,7 +53,7 @@ public class StuRegisterController {
      */
     @ApiOperation(value = "学生用户注册")
     @RequestMapping("/StuRegister")
-    public String toregister(String username, String password, Model model,
+    public String toregister(String username, String password, Model model,HttpServletRequest request,
     String stuid,String stuname, String sex, String clazz,String phone)
     {
         if(userService.findReisterUsername(username)){
