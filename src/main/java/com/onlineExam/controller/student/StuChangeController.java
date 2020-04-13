@@ -4,22 +4,15 @@ import com.onlineExam.domain.LoginUser;
 import com.onlineExam.domain.Student;
 import com.onlineExam.service.StuUserService;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.crypto.hash.Md5Hash;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import sun.tools.jar.Main;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 @Api(tags = "学生信息接口")
 @Controller
@@ -29,19 +22,10 @@ public class StuChangeController {
     @Autowired
     private StuUserService stuUserService;
 
-    /*//跳转到修改密码界面
-    @RequestMapping("/toChangepassword")
-    public String toChangepassword() {
-        return "student/Changepassword";
-    }
-    @RequestMapping("/toChangeInformation")
-    public String toChangeInformation() {
-        return "student/changeInformation";
-    }*/
-
     //    //修改用户的信息
     @RequestMapping(value = "/ChangeStuInfo" ,method=RequestMethod.POST)
-    public String ChangeInformation(HttpServletRequest request, HttpSession session, Model model, String stuid, String stuname, String sex, String clazz, String phone ) throws Exception {
+    public String ChangeInformation(HttpServletRequest request, HttpSession session, Model model, String stuid,
+            String stuname, String sex, String clazz, String phone,String major,String dept,String motto ) throws Exception {
         String username=(String)request.getSession().getAttribute("username");
 
         Student stuInformation=new Student();
@@ -51,6 +35,10 @@ public class StuChangeController {
         stuInformation.setStuid(stuid);
         stuInformation.setClazz(clazz);
         stuInformation.setPhone(phone);
+        stuInformation.setMajor(major);
+        stuInformation.setDept(dept);
+        stuInformation.setMotto(motto);
+
         boolean changeInformation= stuUserService.updateInformation(stuInformation);
 
         if(changeInformation){

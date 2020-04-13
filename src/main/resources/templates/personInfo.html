@@ -38,19 +38,19 @@
 				<div class="layui-form-item">
 					<label class="layui-form-label">学号</label>
 					<div class="layui-input-block">
-						<input type="text" name="stuid"   autocomplete="off" class="layui-input" th:placeholder="${session.stuid}">
+						<input type="text" name="stuid"   autocomplete="off" class="layui-input" th:value="${session.stuid}">
 					</div>
 				</div>
 				<div class="layui-form-item">
 					<label class="layui-form-label">姓名</label>
 					<div class="layui-input-block">
-						<input type="text" name="stuname"  autocomplete="off" class="layui-input" th:placeholder="${session.stuname}">
+						<input type="text" name="stuname"  autocomplete="off" class="layui-input" th:value="${session.stuname}">
 					</div>
 				</div>
                 <div class="layui-form-item">
                     <label class="layui-form-label">性别</label>
                     <div class="layui-input-block">
-                        <input type="text" name="sex"  autocomplete="off" class="layui-input"  th:placeholder="${session.sex}">
+                        <input type="text" name="sex"  autocomplete="off" class="layui-input"  th:value="${session.sex}">
                     </div>
                 </div>
 				<!--<div class="layui-form-item">
@@ -63,27 +63,40 @@
 				<div class="layui-form-item">
 					<label class="layui-form-label">班级</label>
 					<div class="layui-input-block">
-						<input type="text" name="clazz"  autocomplete="off" class="layui-input" placeholder="输入班级" th:placeholder="${session.clazz}">
+						<input type="text" name="clazz"  autocomplete="off" class="layui-input" placeholder="输入班级" th:value="${session.clazz}">
 					</div>
 				</div>
 				<div class="layui-form-item">
 					<label class="layui-form-label">手机号码</label>
 					<div class="layui-input-block">
-						<input type="text" name="phone"  autocomplete="off" class="layui-input" placeholder="输入手机号码" th:placeholder="${session.phone}">
+						<input type="text" name="phone"  autocomplete="off" class="layui-input" placeholder="输入手机号码" th:value="${session.phone}">
 					</div>
 				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">专业</label>
+					<div class="layui-input-block">
+						<input type="text" name="major"  autocomplete="off" class="layui-input" placeholder="输入专业" th:value="${session.major}">
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">院系</label>
+					<div class="layui-input-block">
+						<input type="text" name="dept"  autocomplete="off" class="layui-input" placeholder="输入专业" th:value="${session.dept}">
+					</div>
+				</div>
+
 				<!--<div class="layui-form-item">
 					<label class="layui-form-label">修改头像</label>
 					<div class="layui-input-block">
 						<input type="file" name="file" class="layui-upload-file">
 					</div>
 				</div>-->
-				<!--<div class="layui-form-item layui-form-text">
+				<div class="layui-form-item layui-form-text">
 					<label class="layui-form-label">座右铭</label>
 					<div class="layui-input-block">
-						<textarea placeholder="既然选择了远方，便只顾风雨兼程；路漫漫其修远兮，吾将上下而求索" value="" class="layui-textarea"></textarea>
+						<textarea name="motto"  th:text="${session.motto}" class="layui-textarea"></textarea>
 					</div>
-				</div>-->
+				</div>
 				<div class="layui-form-item">
 					<div class="layui-input-block">
 						<button class="layui-btn"  lay-submit="" lay-filter="demo1">确认修改</button>

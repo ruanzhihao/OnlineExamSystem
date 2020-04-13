@@ -47,11 +47,17 @@ public class StuLoginController {
         String sex=student.getSex();
         String clazz=student.getClazz();
         String phone=student.getPhone();
+        String major=student.getMajor();
+        String dept=student.getDept();
+        String motto=student.getMotto();
         request.getSession().setAttribute("stuid",stuid);
         request.getSession().setAttribute("stuname",stuname);
         request.getSession().setAttribute("sex",sex);
         request.getSession().setAttribute("clazz",clazz);
         request.getSession().setAttribute("phone",phone);
+        request.getSession().setAttribute("major",major);
+        request.getSession().setAttribute("dept",dept);
+        request.getSession().setAttribute("motto",motto);
 
         String password=request.getParameter("password");
         Md5Hash md5registepassword=new Md5Hash( password, username,5);

@@ -54,7 +54,7 @@ public class StuRegisterController {
     @ApiOperation(value = "学生用户注册")
     @RequestMapping("/StuRegister")
     public String toregister(String username, String password, Model model,HttpServletRequest request,
-    String stuid,String stuname, String sex, String clazz,String phone)
+    String stuid,String stuname, String sex, String clazz,String phone,String major,String dept,String motto)
     {
         if(userService.findReisterUsername(username)){
             model.addAttribute("msg", "用户名已经存在");
@@ -78,6 +78,9 @@ public class StuRegisterController {
         stuInformation.setStuid(stuid);
         stuInformation.setClazz(clazz);
         stuInformation.setPhone(phone);
+        stuInformation.setMajor(major);
+        stuInformation.setDept(dept);
+        stuInformation.setMotto(motto);
         boolean addStuInformation= userService.addStuInformation(stuInformation);
         if(addregister&&addStuInformation) {
             model.addAttribute("msg", "注册成功");

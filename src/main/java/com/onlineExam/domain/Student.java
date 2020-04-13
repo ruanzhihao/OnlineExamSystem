@@ -13,5 +13,8 @@ public class Student {
     private String sex;
     private String clazz;
     private String phone;
+    private String major;
+    private String dept;
+    private String motto;
 
 }

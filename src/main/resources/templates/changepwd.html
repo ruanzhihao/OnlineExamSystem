@@ -22,7 +22,7 @@
 			<span style="color:red;font-size: 20px;" th:text="${msg}"></span>
 		</header><!-- /header -->
 		<div class="larry-personal-body clearfix changepwd">
-			<form class="layui-form col-lg-4" method="post" action="ChangeStuPwd">
+			<form class="layui-form col-lg-4" method="post" action="ChangeStuPwd" onsubmit="return Validate(this)">
 			 	<div class="layui-form-item">
 					<label class="layui-form-label">用户名</label>
 					<div class="layui-input-block">  
@@ -44,7 +44,7 @@
 				<div class="layui-form-item">
 					<label class="layui-form-label">确认密码</label>
 					<div class="layui-input-block">  
-					  	<input type="password" name=""  autocomplete="off"  class="layui-input" value="" placeholder="请输入确认新密码">
+					  	<input type="password" name="password3"  autocomplete="off"  class="layui-input" value="" placeholder="请输入确认新密码">
 					</div>
 				</div>
 				<div class="layui-form-item change-submit">
@@ -62,6 +62,18 @@
 	layui.use(['form','upload'],function(){
          var form = layui.form();
 	});
+</script>
+<script type="text/javascript">
+	function Validate(form){
+	    if(form.password2.value=="" ){
+	        alert("密码不能为空");
+	        return false;
+		}
+		if(form.password2.value !=form.password3.value){
+	        alert("两次密码输入不一致");
+            return false;
+		}
+	}
 </script>
 </body>
 </html>

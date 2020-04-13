@@ -22,8 +22,8 @@
 
 	<!-- 添加用户账号信息 -->
 	<insert id="addStuInformation" parameterType="com.onlineExam.domain.Student">
-		INSERT INTO t_student(username,stuid,stuname,sex,clazz,phone)
-		VALUES(#{username},#{stuid},#{stuname},#{sex},#{clazz},#{phone})
+		INSERT INTO t_student(username,stuid,stuname,sex,clazz,phone,major,dept,motto)
+		VALUES(#{username},#{stuid},#{stuname},#{sex},#{clazz},#{phone},#{major},#{dept},#{motto})
 	</insert>
 
    <!--	修改用户密码-->
@@ -33,12 +33,13 @@
 
     <!--查询用户信息	 -->
     <select id="findInformationByUsername"   parameterType="String" resultType="com.onlineExam.domain.Student" >
-    select username,stuid,stuname,sex,clazz,phone from t_student where username = #{value}
+    select username,stuid,stuname,sex,clazz,phone,major,dept,motto from t_student where username = #{value}
   </select>
 
    <!--	修改用户信息-->
 	<update id="updateInformation" parameterType="com.onlineExam.domain.Student">
-	 update t_student set stuid = #{stuid} ,stuname=#{stuname},sex=#{sex},clazz=#{clazz},phone=#{phone}
+	 update t_student set stuid = #{stuid} ,stuname=#{stuname},sex=#{sex},clazz=#{clazz},phone=#{phone},
+	 major=#{major},dept=#{dept},motto=#{motto}
     where username=#{username}
 	</update>
 </mapper>
