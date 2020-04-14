@@ -51,4 +51,22 @@
     <select id="queryTeacher" resultType="com.onlineExam.domain.Teacher">
         select * from teacher,major,depart,state where teachername=#{teachername} and teacher.majorId=major.majorId and teacher.departId=depart.departId and teacher.stateId=state.stateId
     </select>
+    <!--登录-->
+    <select id="login"   parameterType="String" resultType="String" >
+    select roles from t_login where username = #{username} and password=#{password}
+  </select>
+    <!--	验证注册用户名是否存在 -->
+    <select id="findRegisterUsername"   parameterType="String" resultType="com.onlineExam.domain.LoginUser" >
+    select username  from t_login where username = #{value}
+  </select>
+    <!-- 添加用户账号 -->
+    <insert id="register" parameterType="com.onlineExam.domain.LoginUser">
+		INSERT INTO t_login(username,password,roles)
+			VALUES(#{username},#{password},#{roles})
+	</insert>
+    <!-- 添加用户账号信息 -->
+    <insert id="addTeacherInfo" parameterType="com.onlineExam.domain.Teacher">
+		INSERT INTO teacher(username,teachername,teacherpassword,teacherphoneNumber,teacheremail)
+		VALUES(#{username},#{teachername},#{teacherpassword},#{seteacherphoneNumberx},#{teacheremail})
+	</insert>
 </mapper>

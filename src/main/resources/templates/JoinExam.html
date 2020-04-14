@@ -19,154 +19,43 @@
     <div class="larry-personal">
         <header class="larry-personal-tit">
             <span style="font-size: 28px ;color: black">待考试区</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <span style="color: red">请在考试开始前进入考试</span>
+            <span style="color: red">请在考试开始前进入考试 考试期间禁止关闭考试页，否则无法继续考试</span>
         </header><!-- /header -->
         <div class="larry-personal-body clearfix changepwd" >
 
-            <div style="width:25%;hight:100%;float:left; ">
+            <div style="width:25%;hight:100%;float:left; " th:each="Paper:${PaperList}">
                 <table class="layui-table" lay-skin="row" >
                     <tr>
-                        <td>考试名 ：Java测试</td>
+                        <td>考试名：<span style="font-weight: bold" th:text="${Paper.paperName}"></span></td>
                     </tr>
                     <tr>
-                        <td>班级：Java1-5</td>
+                        <td>班级：<span style="font-weight: bold;color: #0c7fd1">Java1-5</span></td>
                     </tr>
                     <tr>
-                        <td>时间：10：00-12:30</td>
+                        <td>考试难度：<span style="font-weight: bold;color: #0c9076"  th:text="${Paper.paperClass}"></span></td>
                     </tr>
                     <tr>
-                        <td>浏览器建议使用火狐 谷歌</td>
+                        <td>考试时间：<span style="color: red" th:text="${Paper.answerTime}"></span>&nbsp;分钟</td>
+                    </tr>
+                    <tr>
+                        <td style="color: #ac2925">注意：参加考试浏览器建议使用 火狐/谷歌 </td>
                     </tr>
                     <tr>
                         <td>
-                            <a th:onclick="|javascript:join()|" href="javascript:;"  class="layui-btn layui-btn-danger" >参加考试</a>
-                            <script>/*th:href="@{http://localhost:8080/Examing}"*/
-                            function join(obj,questionId){
-                                layer.confirm('请在规定时间内完成答题，超时自动交卷！',{btn: ['确定', '取消'], title: "考前提示"},
-                                    function(index){
-                                        layer.msg('试题加载中...',{icon:1,time:2000});
-                                        setTimeout(function () {window.parent.location.href='/Examing';},2000);
-                                    });
-                            }
+                            <a th:onclick="|javascript:join(this,${Paper.sumQuestionScore},${Paper.questionNumber})|" href="javascript:;"  class="layui-btn layui-btn-danger" >参加考试</a>
+                            <script>
+                                function join(obj,score,number){
+                                    layer.confirm('请在规定时间内完成答题，超时自动交卷！',{btn: ['清楚', '取消'], title: "考前提示"},
+                                        function(index){
+                                            layer.msg('试题加载中...',{icon:6,time:2000});
+                                            setTimeout(function () {window.parent.location.href='/Examing?score='+score+'&number='+number;},2000);
+                                        });
+                                }
                             </script>
-
-
                         </td>
                     </tr>
                 </table>
             </div>
-
-
-            <div style="width:25%;hight:100%;float:left;">
-                <table class="layui-table" border="1"  lay-skin="row" >
-                    <tr>
-                        <td>考试名 ：Java测试</td>
-                    </tr>
-                    <tr>
-                        <td>班级：Java1-5</td>
-                    </tr>
-                    <tr>
-                        <td>时间：10：00-12:30</td>
-                    </tr>
-                    <tr>
-                        <td>浏览器建议使用火狐 谷歌</td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <button class="layui-btn layui-btn-danger">参加考试</button>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-
-            <div style="width:25%;hight:100%;float:left;">
-                <table class="layui-table"  lay-skin="row" >
-                    <tr>
-                        <td>考试名 ：Java测试</td>
-                    </tr>
-                    <tr>
-                        <td>班级：Java1-5</td>
-                    </tr>
-                    <tr>
-                        <td>时间：10：00-12:30</td>
-                    </tr>
-                    <tr>
-                        <td>浏览器建议使用火狐 谷歌</td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <button class="layui-btn layui-btn-danger">参加考试</button>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-
-            <div style="width:25%;hight:100%;float:left;">
-                <table class="layui-table"  lay-skin="row" >
-                    <tr>
-                        <td>考试名 ：Java测试</td>
-                    </tr>
-                    <tr>
-                        <td>班级：Java1-5</td>
-                    </tr>
-                    <tr>
-                        <td>时间：10：00-12:30</td>
-                    </tr>
-                    <tr>
-                        <td>浏览器建议使用火狐 谷歌</td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <button class="layui-btn layui-btn-danger">参加考试</button>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-            <div style="width:25%;hight:100%;float:left;">
-                <table class="layui-table" lay-skin="row"  >
-                    <tr>
-                        <td>考试名 ：Java测试</td>
-                    </tr>
-                    <tr>
-                        <td>班级：Java1-5</td>
-                    </tr>
-                    <tr>
-                        <td>时间：10：00-12:30</td>
-                    </tr>
-                    <tr>
-                        <td>浏览器建议使用火狐 谷歌</td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <button class="layui-btn layui-btn-danger">参加考试</button>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-
-            <div style="width:25%;hight:100%;float:left;">
-                <table class="layui-table" lay-skin="row"  >
-                    <tr>
-                        <td>考试名 ：Java测试</td>
-                    </tr>
-                    <tr>
-                        <td>班级：Java1-5</td>
-                    </tr>
-                    <tr>
-                        <td>时间：10：00-12:30</td>
-                    </tr>
-                    <tr>
-                        <td>浏览器建议使用火狐 谷歌</td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <button class="layui-btn layui-btn-danger">参加考试</button>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-
-
         </div>
     </div>
 </section>

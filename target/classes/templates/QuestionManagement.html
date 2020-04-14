@@ -393,7 +393,7 @@
 */
             </script>
 
-            <a title="删除" class="layui-btn layui-btn-sm layui-btn-danger" th:onclick="|javascript:deleteQuestion(${question.questionId})|" href="javascript:;">
+            <a title="删除" class="layui-btn layui-btn-sm layui-btn-danger" th:onclick="|javascript:deleteQuestion(this,${question.questionId})|" href="javascript:;">
                 <i class="layui-icon">&#xe640;</i>
             </a>
             <script>

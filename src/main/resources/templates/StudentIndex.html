@@ -85,6 +85,7 @@
 
             <!-- 左侧菜单 -->
             <ul class="layui-nav layui-nav-tree">
+                <!--<img  style=" width: 200px;height: 170px" th:src="@{/Wjl/wjl.jpg}"  >-->
                 <li class="layui-nav-item layui-this">
 
                     <a href="javascript:;" data-url="main.html">
@@ -185,6 +186,8 @@
 
     });
     $(document).ready(function(){
+
+        $("#iframeMain").attr("src","./JoinExam");
 
         $("#personinfo").click(function (e) {
             e.preventDefault();
