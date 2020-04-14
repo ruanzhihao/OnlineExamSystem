@@ -42,4 +42,77 @@
 	 major=#{major},dept=#{dept},motto=#{motto}
     where username=#{username}
 	</update>
+
+
+    <!--查询所有学生-->
+    <select id="getStudentList" resultType="com.onlineExam.domain.Student1">
+        select * from student,major,depart,state,clazz where student.majorId=major.majorId and student.departId=depart.departId and student.stateId=state.stateId and student.clazzId=clazz.clazzId
+    </select>
+    <!--通过id删除学生-->
+    <delete id="deleteStudent" parameterType="Integer">
+        delete from student where id=#{id}
+    </delete>
+    <!--通过id查找-->
+    <select id="findStudentById" parameterType="Integer" resultType="com.onlineExam.domain.Student1">
+        select * from student where id=#{id}
+    </select>
+    <!--添加学生信息-->
+    <insert id="addStudent" parameterType="com.onlineExam.domain.Student1" keyProperty="id" useGeneratedKeys="true">
+        insert into student(username,stuid,stuname,stupassword,stuphonenumber,stuemail,clazzId,majorId,departId,stateId)
+        values (#{username},#{stuid},#{stuname},#{stupassword},#{stuphonenumber},#{stuemail},#{clazzId},#{majorId},#{departId},#{stateId})
+    </insert>
+    <!--修改学生信息-->
+    <update id="updateStudent" parameterType="com.onlineExam.domain.Student1">
+        update student
+        <set>
+            <if test="username!=null and username!=''">
+                username=#{username},
+            </if>
+            <if test="stuid!=null and username!=0">
+                stuid=#{stuid},
+            </if>
+            <if test="stuname!=null and stuname!=''">
+                stuname=#{stuname},
+            </if>
+            <if test="stupassword!=null and stupassword!=''">
+                stupassword=#{stupassword},
+            </if>
+            <if test="stuphonenumber!=null and stuphonenumber!=''">
+                stuphonenumber=#{stuphonenumber},
+            </if>
+            <if test="stuemail!=null and stuemail!=''">
+                stuemail=#{stuemail},
+            </if>
+            <if test="clazzId!=null and clazzId!=0">
+                clazzId=#{clazzId},
+            </if>
+            <if test="majorId!=null and majorId!=0">
+                majorId=#{majorId},
+            </if>
+            <if test="departId!=null and departId!=0">
+                departId=#{departId},
+            </if>
+            <if test="stateId!=null and stateId!=0">
+                stateId=#{stateId}
+            </if>
+        </set>
+        where id=#{id}
+    </update>
+
+    <select id="queryStudent" resultType="com.onlineExam.domain.Student1">
+        select * from student,major,depart,state,clazz where student.majorId=major.majorId and student.departId=depart.departId and student.stateId=state.stateId and student.clazzId=clazz.clazzId
+    </select>
+
+    <select id="getClazzList" resultType="com.onlineExam.domain.Clazz">
+        select * from clazz
+    </select>
+    <select id="getMajorList" resultType="com.onlineExam.domain.Major">
+        select * from major
+    </select>
+    <select id="getDepartList" resultType="com.onlineExam.domain.Depart">
+        select * from depart
+    </select>
+    <select id="getStateList" resultType="com.onlineExam.domain.State">
+        select * from state
+    </select>
 </mapper>

@@ -1,12 +1,13 @@
 package com.onlineExam.service.Impl;
 
 
-import com.onlineExam.domain.LoginUser;
-import com.onlineExam.domain.Student;
+import com.onlineExam.domain.*;
 import com.onlineExam.mapper.StuUserMapper;
 import com.onlineExam.service.StuUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 
 @Service
@@ -85,5 +86,57 @@ public class StuUserServiceImpl implements StuUserService {
         } else
             return true;
     }
+    @Override
+    public List<Student1> getStudentList() {
+        return usermapper.getStudentList();
+    }
+
+    @Override
+    public int addStudent(Student1 student1) {
+        return usermapper.addStudent(student1);
+    }
+
+    @Override
+    public int deleteStudent(Integer id) {
+        return usermapper.deleteStudent(id);
+    }
+
+    @Override
+    public int updateStudent(Student1 student1) {
+        return usermapper.updateStudent(student1);
+    }
+
+    @Override
+    public Student1 findStudentById(Integer id) {
+        Student1 s=usermapper.findStudentById(id);
+        return s;
+    }
+
+    @Override
+    public List<Student1> queryStudent(String stuname) {
+        return usermapper.queryStudent(stuname);
+    }
+
+    @Override
+    public List<Clazz> getClazzList() {
+        return usermapper.getClazzList();
+    }
+
+    @Override
+    public List<Major> getMajorList() {
+        return usermapper.getMajorList();
+    }
+
+    @Override
+    public List<Depart> getDepartList() {
+        return usermapper.getDepartList();
+    }
+
+    @Override
+    public List<State> getStateList() {
+        return usermapper.getStateList();
+    }
+
+
 
 }

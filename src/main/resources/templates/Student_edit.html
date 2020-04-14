@@ -2,55 +2,72 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>教师信息修改</title>
+    <title>学生信息修改页面</title>
     <link rel="stylesheet" th:href="@{/layui/css/layui.css}" media="all" />
     <script th:src="@{/layui/layui.js}"></script>
     <script th:src="@{/Skz/jquery-3.4.1.js}"></script>
 </head>
 <body>
-
 <div id=”x-body”>
 
-    <form class="layui-form" action="updateTeacher" method="post" id="f-auto" accept-charset="UTF-8">
-        <input type="hidden" th:value="${session.t.teacherid}" name="teacherid" id="teacherid">
+    <form class="layui-form" action="updateStudent" method="post" id="f-auto" accept-charset="UTF-8">
+        <input type="hidden" th:value="${session.s.id}" name="id" id="id">
         <div class="layui-form-item">
             <label for="username" class="layui-form-label">
                 <span class="f_sp">账户名</span>
             </label>
             <div class="layui-input-inline">
-                <input type="text" id="username" name="username" autocomplete="off" th:value="${session.t.username}" class="layui-input">
+                <input type="text" id="username" name="username" autocomplete="off" th:value="${session.s.username}" class="layui-input">
             </div>
         </div>
         <div class="layui-form-item">
-            <label for="teachername" class="layui-form-label">
-                <span class="f_sp">教师姓名</span>
+            <label for="stuid" class="layui-form-label">
+                <span class="f_sp">学号</span>
             </label>
             <div class="layui-input-inline">
-                <input type="text" id="teachername" name="teachername" autocomplete="off" th:value="${session.t.teachername}" class="layui-input">
+                <input type="text" id="stuid" name="stuid" autocomplete="off" th:value="${session.s.stuid}" class="layui-input">
             </div>
         </div>
         <div class="layui-form-item">
-            <label for="teacherpassword" class="layui-form-label">
+            <label for="stuname" class="layui-form-label">
+                <span class="f_sp">学生姓名</span>
+            </label>
+            <div class="layui-input-inline">
+                <input type="text" id="stuname" name="stuname" autocomplete="off" th:value="${session.s.stuname}" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="stupassword" class="layui-form-label">
                 <span class="f_sp">密码</span>
             </label>
             <div class="layui-input-inline">
-                <input type="text" id="teacherpassword" name="teacherpassword" autocomplete="off" th:value="${session.t.teacherpassword}" class="layui-input">
+                <input type="text" id="stupassword" name="stupassword" autocomplete="off" th:value="${session.s.stupassword}" class="layui-input">
             </div>
         </div>
         <div class="layui-form-item">
-            <label for="teacherphoneNumber" class="layui-form-label">
+            <label for="stuphonenumber" class="layui-form-label">
                 <span class="f_sp">手机号</span>
             </label>
             <div class="layui-input-inline">
-                <input type="text" id="teacherphoneNumber" name="teacherphoneNumber" autocomplete="off" th:value="${session.t.teacherphoneNumber}" class="layui-input">
+                <input type="text" id="stuphonenumber" name="stuphonenumber" autocomplete="off" th:value="${session.s.stuphonenumber}" class="layui-input">
             </div>
         </div>
         <div class="layui-form-item">
-            <label for="teacheremail" class="layui-form-label">
+            <label for="stuemail" class="layui-form-label">
                 <span class="f_sp">email</span>
             </label>
             <div class="layui-input-inline">
-                <input type="text" id="teacheremail" name="teacheremail" autocomplete="off" th:value="${session.t.teacheremail}" class="layui-input">
+                <input type="text" id="stuemail" name="stuemail" autocomplete="off" th:value="${session.s.stuemail}" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="clazzId" class="layui-form-label">
+                <span class="f_sp">班级</span>
+            </label>
+            <div class="layui-input-inline">
+                <select id="clazzId" name="clazzId" lay-verify="required"  lay-filter="business" class="select" >
+                    <option value=""></option>
+                </select>
             </div>
         </div>
         <div class="layui-form-item">
@@ -58,7 +75,6 @@
                 <span class="f_sp">专业</span>
             </label>
             <div class="layui-input-inline">
-                <!--<input type="text" id="majorId" name="majorId" autocomplete="off" th:value="${session.t.majorId}" class="layui-input">-->
                 <select id="majorId" name="majorId" lay-verify="required"  lay-filter="business" class="select" >
                     <option value="" ></option>
                 </select>
@@ -69,7 +85,6 @@
                 <span class="f_sp">所在学院</span>
             </label>
             <div class="layui-input-inline">
-                <!--<input type="text" id="departId" name="departId" autocomplete="off" th:value="${session.t.departId}" class="layui-input">-->
                 <select id="departId" name="departId" lay-verify="required"  lay-filter="business" class="select" >
                     <option value="" ></option>
                 </select>
@@ -80,7 +95,6 @@
                 <span class="f_sp">账号状态</span>
             </label>
             <div class="layui-input-inline">
-                <!--<input type="text" id="stateId" name="stateId" autocomplete="off" th:value="${session.t.stateId}" class="layui-input">-->
                 <select id="stateId" name="stateId" lay-verify="required"  lay-filter="business" class="select" >
                     <option value="" ></option>
                 </select>
@@ -94,32 +108,30 @@
     </form>
 
 </div>
-
-
-
 <script>
     layui.use(['form','layer'], function(){
         var form = layui.form;
 
-        form.on('submit(updateForm)',function(obj,teacherid){
+        form.on('submit(updateForm)',function(obj,id){
             var param=data.field;
             $.ajax({
-                url:'updateTeacher',
+                url:'updateStudent',
                 type:"post",
-                data:{"teacherid":teacherid},
+                data:{"id":id},
                 success:function () {
                     layer.msg('修改成功',{icon:1,time:3000});
                     setTimeout(function () {
-                        window.location.href='/teenager';},2000);
+                        window.location.href='/strange';},2000);
                 },
                 error:function(){
-                    console.log($("#teacherid").val());
+                    console.log($("#id").val());
                     layer.msg('修改失败',{icon:1,time:3000});
                     setTimeout(function () {
-                        window.location.href='/teenager';},2000);
+                        window.location.href='/strange';},2000);
                 }
             })
-        })
+        });
+
         $(function(){
             $.ajax({
                 type:"post",
@@ -131,8 +143,10 @@
                 success: function (data) {
                     $.each(data,function(index,item){
                         $('#clazzId').append(new Option(item.clazzName,item.clazzId));//往下拉菜单里添加元素
-                    })
+                    });
+
                     form.render();//菜单渲染 把内容加载进去
+
                 }
             })
         });
@@ -147,7 +161,8 @@
                 success: function (data) {
                     $.each(data,function(index,item){
                         $('#majorId').append(new Option(item.majorName,item.majorId));//往下拉菜单里添加元素
-                    })
+
+                    });
                     form.render();//菜单渲染 把内容加载进去
                 }
             })
@@ -163,7 +178,8 @@
                 success: function (data) {
                     $.each(data,function(index,item){
                         $('#departId').append(new Option(item.departName,item.departId));//往下拉菜单里添加元素
-                    })
+                    });
+
                     form.render();//菜单渲染 把内容加载进去
                 }
             })
@@ -179,13 +195,12 @@
                 success: function (data) {
                     $.each(data,function(index,item){
                         $('#stateId').append(new Option(item.state,item.stateId));//往下拉菜单里添加元素
-                    })
+                    });
                     form.render();//菜单渲染 把内容加载进去
                 }
             })
         });
     });
 </script>
-
 </body>
 </html>

@@ -29,7 +29,7 @@ public class TeacherController {
     @Autowired
     private DefaultKaptcha defaultKaptcha;
 
-    //进去教师管理界面
+    /*//进去教师管理界面
     @RequestMapping(value = "/teenager")
     public String getTeacherList(Model model){
         List<Teacher> list=teacherService.getAllTeacher();
@@ -86,7 +86,7 @@ public class TeacherController {
         List<Teacher> list=teacherService.queryTeacher(teachername);
         model.addAttribute("list",list);
         return "TeacherManagement";
-    }
+    }*/
 
     //登录
     @RequestMapping(value="/TeaLogin",method = {RequestMethod.POST,RequestMethod.GET})

@@ -24,7 +24,7 @@
     </div>
     <script>
         function queryTeacher(){
-            var teachername=$('#findTeacherKey').val()
+            var teachername=$('#findTeacherKey').val();
             $.ajax({
                 url:'/queryTeacher',
                 type:'get',
@@ -76,21 +76,30 @@
                     </div>
                 </div>
                 <div class="layui-form-item">
-                    <label class="layui-form-label">专业序号:</label>
+                    <label class="layui-form-label">专业:</label>
                     <div class="layui-input-block">
-                        <input type="text" lay-verify="required" name="majorId"   class="layui-input" placeholder="请输入专业序号">
+                        <!--<input type="text" lay-verify="required" name="majorId"   class="layui-input" placeholder="请输入专业序号">-->
+                        <select id="majorId" name="majorId" lay-verify="required"  lay-filter="business" class="select" >
+                            <option value="" ></option>
+                        </select>
                     </div>
                 </div>
                 <div class="layui-form-item">
-                    <label class="layui-form-label">所在学院序号:</label>
+                    <label class="layui-form-label">所在学院:</label>
                     <div class="layui-input-block">
-                        <input type="text" lay-verify="required" name="departId"   class="layui-input" placeholder="请输入所在学院序号">
+                        <!--<input type="text" lay-verify="required" name="departId"   class="layui-input" placeholder="请输入所在学院序号">-->
+                        <select id="departId" name="departId" lay-verify="required"  lay-filter="business" class="select" >
+                            <option value="" ></option>
+                        </select>
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label">状态:</label>
                     <div class="layui-input-block">
-                        <input type="text" lay-verify="required" name="stateId"   class="layui-input" placeholder="请设定账号状态">
+                        <!--<input type="text" lay-verify="required" name="stateId"   class="layui-input" placeholder="请设定账号状态">-->
+                        <select id="stateId" name="stateId" lay-verify="required"  lay-filter="business" class="select" >
+                            <option value="" ></option>
+                        </select>
                     </div>
                 </div>
                 <div class="layui-form-item">
@@ -182,6 +191,54 @@
                     }
                 });
             });
+        });
+        $(function(){
+            $.ajax({
+                type:"post",
+                url:'/queryMajor',
+                dataType: "json",
+                contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                async: false,
+                cache: false,
+                success: function (data) {
+                    $.each(data,function(index,item){
+                        $('#majorId').append(new Option(item.majorName,item.majorId));//往下拉菜单里添加元素
+                    })
+                    form.render();//菜单渲染 把内容加载进去
+                }
+            })
+        });
+        $(function(){
+            $.ajax({
+                type:"post",
+                url:'/queryDepart',
+                dataType: "json",
+                contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                async: false,
+                cache: false,
+                success: function (data) {
+                    $.each(data,function(index,item){
+                        $('#departId').append(new Option(item.departName,item.departId));//往下拉菜单里添加元素
+                    })
+                    form.render();//菜单渲染 把内容加载进去
+                }
+            })
+        });
+        $(function(){
+            $.ajax({
+                type:"post",
+                url:'/queryState',
+                dataType: "json",
+                contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                async: false,
+                cache: false,
+                success: function (data) {
+                    $.each(data,function(index,item){
+                        $('#stateId').append(new Option(item.state,item.stateId));//往下拉菜单里添加元素
+                    })
+                    form.render();//菜单渲染 把内容加载进去
+                }
+            })
         });
 
     });

@@ -1,20 +1,22 @@
 package com.onlineExam.controller;
 
 import com.google.code.kaptcha.impl.DefaultKaptcha;
+import com.onlineExam.domain.*;
 import com.onlineExam.mapper.AdminMapper;
 import com.onlineExam.modules.common.controller.MainController;
+import com.onlineExam.service.StuUserService;
+import com.onlineExam.service.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -23,6 +25,10 @@ public class AdminController {
     private DefaultKaptcha defaultKaptcha;
     @Autowired
     private AdminMapper adminMapper;
+    @Autowired
+    private TeacherService teacherService;
+    @Autowired
+    private StuUserService stuUserService;
 
     @RequestMapping(value="/adminLogin",method = {RequestMethod.POST,RequestMethod.GET})
     public String login(HttpServletRequest request, HttpServletResponse response, HttpSession session, @RequestParam("validateCode")String validateCode){
@@ -72,6 +78,155 @@ public class AdminController {
             }
         }
         return null;
+    }
+
+
+
+
+    //进去教师管理界面
+    @RequestMapping(value = "/teenager")
+    public String getTeacherList(Model model){
+        List<Teacher> list=teacherService.getAllTeacher();
+        model.addAttribute("list",list);
+        return "TeacherManagement";
+    }
+
+
+    //添加老师
+    @RequestMapping(value = "/addTeacher",method = RequestMethod.POST)
+    @ResponseBody
+    public String addTeacher(@RequestBody Teacher teacher){
+        //teacher.setTeacherpassword(MD5Util.MD5EncodeUtf8(teacher.getTeacherpassword()));
+        int a=teacherService.addTeacher(teacher);
+        return "TeacherManagement";
+    }
+
+    //删除教师信息
+    @RequestMapping("/deleteTeacher")
+    @ResponseBody
+    public String deleteTeacher(Integer teacherid){
+        int s=teacherService.deleteTeacher(teacherid);
+        return "TeacherManagement";
+    }
+
+    //修改教师信息
+    @RequestMapping(value = "/updateTeacher",method = RequestMethod.POST)
+    public String updateTeacher(Teacher teacher){
+        //teacher.setTeacherpassword(MD5Util.MD5EncodeUtf8(teacher.getTeacherpassword()));
+        int t=teacherService.updateTeacher(teacher);
+        return "redirect:/teenager";
+    }
+
+    //根据id查找学生
+    @RequestMapping("/findTeacherById")
+    public String findTeacherById(Integer teacherid, HttpSession session){
+        Teacher t=teacherService.findTeacherById(teacherid);
+        session.setAttribute("t",t);
+        return "Teacher_edit";
+    }
+    //教师查找
+    @RequestMapping(value = "/queryTeacher",method = RequestMethod.GET)
+    @ResponseBody
+    public String queryTeacher(@RequestParam("teachername") String teachername){
+        List<Teacher> list=teacherService.queryTeacher(teachername);
+        if (list ==null){
+            return "查找失败";
+        }else{
+            return "查找成功";
+        }
+    }
+
+    //查找后的显示信息
+    @RequestMapping(value = "/queryShowTeacher",method = RequestMethod.GET)
+    public String queryShow(@RequestParam("teachername") String teachername,Model model){
+        List<Teacher> list=teacherService.queryTeacher(teachername);
+        model.addAttribute("list",list);
+        return "TeacherManagement";
+    }
+
+    //进入学生信息管理界面
+    @RequestMapping(value = "/strange")
+    public String getStudentList(Model model){
+        List<Student1> studentList=stuUserService.getStudentList();
+        model.addAttribute("studentList",studentList);
+        return "StudentManagement";
+    }
+    //添加学生
+    @RequestMapping(value = "/addStudent",method = RequestMethod.POST)
+    @ResponseBody
+    public String addStudent(@RequestBody Student1 student1){
+        int a=stuUserService.addStudent(student1);
+        return "StudentManagement";
+    }
+    //删除学生信息
+    @RequestMapping("/deleteStudent")
+    @ResponseBody
+    public String deleteStudent(Integer id){
+        int s=stuUserService.deleteStudent(id);
+        return "TeacherManagement";
+    }
+    //修改学生信息
+    @RequestMapping(value = "updateStudent",method = RequestMethod.POST)
+    public String updateStudent(Student1 student1){
+        int s=stuUserService.updateStudent(student1);
+        return "redirect:/strange";
+    }
+    //根据id查找学生
+    @RequestMapping("/findStudentById")
+    public String findStudentById(Integer id,HttpSession session){
+        Student1 s=stuUserService.findStudentById(id);
+        session.setAttribute("s",s);
+        return "Student_edit";
+    }
+    //学生查找
+    @RequestMapping(value = "/queryStudent",method = RequestMethod.GET)
+    @ResponseBody
+    public String queryStudent(@RequestParam("stuname") String stuname){
+        List<Student1> list=stuUserService.queryStudent(stuname);
+        if (list ==null){
+            return "查找失败";
+        }else{
+            return "查找成功";
+        }
+    }
+    //查找后的显示信息
+    @RequestMapping(value = "/queryShowStudent",method = RequestMethod.GET)
+    public String queryShow_s(@RequestParam("stuname") String stuname,Model model){
+        List<Student1> studentList=stuUserService.queryStudent(stuname);
+        model.addAttribute("studentList",studentList);
+        return "StudentManagement";
+    }
+    //导出为Excel
+    @RequestMapping(value = "/exportstudentlist", method = RequestMethod.POST)
+    @ResponseBody
+    public List<Student1> exportStudent(){
+        List<Student1> studentList1 = stuUserService.getStudentList();
+        return studentList1;
+    }
+
+    @RequestMapping(value = "/queryClazz")
+    @ResponseBody
+    public List getClazzList(){
+        List<Clazz> c_list=stuUserService.getClazzList();
+        return c_list;
+    }
+    @RequestMapping(value = "/queryMajor")
+    @ResponseBody
+    public List getMajorList(){
+        List<Major> m_list=stuUserService.getMajorList();
+        return m_list;
+    }
+    @RequestMapping(value = "/queryDepart")
+    @ResponseBody
+    public List getDepartList(){
+        List<Depart> d_list=stuUserService.getDepartList();
+        return d_list;
+    }
+    @RequestMapping(value = "/queryState")
+    @ResponseBody
+    public List getStateList(){
+        List<State> s_list=stuUserService.getStateList();
+        return s_list;
     }
 
 }

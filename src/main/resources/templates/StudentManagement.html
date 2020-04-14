@@ -2,49 +2,48 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>教师管理</title>
+    <title>学生管理</title>
     <link rel="stylesheet" th:href="@{/layui/css/layui.css}" media="all" />
     <script th:src="@{/layui/layui.js}"></script>
-    <script th:src="@{/Skz/jquery-3.4.1.js}"></script>
-
+    <script th:src="@{/js/jquery-1.8.2.min.js}"></script>
 </head>
 <body>
 <div class="x-body">
     <div class="demoTable" style="padding: 15px">
         <div class="layui-inline">
-            <input placeholder="输入要查找老师姓名" class="layui-input" id="findTeacherKey" autocomplete="off">
+            <input placeholder="输入要查找学生姓名" class="layui-input" id="findStudentKey" autocomplete="off">
         </div>
-        <button class="layui-btn" data-type="reload" onclick="queryTeacher()">搜索</button>
+        <button class="layui-btn" data-type="reload" onclick="queryStudent()">搜索</button>
 
 
-        <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right" href="./teenager" title="刷新">
+        <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right" href="./strange" title="刷新">
             <i class="layui-icon" style="line-height:30px">ဂ</i></a>
-        <button id="addTeacherBtn" class="layui-btn layui-btn-normal" style="line-height:1.6em;margin-top:3px;float:right"> <i class="layui-icon " style="line-height:30px">&#xe654;</i> </button>
+        <button id="addStudentBtn" class="layui-btn layui-btn-normal" style="line-height:1.6em;margin-top:3px;float:right"> <i class="layui-icon " style="line-height:30px">&#xe654;</i> </button>
+        <button class="layui-btn layui-btn-warm" id="exportExcel" name="exportExcel"><i class="layui-icon">&#xe67c;</i>导出</button>
 
     </div>
     <script>
-        function queryTeacher(){
-            var teachername=$('#findTeacherKey').val()
+        function queryStudent(){
+            var stuname=$('#findStudentKey').val();
             $.ajax({
-                url:'/queryTeacher',
+                url:'/queryStudent',
                 type:'get',
                 data:{
-                    teachername:teachername,
+                    stuname:stuname,
                 },
                 success:function () {
                     layer.msg('查询中...',{
                         time:2000
                     },function () {
-                        window.location.href="/queryShowTeacher?teachername="+teachername;
+                        window.location.href="/queryShowStudent?stuname="+stuname;
                     });
                 }
             });
         }
     </script>
-
     <div class="layui-row" id="test" style="display: none;">
         <div class="layui-col-md10">
-            <form class="layui-form" id="addTeacherForm">
+            <form class="layui-form" id="addStudentForm">
                 <div class="layui-form-item">
                     <label class="layui-form-label">账户名:</label>
                     <div class="layui-input-block">
@@ -52,27 +51,42 @@
                     </div>
                 </div>
                 <div class="layui-form-item">
+                    <label class="layui-form-label">学号:</label>
+                    <div class="layui-input-block">
+                        <input type="text" lay-verify="required" name="stuid"   class="layui-input" placeholder="请输入学号">
+                    </div>
+                </div>
+                <div class="layui-form-item">
                     <label class="layui-form-label">姓名:</label>
                     <div class="layui-input-block">
-                        <input type="text" lay-verify="required" name="teachername"   class="layui-input" placeholder="请输入姓名">
+                        <input type="text" lay-verify="required" name="stuname"   class="layui-input" placeholder="请输入姓名">
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label">密码:</label>
                     <div class="layui-input-block">
-                        <input type="text" lay-verify="required" name="teacherpassword"   class="layui-input" placeholder="请输入密码">
+                        <input type="text" lay-verify="required" name="stupassword"   class="layui-input" placeholder="请输入密码">
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label">手机号:</label>
                     <div class="layui-input-block">
-                        <input type="text" lay-verify="required" name="teacherphoneNumber"   class="layui-input" placeholder="请输入手机号">
+                        <input type="text" lay-verify="required" name="stuphonenumber"   class="layui-input" placeholder="请输入手机号">
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label">email:</label>
                     <div class="layui-input-block">
-                        <input type="text" lay-verify="required" name="teacheremail"   class="layui-input" placeholder="请输入邮箱">
+                        <input type="text" lay-verify="required" name="stuemail"   class="layui-input" placeholder="请输入邮箱">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">班级:</label>
+                    <div class="layui-input-block">
+                        <!--<input type="text" lay-verify="required" name="clazzId"   class="layui-input" placeholder="请输入班级序号">-->
+                        <select id="clazzId" name="clazzId" lay-verify="required"  lay-filter="business" class="select" >
+                            <option value="" ></option>
+                        </select>
                     </div>
                 </div>
                 <div class="layui-form-item">
@@ -112,37 +126,41 @@
         </div>
     </div>
 </div>
+
+
 <table lay-filter="demo">
     <thead>
     <tr>
         <th lay-data="{field:'1',align: 'center'}">ID</th>
-        <th lay-data="{field:'2', align: 'center'}">老师姓名</th>
-        <th lay-data="{field:'3', align: 'center'}">老师账号名</th>
+        <th lay-data="{field:'2', align: 'center'}">学生姓名</th>
+        <th lay-data="{field:'3', align: 'center'}">学生账号名</th>
         <th lay-data="{field:'4', align: 'center'}">密码</th>
         <th lay-data="{field:'5', align: 'center'}">手机号</th>
         <th lay-data="{field:'6', align: 'center'}">email</th>
-        <th lay-data="{field:'7', align: 'center'}">教学专业</th>
-        <th lay-data="{field:'8', align: 'center'}">所在学院</th>
-        <th lay-data="{field:'9', align: 'center'}">账号状态</th>
-        <th lay-data="{field:'10', align: 'center'}">操作</th>
+        <th lay-data="{field:'7', align: 'center'}">班级名</th>
+        <th lay-data="{field:'8', align: 'center'}">专业</th>
+        <th lay-data="{field:'9', align: 'center'}">所在学院</th>
+        <th lay-data="{field:'10', align: 'center'}">账号状态</th>
+        <th lay-data="{field:'11', align: 'center'}">操作</th>
     </tr>
     </thead>
     <tbody>
-    <tr th:each="teacher :${list}">
-        <td th:text="${teacher.teacherid}"></td>
-        <td th:text="${teacher.teachername}"></td>
-        <td th:text="${teacher.username}"></td>
-        <td th:text="${teacher.teacherpassword}"></td>
-        <td th:text="${teacher.teacherphoneNumber}"></td>
-        <td th:text="${teacher.teacheremail}"></td>
-        <td th:text="${teacher.majorName}"></td>
-        <td th:text="${teacher.departName}"></td>
-        <td th:text="${teacher.state}"></td>
+    <tr th:each="student1 :${studentList}">
+        <td th:text="${student1.id}"></td>
+        <td th:text="${student1.stuname}"></td>
+        <td th:text="${student1.username}"></td>
+        <td th:text="${student1.stupassword}"></td>
+        <td th:text="${student1.stuphonenumber}"></td>
+        <td th:text="${student1.stuemail}"></td>
+        <td th:text="${student1.clazzName}"></td>
+        <td th:text="${student1.majorName}"></td>
+        <td th:text="${student1.departName}"></td>
+        <td th:text="${student1.state}"></td>
         <td>&nbsp;
-            <a title="编辑"    id= "updateEdit"    th:href="@{/findTeacherById(teacherid=${teacher.teacherid})}">
+            <a title="编辑"    id= "updateEdit"    th:href="@{/findStudentById(id=${student1.id})}">
                 <i class="layui-icon">&#xe642;</i>
             </a>
-            <a title="删除" th:onclick="|javascript:member_del(this,${teacher.teacherid})|" href="javascript:;">
+            <a title="删除" th:onclick="|javascript:member_del(this,${student1.id})|" href="javascript:;">
                 <i class="layui-icon">&#xe640;</i>
             </a>
 
@@ -150,47 +168,121 @@
     </tr>
     </tbody>
 </table>
-<script type="text/javascript" th:src="@{/layui/layui.js}"></script>
-<script th:src="@{/layui/layui.js}"></script>
-<script th:src="@{/js/jquery-1.8.2.min.js}"></script>
+
 <script>
-    //静态表格
-    layui.use(['table','form','layer'],function(){
+
+    layui.config({
+        base: 'layui_exts/',
+    }).extend({
+        excel: 'excel',
+    });
+
+
+    layui.use(['table','form','layer','jquery','excel'],function(){
         var table = layui.table;//加载表格模块
+        var layer = layui.layer;
         var form=layui.form;
+        var $=layui.jquery;
+        /*var laydate=layui.laydate;*/
+        var excel = parent.layui.excel;
         table.init('demo', {
             height: 500 //设置高度
             ,cellMinWidth: 80
             ,page: true //开启分页
         });
+        /*laydate.render({
+            elem: '#start' //指定元素
+        });
+        form.render();*/
 
-        $("#addTeacherBtn").click(function () {
+
+        $('#exportExcel').on('click', function(){
+            $.ajax({
+                url:'/exportstudentlist',
+                type:'post',
+                dataType:'json',
+                contentType: "application/json; charset=utf-8",
+                success:function(data){
+                    console.log(data);
+                    var dt = excel.filterExportData(data,[
+                        'id'
+                        ,'stuname'
+                        ,'username'
+                        ,'stuphonenumber'
+                        ,'stuemail'
+                        ,'clazzName'
+                        ,'majorName'
+                        ,'departName'
+                        , 'state'
+                    ]);
+                    dt.unshift({id:'序号',stuname:'学生姓名',username:'账号名',stuphonenumber:'手机号',stuemail:'邮箱',clazzName:'班级名',majorName:'专业方向',departName:'所属院系',state:'账号状态'});
+                    var colConf = excel.makeColConfig({
+                        'B': 90,
+                        'C': 80,
+                        'F': 90
+                    }, 60);
+                    var timestart = Date.now();
+                    excel.exportExcel({
+                        sheet1: dt
+                    }, '学生数据.xlsx', 'xlsx', {
+                        extend: {
+                            '!cols': colConf
+                        }
+                    });
+                    var timeend = Date.now();
+
+                    var spent = (timeend - timestart) / 1000;
+                    layer.alert('导出耗时 '+spent+' s');
+                },
+                error: function () {
+                    setTimeout(function () {window.location.href='/strange';},2000);
+                }
+            });
+        });
+
+        $("#addStudentBtn").click(function () {
             layer.open({
                 type:1,
-                title:"添加老师",
+                title:"添加学生",
                 area:["50%"],
                 anim:2,
                 content: $("#test").html()
             });
-            $("#addTeacherForm")[0].reset();
+            $("#addStudentForm")[0].reset();
             form.on('submit(formDemo)',function (data) {
                 var param=data.field;
                 $.ajax({
-                    url: 'addTeacher',
+                    url: 'addStudent',
                     type: "post",
                     data:JSON.stringify(param),
                     contentType:"application/json;charset=utf-8",
 
                     success:function () {
                         layer.msg('添加成功',{icon:1,time:2000});
-                        setTimeout(function () {window.location.href='/teenager';},2000);
+                        setTimeout(function () {window.location.href='/strange';},2000);
                     },
                     error:function () {
                         layer.msg('添加失败',{icon:0,time:2000});
-                        setTimeout(function () {window.location.href='/teenager';},2000);
+                        setTimeout(function () {window.location.href='/strange';},2000);
                     }
                 });
             });
+        });
+        $(function(){
+            $.ajax({
+                type:"post",
+                url:'/queryClazz',
+                dataType: "json",
+                contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                async: false,
+                cache: false,
+                success: function (data) {
+                    $.each(data,function(index,item){
+                        $('#clazzId').append(new Option(item.clazzName,item.clazzId));//往下拉菜单里添加元素
+                    })
+                    form.render();//菜单渲染 把内容加载进去
+                }
+            })
         });
         $(function(){
             $.ajax({
@@ -243,22 +335,23 @@
 
     });
     /*删除*/
-    function member_del(obj,teacherid){
+    function member_del(obj,id){
         layer.confirm('确认要删除吗？',function(index){
             //发异步删除数据
-            $.get("deleteTeacher",{"teacherid":teacherid},function (data) {
+            $.get("deleteStudent",{"id":id},function (data) {
                 if(data =true){
                     layer.msg('删除成功!',{icon:1,time:2000});
-                    setTimeout(function () {window.location.href='/teenager';},2000);
+                    setTimeout(function () {window.location.href='/strange';},2000);
 
                 }else {
                     layer.msg('删除失败!',{icon:1,time:3000});
-                    setTimeout(function () {window.location.href='/teenager';},2000);
+                    setTimeout(function () {window.location.href='/strange';},2000);
                 }
             });
         });
     }
 
 </script>
+
 </body>
 </html>
