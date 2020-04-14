@@ -19,7 +19,7 @@
           });
       });
   </script>
-  <script type='text/javascript'>
+  <script type="text/javascript">
       $(function () {
           $("#validateCode,#validateCode2,#validateCode3").keyup(function(){
               checkLoginValidateCode($(this).val());
@@ -67,6 +67,52 @@
       function teaRegister(){
           window.location.href="teacherRegister";
       }
+      //学生记住密码
+      function rememberStuCheck(String){
+          $.ajax({
+              type:"post",
+              url:"/getStuCookie",
+              data:{username:String},
+              success:function(data){
+                  $("#stu_username").val(data.username);
+                  $("#stu_password").val(data.password);
+              },
+              error:function(){
+                  $("#stu_password").val("");
+              }
+          });
+      }
+      //教师记住密码
+      function rememberTeaCheck(String){
+          $.ajax({
+              type:"post",
+              url:"/getTeaCookie",
+              data:{username:String},
+              success:function(data){
+                  $("#tea_username").val(data.username);
+                  $("#tea_password").val(data.password);
+              },
+              error:function(){
+                  $("#tea_password").val("");
+              }
+          });
+      }
+      //管理员记住密码
+      function rememberAdminCheck(String){
+          $.ajax({
+              type:"post",
+              url:"/getAdminCookie",
+              data:{username:String},
+              success:function(data){
+                  $("#admin_username").val(data.username);
+                  $("#admin_password").val(data.password);
+              },
+              error:function(){
+                  $("#admin_password").val("");
+              }
+          });
+      }
+
   </script>
 </head>
 <body>
@@ -80,15 +126,15 @@
     <!-- 学生登录 -->
     <div>
       <div class="stu_error_box"></div>
-      <form action="stuLogin" method="post"  class="stu_login_error">
+      <form action="stuLogin" method="post"  class="stu_login_error" >
         <div id="stuname">
           <label>用户名：</label>
-          <input type="text" id="stu_username_hide" name="username" />
+          <input type="text" id="stu_username" name="username" onblur="rememberStuCheck(this.value)"/>
           <!--ajaxurl="demo/valid.jsp"-->
         </div>
         <div id="stupwd">
           <label>密&nbsp;&nbsp;&nbsp;码：</label>
-          <input type="password" id="stu_password_hide" name="password" />
+          <input type="password" id="stu_password" name="password" />
         </div>
         <div id="code">
           <label>验证码：</label>
@@ -97,7 +143,7 @@
           <img  title="点击更换" alt="验证码占位图" id="loginValidateCode" height="40" width="150"  style="cursor: pointer;" src="/loginValidateCode" onclick="uploadLoginValidateCode();"/> </div>
         <p  id="p2" style="color: red"></p>
         <div id="remember">
-          <input type="checkbox" name="rememberMe">
+          <input type="checkbox" id="rememberMe" name="rememberMe_stu" checked="checked">
           <label>记住密码</label>
         </div>
         <!--<div id="login">
@@ -117,12 +163,12 @@
       <form action="TeaLogin" method="post"  class="tea_login_error">
         <div id="teaid">
           <label>账&nbsp;&nbsp;&nbsp;号：</label>
-          <input type="text" id="tea_username_hide" name="username" />
+          <input type="text" id="tea_username" name="username" onblur="rememberTeaCheck(this.value)"/>
           <!--ajaxurl="demo/valid.jsp"-->
         </div>
         <div id="teapwd">
           <label>密&nbsp;&nbsp;&nbsp;码：</label>
-          <input type="password" id="tea_password_hide" name="password" />
+          <input type="password" id="tea_password" name="password" />
         </div>
         <div id="code">
           <label>验证码：</label>
@@ -131,7 +177,7 @@
           <img  title="点击更换" alt="验证码占位图" id="loginValidateCode2" height="40" width="150"  style="cursor: pointer;" src="/loginValidateCode" onclick="uploadLoginValidateCode();"/> </div>
         <p  id="p" style="color: red"></p>
         <div id="remember">
-          <input type="checkbox" name="rememberMe">
+          <input type="checkbox" name="rememberMe_tea">
           <label>记住密码</label>
         </div>
         <!--<div id="login">
@@ -151,12 +197,12 @@
       <form action="adminLogin" method="post"  class="stu_login_error">
         <div id="adminname">
           <label>账&nbsp;&nbsp;&nbsp;号：</label>
-          <input type="text" id="manager_username_hide" name="username" />
+          <input type="text" id="admin_username" name="username" onblur="rememberAdminCheck(this.value)"/>
           <!--ajaxurl="demo/valid.jsp"-->
         </div>
         <div id="adminpwd">
           <label>密&nbsp;&nbsp;&nbsp;码：</label>
-          <input type="password" id="manager_password_hide" name="password" />
+          <input type="password" id="admin_password" name="password" />
         </div>
         <div id="code">
           <label>验证码：</label>
@@ -165,7 +211,7 @@
           <img  title="点击更换" alt="验证码占位图" id="loginValidateCode3" height="40" width="150"  style="cursor: pointer;" src="/loginValidateCode" onclick="uploadLoginValidateCode();"/> </div>
         <p  id="p3" style="color: red"></p>
         <div id="remember3">
-          <input type="checkbox" name="remember">
+          <input type="checkbox" name="rememberMe_admin">
           <label>记住密码</label>
         </div>
         <div id="login">

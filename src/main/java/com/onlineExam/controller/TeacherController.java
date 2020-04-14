@@ -11,8 +11,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -87,7 +90,7 @@ public class TeacherController {
 
     //登录
     @RequestMapping(value="/TeaLogin",method = {RequestMethod.POST,RequestMethod.GET})
-    public String login(HttpServletRequest request, HttpSession session, @RequestParam("validateCode")String validateCode) {
+    public String login(HttpServletRequest request,HttpServletResponse response, HttpSession session, @RequestParam("validateCode")String validateCode) {
 
         MainController mainController = new MainController();
         Map map = mainController.checkLoginValidateCode(request, validateCode);
@@ -102,10 +105,39 @@ public class TeacherController {
         String roles=teacherMapper.login(username,md5password);
         session.setAttribute("roles", roles);
         if (roles != null&&flag.equals("true") ) {
+            if(request.getParameter("rememberMe_tea")!=null){
+
+                addCookie(username,password,response,request);
+            }
             return "TeacherManagement";
         } else {
             return "index";
         }
+    }
+    public static void addCookie(String username, String password, HttpServletResponse response, HttpServletRequest request)  {
+        //创建cookie
+        Cookie nameCookie = new Cookie(username, password);
+        nameCookie.setPath("/");//设置cookie路径
+        //设置cookie保存的时间 单位：秒
+        nameCookie.setMaxAge(60*60*24);
+        //将cookie添加到响应
+        response.addCookie(nameCookie);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/getTeaCookie",method = RequestMethod.POST)
+    public Map<String,String> initCookie(String username, HttpServletRequest request){
+        Cookie[] cookies=request.getCookies();
+        Map<String,String> map=new HashMap<>();
+        for (Cookie c:cookies){
+            if(c.getName().equals(username)){
+                String password=c.getValue();
+                map.put("username",username);
+                map.put("password",password);
+                return map;
+            }
+        }
+        return null;
     }
 
 

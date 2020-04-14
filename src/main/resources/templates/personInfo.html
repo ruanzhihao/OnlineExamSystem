@@ -47,19 +47,13 @@
 						<input type="text" name="stuname"  autocomplete="off" class="layui-input" th:value="${session.stuname}">
 					</div>
 				</div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label">性别</label>
-                    <div class="layui-input-block">
-                        <input type="text" name="sex"  autocomplete="off" class="layui-input"  th:value="${session.sex}">
-                    </div>
-                </div>
-				<!--<div class="layui-form-item">
+				<div class="layui-form-item">
 					<label class="layui-form-label">性别</label>
 					<div class="layui-input-block">
-                           <input type="radio" name="sex" value="男" title="男" checked=""><div class="layui-unselect layui-form-radio layui-form-radioed"><i class="layui-anim layui-icon"></i><span>男</span></div>
-                           <input type="radio" name="sex" value="女" title="女" ><div class="layui-unselect layui-form-radio"><i class="layui-anim layui-icon"></i><span>女</span></div>
+                           <input type="radio"  name="sex" value="男" title="男" th:checked=" '男' eq ${session.sex}"><div class="layui-unselect layui-form-radio layui-form-radioed"><i class="layui-anim layui-icon"></i><span>男</span></div>
+                           <input type="radio"  name="sex" value="女" title="女" th:checked=" '女' eq ${session.sex}"><div class="layui-unselect layui-form-radio"><i class="layui-anim layui-icon"></i><span>女</span></div>
                     </div>
-				</div>-->
+				</div>
 				<div class="layui-form-item">
 					<label class="layui-form-label">班级</label>
 					<div class="layui-input-block">

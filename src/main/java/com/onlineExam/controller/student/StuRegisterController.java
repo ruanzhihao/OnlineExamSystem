@@ -73,6 +73,7 @@ public class StuRegisterController {
         //注册用户详细信息
         Student stuInformation=new Student();
         stuInformation.setUsername(username);
+        stuInformation.setPassword(password);
         stuInformation.setSex(sex);
         stuInformation.setStuname(stuname);
         stuInformation.setStuid(stuid);
