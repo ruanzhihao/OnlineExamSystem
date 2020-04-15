@@ -67,6 +67,10 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
+    public List<Integer> getQuestionId(int count) {
+        return questionMapper.getQuestionId(count);
+    }
+    @Override
     public List<Major> getAllMajor() {
         return questionMapper.getAllMajor();
     }
@@ -74,5 +78,10 @@ public class QuestionServiceImpl implements QuestionService {
     @Override
     public List<Course> getAllCourse() {
         return questionMapper.getAllCourse();
+    }
+
+    @Override
+    public List<Question> getAllQuestionByMajorId(Integer majorId) {
+        return questionMapper.getAllQuestionByMajorId(majorId);
     }
 }

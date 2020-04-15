@@ -12,4 +12,5 @@ public class Paper {
     int questionNumber;
     int sumQuestionScore;
     int answerTime;
+
 }

@@ -39,5 +39,9 @@ public interface QuestionMapper {
     //修改试题实现
     int updateQuestion(@Param("questionId") Integer questionId,@Param("questionName") String questionName,@Param("optionA") String optionA,@Param("optionB") String optionB,@Param("optionC") String optionC,@Param("optionD") String optionD,@Param("answer") String answer,@Param("questionScore") Integer questionScore,@Param("courseId") Integer courseId,@Param("majorId") Integer majorId,@Param("questionType") String questionType,@Param("questionClass") String questionClass);
 
+    List<Integer> getQuestionId(int count);
+    //根据MajorId查询Ques
+    List<Question> getAllQuestionByMajorId(@Param("majorId") Integer majorId);
+
 }
 

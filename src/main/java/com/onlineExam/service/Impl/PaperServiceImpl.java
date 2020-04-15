@@ -1,14 +1,13 @@
 package com.onlineExam.service.Impl;
 
-import com.onlineExam.domain.EasyClass;
-import com.onlineExam.domain.Major;
-import com.onlineExam.domain.Paper;
+import com.onlineExam.domain.*;
 import com.onlineExam.mapper.PaperMapper;
 import com.onlineExam.service.PaperService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class PaperServiceImpl implements PaperService {
@@ -41,6 +40,21 @@ public class PaperServiceImpl implements PaperService {
     }
 
     @Override
+    public int updatePaperScore(Map<String, Object> map) {
+        return paperMapper.updatePaperScore(map);
+    }
+
+    @Override
+    public List<Course> getAllCourse() {
+        return paperMapper.getAllCourse();
+    }
+
+    @Override
+    public int updatePaperQuestionNumber(Map<String, Object> map) {
+        return paperMapper.updatePaperQuestionNumber(map);
+    }
+
+    @Override
     public  List<Major>  getAllMajor() {
         return paperMapper.getAllMajor();
     }
@@ -48,6 +62,26 @@ public class PaperServiceImpl implements PaperService {
     @Override
     public  List<EasyClass> getAllEasyClass() {
         return paperMapper.getAllEasyClass();
+    }
+
+    @Override
+    public int updatePaperScoreSimpl(Map<String, Object> map) {
+        return paperMapper.updatePaperScoreSimpl(map);
+    }
+
+    @Override
+    public int updatePaperQuestionNumber1Simpl(Map<String, Object> map) {
+        return paperMapper.updatePaperQuestionNumber1Simpl(map);
+    }
+
+    @Override
+    public int findSumquestionScore(Integer paperId) {
+        return paperMapper.findSumquestionScore(paperId);
+    }
+
+    @Override
+    public List<PapQuestion> getPapQues(Integer paperId) {
+        return paperMapper.getPapQues(paperId);
     }
 
     @Override

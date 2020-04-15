@@ -36,10 +36,37 @@ select paperId,paperName,paperClass,questionNumber,sumQuestionScore ,answerTime 
     <select id="getAllMajor" resultType="com.onlineExam.domain.Major">
         select majorId,majorName from t_major;
     </select>
+    <select id="getAllCourse" resultType="com.onlineExam.domain.Major">
+        select courseId,courseName from t_course;
+    </select>
     <select id="getAllEasyClass" resultType="com.onlineExam.domain.EasyClass">
         SELECT  * FROM t_easyclass;
     </select>
     <select id="findPaperByMajorId" resultType="com.onlineExam.domain.Paper">
-select paperId,paperName,paperClass,questionNumber,sumQuestionScore ,answerTime ,t_major.majorId,t_major.majorName from t_paper,t_major where t_paper.majorId=t_major.majorId and t_paper.majorId =#{majorId}
+select paperId,paperName,paperClass,questionNumber,sumQuestionScore ,answerTime ,t_major.majorId,t_major.majorName from t_paper,t_major where t_paper.majorId=t_major.majorId
+<if test="majorId !=0 and majorId != null">and t_paper.majorId =#{majorId}</if>
+
     </select>
+    <update id="updatePaperQuestionNumber" parameterType="java.util.Map">
+		UPDATE t_paper SET questionNumber=questionNumber+#{questionNumber}
+		WHERE paperId=#{paperId}
+	</update>
+    <update id="updatePaperScore" parameterType="java.util.Map">
+		UPDATE t_paper SET sumQuestionScore=sumQuestionScore+#{score}
+		WHERE paperId=#{paperId}
+	</update>
+    <select id="getPapQues" resultType="com.onlineExam.domain.PapQuestion">
+        select t_realpaper.realPaperId,t_question.questionId,questionName,optionA,optionB,optionC,optionD,answer,questionScore,t_major.majorName,questionType,questionClass from t_realpaper,t_question,t_major where t_realpaper.questionId=t_question.questionId and t_question.majorId=t_major.majorId and t_realpaper.paperId=#{paperId}
+    </select>
+    <select id="findSumquestionScore" resultType="integer">
+        SELECT sumQuestionScore from t_paper WHERE paperId=#{paperId}
+    </select>
+    <update id="updatePaperQuestionNumber1Simpl" parameterType="java.util.Map">
+		UPDATE t_paper SET questionNumber=#{questionNumber}
+		WHERE paperId=#{paperId}
+	</update>
+    <update id="updatePaperScoreSimpl" parameterType="java.util.Map">
+		UPDATE t_paper SET sumQuestionScore=#{score}
+		WHERE paperId=#{paperId}
+	</update>
 </mapper>

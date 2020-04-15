@@ -1,9 +1,8 @@
 package com.onlineExam.controller;
 
-import com.onlineExam.domain.Course;
-import com.onlineExam.domain.FileUpload;
-import com.onlineExam.domain.Major;
-import com.onlineExam.domain.Question;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.onlineExam.domain.*;
 import com.onlineExam.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -172,5 +171,15 @@ public class QuestionController {
             file.delete();
         }
     }
-
+@RequestMapping("getAllQuestion")
+@ResponseBody
+    public Page getAllQuestion (@RequestParam("majorId") Integer majorId,@RequestParam(value = "page", defaultValue = "1") Integer page, @RequestParam(value = "limit", defaultValue = "7") Integer limit){
+        List<Question> list=ques.getAllQuestionByMajorId(majorId);
+    PageHelper.startPage(page,limit);
+    PageInfo pages=new PageInfo(list,limit);
+    Page data=Page.success(pages.getTotal(),pages.getList());
+    System.out.println(page+"------"+limit);
+    System.out.println(pages);
+    return data;
+}
 }

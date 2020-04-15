@@ -4,7 +4,6 @@
 <body>
         <!-- 内容主体区域 -->
         <div style="padding: 15px;">
-            <hr class="layui-bg-orange">
             <div style="padding: 20px; background-color: #F2F2F2;">
                 <div class="layui-row layui-col-space15">
                     <div class="layui-col-md12">
@@ -25,51 +24,66 @@
                                             <div class="layui-input-inline">
                                                 <button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="demo" id="search_btn">搜索</button>
                                             </div>
+                                            <button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="demo" id="fresh">刷新</button>
+
                                         </div>
                                     </div>
                                 </form>
                             </div>
                             <div class="layui-card-body">
-                                <table class="layui-hide" id="test" lay-filter="demo"></table>
+                                <table class="layui-hide" id="test" lay-filter="demo" ></table>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-<script th:replace="script::copy"></script>
+        <script th:replace="script::copy"></script>
 <script type="text/html" id="barDemo">
     <a class="layui-btn layui-btn-xs layui-btn-warm" lay-event="look">题目详情</a>
     <a  class="layui-btn layui-btn-xs" lay-event="edit">修改</a>
     <a  class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
     <a  class="layui-btn layui-btn-xs layui-btn-xs" lay-event="add">添加试题</a>
+    <a  class="layui-btn layui-btn-xs" lay-event="addIntoPaper">导入试题</a>
 </script>
+        <script type="text/html" id="barDemo1">
+            <a  class="layui-btn layui-btn-danger layui-btn-xs" lay-event="add1">删除</a>
+        </script>
+        <script type="text/html" id="barDemo2">
+            <a  class="layui-btn layui-btn-xs layui-btn-xs" lay-event="add2">添加</a>
+        </script>
 <script type="text/javascript" th:inline="javascript">
     layui.use('table', function(){
+        var load;
+        var load1;
+        var load2;
         var table = layui.table;
-        table.render({
+        var obj_data;
+        load= table.render({
             elem: '#test'
-            ,url:'/groupPaper'
+           ,id:'test'
+           ,url:'/groupPaper'
             ,cellMinWidth: 80
             ,cols: [[
                 {type:'checkbox', fixed: 'left'}
-                ,{field:'paperId', width:'5%', title: 'ID', sort: true}
+                ,{field:'paperId', width:'5%', title: '试卷ID', sort: true}
                 ,{field:'paperName', width:'10%', title: '试卷名称'}
                 ,{field:'questionNumber', width:'9%', title: '题量'}
                 ,{field:'answerTime', width:'10%', title: '答题时间'}
                 ,{field:'sumQuestionScore', title: '总分', width:'8%'}
                 ,{field:'majorName', title: '所属专业', width:'10%'}
                 ,{field:'paperClass', title: '难度类型', width:'10%'}
-/*
-                ,{field:'username', title: '授课老师' , width:'9%'}
-*/
+
+               /* ,{field:'courseName', title: '所属课程' , width:'9%'}*/
+
                 ,{fixed: 'right', title: '操作', align:'center', toolbar: '#barDemo', width:'34%'}
             ]]
             ,page:true
             ,limit: 7
             ,even: true //开启隔行背景
-
         });
+
         //监听表格复选框选择
         table.on('checkbox(demo)', function(obj){
             console.log(obj)
@@ -77,6 +91,7 @@
         //监听工具条
         table.on('tool(demo)', function(obj){
             var data = obj.data;
+            console.log(data);
             if(obj.event === 'del'){
                 layer.confirm('确认要删除吗？', function(index){
                     $.get("/deletePaper?paperId="+data.paperId, function(res){
@@ -90,34 +105,262 @@
                         }
 
                     });
+                    load.reload({
+                        page: {
+                            curr: 1
+                        }
+                    });
                     layer.close(index);
                 });
             } else if(obj.event === 'edit'){
-                // layer.alert('编辑行：<br>'+ JSON.stringify(data))
                 layer.open({
                     type: 2,
                     title: '编辑试卷信息',
                     area: ['850px', '550px'],
                     content: "/getPapEdit?paperId="+data.paperId
                 });
-            } else if(obj.event === 'import'){
-                // layer.alert('编辑行：<br>'+ JSON.stringify(data))
+            } else if(obj.event === 'add'){
+                    layui.use('table', function () {
+                        var table = layui.table;
+                        layer.open({
+                            type: 1,
+                            area: ["1050px", '530px'],
+                            title: "手动添加",
+                            content: '<div><button class="layui-btn layui-btn-normal" id="add_all" th:onclick="|javascript:addAll()|">批量添加</button><table id="Table" lay-filter="Table" ></table></div>',
+                            success: function (index, layero) {
+                             load2= table.render({
+                                    elem: '#Table'
+                                 ,id:'Table'
+                                 ,cellMinWidth: 80
+                                 ,url:'/getAllQuestion'
+                                    , where: {
+                                        majorId: data.majorId,
+                                    }
+                                    , width: '100%'
+                                    ,cols: [[
+                                        {type:'checkbox', fixed: 'left'}
+                                        ,{field:'questionId',  title: '题目ID', sort: true}
+                                        ,{field:'questionName',  title: '题目'}
+                                        ,{field:'optionA',  title: '选项A'}
+                                        ,{field:'optionB', title: '选项B'}
+                                        ,{field:'optionC', title: '选项C'}
+                                        ,{field:'optionD', title: '选项D'}
+                                        ,{field:'answer', title: '正确答案'}
+                                        ,{field:'questionScore',  title: '分值'}
+                                        ,{field:'majorName',  title: '专业名称'}
+                                        ,{field:'questionType', title: '题目类型'}
+                                        ,{field:'questionClass', title: '难易程度'}
+
+                                        /* ,{field:'courseName', title: '所属课程' , width:'9%'}*/
+
+                                        ,{fixed: 'right', title: '操作', align:'center', toolbar: '#barDemo2'}
+                                    ]]
+                                    , page: true
+                                    , limit: 7
+                                    ,even: true
+
+                                });
+
+                                table.on('checkbox(Table)', function (obj2) {
+                                    obj_data = obj2.data;
+                                    var checkStatus=table.checkStatus('Table');
+                                    var checkData=checkStatus.data;
+                                    console.log(checkData);
+                                    var dd=JSON.stringify(checkData);
+                                    console.log(dd);
+                                    console.log(typeof  dd);
+                                   /* var ids=new Array();
+                                    var scores=new Array();*/
+                                 /*   var checkDatas=checkData.join(',');
+                                    console.log(checkDatas);*/
+                               /*  for(var i=0;i<checkData.length;i++){
+                                     console.log(checkData[i]);
+                                        ids.push(checkData[i].questionId);
+                                        scores.push(checkData[i].questionScore);
+                                 }
+                                 var str1=ids.join(',');
+                                 var str2=scores.join(',');
+                                 console.log(str1)
+                                 console.log(str2);*/
+                                    var paperId=data.paperId;
+                                    console.log(paperId);
+                              /* var paperId=JSON.stringify(data.paperId);
+                                        console.log(paperId);
+                                          console.log(typeof paperId);*/
+                                 $("#add_all").click (function(){
+/*
+
+*/
+                                        $.ajax({
+                                          url:'/add_allQues',
+                                          data:{'questions':dd,'paperId':paperId},
+                                          type:'get',
+                                          dataType:'json',
+                                          contentType:'application/json',
+                                         success:function (result) {
+                                         console.log(result);
+                                         if(result.code==100){
+                                             layer.open({
+                                                 title:'提示'
+                                                 ,content:result.extend.msg
+                                             })
+                                             load.reload({
+                                                 page: {
+                                                     curr: 1
+                                                 }
+                                             });
+                                         }
+                                     }
+                                   });
+
+                                     load.reload({
+                                         page: {
+                                             curr: 1
+                                         }
+                                     });
+                                      layer.close(index);
+                                    })
+                                })
+                                table.on('tool(Table)', function(obj2) {
+                                    if (obj2.event == 'add2') {
+                                        layer.confirm('确定添加?', function (index) {
+                                            $.get("/addOneQuesIntoPap?paperId=" + data.paperId + "&questionId=" + obj_data.questionId+"&questionScore="+obj_data.questionScore, function (res) {
+                                                console.log(res);
+                                                if (res.code == 100) {
+                                                    layer.open({
+                                                        title: '提示'
+                                                        , content: res.extend.msg
+                                                    })
+                                                    load.reload({
+                                                        page: {
+                                                            curr: 1
+                                                        }
+                                                    });
+                                                }
+                                            });
+                                            layer.close(index);
+                                        });
+                                    }
+                                })
+                                    },
+                            btn: ['确定', '关闭'],
+                            yes: function (index, layero) {
+                                load.reload({
+                                    page: {
+                                        curr: 1
+                                    }
+                                });
+                                layer.close(layer.index); //点击确定之后执行yes函数,关闭弹出层
+                            }
+                        });
+                    });
+            } else if(obj.event === 'addIntoPaper'){
                 layer.open({
                     type: 2,
-                    title: '导入试题到试卷',
-                    area: ['850px', '550px'],
-                    content: "/getPapEdit?paperId="+data.paperId
+                    title: '导入试题',
+                    area: ['1100px', '550px'],
+                    content: "/getAddIntoPap?paperId="+data.paperId
+
                 });
+
             } else if(obj.event === 'look'){
-                layer.open({
+               /* layer.open({
                     type: 2,
-                    title: '查看题目',
-                    area: ['900px', '600px'],
-                    content: "/getPaperQuestion?paperId="+data.paperId
+                    title: '题目详情',
+                    area: ['1200px', '400px'],
+                    content: "/getPapQues?paperId="+data.paperId
+                });*/
+                layui.use('table', function () {
+                    var table = layui.table;
+                    layer.open({
+                        type: 1,
+                        area: ["1050px", '530px'],
+                        title: "题目详情",
+                        content: '<div><table id="Table1" lay-filter="Table1""></table>',
+                        success: function (index, layero) {
+                           load1= table.render({
+                                elem: '#Table1'
+                               ,id:'Table1'
+                                ,cellMinWidth: 80
+                                ,url:'/getGroupPapQues'
+                                , where: {
+                                    paperId: data.paperId,
+                                }
+                                , width: '100%'
+                                ,cols: [[
+                                    {type:'checkbox', fixed: 'left'}
+                                    ,{field:'realPaperId',  title: 'ID', sort: true}
+                                    ,{field:'questionName',  title: '题目'}
+                                    ,{field:'optionA',  title: '选项A'}
+                                    ,{field:'optionB', title: '选项B'}
+                                    ,{field:'optionC', title: '选项C'}
+                                    ,{field:'optionD', title: '选项D'}
+                                    ,{field:'answer', title: '正确答案'}
+                                    ,{field:'questionScore',  title: '分值'}
+                                    ,{field:'majorName',  title: '专业名称'}
+                                    ,{field:'questionType', title: '题目类型'}
+                                    ,{field:'questionClass', title: '难易程度'}
+
+                                    /* ,{field:'courseName', title: '所属课程' , width:'9%'}*/
+
+                                    ,{fixed: 'right', title: '操作', align:'center', toolbar: '#barDemo1'}
+                                ]]
+                                , page: true
+                                , limit: 7
+                                ,even: true
+                            });
+
+                            table.on('tool(Table1)', function(obj1) {
+                                var data1=obj1.data;
+                                if (obj1.event == 'add1') {
+                                    layer.confirm('确定删除?', function (index) {
+                                        $.get("/delPapQuestionById?realPaperId="+data1.realPaperId+"&paperId="+data.paperId+"&questionScore="+data1.questionScore, function (res) {
+                                            console.log(res);
+                                            if (res.code == 100) {
+                                                layer.open({
+                                                    title: '提示'
+                                                    , content: res.extend.msg
+                                                })
+                                                load1.reload({
+                                                   where: {
+                                                    paperId: data.paperId,
+                                                   }
+                                                   , page: {
+                                                        curr: 1
+                                                    }
+                                                });
+                                                load.reload({
+                                                    page: {
+                                                        curr: 1
+                                                    }
+                                                });
+                                                obj.del();
+                                            }
+                                        });
+                                        load.reload({
+                                            page: {
+                                                curr: 1
+                                            }
+                                        });
+                                        layer.close(index);
+                                    });
+                                }
+                            })
+                        },
+                        btn: ['确定', '关闭'],
+                        yes: function (index, layero) {
+                            load.reload({
+                                page: {
+                                    curr: 1
+                                }
+                            });
+                            layer.close(layer.index); //点击确定之后执行yes函数,关闭弹出层
+                        }
+                    });
                 });
             }
-        });
 
+        });
         $("#add_course").click(function(){
             layer.open({
                 type: 2,
@@ -128,7 +371,7 @@
         });
 
         $("#search_btn").click(function(){
-            var majorId = $("#majorId").val() ? $("#majorId").val() : "";
+            var majorId = $("#majorId").val();
             var form_data = {
                 "majorId": majorId,
             };
@@ -138,7 +381,13 @@
                 ,where: form_data
             });
         })
-
+          $("#fresh").click(function () {
+              load.reload({
+                  page: {
+                      curr: 1
+                  }
+              });
+          })
     });
 </script>
 </body>

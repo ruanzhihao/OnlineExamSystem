@@ -2,16 +2,17 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.onlineExam.mapper.QuestionMapper">
     <select id="getAllQuestion" resultType="com.onlineExam.domain.Question">
-        select * from t_question,t_course,t_major where t_course.courseId = t_question.courseId and t_major.majorId = t_question.majorId and t_course.majorId =t_major.majorId
+        select * from t_question,t_major where  t_major.majorId = t_question.majorId
     </select>
-
+    <select id="getAllQuestionByMajorId" resultType="com.onlineExam.domain.Question">
+        select * from t_question,t_major where t_major.majorId = t_question.majorId and t_major.majorId=#{majorId}
+    </select>
     <select id="getCourse" resultType="com.onlineExam.domain.Course">
         select * from t_course
     </select>
 
     <select id="getMajor" resultType="com.onlineExam.domain.Major">
         select * from t_major
-
     </select>
 
     <insert id="addQuestion" parameterType="com.onlineExam.domain.Question">
@@ -26,7 +27,7 @@
     </select>
     <insert id="addImportQuestion" parameterType="com.onlineExam.domain.Question">
      insert into t_question (questionId,questionName,optionA,optionB,optionC,optionD,answer,questionScore,courseId,majorId,questionType,questionClass) values
-    (DEFAULT , #{questionName}, #{optionA}, #{optionB}, #{optionC}, #{optionD}, #{answer}, #{questionScore}, #{courseId}, #{majorId}, #{questionType}, #{questionClass})
+    (DEFAULT , #{questionName}, #{optionA}, #{optionB}, #{optionC}, #{optionD}, #{answer}, #{questionScore}, #{courseId,jdbcType=INTEGER}, #{majorId}, #{questionType}, #{questionClass})
     </insert>
 
     <delete id="delQuestionById" parameterType="java.lang.Integer">
@@ -39,12 +40,11 @@
 
     <select id="showQuestion" parameterType="java.lang.Integer" resultType="com.onlineExam.domain.Question">
         select * from t_question  where questionId=#{questionId}
-
     </select>
-
     <update id="updateQuestion" parameterType="com.onlineExam.domain.Question">
         update t_question set questionName=#{questionName},optionA=#{optionA},optionB=#{optionB},optionC=#{optionC},optionD=#{optionD},answer=#{answer},questionScore=#{questionScore},courseId=#{courseId},  majorId=#{majorId},  questionType=#{questionType},  questionClass=#{questionClass} where questionId=#{questionId}
-
-    </update>
-
+        </update>
+       <select id="getQuestionId" resultType="Integer">
+        select t_question.questionId from t_question ORDER BY questionId DESC limit 0,#{count}
+       </select>
 </mapper>

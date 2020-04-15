@@ -105,7 +105,12 @@
             <artifactId>springfox-swagger-ui</artifactId>
             <version>2.9.1</version>
         </dependency>
-
+        <!-- https://mvnrepository.com/artifact/com.alibaba/fastjson -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.68</version>
+        </dependency>
     </dependencies>
 <build>
     <plugins>
