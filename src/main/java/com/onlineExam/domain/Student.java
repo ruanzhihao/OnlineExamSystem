@@ -16,5 +16,6 @@ public class Student {
     private String major;
     private String dept;
     private String motto;
+    private String email;
 
 }

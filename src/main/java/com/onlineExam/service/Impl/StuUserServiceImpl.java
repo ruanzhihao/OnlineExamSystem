@@ -16,6 +16,10 @@ public class StuUserServiceImpl implements StuUserService {
     @Autowired
     private StuUserMapper usermapper;
 
+    @Override
+    public Student getStuByEmail(String email) {
+        return usermapper.getStuByEmail(email);
+    }
 
     @Override
     public String login(String username, String password) {

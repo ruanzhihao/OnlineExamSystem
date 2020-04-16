@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.Enumeration;
 
 @Api(tags = "学生信息接口")
 @Controller
@@ -74,6 +75,15 @@ public class StuChangeController {
             model.addAttribute("msg", "原密码错误");
         }
         return "changepwd";
+    }
+    @RequestMapping(value = "/logout",method = {RequestMethod.POST,RequestMethod.GET})
+    public String logout(HttpServletRequest request){
+
+        Enumeration em=request.getSession().getAttributeNames();
+        while (em.hasMoreElements()){
+            request.getSession().removeAttribute(em.nextElement().toString());
+        }
+        return "index";
     }
 
 

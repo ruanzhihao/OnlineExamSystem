@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.onlineExam.mapper.StuUserMapper">
+    <select id="getStuByEmail" parameterType="String" resultType="com.onlineExam.domain.Student">
+      select * from t_student where email=#{email}
+    </select>
+
     <select id="login"   parameterType="String" resultType="String" >
     select roles from t_login where username = #{username} and password=#{password}
   </select>

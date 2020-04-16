@@ -7,6 +7,7 @@ import java.util.List;
 
 public interface StuUserService {
 
+    public Student getStuByEmail(String email);
     public String login(@Param("username") String username, @Param("password") String password);
 
     //登录验证
