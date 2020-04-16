@@ -189,12 +189,11 @@
                                           console.log(typeof paperId);*/
                                  $("#add_all").click (function(){
 /*
-
 */
                                         $.ajax({
                                           url:'/add_allQues',
                                           data:{'questions':dd,'paperId':paperId},
-                                          type:'get',
+                                          type:'post',
                                           dataType:'json',
                                           contentType:'application/json',
                                          success:function (result) {
