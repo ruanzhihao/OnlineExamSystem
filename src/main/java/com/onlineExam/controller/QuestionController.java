@@ -182,4 +182,21 @@ public class QuestionController {
     System.out.println(pages);
     return data;
 }
+     //各个专业的题量
+    @RequestMapping("getAllQuestionVo")
+    @ResponseBody
+    public List<QuestionVo> getAllQuestionVo(){
+        List<QuestionVo> questionVos=ques.getAllQuestionVo();
+        return  questionVos;
+    }
+    @RequestMapping("getEcharts")
+    public String  getEcharts(){
+        return "QuestionTypeEchart";
+    }
+    @RequestMapping("getAllQuestionType")
+    @ResponseBody
+    public List<QuestionVo> getAllQuestionType(){
+        List<QuestionVo> questionVos=ques.getQuestionType();
+        return  questionVos;
+    }
 }

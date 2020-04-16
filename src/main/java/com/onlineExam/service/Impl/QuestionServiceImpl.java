@@ -3,6 +3,7 @@ package com.onlineExam.service.Impl;
 import com.onlineExam.domain.Course;
 import com.onlineExam.domain.Major;
 import com.onlineExam.domain.Question;
+import com.onlineExam.domain.QuestionVo;
 import com.onlineExam.mapper.QuestionMapper;
 import com.onlineExam.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -83,5 +84,15 @@ public class QuestionServiceImpl implements QuestionService {
     @Override
     public List<Question> getAllQuestionByMajorId(Integer majorId) {
         return questionMapper.getAllQuestionByMajorId(majorId);
+    }
+
+    @Override
+    public List<QuestionVo> getAllQuestionVo() {
+        return questionMapper.getAllQuestionVo();
+    }
+
+    @Override
+    public List<QuestionVo> getQuestionType() {
+        return questionMapper.getQuestionType();
     }
 }

@@ -47,4 +47,10 @@
        <select id="getQuestionId" resultType="Integer">
         select t_question.questionId from t_question ORDER BY questionId DESC limit 0,#{count}
        </select>
+    <select id="getAllQuestionVo" resultType="com.onlineExam.domain.QuestionVo">
+        select t_major.majorName as questionMajor,count(*) as number from t_question,t_major where t_question.majorId=t_major.majorId GROUP BY t_question.majorId
+    </select>
+    <select id="getQuestionType" resultType="com.onlineExam.domain.QuestionVo">
+select t_question.questionType as questionType,count(*) as number from t_question GROUP BY t_question.questionType
+    </select>
 </mapper>

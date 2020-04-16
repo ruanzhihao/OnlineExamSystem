@@ -3,6 +3,7 @@ package com.onlineExam.mapper;
 import com.onlineExam.domain.Course;
 import com.onlineExam.domain.Major;
 import com.onlineExam.domain.Question;
+import com.onlineExam.domain.QuestionVo;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
 
@@ -42,6 +43,9 @@ public interface QuestionMapper {
     List<Integer> getQuestionId(int count);
     //根据MajorId查询Ques
     List<Question> getAllQuestionByMajorId(@Param("majorId") Integer majorId);
-
+    //查询各个专业的题目数量
+    List<QuestionVo> getAllQuestionVo();
+    //查询题目类型de数量
+    List<QuestionVo>  getQuestionType();
 }
 

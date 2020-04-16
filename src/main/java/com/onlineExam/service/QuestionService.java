@@ -3,6 +3,7 @@ package com.onlineExam.service;
 import com.onlineExam.domain.Course;
 import com.onlineExam.domain.Major;
 import com.onlineExam.domain.Question;
+import com.onlineExam.domain.QuestionVo;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -35,6 +36,8 @@ public interface QuestionService {
     int updateQuestion(@Param("questionId") Integer questionId,@Param("questionName") String questionName,@Param("optionA") String optionA,@Param("optionB") String optionB,@Param("optionC") String optionC,@Param("optionD") String optionD,@Param("answer") String answer,@Param("questionScore") Integer questionScore,@Param("courseId") Integer courseId,@Param("majorId") Integer majorId,@Param("questionType") String questionType,@Param("questionClass") String questionClass);
     List<Integer> getQuestionId(int count);
     List<Question> getAllQuestionByMajorId(@Param("majorId") Integer majorId);
+    List<QuestionVo> getAllQuestionVo();
+    List<QuestionVo>  getQuestionType();
 
 
 }
