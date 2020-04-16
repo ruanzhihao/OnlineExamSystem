@@ -301,7 +301,7 @@ public class PaperController {
             }
         }
         if(alreadyExisit.size()==questionList.size()){
-            return Msg.fail().add("msg","试题"+alreadyExisit+"已存在添加失败");
+            return Msg.success().add("msg","试题"+alreadyExisit+"已存在添加失败");
         }
         Map<String, Object> update = new HashMap<>();
         update.put("paperId", paperId);
