@@ -25,10 +25,13 @@
         <div class="nr_left">
             <div class="test">
                 <form>
+
                     <div class="test_title">
                         <p class="test_time" >
                             <i class="icon iconfont">&#xe6fb;</i><b class="alt-1"  id="tarTime">00:00:10</b><!--定时-->
                         </p>
+                        <input type="hidden" id="stuId" th:value="${stuId}">
+                        <input type="hidden" id="paperId" th:value="${paperId}">
                         <input type="hidden" th:value="${question1.answer}" id="ranswer1">
                         <input type="hidden" th:value="${question2.answer}" id="ranswer2">
                         <input type="hidden" th:value="${question3.answer}" id="ranswer3">
@@ -40,14 +43,30 @@
                         <font><input type="button" name="test_jiaojuan" value="交卷"  th:onclick="|javascript:jiaojuan('${question1.answer}',${question1.questionScore},'${question2.answer}',${question2.questionScore},'${question3.answer}',${question3.questionScore},'${question4.answer}',${question4.questionScore})|"></font>
                         <script th:inline="javascript">
                             function jiaojuan(ok1,score1,ok2,score2,ok3,score3,ok4,score4) {
+                                var stuId=$('#stuId').val()
+                                var paperId=$('#paperId').val()
                                 var answer1= $("input[name='answer1']:checked").val();
+                                if(answer1==null){
+                                    answer1=null;
+                                }
                                 var answer2= $("input[name='answer2']:checked").val();
+                                if(answer2==null){
+                                    answer2=null;
+                                }
                                 var answer3= $("input[name='answer3']:checked").val();
+                                if(answer3==null){
+                                    answer3=null;
+                                }
                                 var answer4= $("input[name='answer4']:checked").val();
+                                if(answer4==null){
+                                    answer4=null;
+                                }
                                 $.ajax({
                                     url:'/jiaojuan',
                                     type:'post',
                                     data:{
+                                        stuId:stuId,
+                                        paperId:paperId,
                                         answer1:answer1,
                                         answer2:answer2,
                                         answer3:answer3,
@@ -63,7 +82,7 @@
                                     },
                                     success:function (data) {
                                         layer.msg('考试结束 等待自动判分',{time:2000});
-                                        setTimeout(function () {window.location.href="/student";},2000);
+                                     /*  setTimeout(function () {window.location.href="/goStudent?stuId="+stuId;},2000);*/
 
                                     }
                                 })
@@ -823,6 +842,8 @@
                 css_class : 'countdown-alt-1',
             });
             $('.alt-1').on(' time.elapsed ',function(){
+                var stuId=$('#stuId').val()
+                var paperId=$('#paperId').val()
                 var answer1= $("input[name='answer1']:checked").val();
                 if(answer1==null){
                     answer1=null;
@@ -851,6 +872,8 @@
                     url:'/AutoJiaoJuan',
                     type:'post',
                     data:{
+                        stuId:stuId,
+                        paperId:paperId,
                         answer1:answer1,
                         answer2:answer2,
                         answer3:answer3,
@@ -866,7 +889,7 @@
                     },
                     success:function () {
                         layer.msg('考试时间到，考试结束,系统自动交卷',{icon:2,time:2000});
-                        setTimeout(function () {window.location.href="/student";},2000);
+                      /*  setTimeout(function () {window.location.href="/student";},2000);*/
 
                     }
                 })

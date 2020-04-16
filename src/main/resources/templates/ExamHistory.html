@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>考试记录</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" type="text/css" th:href="@{Wjl/common/layui/css/layui.css}" media="all">
+    <link rel="stylesheet" type="text/css" th:href="@{Wjl/common/bootstrap/css/bootstrap.css}" media="all">
+    <link rel="stylesheet" type="text/css" th:href="@{Wjl/common/global.css}" media="all">
+    <link rel="stylesheet" type="text/css" th:href="@{Wjl/css/personal.css}" media="all">
+</head>
+<body>
+<section class="layui-larry-box">
+    <div class="larry-personal">
+        <div class="layui-tab">
+            <blockquote class="layui-elem-quote news_search">
+
+                <div class="layui-inline">
+                    <div class="layui-input-inline">
+                        <input value="" placeholder="请输入关键字" class="layui-input search_input" type="text">
+                    </div>
+                    <a class="layui-btn search_btn">查询</a>
+                </div><div class="layui-inline">
+            </div>
+
+            </blockquote>
+
+            <div class="layui-tab-content larry-personal-body clearfix mylog-info-box">
+
+                <div class="layui-tab-item layui-field-box layui-show">
+                    <table class="layui-table table-hover" lay-even="" lay-skin="nob">
+                        <thead>
+                        <tr>
+                            <td></td>
+                            <td>学生姓名</td>
+                            <td>学院</td>
+                            <td>班级</td>
+                            <td>考试科目</td>
+                            <td>考试时间</td>
+                            <td>考试分数</td>
+                            <td>答题详情</td>
+                        </tr>
+                        </thead>
+
+                        <tbody th:each="exam :${list}">
+                        <tr>
+                            <td></td>
+                            <td th:text="${exam.stuName}"></td>
+                            <td th:text="${exam.stuDept}"></td>
+                            <td th:text="${exam.stuClazz}"></td>
+                            <td th:text="${exam.examName}"></td>
+                            <td th:text="${exam.examTime}"></td>
+                            <td th:text="${exam.examScore}"></td>
+                            <td>
+                                <button class="layui-btn">详情</button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div class="larry-table-page clearfix">
+                        <div id="page" class="page"></div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+<script type="text/javascript" th:src="@{Wjl/common/layui/layui.js}"></script>
+<script type="text/javascript">
+    layui.use(['jquery','layer','element','laypage'],function(){
+        window.jQuery = window.$ = layui.jquery;
+        window.layer = layui.layer;
+        var element = layui.element(),
+            laypage = layui.laypage;
+
+
+        laypage({
+            cont: 'page',
+            pages: 10 //总页数
+            ,
+            groups: 5 //连续显示分页数
+            ,
+            jump: function(obj, first) {
+                //得到了当前页，用于向服务端请求对应数据
+                var curr = obj.curr;
+                if(!first) {
+                    //layer.msg('第 '+ obj.curr +' 页');
+                }
+            }
+        });
+
+        laypage({
+            cont: 'page2',
+            pages: 10 //总页数
+            ,
+            groups: 5 //连续显示分页数
+            ,
+            jump: function(obj, first) {
+                //得到了当前页，用于向服务端请求对应数据
+                var curr = obj.curr;
+                if(!first) {
+                    //layer.msg('第 '+ obj.curr +' 页');
+                }
+            }
+        });
+    });
+</script>
+</body>
+</html>

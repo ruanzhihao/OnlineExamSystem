@@ -52,6 +52,7 @@
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <span style="color: cyan;size: 20px" th:text="${session.stuname}"></span>&nbsp;&nbsp;&nbsp;同学 欢迎您
+                    <input th:value="${session.stuid}" type="hidden" id="stuId"/>
                 </li>
                 <li class="layui-nav-item first">
                     <a href="./personal" id="personinfo">
@@ -130,7 +131,7 @@
                     </a>
                     <dl class="layui-nav-child">
                         <dd>
-                            <a href="javascript:;" data-url="table.html">
+                            <a href="./ExamHistory" id="ExamHistory" >
                                 <i class="iconfont icon-yonghu1" data-icon='icon-yonghu1'></i>
                                 <span>考试记录</span>
                             </a>
@@ -210,6 +211,11 @@
         $("#JoinExam").click(function (e) {
             e.preventDefault();
             $("#iframeMain").attr("src",$(this).attr("href"));
+        });
+        $("#ExamHistory").click(function (e) {
+            e.preventDefault();
+            var stuId=$('#stuId').val()
+            $("#iframeMain").attr("src",$(this).attr("href")+'?stuId='+stuId);
         });
 
     });

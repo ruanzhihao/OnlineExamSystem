@@ -22,9 +22,10 @@
             <span style="color: red">请在考试开始前进入考试 考试期间禁止关闭考试页，否则无法继续考试</span>
         </header><!-- /header -->
         <div class="larry-personal-body clearfix changepwd" >
-
+            <input type="hidden" id="stuId" th:value="${session.stuid}"/>
             <div style="width:25%;hight:100%;float:left; " th:each="Paper:${PaperList}">
                 <table class="layui-table" lay-skin="row" >
+
                     <tr>
                         <td>考试名：<span style="font-weight: bold" th:text="${Paper.paperName}"></span></td>
                     </tr>
@@ -35,6 +36,7 @@
                         <td>考试难度：<span style="font-weight: bold;color: #0c9076"  th:text="${Paper.paperClass}"></span></td>
                     </tr>
                     <tr>
+                        <input type="hidden" id="PaperId" th:value="${Paper.paperId}"/>
                         <td>考试时间：<span style="color: red" th:text="${Paper.answerTime}"></span>&nbsp;分钟</td>
                     </tr>
                     <tr>
@@ -42,13 +44,15 @@
                     </tr>
                     <tr>
                         <td>
-                            <a th:onclick="|javascript:join(this,${Paper.sumQuestionScore},${Paper.questionNumber})|" href="javascript:;"  class="layui-btn layui-btn-danger" >参加考试</a>
+                            <a th:onclick="|javascript:join(this,${Paper.paperId},${session.stuid},${Paper.sumQuestionScore},${Paper.questionNumber})|" href="javascript:;"  class="layui-btn layui-btn-danger" >参加考试</a>
                             <script>
-                                function join(obj,score,number){
+                                function join(obj,paperId,stuId,score,number){
+                                    /*  var stuId=$('#stuId').val()
+                                      var paperId=$('#PaperId').val()*/
                                     layer.confirm('请在规定时间内完成答题，超时自动交卷！',{btn: ['清楚', '取消'], title: "考前提示"},
                                         function(index){
                                             layer.msg('试题加载中...',{icon:6,time:2000});
-                                            setTimeout(function () {window.parent.location.href='/Examing?score='+score+'&number='+number;},2000);
+                                            setTimeout(function () {window.parent.location.href='/Examing?score='+score+'&number='+number+'&stuId='+stuId+'&paperId='+paperId;},2000);
                                         });
                                 }
                             </script>

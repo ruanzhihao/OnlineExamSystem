@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.onlineExam.mapper.ExamMapper">
+   <insert id="StuInsertExam" parameterType="com.onlineExam.domain.Exam">
+
+       insert into t_exam (examName,stuId,stuName,stuDept,stuClazz,examTime,examScore) value(#{examName},#{stuId},#{stuName},#{stuDept},#{stuClazz},#{examTime},#{examScore})
+   </insert>
+    <select id="fingStuById" parameterType="java.lang.String" resultType="com.onlineExam.domain.Student">
+    select * from t_student where stuid=#{stuId}
+    </select>
+
+    <select id="findPaperById" parameterType="java.lang.Integer" resultType="com.onlineExam.domain.Paper">
+    select * from t_paper where paperId=#{paperId}
+    </select>
+
+    <select id="findExamScoreById" parameterType="java.lang.String" resultType="com.onlineExam.domain.Exam">
+select * from t_exam where stuId=#{stuId}
+    </select>
+</mapper>
