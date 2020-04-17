@@ -5,17 +5,19 @@ import lombok.Data;
 @Data
 public class Student {
     private Integer id;
-    private String stuid;
-    private String stuname;
     private String username;
-    private String password;
-    private String roles;
-    private String sex;
-    private String clazz;
-    private String phone;
-    private String major;
-    private String dept;
-    private String motto;
-    private String email;
+    private Integer stuid;
+    private String stuname;
+    private String stupassword;
+    private String stuphonenumber;
+    private String stuemail;
+    private int majorId;
+    private String majorName;
+    private int departId;
+    private String departName;
+    private int stateId;
+    private String state;
+    private int clazzId;
+    private String clazzName;
 
 }

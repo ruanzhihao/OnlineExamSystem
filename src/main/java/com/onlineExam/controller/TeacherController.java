@@ -113,7 +113,7 @@ public class TeacherController {
 
                 addCookie(username,password,response,request);
             }
-            return "TeacherManagement";
+            return "TeacherManagerIndex";
         } else {
             return "index";
         }

@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface StuUserService {
 
-    public Student getStuByEmail(String email);
+    public Student getStuByEmail(String stuemail);
     public String login(@Param("username") String username, @Param("password") String password);
 
     //登录验证
@@ -18,6 +18,7 @@ public interface StuUserService {
     //注册学生用户账号信息存储
     public boolean addStuInformation(Student user);
     public boolean updatePassword(LoginUser user);
+    public boolean updateStuPassword(Student student);
     //查询用户信息
     public Student findInformationByUsername(String username);
     //修改用户信息

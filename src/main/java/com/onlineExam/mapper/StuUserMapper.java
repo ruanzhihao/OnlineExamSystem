@@ -9,7 +9,7 @@ import java.util.List;
 //@Mapper
 @Component
 public interface StuUserMapper {
-    public Student getStuByEmail(String email);
+    public Student getStuByEmail(String stuemail);
 
     public String login(@Param("username") String username, @Param("password") String password);
     //登录
@@ -23,6 +23,8 @@ public interface StuUserMapper {
     public int addStuInformation(Student user);
    //修改用户密码
     public int updatePassword(LoginUser user);
+    //修改学生密码
+    public int updateStuPassword(Student  student);
     //查询用户信息
     public Student findInformationByUsername(String username);
     //修改用户信息

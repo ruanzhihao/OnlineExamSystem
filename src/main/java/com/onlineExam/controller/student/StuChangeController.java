@@ -25,20 +25,19 @@ public class StuChangeController {
 
     //    //修改用户的信息
     @RequestMapping(value = "/ChangeStuInfo" ,method=RequestMethod.POST)
-    public String ChangeInformation(HttpServletRequest request, HttpSession session, Model model, String stuid,
-            String stuname, String sex, String clazz, String phone,String major,String dept,String motto ) throws Exception {
+    public String ChangeInformation(HttpServletRequest request, HttpSession session, Model model, Integer stuid,
+            String stuname, Integer clazz, String phone,Integer major,Integer dept ,String email) throws Exception {
         String username=(String)request.getSession().getAttribute("username");
 
         Student stuInformation=new Student();
         stuInformation.setUsername(username);
-        stuInformation.setSex(sex);
         stuInformation.setStuname(stuname);
         stuInformation.setStuid(stuid);
-        stuInformation.setClazz(clazz);
-        stuInformation.setPhone(phone);
-        stuInformation.setMajor(major);
-        stuInformation.setDept(dept);
-        stuInformation.setMotto(motto);
+        stuInformation.setClazzId(clazz);
+        stuInformation.setStuphonenumber(phone);
+        stuInformation.setMajorId(major);
+        stuInformation.setDepartId(dept);
+        stuInformation.setStuemail(email);
 
         boolean changeInformation= stuUserService.updateInformation(stuInformation);
 
@@ -69,6 +68,10 @@ public class StuChangeController {
             //System.out.println("执行修改密码操作：------新密码："+password2+"   ;新密码加密后:"+md5password2.toString());
 
             stuUserService.updatePassword(user2);
+            Student student=new Student();
+            student.setUsername(username);
+            student.setStupassword(md5password2.toString());
+            stuUserService.updateStuPassword(student);
             System.out.println("修改密码后数据库中加密密码："+user2.getPassword());
             model.addAttribute("msg", "修改成功");
         } else {

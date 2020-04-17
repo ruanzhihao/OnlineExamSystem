@@ -96,7 +96,7 @@ public class StudentFunctionController {
         return "Examing";
     }
 
-    //点击交卷自动判分 实现
+    /*//点击交卷自动判分 实现
     @RequestMapping(value = "/jiaojuan",method = RequestMethod.POST)
     @ResponseBody
     public int jiaojuan(@RequestParam("stuId") String stuid,@RequestParam("paperId") int paperId, @RequestParam("answer1") String answer1,@RequestParam("answer2")String answer2,@RequestParam("answer3")String answer3, @RequestParam("answer4")String answer4,
@@ -151,7 +151,7 @@ public class StudentFunctionController {
         int i=examService.StuInsertExam(examName,stuId,stuName,stuDept,stuClazz,examTime,examScore,paperid);
         return sum;
     }
-
+*/
     //学生主页 进入考试记录
     @RequestMapping(value = "/ExamHistory",method = RequestMethod.GET)
     public String goHistory(Model model,@RequestParam("stuId") String stuId){

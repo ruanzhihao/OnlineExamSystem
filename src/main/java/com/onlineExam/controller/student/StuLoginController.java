@@ -16,7 +16,6 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -48,24 +47,26 @@ public class StuLoginController {
 
         Student student=new Student();
         student=stuUserMapper.findInformationByUsername(username);
-        String stuid=student.getStuid();
+        Integer stuid=student.getStuid();
         String stuname=student.getStuname();
-        String sex=student.getSex();
-        String clazz=student.getClazz();
-        String phone=student.getPhone();
-        String major=student.getMajor();
-        String dept=student.getDept();
-        String motto=student.getMotto();
+        String stupassword=student.getStupassword();
+        String stuphonenumber=student.getStuphonenumber();
+        String stuemail=student.getStuemail();
+        Integer clazzId=student.getClazzId();
+        Integer departId=student.getDepartId();
+        Integer stateId=student.getStateId();
+        Integer majorId=student.getMajorId();
+
         request.getSession().setAttribute("stuid",stuid);
         request.getSession().setAttribute("stuname",stuname);
-        request.getSession().setAttribute("sex",sex);
-        request.getSession().setAttribute("clazz",clazz);
-        request.getSession().setAttribute("phone",phone);
-        request.getSession().setAttribute("major",major);
-        request.getSession().setAttribute("dept",dept);
-        request.getSession().setAttribute("motto",motto);
+        request.getSession().setAttribute("stupassword",stupassword);
+        request.getSession().setAttribute("stuphonenumber",stuphonenumber);
+        request.getSession().setAttribute("stuemail",stuemail);
+        request.getSession().setAttribute("clazzId",clazzId);
+        request.getSession().setAttribute("departId",departId);
+        request.getSession().setAttribute("stateId",stateId);
+        request.getSession().setAttribute("majorId",majorId);
 
-        //String password=request.getParameter("password");
         Md5Hash md5registepassword=new Md5Hash( password, username,5);
          String md5password=md5registepassword.toString();
         System.out.println("登录账号："+username+"   密码："+password+"   加密后："+md5password);

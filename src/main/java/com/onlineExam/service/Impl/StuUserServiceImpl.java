@@ -17,8 +17,8 @@ public class StuUserServiceImpl implements StuUserService {
     private StuUserMapper usermapper;
 
     @Override
-    public Student getStuByEmail(String email) {
-        return usermapper.getStuByEmail(email);
+    public Student getStuByEmail(String stuemail) {
+        return usermapper.getStuByEmail(stuemail);
     }
 
     @Override
@@ -77,6 +77,14 @@ public class StuUserServiceImpl implements StuUserService {
     @Override
     public boolean updatePassword(LoginUser user) {
         if (usermapper.updatePassword(user) == 0) {
+            return false;
+        } else
+            return true;
+    }
+    //修改学生密码
+    @Override
+    public boolean updateStuPassword(Student  student) {
+        if (usermapper.updateStuPassword(student)== 0) {
             return false;
         } else
             return true;
