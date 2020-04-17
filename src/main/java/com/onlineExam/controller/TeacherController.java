@@ -1,9 +1,11 @@
 package com.onlineExam.controller;
 
 import com.google.code.kaptcha.impl.DefaultKaptcha;
+import com.onlineExam.domain.Student1;
 import com.onlineExam.domain.Teacher;
 import com.onlineExam.mapper.TeacherMapper;
 import com.onlineExam.modules.common.controller.MainController;
+import com.onlineExam.service.StuUserService;
 import com.onlineExam.service.TeacherService;
 import org.apache.shiro.crypto.hash.Md5Hash;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +30,8 @@ public class TeacherController {
     private TeacherMapper teacherMapper;
     @Autowired
     private DefaultKaptcha defaultKaptcha;
+    @Autowired
+    private StuUserService stuUserService;
 
     /*//进去教师管理界面
     @RequestMapping(value = "/teenager")
@@ -140,5 +144,18 @@ public class TeacherController {
         return null;
     }
 
+    //进入教师端
+    @RequestMapping("/TeacherIndex")
+    public String Login(){
+        return "TeacherManagerIndex";
+    }
+
+    //学生管理
+    /*@RequestMapping(value = "/t_teenager")
+    public String findStudentByClazzId(Model model,Integer id){
+        List<Student1> studentList= (List<Student1>) stuUserService.findStudentByclazzId(id);
+        model.addAttribute("studentList",studentList);
+        return "Teacher-StudentManager";
+    }*/
 
 }

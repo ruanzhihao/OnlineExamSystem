@@ -48,7 +48,7 @@
             <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
             <ul class="layui-nav layui-nav-tree" lay-filter="test">
                 <li class="layui-nav-item layui-nav-itemed"><a class=""
-                                                               href="javascript:;">基本信息</a>
+                                                               href="javascript:;">考试发布</a>
                     <dl class="layui-nav-child">
                         <dd>
                             <a href="./test2">院系管理</a>
@@ -59,55 +59,23 @@
 
 
                     </dl></li>
-                <li class="layui-nav-item"><a href="javascript:;">班级管理</a>
+                <li class="layui-nav-item"><a th:href="@{/findStudentByclazzId(clazzId=${session.clazzId})}">学生管理</a>
+                </li>
+                <li class="layui-nav-item"><a  href="javascript:";>个人主页</a>
                     <dl class="layui-nav-child">
                         <dd>
-                            <a href="javascript:;">可删</a>
+                            <a href="javascript:;">个人信息</a>
                         </dd>
                         <dd>
-                            <a href="javascript:;">可删</a>
-                        </dd>
-
-                    </dl></li>
-                <li class="layui-nav-item"><a  href="./teenager";>教师管理</a></li>
-
-                <li class="layui-nav-item"><a  href="./strange";>学生管理</a></li>
-
-                <li class="layui-nav-item"><a  href="javascript:";>试题库</a>
-                    <dl class="layui-nav-child">
-                        <dd>
-                            <a href="./getEcharts">题目分布</a>
-                        </dd>
-                        <dd>
-                            <a href="./testManage">试题管理</a>
+                            <a href="javascript:;">查看学生成绩</a>
                         </dd>
 
                     </dl>
-
                 </li>
 
-                <li class="layui-nav-item"><a  href="javascript:";>试卷库</a>
-                    <dl class="layui-nav-child">
-                        <dd>
-                            <a href="./getAddPaper">添加试卷</a>
-                        </dd>
-                        <dd>
-                            <a href="./paperCenter">试卷中心</a>
-                        </dd>
-                    </dl>
-                </li>
-                <li class="layui-nav-item"><a  href="javascript:";>考务信息</a>
 
-                    <dl class="layui-nav-child">
-                        <dd>
-                            <a href="./getReleaseForm">发布考试</a>
-                        </dd>
-                        <dd>
-                            <a href="./releaseInfoCenter">考务大厅</a>
-                        </dd>
-                    </dl>
-                </li>
-                </ul>
+
+            </ul>
         </div>
     </div>
 
@@ -117,7 +85,7 @@
     </div>
 
     <div class="layui-footer">
-欢迎您 管理员
+        欢迎您 管理员
     </div>
 </div>
 <script th:src="@{/layui/layui.js}"></script>

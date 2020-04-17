@@ -76,6 +76,15 @@
                     </div>
                 </div>
                 <div class="layui-form-item">
+                    <label class="layui-form-label">班级:</label>
+                    <div class="layui-input-block">
+                        <!--<input type="text" lay-verify="required" name="clazzId"   class="layui-input" placeholder="请输入班级序号">-->
+                        <select id="clazzId" name="clazzId" lay-verify="required"  lay-filter="business" class="select" >
+                            <option value="" ></option>
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-form-item">
                     <label class="layui-form-label">专业:</label>
                     <div class="layui-input-block">
                         <!--<input type="text" lay-verify="required" name="majorId"   class="layui-input" placeholder="请输入专业序号">-->
@@ -118,9 +127,10 @@
         <th lay-data="{field:'1',align: 'center'}">ID</th>
         <th lay-data="{field:'2', align: 'center'}">老师姓名</th>
         <th lay-data="{field:'3', align: 'center'}">老师账号名</th>
-        <th lay-data="{field:'4', align: 'center'}">密码</th>
-        <th lay-data="{field:'5', align: 'center'}">手机号</th>
-        <th lay-data="{field:'6', align: 'center'}">email</th>
+        <!--<th lay-data="{field:'4', align: 'center'}">密码</th>-->
+        <th lay-data="{field:'4', align: 'center'}">手机号</th>
+        <th lay-data="{field:'5', align: 'center'}">email</th>
+        <th lay-data="{field:'6', align: 'center'}">班级</th>
         <th lay-data="{field:'7', align: 'center'}">教学专业</th>
         <th lay-data="{field:'8', align: 'center'}">所在学院</th>
         <th lay-data="{field:'9', align: 'center'}">账号状态</th>
@@ -132,9 +142,10 @@
         <td th:text="${teacher.teacherid}"></td>
         <td th:text="${teacher.teachername}"></td>
         <td th:text="${teacher.username}"></td>
-        <td th:text="${teacher.teacherpassword}"></td>
+        <!--<td th:text="${teacher.teacherpassword}"></td>-->
         <td th:text="${teacher.teacherphoneNumber}"></td>
         <td th:text="${teacher.teacheremail}"></td>
+        <td th:text="${teacher.clazzName}"></td>
         <td th:text="${teacher.majorName}"></td>
         <td th:text="${teacher.departName}"></td>
         <td th:text="${teacher.state}"></td>
@@ -219,6 +230,22 @@
                 success: function (data) {
                     $.each(data,function(index,item){
                         $('#departId').append(new Option(item.departName,item.departId));//往下拉菜单里添加元素
+                    })
+                    form.render();//菜单渲染 把内容加载进去
+                }
+            })
+        });
+        $(function(){
+            $.ajax({
+                type:"post",
+                url:'/queryClazz',
+                dataType: "json",
+                contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                async: false,
+                cache: false,
+                success: function (data) {
+                    $.each(data,function(index,item){
+                        $('#clazzId').append(new Option(item.clazzName,item.clazzId));//往下拉菜单里添加元素
                     })
                     form.render();//菜单渲染 把内容加载进去
                 }

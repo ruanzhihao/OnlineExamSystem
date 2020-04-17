@@ -17,5 +17,7 @@ public class Teacher {
     private String departName;
     private int stateId;
     private String state;
+    private int clazzId;
+    private String clazzName;
 
 }

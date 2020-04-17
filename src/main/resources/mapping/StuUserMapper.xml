@@ -60,6 +60,9 @@
     <select id="findStudentById" parameterType="Integer" resultType="com.onlineExam.domain.Student1">
         select * from student where id=#{id}
     </select>
+    <select id="findStudentByclazzId" resultType="com.onlineExam.domain.Student1">
+        select * from student,major,depart,state,clazz where student.majorId=major.majorId and student.departId=depart.departId and student.stateId=state.stateId and id=#{id}
+    </select>
     <!--添加学生信息-->
     <insert id="addStudent" parameterType="com.onlineExam.domain.Student1" keyProperty="id" useGeneratedKeys="true">
         insert into student(username,stuid,stuname,stupassword,stuphonenumber,stuemail,clazzId,majorId,departId,stateId)
@@ -78,9 +81,9 @@
             <if test="stuname!=null and stuname!=''">
                 stuname=#{stuname},
             </if>
-            <if test="stupassword!=null and stupassword!=''">
+            <!--<if test="stupassword!=null and stupassword!=''">
                 stupassword=#{stupassword},
-            </if>
+            </if>-->
             <if test="stuphonenumber!=null and stuphonenumber!=''">
                 stuphonenumber=#{stuphonenumber},
             </if>

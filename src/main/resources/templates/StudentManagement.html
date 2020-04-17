@@ -134,7 +134,7 @@
         <th lay-data="{field:'1',align: 'center'}">ID</th>
         <th lay-data="{field:'2', align: 'center'}">学生姓名</th>
         <th lay-data="{field:'3', align: 'center'}">学生账号名</th>
-        <th lay-data="{field:'4', align: 'center'}">密码</th>
+        <!--<th lay-data="{field:'4', align: 'center'}">密码</th>-->
         <th lay-data="{field:'5', align: 'center'}">手机号</th>
         <th lay-data="{field:'6', align: 'center'}">email</th>
         <th lay-data="{field:'7', align: 'center'}">班级名</th>
@@ -149,7 +149,7 @@
         <td th:text="${student1.id}"></td>
         <td th:text="${student1.stuname}"></td>
         <td th:text="${student1.username}"></td>
-        <td th:text="${student1.stupassword}"></td>
+        <!--<td th:text="${student1.stupassword}"></td>-->
         <td th:text="${student1.stuphonenumber}"></td>
         <td th:text="${student1.stuemail}"></td>
         <td th:text="${student1.clazzName}"></td>
@@ -183,17 +183,13 @@
         var layer = layui.layer;
         var form=layui.form;
         var $=layui.jquery;
-        /*var laydate=layui.laydate;*/
         var excel = parent.layui.excel;
         table.init('demo', {
             height: 500 //设置高度
             ,cellMinWidth: 80
             ,page: true //开启分页
         });
-        /*laydate.render({
-            elem: '#start' //指定元素
-        });
-        form.render();*/
+
 
 
         $('#exportExcel').on('click', function(){

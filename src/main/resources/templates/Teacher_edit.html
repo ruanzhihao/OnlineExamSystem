@@ -29,14 +29,14 @@
                 <input type="text" id="teachername" name="teachername" autocomplete="off" th:value="${session.t.teachername}" class="layui-input">
             </div>
         </div>
-        <div class="layui-form-item">
+        <!--<div class="layui-form-item">
             <label for="teacherpassword" class="layui-form-label">
                 <span class="f_sp">密码</span>
             </label>
             <div class="layui-input-inline">
                 <input type="text" id="teacherpassword" name="teacherpassword" autocomplete="off" th:value="${session.t.teacherpassword}" class="layui-input">
             </div>
-        </div>
+        </div>-->
         <div class="layui-form-item">
             <label for="teacherphoneNumber" class="layui-form-label">
                 <span class="f_sp">手机号</span>
@@ -51,6 +51,16 @@
             </label>
             <div class="layui-input-inline">
                 <input type="text" id="teacheremail" name="teacheremail" autocomplete="off" th:value="${session.t.teacheremail}" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="clazzId" class="layui-form-label">
+                <span class="f_sp">班级</span>
+            </label>
+            <div class="layui-input-inline">
+                <select id="clazzId" name="clazzId" lay-verify="required"  lay-filter="business" class="select" >
+                    <option value=""></option>
+                </select>
             </div>
         </div>
         <div class="layui-form-item">
