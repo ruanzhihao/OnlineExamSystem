@@ -20,4 +20,5 @@ public class Exam {
     String stuMajor;
     String examTime;
     int examScore;
+    int paperId;
 }

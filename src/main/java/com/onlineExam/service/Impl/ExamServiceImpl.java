@@ -18,8 +18,8 @@ public class ExamServiceImpl implements ExamService {
 
 
     @Override
-    public int StuInsertExam(String examName, String stuId, String stuName, String stuDept, String stuClazz, String examTime, int examScore) {
-        return examMapper.StuInsertExam(examName,stuId,stuName,stuDept,stuClazz,examTime,examScore);
+    public int StuInsertExam(String examName, String stuId, String stuName, String stuDept, String stuClazz, String examTime, int examScore, int paperid) {
+        return examMapper.StuInsertExam(examName,stuId,stuName,stuDept,stuClazz,examTime,examScore,paperid);
     }
 
     @Override

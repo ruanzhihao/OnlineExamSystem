@@ -116,10 +116,11 @@ public class StudentFunctionController {
         String stuDept=student.getDept();
         String stuClazz=student.getClazz();
         String examTime=new Date().toLocaleString();
+        int paperid=paper.getPaperId();//后添加
         int examScore=sum;
         //paper.getPaperName(),student.getStuid(),student.getStuname(),student.getDept(),student.getClazz(),new Date().toString(),sum
         //String examName,int stuId,String stuName,String stuDept,String stuClazz,String examTime,int examScore
-        int i=examService.StuInsertExam(examName,stuId,stuName,stuDept,stuClazz,examTime,examScore);
+        int i=examService.StuInsertExam(examName,stuId,stuName,stuDept,stuClazz,examTime,examScore,paperid);
         return i;
     }
 
@@ -143,10 +144,11 @@ public class StudentFunctionController {
         String stuDept=student.getDept();
         String stuClazz=student.getClazz();
         String examTime=new Date().toLocaleString();
+        int paperid=paper.getPaperId();//后添加
         int examScore=sum;
         //paper.getPaperName(),student.getStuid(),student.getStuname(),student.getDept(),student.getClazz(),new Date().toString(),sum
         //String examName,int stuId,String stuName,String stuDept,String stuClazz,String examTime,int examScore
-        int i=examService.StuInsertExam(examName,stuId,stuName,stuDept,stuClazz,examTime,examScore);
+        int i=examService.StuInsertExam(examName,stuId,stuName,stuDept,stuClazz,examTime,examScore,paperid);
         return sum;
     }
 
