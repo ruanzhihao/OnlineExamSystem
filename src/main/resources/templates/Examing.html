@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <title>正在考试</title>
+    <script type="text/javascript"
+            src="//api.map.baidu.com/api?v=2.0&ak=OfMzjrzcNpMcHzayyMVGY3YLCQ6we3KU"></script>
     <link th:href="@{Wjl/css/main2.css}" rel="stylesheet" type="text/css" />
     <link th:href="@{Wjl/css/iconfont.css}" rel="stylesheet" type="text/css" />
     <link th:href="@{Wjl/css/test.css}" rel="stylesheet" type="text/css" />
@@ -25,10 +27,9 @@
         <div class="nr_left">
             <div class="test">
                 <form>
-
                     <div class="test_title">
                         <p class="test_time" >
-                            <i class="icon iconfont">&#xe6fb;</i><b class="alt-1"  id="tarTime">00:00:10</b><!--定时-->
+                            <i class="icon iconfont">&#xe6fb;</i><b class="alt-1"  id="tarTime">00:20:00</b><!--定时-->
                         </p>
                         <input type="hidden" id="stuId" th:value="${stuId}">
                         <input type="hidden" id="paperId" th:value="${paperId}">
@@ -92,7 +93,11 @@
                     </div>
 
                     <div class="test_content">
+
+                        <div style="color: red ; font-weight: bold;font-size: 25px"   align="center" id="e"></div>
+
                         <div class="test_content_title ">
+
                             <h2>单选题</h2>
                             <p>
                                 <span>共</span><i class="content_lit" th:text="${number}"></i><span>题，</span><span>合计</span><i class="content_fs" th:text="${score}"></i><span>分</span>
@@ -715,6 +720,7 @@
                                 <span>共</span><i class="content_lit" th:text="${number}"></i><span>题</span>
                             </p>
                         </div>
+
                         <div class="rt_content_nr answerSheet">
                             <ul>
 
@@ -825,7 +831,7 @@
     <!--nr end-->
     <div class="foot"></div>
 </div>
-
+<div id="allmap"></div>
 <script th:src="@{Wjl/js/jquery-1.11.3.min.js}"></script>
 <script th:src="@{Wjl/js/jquery.easy-pie-chart.js}"></script>
 <!--时间js-->
@@ -926,6 +932,36 @@
     )
     )
 </script>-->
+<script type="text/javascript">
+    // 使用浏览器定位到该位置
+    var map = new BMap.Map("allmap");
+    var point = new BMap.Point(116.331398, 39.897445);
+    map.centerAndZoom(point, 12);
+
+    var geolocation = new BMap.Geolocation();
+    var gc = new BMap.Geocoder();//地址解析类
+    geolocation.getCurrentPosition(function(r) {
+        if (this.getStatus() == BMAP_STATUS_SUCCESS) {
+            var mk = new BMap.Marker(r.point);
+            map.addOverlay(mk);
+            map.panTo(r.point);
+            gc.getLocation(r.point, function(rs) {
+                showLocationInfo(r.point, rs);
+            });
+        } else {
+            alert('failed' + this.getStatus());
+        }
+    }, {
+        enableHighAccuracy : true
+    })
+
+    function showLocationInfo(pt, rs) {
+        var addComp = rs.addressComponents;
+        var addr = "当前考试定位：" + addComp.province + "- " + addComp.city + "- "
+            + addComp.district + "- " + addComp.street+'  '+'  '+"请注意考试定位 杜绝作弊";
+        $('#e').html(addr);
+    }
+</script>
 </body>
 
 </html>

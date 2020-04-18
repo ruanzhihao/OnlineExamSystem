@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.onlineExam.mapper.TeacherIndexMapper">
+    <select id="getAllStudent" resultType="com.onlineExam.domain.Student">
+        select * from student,t_clazz,t_depart where student.clazzId=t_clazz.clazzId and student.departId=t_depart.departId
+    </select>
+</mapper>

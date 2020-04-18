@@ -9,9 +9,9 @@
 <body class="layui-layout-body">
 <div class="layui-layout layui-layout-admin">
     <div class="layui-header">
-        <div class="layui-logo">在线考试平台后台管理</div>
+        <div class="layui-logo">教师端平台</div>
         <!-- 头部区域（可配合layui已有的水平导航） -->
-        <ul class="layui-nav layui-layout-left">
+       <!-- <ul class="layui-nav layui-layout-left">
             <li class="layui-nav-item"><a href="">界面1</a></li>
             <li class="layui-nav-item"><a href="">界面2</a></li>
             <li class="layui-nav-item"><a href="">界面3</a></li>
@@ -27,16 +27,23 @@
                         <a href="">授权管理</a>
                     </dd>
                 </dl></li>
-        </ul>
+        </ul>-->
         <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item">
+                <div style="color: darkorange; font-size: 15px"  id="datetime">
+                    <script>
+                        setInterval("document.getElementById('datetime').innerHTML=new Date().toLocaleString();", 1000);
+                    </script>
+                </div>
+            </li>
             <li class="layui-nav-item">
                 <a href="javascript:;">
                     <img src="http://thirdwx.qlogo.cn/mmopen/O0B2cNsVaCBqrjX4KtHLs53hEt0GFbLXZCAIFd1ue8tCXRhFTxEs1INIm9ibicK1PqiaxMlRTCgZ43wHorewZ0wHKicfvB9gHWWF/132" class="layui-nav-img">
                     <span id="usernameInfo"></span>
                 </a>
                 <dl class="layui-nav-child">
-                    <dd><a href="">基本资料</a></dd>
-                    <dd><a href="">安全设置</a></dd>
+                    <dd><a href="">个人资料</a></dd>
+                    <dd><a href="">修改密码</a></dd>
                 </dl>
             </li>
             <li class="layui-nav-item"><a href="javascript:">退出</a></li>
@@ -47,35 +54,30 @@
         <div class="layui-side-scroll">
             <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
             <ul class="layui-nav layui-nav-tree" lay-filter="test">
-                <li class="layui-nav-item layui-nav-itemed"><a class=""
-                                                               href="javascript:;">考试发布</a>
-                    <dl class="layui-nav-child">
-                        <dd>
-                            <a href="./test2">院系管理</a>
-                        </dd>
-                        <dd>
-                            <a href="./login">专业方向</a>
-                        </dd>
-
-
-                    </dl></li>
-                <li class="layui-nav-item"><a th:href="@{/findStudentByclazzId(clazzId=${session.clazzId})}">学生管理</a>
+                <li class="layui-nav-item layui-nav-itemed">
                 </li>
-                <li class="layui-nav-item"><a  href="javascript:";>个人主页</a>
+
+                <li class="layui-nav-item"><a  href="javascript:";>考务中心</a>
                     <dl class="layui-nav-child">
                         <dd>
-                            <a href="javascript:;">个人信息</a>
+                            <a href="javascript:;">安排考试</a>
                         </dd>
                         <dd>
-                            <a href="javascript:;">查看学生成绩</a>
+                            <a href="javascript:;">考试记录</a>
                         </dd>
-
                     </dl>
                 </li>
 
-
+               <!-- <li class="layui-nav-item"><a  href="javascript:";>考试中心</a></li>-->
+                <li class="layui-nav-item"><a id="studentInfo" href="./studentInfo";>学生信息</a></li>
+                <li class="layui-nav-item"><a  href="javascript:";>试题管理</a></li>
+                <li class="layui-nav-item"><a  href="javascript:";>试卷中心</a></li>
+                <li class="layui-nav-item"><a  href="javascript:";>考试汇报</a></li>
 
             </ul>
+
+           <!-- <div align="">aaa</div>-->
+
         </div>
     </div>
 
@@ -85,7 +87,7 @@
     </div>
 
     <div class="layui-footer">
-        欢迎您 管理员
+        辛勤的教师 欢迎您
     </div>
 </div>
 <script th:src="@{/layui/layui.js}"></script>
@@ -105,6 +107,11 @@
         });
 
         $("li>a").click(function (e) {
+            e.preventDefault();
+            $("#iframeMain").attr("src",$(this).attr("href"));
+        });
+
+        $("#studentInfo").click(function (e) {
             e.preventDefault();
             $("#iframeMain").attr("src",$(this).attr("href"));
         });

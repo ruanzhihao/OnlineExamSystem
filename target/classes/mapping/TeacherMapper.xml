@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.onlineExam.mapper.TeacherMapper">
     <select id="getAllTeacher" resultType="com.onlineExam.domain.Teacher">
-        select * from teacher,major,depart,state,clazz where teacher.majorId=major.majorId and teacher.departId=depart.departId and teacher.stateId=state.stateId and teacher.clazzId=clazz.clazzId
+        select * from teacher,t_major,t_depart,t_state,t_clazz where teacher.majorId=t_major.majorId and teacher.departId=t_depart.departId and teacher.stateId=t_state.stateId and teacher.clazzId=t_clazz.clazzId
     </select>
     <!--添加教师信息-->
     <insert id="addTeacher" parameterType="com.onlineExam.domain.Teacher" keyProperty="teacherid" useGeneratedKeys="true">
@@ -52,7 +52,7 @@
         where teacherid=#{teacherid}
     </update>
     <select id="queryTeacher" resultType="com.onlineExam.domain.Teacher">
-        select * from teacher,major,depart,state,clazz where teachername=#{teachername} and teacher.majorId=major.majorId and teacher.departId=depart.departId and teacher.stateId=state.stateId and teacher.clazzId=clazz.clazzId
+        select * from teacher,t_major,t_depart,t_state,t_clazz where teachername=#{teachername} and teacher.majorId=t_major.majorId and teacher.departId=t_depart.departId and teacher.stateId=t_state.stateId and teacher.clazzId=t_clazz.clazzId
     </select>
     <!--登录-->
     <select id="login"   parameterType="String" resultType="String" >
