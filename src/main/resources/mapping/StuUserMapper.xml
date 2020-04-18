@@ -54,7 +54,7 @@
 
     <!--查询所有学生-->
     <select id="getStudentList" resultType="com.onlineExam.domain.Student1">
-        select * from student,major,depart,state,clazz where student.majorId=major.majorId and student.departId=depart.departId and student.stateId=state.stateId and student.clazzId=clazz.clazzId
+        select * from student,t_major,t_depart,t_state,t_clazz where student.majorId=t_major.majorId and student.departId=t_depart.departId and student.stateId=t_state.stateId and student.clazzId=t_clazz.clazzId
     </select>
     <!--通过id删除学生-->
     <delete id="deleteStudent" parameterType="Integer">
@@ -65,7 +65,7 @@
         select * from student where id=#{id}
     </select>
     <select id="findStudentByclazzId" resultType="com.onlineExam.domain.Student1">
-        select * from student,major,depart,state,clazz where student.majorId=major.majorId and student.departId=depart.departId and student.stateId=state.stateId and id=#{id}
+        select * from student,t_major,t_depart,t_state,t_clazz where student.majorId=t_major.majorId and student.departId=t_depart.departId and student.stateId=t_state.stateId and id=#{id}
     </select>
     <!--添加学生信息-->
     <insert id="addStudent" parameterType="com.onlineExam.domain.Student1" keyProperty="id" useGeneratedKeys="true">
@@ -111,19 +111,19 @@
     </update>
 
     <select id="queryStudent" resultType="com.onlineExam.domain.Student1">
-        select * from student,major,depart,state,clazz where student.majorId=major.majorId and student.departId=depart.departId and student.stateId=state.stateId and student.clazzId=clazz.clazzId
+        select * from student,t_major,t_depart,t_state,t_clazz where student.majorId=t_major.majorId and student.departId=t_depart.departId and student.stateId=t_state.stateId and student.clazzId=t_clazz.clazzId and stuname=#{stuname}
     </select>
 
     <select id="getClazzList" resultType="com.onlineExam.domain.Clazz">
-        select * from clazz
+        select * from t_clazz
     </select>
     <select id="getMajorList" resultType="com.onlineExam.domain.Major">
-        select * from major
+        select * from t_major
     </select>
     <select id="getDepartList" resultType="com.onlineExam.domain.Depart">
-        select * from depart
+        select * from t_depart
     </select>
     <select id="getStateList" resultType="com.onlineExam.domain.State">
-        select * from state
+        select * from t_state
     </select>
 </mapper>
