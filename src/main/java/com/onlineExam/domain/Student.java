@@ -20,4 +20,6 @@ public class Student {
     private int clazzId;
     private String clazzName;
 
+    private String examName;//新添加
+    private int examScore;//新添加
 }

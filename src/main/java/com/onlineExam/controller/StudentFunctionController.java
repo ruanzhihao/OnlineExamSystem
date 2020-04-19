@@ -154,7 +154,7 @@ public class StudentFunctionController {
 */
     //学生主页 进入考试记录
     @RequestMapping(value = "/ExamHistory",method = RequestMethod.GET)
-    public String goHistory(Model model,@RequestParam("stuId") String stuId){
+    public String goHistory(Model model,@RequestParam("stuId") int stuId){
         List<Exam> list=examService.findExamScoreById(stuId);
         model.addAttribute("list",list);
         return "ExamHistory";

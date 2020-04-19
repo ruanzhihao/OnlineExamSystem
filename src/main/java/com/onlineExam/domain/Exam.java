@@ -9,7 +9,7 @@ import lombok.Data;
 public class Exam {
     int examid;
     String examName;
-    String stuId;//学生号
+    int stuId;//学生号
     String stuName;//学生名
     int departId;
     String stuDept;

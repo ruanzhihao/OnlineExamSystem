@@ -18,12 +18,12 @@ public class ExamServiceImpl implements ExamService {
 
 
     @Override
-    public int StuInsertExam(String examName, String stuId, String stuName, String stuDept, String stuClazz, String examTime, int examScore, int paperid) {
+    public int StuInsertExam(String examName, int stuId, String stuName, String stuDept, String stuClazz, String examTime, int examScore, int paperid) {
         return examMapper.StuInsertExam(examName,stuId,stuName,stuDept,stuClazz,examTime,examScore,paperid);
     }
 
     @Override
-    public Student fingStuById(String stuId) {
+    public Student fingStuById(int stuId) {
         return examMapper.fingStuById(stuId);
     }
 
@@ -33,7 +33,7 @@ public class ExamServiceImpl implements ExamService {
     }
 
     @Override
-    public List<Exam> findExamScoreById(String stuId) {
+    public List<Exam> findExamScoreById(int stuId) {
         return examMapper.findExamScoreById(stuId);
     }
 }

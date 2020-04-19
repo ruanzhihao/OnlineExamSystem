@@ -1,10 +1,7 @@
 package com.onlineExam.controller;
 
-import com.onlineExam.domain.Clazz;
-import com.onlineExam.domain.Depart;
 import com.onlineExam.domain.Student;
 import com.onlineExam.service.TeacherIndexService;
-import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,18 +22,13 @@ public class TeacherIndexController {
     @Autowired
     private TeacherIndexService teacherIndexService;
 
-    @RequestMapping(value = "/studentInfo",method = RequestMethod.GET)
+
+    @RequestMapping(value = "/QuestionInfo",method = RequestMethod.GET)
     public String goInfo(Model model){
-    List<Student> list=teacherIndexService.getAllStudent();
-    model.addAttribute("list",list);
 
-    List<Clazz> clazzList=teacherIndexService.getAllClazz();
-    model.addAttribute("clazzList",clazzList);
 
-    List<Depart> departList=teacherIndexService.getAllDepart();
-    model.addAttribute("departList",departList);
+        return "QuestionInfo";
 
-        return "StudentInfo";
     }
     @RequestMapping(value = "/queryStuInfo",method = RequestMethod.POST)
     @ResponseBody
@@ -50,6 +42,6 @@ public class TeacherIndexController {
     public String showInfo(Model model,@RequestParam("stuId") int stuId){
     List<Student> list=teacherIndexService.queryStuInfo(stuId);
     model.addAttribute("list",list);
-        return "StudentInfo";
+        return "QuestionInfo";
     }
 }
