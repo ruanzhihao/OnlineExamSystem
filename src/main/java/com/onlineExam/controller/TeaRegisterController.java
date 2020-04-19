@@ -46,7 +46,7 @@ public class TeaRegisterController {
     @ApiOperation(value = "教师用户注册")
     @RequestMapping("/TeaRegister")
     public String toregister(String username, String teachername,String teacherpassword, Model model,
-                             String teacherphoneNumber,String teacheremail)
+                             String teacherphoneNumber,String teacheremail,Integer majorId,Integer departId,Integer clazzId)
     {
         if(teacherService.findReisterUsername(username)){
             model.addAttribute("msg", "用户名已经存在");
@@ -69,6 +69,9 @@ public class TeaRegisterController {
         teacher.setTeacherpassword(teacherpassword);
         teacher.setTeacherphoneNumber(teacherphoneNumber);
         teacher.setTeacheremail(teacheremail);
+        teacher.setMajorId(majorId);
+        teacher.setDepartId(departId);
+        teacher.setClazzId(clazzId);
 
         boolean addTeacher= teacherService.addTeacherInfo(teacher);
         if(addregister&&addTeacher) {

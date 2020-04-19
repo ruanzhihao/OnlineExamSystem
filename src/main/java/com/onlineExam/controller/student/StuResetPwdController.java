@@ -24,7 +24,7 @@ public class StuResetPwdController {
     @Autowired
     private StuUserMapper stuUserMapper;
 
-    @RequestMapping("/retrievePwd")
+    @RequestMapping("/retrieveStuPwd")
     public String toGetCode(){
         return "student/retrievePwd";
     }

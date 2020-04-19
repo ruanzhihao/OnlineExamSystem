@@ -54,6 +54,22 @@
     <select id="queryTeacher" resultType="com.onlineExam.domain.Teacher">
         select * from teacher,t_major,t_depart,t_state,t_clazz where teachername=#{teachername} and teacher.majorId=t_major.majorId and teacher.departId=t_depart.departId and teacher.stateId=t_state.stateId and teacher.clazzId=t_clazz.clazzId
     </select>
+
+    <!--查询教师信息	 -->
+    <select id="findTeaByUsername"   parameterType="String" resultType="com.onlineExam.domain.Teacher" >
+    select * from teacher where username = #{value}
+  </select>
+    <select id="getTeaByEmail" resultType="com.onlineExam.domain.Teacher">
+        select * from teacher where teacheremail=#{teacheremail}
+    </select>
+    <!--修改用户密码-->
+    <update id="updatePassword" parameterType="com.onlineExam.domain.LoginUser" >
+    update t_login set password = #{password} where username=#{username}
+  </update>
+    <!--	修改教师密码-->
+    <update id="updateTeaPassword" parameterType="com.onlineExam.domain.Teacher" >
+    update teacher set teacherpassword = #{teacherpassword} where username=#{username}
+  </update>
     <!--登录-->
     <select id="login"   parameterType="String" resultType="String" >
     select roles from t_login where username = #{username} and password=#{password}

@@ -18,6 +18,12 @@ public interface TeacherMapper {
     Teacher findTeacherById(Integer teacherid);//根据id查找
     List<Teacher> queryTeacher(@Param("teachername") String teachername);//根据教师姓名查询
 
+    public Teacher findTeaByUsername(String username);
+    public Teacher getTeaByEmail(String teacheremail);
+    //修改用户密码
+    public int updatePassword(LoginUser user);
+    //修改教师密码
+    public int updateTeaPassword(Teacher teacher);
     //登录
     public String login(@Param("username") String username, @Param("password") String password);
     //判断用户名是否注册过

@@ -1,13 +1,16 @@
 package com.onlineExam.controller;
 
 import com.google.code.kaptcha.impl.DefaultKaptcha;
+import com.onlineExam.domain.LoginUser;
 import com.onlineExam.domain.Student1;
 import com.onlineExam.domain.Teacher;
 import com.onlineExam.mapper.TeacherMapper;
 import com.onlineExam.modules.common.controller.MainController;
+import com.onlineExam.modules.util.SendMail;
 import com.onlineExam.service.StuUserService;
 import com.onlineExam.service.TeacherService;
 import org.apache.shiro.crypto.hash.Md5Hash;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,6 +20,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -102,9 +106,29 @@ public class TeacherController {
 
         String username=request.getParameter("username");
         String password=request.getParameter("password");
+
+        Teacher teacher=teacherMapper.findTeaByUsername(username);
+        Integer teacherid=teacher.getTeacherid();
+        String teachername=teacher.getTeachername();
+        String teacherphoneNumber=teacher.getTeacherphoneNumber();
+        String teacheremail=teacher.getTeacheremail();
+        Integer majorId=teacher.getMajorId();
+        Integer departId=teacher.getDepartId();
+        Integer clazzId=teacher.getClazzId();
+
+
+        request.getSession().setAttribute("username",username);
+        request.getSession().setAttribute("teacherid",teacherid);
+        request.getSession().setAttribute("teachername",teachername);
+        request.getSession().setAttribute("teacherphoneNumber",teacherphoneNumber);
+        request.getSession().setAttribute("teacheremail",teacheremail);
+        request.getSession().setAttribute("majorId",majorId);
+        request.getSession().setAttribute("departId",departId);
+        request.getSession().setAttribute("clazzId",clazzId);
+
         Md5Hash md5registepassword=new Md5Hash( password, username,5);
         String md5password=md5registepassword.toString();
-        System.out.println("账号："+username+"密码："+password);
+        System.out.println("账号："+username+"密码："+password+"    加密后："+md5password);
 
         String roles=teacherMapper.login(username,md5password);
         session.setAttribute("roles", roles);
@@ -142,6 +166,66 @@ public class TeacherController {
             }
         }
         return null;
+    }
+    //找回密码
+    @RequestMapping("/retrieveTeaPwd")
+    public String toGetCode(){
+        return "retrieveTeaPwd";
+    }
+
+    //找回密码控制器
+    @RequestMapping(value = "/getTeaCode", method = RequestMethod.POST, produces = "text/html;charset=UTF-8;")
+    @ResponseBody // 此注解不能省略 否则ajax无法接受返回值
+    public String retrievePassword(HttpServletRequest request, HttpServletResponse response)
+            throws UnsupportedEncodingException {
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
+
+        HttpSession session = request.getSession();
+        Map<String, Object> map = new HashMap<String, Object>();
+        //获取用户的邮箱
+        String email = request.getParameter("email");
+
+        //实例化一个发送邮件的对象
+        SendMail mySendMail = new SendMail();
+        //根据邮箱找到该用户信息
+        Teacher teacher=teacherMapper.getTeaByEmail(email);
+        String username=teacher.getUsername();
+        LoginUser user=teacherMapper.findRegisterUsername(username);
+        //String password=user.getPassword();
+        //修改密码并返回
+        //产生随机的6位数密码
+        String Password = ((int)((Math.random()*9+1)*100000))+"";
+        //修改密码成功后进行发送邮件
+        //设置收件人和消息内容
+        mySendMail.sendMail(email, "在线考试平台提醒您：您的新密码为："+ Password);
+
+        Md5Hash md5password = new Md5Hash(Password, username, 5);
+        String userpassword = md5password.toString();
+        user.setUsername(username);
+        user.setPassword(userpassword);
+        teacher.setTeacherpassword(userpassword);
+        //将加密后的新密码保存到数据库
+        teacherMapper.updatePassword(user);
+        teacherMapper.updateTeaPassword(teacher);
+
+
+        System.out.println("重置密码：数据库中密码为："+userpassword);
+
+        map.put("code", 200);
+        map.put("msg", "恭喜，找回密码成功，请前往邮箱查看密码！");
+        JSONObject jsonFail = new JSONObject(map);
+        return jsonFail.toString();
+    }
+    //教师端个人信息页面
+    @RequestMapping("/teaPersoninfo")
+    public String teaPersoninfo(){
+        return "teaPersoninfo";
+    }
+    //教师端修改密码
+    @RequestMapping("/changeTeaPwd")
+    public String changeTeaPwd(){
+        return "changepwd";
     }
 
     //进入教师端

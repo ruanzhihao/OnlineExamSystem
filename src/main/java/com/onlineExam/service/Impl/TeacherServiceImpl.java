@@ -43,6 +43,34 @@ public class TeacherServiceImpl implements TeacherService {
         return teacherMapper.queryTeacher(teachername);
     }
 
+
+    @Override
+    public Teacher findTeaByUsername(String username) {
+        return teacherMapper.findTeaByUsername(username);
+    }
+
+    @Override
+    public Teacher getTeaByEmail(String teacheremail) {
+        return teacherMapper.getTeaByEmail(teacheremail);
+    }
+
+    @Override
+    public boolean updatePassword(LoginUser user) {
+        if (teacherMapper.updatePassword(user)==0) {
+            return false;
+        }else{
+            return true;
+        }
+    }
+
+    @Override
+    public boolean updateTeaPassword(Teacher teacher) {
+        if (teacherMapper.updateTeaPassword(teacher)==0) {
+            return false;
+        }else {
+            return true;
+        }
+    }
     @Override
     public String login(String username, String password) {
         return teacherMapper.login(username,password);

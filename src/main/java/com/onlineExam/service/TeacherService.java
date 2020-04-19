@@ -15,6 +15,12 @@ public interface TeacherService {
     public Teacher findTeacherById(Integer teacherid);
     List<Teacher> queryTeacher(String teachername);
 
+    public Teacher findTeaByUsername(String username);
+    public Teacher getTeaByEmail(String teacheremail);
+    //修改用户密码
+    public boolean updatePassword(LoginUser user);
+    //修改教师密码
+    public boolean updateTeaPassword(Teacher teacher);
     public String login(@Param("username") String username, @Param("password") String password);
     public boolean findReisterUsername(String username);
     //注册用户账号

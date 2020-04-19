@@ -42,8 +42,8 @@
                     <span id="usernameInfo"></span>
                 </a>
                 <dl class="layui-nav-child">
-                    <dd><a href="">个人资料</a></dd>
-                    <dd><a href="">修改密码</a></dd>
+                    <dd><a href="./teaPersoninfo" id="teaPersoninfo">个人资料</a></dd>
+                    <dd><a href="./changeTeaPwd" id="changeTeaPwd">修改密码</a></dd>
                 </dl>
             </li>
             <li class="layui-nav-item"><a href="javascript:">退出</a></li>
@@ -112,6 +112,14 @@
         });
 
         $("#studentInfo").click(function (e) {
+            e.preventDefault();
+            $("#iframeMain").attr("src",$(this).attr("href"));
+        });
+        $("#teaPersoninfo").click(function(e){
+            e.preventDefault();
+            $("#iframeMain").attr("src",$(this).attr("href"));
+        });
+        $("#updatePass").click(function (e) {
             e.preventDefault();
             $("#iframeMain").attr("src",$(this).attr("href"));
         });
