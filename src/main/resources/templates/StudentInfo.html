@@ -43,7 +43,7 @@
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     <a th:href="@{/getImport}" ><button type="button" class="layui-btn">
-        <i class="layui-icon">&#xe608;</i> 导出学生信息
+        <i class="layui-icon">&#xe608;</i> 导出成绩信息
     </button>
     </a>
 </div>
@@ -54,11 +54,9 @@
 <table class="layui-table" lay-filter="demo">
     <thead>
     <tr>
-        <th lay-data="{field:'1', width:200, sort:true}">学号</th>
-        <th lay-data="{field:'2', width:200}">学生姓名</th>
-        <th lay-data="{field:'3', width:200}">手机号</th>
-        <th lay-data="{field:'4', width:200}">邮箱</th>
-        <th lay-data="{field:'5', width:200}">所属班级</th>
+        <th lay-data="{field:'1', width:300}">学号</th>
+        <th lay-data="{field:'2', width:300}">学生姓名</th>
+        <th lay-data="{field:'5', width:300}">所属班级</th>
         <th lay-data="{field:'6'}">专业</th>
 
     </tr>
@@ -67,8 +65,6 @@
     <tr th:each ="student :${list}">
         <td th:text="${student.stuid}"></td>
         <td th:text="${student.stuname}"></td>
-        <td th:text="${student.stuphonenumber}"></td>
-        <td th:text="${student.stuemail}"></td>
         <td th:text="${student.clazzName}"></td>
         <td th:text="${student.departName}"></td>
     </tr>
