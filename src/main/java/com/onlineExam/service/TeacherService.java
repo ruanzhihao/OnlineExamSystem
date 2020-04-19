@@ -15,6 +15,10 @@ public interface TeacherService {
     public Teacher findTeacherById(Integer teacherid);
     List<Teacher> queryTeacher(String teachername);
 
+
+    //修改用户信息
+    public boolean updateInformation(Teacher teacher);
+    public LoginUser findByUsername(String username);
     public Teacher findTeaByUsername(String username);
     public Teacher getTeaByEmail(String teacheremail);
     //修改用户密码

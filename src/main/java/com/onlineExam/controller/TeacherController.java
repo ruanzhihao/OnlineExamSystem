@@ -2,7 +2,6 @@ package com.onlineExam.controller;
 
 import com.google.code.kaptcha.impl.DefaultKaptcha;
 import com.onlineExam.domain.LoginUser;
-import com.onlineExam.domain.Student1;
 import com.onlineExam.domain.Teacher;
 import com.onlineExam.mapper.TeacherMapper;
 import com.onlineExam.modules.common.controller.MainController;
@@ -14,7 +13,10 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -22,7 +24,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 
@@ -225,8 +226,59 @@ public class TeacherController {
     //教师端修改密码
     @RequestMapping("/changeTeaPwd")
     public String changeTeaPwd(){
-        return "changepwd";
+        return "changeTeapwd";
     }
+
+    //修改教师个人信息
+    @RequestMapping(value = "/ChangeTeaInfo",method = RequestMethod.POST)
+    public String ChangeTeaInfo(HttpServletRequest request,HttpSession session,Model model,String teachername,Integer clazzId,
+                                Integer majorId,Integer departId,String teacherphoneNumber,String teacheremail){
+
+        String username=(String)request.getSession().getAttribute("username");
+        Teacher teacher=teacherService.findTeaByUsername(username);
+        teacher.setUsername(username);
+        teacher.setTeachername(teachername);
+        teacher.setTeacherphoneNumber(teacherphoneNumber);
+        teacher.setTeacheremail(teacheremail);
+        teacher.setClazzId(clazzId);
+        teacher.setDepartId(departId);
+        teacher.setMajorId(majorId);
+        boolean changeTeaInfo= teacherService.updateInformation(teacher);
+        if(changeTeaInfo){
+            model.addAttribute("msg","修改成功");
+        }else {
+            model.addAttribute("msg","修改失败");
+        }
+        return "teaPersoninfo";
+
+    }
+    //修改教师密码
+    @RequestMapping(value = "/ChangeTeaPwd",method = RequestMethod.POST)
+    public String changeTeaPwd(String password1, String password2, Model model, HttpSession session){
+        String username = (String) session.getAttribute("username");
+        Md5Hash md5password = new Md5Hash(password1, username, 5);
+        String userpassword = md5password.toString();   //加密后的原密码
+        LoginUser user=teacherService.findByUsername(username);
+        LoginUser user2 = new LoginUser();
+        if (userpassword.equals(user.getPassword())) {
+            Md5Hash md5password2 = new Md5Hash(password2, username, 5);  //新密码加密后
+            user2.setUsername(username);
+            user2.setPassword(md5password2.toString());
+
+            teacherService.updatePassword(user2);
+            Teacher teacher=new Teacher();
+            teacher.setUsername(username);
+            teacher.setTeacherpassword(md5password2.toString());
+            teacherService.updateTeaPassword(teacher);
+            System.out.println("修改密码后数据库中加密密码："+user2.getPassword()+"     teacher表中："+md5password2.toString());
+            model.addAttribute("msg", "修改成功");
+        } else {
+            model.addAttribute("msg", "原密码错误");
+        }
+        return "changeTeapwd";
+
+    }
+
 
     //进入教师端
     @RequestMapping("/TeacherIndex")

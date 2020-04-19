@@ -66,12 +66,13 @@ public class TeaRegisterController {
         Teacher teacher=new Teacher();
         teacher.setUsername(username);
         teacher.setTeachername(teachername);
-        teacher.setTeacherpassword(teacherpassword);
+        teacher.setTeacherpassword(md5registepassword.toString());
         teacher.setTeacherphoneNumber(teacherphoneNumber);
         teacher.setTeacheremail(teacheremail);
         teacher.setMajorId(majorId);
         teacher.setDepartId(departId);
         teacher.setClazzId(clazzId);
+        teacher.setStateId(1);
 
         boolean addTeacher= teacherService.addTeacherInfo(teacher);
         if(addregister&&addTeacher) {

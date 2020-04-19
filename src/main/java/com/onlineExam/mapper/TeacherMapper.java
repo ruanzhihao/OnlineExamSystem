@@ -18,6 +18,10 @@ public interface TeacherMapper {
     Teacher findTeacherById(Integer teacherid);//根据id查找
     List<Teacher> queryTeacher(@Param("teachername") String teachername);//根据教师姓名查询
 
+    //修改用户信息
+    public int updateInformation(Teacher teacher);
+    //登录验证
+    public LoginUser findByUsername(String username);
     public Teacher findTeaByUsername(String username);
     public Teacher getTeaByEmail(String teacheremail);
     //修改用户密码

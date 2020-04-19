@@ -37,13 +37,24 @@ public class TeacherServiceImpl implements TeacherService {
         Teacher t=teacherMapper.findTeacherById(teacherid);
         return t;
     }
-
     @Override
     public List<Teacher> queryTeacher(String teachername) {
         return teacherMapper.queryTeacher(teachername);
     }
 
 
+    //修改用户信息
+    @Override
+    public boolean updateInformation(Teacher teacher) {
+        if (teacherMapper.updateInformation(teacher) == 0) {
+            return false;
+        } else
+            return true;
+    }
+    @Override
+    public LoginUser findByUsername(String username) {
+        return teacherMapper.findByUsername(username);
+    }
     @Override
     public Teacher findTeaByUsername(String username) {
         return teacherMapper.findTeaByUsername(username);
