@@ -1,5 +1,7 @@
 package com.onlineExam.service.Impl;
 
+import com.onlineExam.domain.Clazz;
+import com.onlineExam.domain.Depart;
 import com.onlineExam.domain.Student;
 import com.onlineExam.mapper.TeacherIndexMapper;
 import com.onlineExam.service.TeacherIndexService;
@@ -16,5 +18,20 @@ public class TeacherIndexServiceImpl implements TeacherIndexService {
     @Override
     public List<Student> getAllStudent() {
         return teacherIndexMapper.getAllStudent();
+    }
+
+    @Override
+    public List<Clazz> getAllClazz() {
+        return teacherIndexMapper.getAllClazz();
+    }
+
+    @Override
+    public List<Depart> getAllDepart() {
+        return teacherIndexMapper.getAllDepart();
+    }
+
+    @Override
+    public List<Student> queryStuInfo(int stuId) {
+        return teacherIndexMapper.queryStuInfo(stuId);
     }
 }
