@@ -8,6 +8,7 @@ import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.crypto.hash.Md5Hash;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -45,6 +46,7 @@ public class TeaRegisterController {
 */
     @ApiOperation(value = "教师用户注册")
     @RequestMapping("/TeaRegister")
+    @Transactional
     public String toregister(String username, String teachername,String teacherpassword, Model model,
                              String teacherphoneNumber,String teacheremail,Integer majorId,Integer departId,Integer clazzId)
     {
