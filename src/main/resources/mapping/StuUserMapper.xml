@@ -44,7 +44,7 @@
   </select>
 
     <!--	修改用户信息-->
-    <update id="updateInformation" parameterType="String">
+    <update id="updateInformation" parameterType="com.onlineExam.domain.Student">
 	 update student set stuid = #{stuid} ,stuname=#{stuname},stuemail=#{stuemail},stuphonenumber=#{stuphonenumber},
 	 clazzId=#{clazzId},majorId=#{majorId},departId=#{departId}
     where username=#{username}

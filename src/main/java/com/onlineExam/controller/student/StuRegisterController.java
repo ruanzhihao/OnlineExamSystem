@@ -8,6 +8,7 @@ import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.crypto.hash.Md5Hash;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -53,6 +54,7 @@ public class StuRegisterController {
      */
     @ApiOperation(value = "学生用户注册")
     @RequestMapping("/StuRegister")
+    @Transactional
     public String toregister(String username, String password, Model model,HttpServletRequest request,
     Integer stuid,String stuname, String phone, String email,Integer clazz,Integer dept,Integer major)
     {
@@ -81,6 +83,7 @@ public class StuRegisterController {
         stuInformation.setClazzId(clazz);
         stuInformation.setDepartId(dept);
         stuInformation.setMajorId(major);
+        stuInformation.setStateId(1);
         boolean addStuInformation= userService.addStuInformation(stuInformation);
         if(addregister&&addStuInformation) {
             model.addAttribute("msg", "注册成功");
