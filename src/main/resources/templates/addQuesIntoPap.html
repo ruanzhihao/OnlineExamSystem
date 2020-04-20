@@ -5,7 +5,7 @@
 </head>
 <body class="layui-layout-body">
     <div class="layui-container">
-        <div style="width: auto;height: 150px;"></div>
+        <div style="width: auto;height: 40px;"></div>
         <div style="text-align: center;">
         <form class="layui-form layui-form-pane" id="importForm" action="imp_addIntoPaper" th:method="post" enctype="multipart/form-data" >
             <input type="hidden" value="" name="paperId" th:value="${paper.paperId}">
@@ -79,13 +79,6 @@
         </form>
         </div>
     </div>
-  <!--  <script type="text/javascript" data-th-inline="javascript">
-        //一般直接写在一个js文件中S
-        layui.use(['layer', 'form'], function(){
-            var layer = layui.layer
-                ,form = layui.form; //只有执行了这一步，部分表单元素才会自动修饰成功
-        });//弹框
-    </script>-->
 <script type="text/javascript" data-th-inline="javascript">
     layui.use(['form', 'layedit'], function() {
         var form = layui.form
@@ -99,9 +92,10 @@
                     icon: 1,
                     time: 2000
                 }, function(){
-                  window.location.href="/paperCenter";
+                    window.location.href="/paperCenter";
+                    var index = parent.layer.getFrameIndex(window.name);
+                    parent.layer.close(index);
                 });
-
             })
         });
     });

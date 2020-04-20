@@ -3,19 +3,20 @@ package com.onlineExam.controller;
 import com.onlineExam.domain.Exam;
 import com.onlineExam.domain.Paper;
 import com.onlineExam.domain.Question;
-import com.onlineExam.domain.Student;
+import com.onlineExam.domain.ReleaseExam;
 import com.onlineExam.service.ExamService;
 import com.onlineExam.service.PaperService;
 import com.onlineExam.service.QuestionService;
+import com.onlineExam.service.StudentFunctionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.HttpSession;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -24,6 +25,8 @@ import java.util.List;
  * */
 @Controller
 public class StudentFunctionController {
+    @Autowired
+    private StudentFunctionService studentFunctionService;
 
     @Autowired
     private PaperService paperService;
@@ -66,12 +69,56 @@ public class StudentFunctionController {
 
         return "main";
     }
-    //进入参加考试界面  获取待考试 并显示
+/*    //进入参加考试界面  获取待考试 并显示
     @RequestMapping(value = "/JoinExam",method = RequestMethod.GET)
     public String goExam(Model model){
         List<Paper> list=paperService.getAllPaper();
         model.addAttribute("PaperList",list);
         return "JoinExam";
+    }*/
+//进入参加考试界面  获取待考试 并显示
+@RequestMapping(value = "/JoinExam",method = RequestMethod.GET)
+public String goExam(Model model){
+    List<ReleaseExam> releaseExams=studentFunctionService.getReleaseByMajor(1);
+    model.addAttribute("releaseExams",releaseExams);
+    return "JoinExam";
+}
+    //进入参加考试界面  获取待考试 并显示
+
+    @Scheduled(cron = "0/10 * * * * *")
+/*@RequestMapping("ddd")
+@ResponseBody*/
+    public void  getStuReleaseExam() throws Exception{
+        List<ReleaseExam> releaseExams=studentFunctionService.selectReleaseTime();
+        System.out.println(releaseExams);
+        for (ReleaseExam r:releaseExams) {
+            String beginTime=r.getBeginTime();
+            System.out.println(beginTime);
+            Integer answerTime=r.getAnswerTime();
+            System.out.println(answerTime);
+            int stateId=checkRelease(beginTime,answerTime);
+            int i=studentFunctionService.updateState(r.getReleaseExamId(),stateId);
+            System.out.println(i);
+            if(i==1){
+                System.out.println("更新任务"+r.getReleaseExamId()+"状态为"+stateId);            }
+        }
+    }
+    public int checkRelease(String beginTime,int answerTime)throws Exception {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date beginTimeDate = sdf.parse(beginTime);
+        Long beginTimes = beginTimeDate.getTime();
+        int answerTimeSecond =  answerTime * 60 * 1000;
+        Date nowDate = new Date();
+        Long nowDateTime = nowDate.getTime();
+        Long newAnswerTime = nowDateTime - beginTimes;
+        System.out.println("时间差"+newAnswerTime);
+        if (newAnswerTime.intValue() >= 0 && newAnswerTime.intValue() <= answerTimeSecond) {
+            return 2;
+        } else if (newAnswerTime.intValue() >answerTimeSecond) {
+            return 3;
+        } else {
+            return 1;
+        }
     }
     //点击考试界面 进入考试 获取试卷试题 并显示-----后去换生成随机数获取题目
     @RequestMapping(value = "/Examing",method = RequestMethod.GET)

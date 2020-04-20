@@ -297,7 +297,6 @@ public class PaperController {
             }
             else {
                 alreadyExisit.add(questionId);
-
             }
         }
         if(alreadyExisit.size()==questionList.size()){

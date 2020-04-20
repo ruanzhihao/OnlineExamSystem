@@ -1,9 +1,6 @@
 package com.onlineExam.mapper;
 
-import com.onlineExam.domain.Course;
-import com.onlineExam.domain.Major;
-import com.onlineExam.domain.Question;
-import com.onlineExam.domain.QuestionVo;
+import com.onlineExam.domain.*;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
 
@@ -21,12 +18,12 @@ public interface QuestionMapper {
     List<Major> getMajor();
 
     //增加题目的实现
-    int addQuestion(@Param("questionName") String questionName, @Param("optionA")String optionA, @Param("optionB")String optionB, @Param("optionC")String optionC,
-                    @Param("optionD")String optionD, @Param("answer")String answer, @Param("questionScore")int questionScore, @Param("courseId")int courseId, @Param("majorId")int majorId,
-                    @Param("questionType")String questionType, @Param("questionClass")String questionClass);
+    int addQuestion(@Param("questionName") String questionName, @Param("optionA") String optionA, @Param("optionB") String optionB, @Param("optionC") String optionC,
+                    @Param("optionD") String optionD, @Param("answer") String answer, @Param("questionScore") int questionScore, @Param("courseId") int courseId, @Param("majorId") int majorId,
+                    @Param("questionType") String questionType, @Param("questionClass") String questionClass);
     List<Course> getAllCourse();
     List<Major> getAllMajor();
-    int addImportQuestion(@Param("questionId") Integer questionId,@Param("questionName") String questionName,@Param("optionA") String optionA,@Param("optionB") String optionB,@Param("optionC") String optionC,@Param("optionD") String optionD,@Param("answer") String answer,@Param("questionScore") Integer questionScore,@Param("courseId") Integer courseId,@Param("majorId") Integer majorId,@Param("questionType") String questionType,@Param("questionClass") String questionClass);
+    int addImportQuestion(@Param("questionId") Integer questionId, @Param("questionName") String questionName, @Param("optionA") String optionA, @Param("optionB") String optionB, @Param("optionC") String optionC, @Param("optionD") String optionD, @Param("answer") String answer, @Param("questionScore") Integer questionScore, @Param("courseId") Integer courseId, @Param("majorId") Integer majorId, @Param("questionType") String questionType, @Param("questionClass") String questionClass);
 
     //根据试题Id  删除
     int delQuestionById(@Param("questionId") int questionId);
@@ -38,7 +35,7 @@ public interface QuestionMapper {
     Question showQuestion(Integer questionId);
 
     //修改试题实现
-    int updateQuestion(@Param("questionId") Integer questionId,@Param("questionName") String questionName,@Param("optionA") String optionA,@Param("optionB") String optionB,@Param("optionC") String optionC,@Param("optionD") String optionD,@Param("answer") String answer,@Param("questionScore") Integer questionScore,@Param("courseId") Integer courseId,@Param("majorId") Integer majorId,@Param("questionType") String questionType,@Param("questionClass") String questionClass);
+    int updateQuestion(@Param("questionId") Integer questionId, @Param("questionName") String questionName, @Param("optionA") String optionA, @Param("optionB") String optionB, @Param("optionC") String optionC, @Param("optionD") String optionD, @Param("answer") String answer, @Param("questionScore") Integer questionScore, @Param("courseId") Integer courseId, @Param("majorId") Integer majorId, @Param("questionType") String questionType, @Param("questionClass") String questionClass);
 
     List<Integer> getQuestionId(int count);
     //根据MajorId查询Ques
@@ -47,5 +44,7 @@ public interface QuestionMapper {
     List<QuestionVo> getAllQuestionVo();
     //查询题目类型de数量
     List<QuestionVo>  getQuestionType();
+    List<CountVo> getResourceInfo();
+    List<CountVo> getUserInfo();
 }
 

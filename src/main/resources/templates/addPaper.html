@@ -92,15 +92,15 @@
 
         //监听提交
         form.on('submit(formDemo)', function(data){
-            // layer.alert(JSON.stringify(data.field), {
-            //     title: '最终的提交信息'
-            // })
             $.post("/addPapers", data.field, function(res){
                 layer.msg("增加成功！", {
                     icon: 1,
-                    time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                    time: 2000
                 }, function(){
                    window.location.href="/paperCenter";
+                    var index = parent.layer.getFrameIndex(window.name);
+                    parent.layer.close(index);
+                    parent.layui.table.reload('test');
                 });
             })
             return false;

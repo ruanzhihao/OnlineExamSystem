@@ -1,9 +1,6 @@
 package com.onlineExam.service.Impl;
 
-import com.onlineExam.domain.Course;
-import com.onlineExam.domain.Major;
-import com.onlineExam.domain.Question;
-import com.onlineExam.domain.QuestionVo;
+import com.onlineExam.domain.*;
 import com.onlineExam.mapper.QuestionMapper;
 import com.onlineExam.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -92,7 +89,17 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
+    public List<CountVo> getResourceInfo() {
+        return questionMapper.getResourceInfo();
+    }
+
+    @Override
     public List<QuestionVo> getQuestionType() {
         return questionMapper.getQuestionType();
+    }
+
+    @Override
+    public List<CountVo> getUserInfo() {
+        return questionMapper.getUserInfo();
     }
 }

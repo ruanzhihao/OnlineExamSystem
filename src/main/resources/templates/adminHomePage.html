@@ -11,20 +11,21 @@
     <div id="main" style="float:left;width: 600px;height:400px;"></div>
     <div id="main1" style="float:left;width: 600px;height:400px;"></div>
 </div>
+
 <script type="text/javascript">
     // 基于准备好的dom，初始化echarts实例
     var myChart = echarts.init(document.getElementById('main'));
-    var questionMajor = [];
-    var numbers = [];
+    var countName = [];
+    var countNum = [];
     $.ajax({
         type:"GET",
-        url:"/getAllQuestionVo",
+        url:"/getResourceInfo",
         dataType:"json",
         async:false,
         success:function (result) {
             for (var i = 0; i < result.length; i++){
-                questionMajor.push(result[i].questionMajor);
-                numbers.push(result[i].number);
+                countName.push(result[i].countName);
+                countNum.push(result[i].countNum);
             }
         },
         error :function(errorMsg) {
@@ -34,22 +35,22 @@
     // 指定图表的配置项和数据
     var option = {
         title: {
-            text: '各专业题库题量'
+            text: '平台资源'
         },
         tooltip: {},
         legend: {
-            data:['题量']
+            data:['资源']
         },
         xAxis: {
             //结合
-            data: questionMajor
+            data: countName
         },
         yAxis: {},
         series: [{
-            name: '题量',
+            name: '资源',
             type: 'bar',
             //结合
-            data: numbers
+            data: countNum
         }]
     };
     // 使用刚指定的配置项和数据显示图表。
@@ -59,7 +60,7 @@
     var myChart1 = echarts.init(document.getElementById('main1'));
     var option1 = {
         title : {
-            text: '题型分布',
+            text: '用户分布',
             x:'center'
         },
         tooltip : {
@@ -72,7 +73,7 @@
         },
         series : [
             {
-                name: '数据库题量',
+                name: '用户分布',
                 type: 'pie',
                 radius : '55%',
                 center: ['50%', '60%'],
@@ -80,13 +81,13 @@
                     var datas = [];
                     $.ajax({
                         type:"POST",
-                        url:"/getAllQuestionType",
+                        url:"/getUserInfo",
                         dataType:"json",
                         async:false,
                         success:function (result) {
                             for (var i = 0; i < result.length; i++){
                                 datas.push({
-                                    "value":result[i].number, "name":result[i].questionType
+                                    "value":result[i].countNum, "name":result[i].countName
                                 })
                             }
                         }

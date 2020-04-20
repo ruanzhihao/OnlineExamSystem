@@ -14,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -199,4 +200,46 @@ public class QuestionController {
         List<QuestionVo> questionVos=ques.getQuestionType();
         return  questionVos;
     }
+    @RequestMapping("getUserInfo")
+    @ResponseBody
+    public List<CountModel> getUserInfo(){
+        List<CountVo> countVo=ques.getUserInfo();
+        System.out.println(countVo);
+        Integer userNum=countVo.get(0).getTeacherNum();
+        Integer teacherNum=countVo.get(0).getStuNum();
+        CountModel countModel=new CountModel("学生",userNum);
+        CountModel countModel2=new CountModel("老师",teacherNum);
+        List<CountModel> countModels=new ArrayList<>();
+        countModels.add(countModel);
+        countModels.add(countModel2);
+        return  countModels;
+    }
+    @RequestMapping("getResourceInfo")
+    @ResponseBody
+    public List<CountModel> getResourceInfo(){
+        List<CountVo> countVo=ques.getResourceInfo();
+        System.out.println(countVo);
+        Integer questionNum=countVo.get(0).getQuestionNum();
+        Integer releaseNum=countVo.get(0).getReleaseNum();
+        Integer papNum=countVo.get(0).getPapNum();
+        CountModel countModel=new CountModel("题目",questionNum);
+        CountModel countModel2=new CountModel("试卷",papNum);
+        CountModel countModel3=new CountModel("考试任务",releaseNum);
+        List<CountModel> countModels=new ArrayList<>();
+        countModels.add(countModel);
+        countModels.add(countModel2);
+        countModels.add(countModel3);
+        return  countModels;
+    }
+    @RequestMapping("adminHomePage")
+    public String adminHomePage(){
+        return "adminHomePage";
+    }
+
+
+
+
+
+
+
 }

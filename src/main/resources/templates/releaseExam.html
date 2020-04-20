@@ -4,7 +4,7 @@
 </head>
 <body class="layui-layout-body">
     <div class="layui-container">
-        <div style="width: auto;height: 150px;"></div>
+        <div style="width: auto;height: 80px;"></div>
         <div style="text-align: center;">
         <form class="layui-form" onclick="return false;" >
 
@@ -87,6 +87,9 @@
                     time: 2000 //2秒关闭（如果不配置，默认是3秒）
                 }, function(){
                     window.location.href="/releaseInfoCenter";
+                    var index = parent.layer.getFrameIndex(window.name);
+                    parent.layer.close(index);
+                    parent.layui.table.reload('test');
                 });
             })
             return false;

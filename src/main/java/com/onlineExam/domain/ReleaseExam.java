@@ -14,8 +14,11 @@ String courseName;
 int authorId;
 String beginTime;
 String authorName;
+Integer questionNumber;
+Integer sumQuestionScore;
 Integer paperId;
 String paperName;
+Integer answerTime;
 Integer examStateId;
 String examStateName;
 }

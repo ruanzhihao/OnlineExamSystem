@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.onlineExam.mapper.StudentFunctionMapper">
+<select id="getStuMajor" resultType="Integer">
+SELECT student.majorId from t_major,student where t_major.majorId=student.majorId and student.username=#{username}
+</select>
+    <select id="getReleaseByMajor" resultType="com.onlineExam.domain.ReleaseExam">
+select t_releaseexam.releaseExamId,t_paper.questionNumber,t_paper.sumQuestionScore,t_releaseexam.beginTime,t_paper.answerTime,t_paper.paperId,t_paper.paperName,t_examstate.examStateName
+from t_examstate,t_releaseexam,t_paper
+where (t_releaseexam.examStateId=t_examstate.examStateId
+and  t_paper.paperId=t_releaseexam.paperId
+and t_releaseexam.majorId=#{majorId})
+and (t_releaseexam.examStateId=2
+or t_releaseexam.examStateId=1)
+ORDER BY examStateName DESC
+
+    </select>
+    <select id="getAnswerTime" resultType="com.onlineExam.domain.Paper">
+        select answerTime from t_paper where paperId=#{paperId}
+    </select>
+    <update id="updateState" parameterType="com.onlineExam.domain.ReleaseExam">
+      update t_releaseexam SET t_releaseexam.examStateId=#{examStateId} where t_releaseexam.releaseExamId=#{releaseExamId}
+    </update>
+    <select id="selectReleaseTime" resultType="com.onlineExam.domain.ReleaseExam">
+      select  t_releaseexam.beginTime,t_paper.answerTime,t_releaseexam.releaseExamId from t_paper,t_releaseexam where t_paper.paperId=t_releaseexam.paperId
+    </select>
+</mapper>

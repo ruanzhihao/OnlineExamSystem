@@ -53,4 +53,19 @@
     <select id="getQuestionType" resultType="com.onlineExam.domain.QuestionVo">
 select t_question.questionType as questionType,count(*) as number from t_question GROUP BY t_question.questionType
     </select>
+    <select id="getResourceInfo" resultType="com.onlineExam.domain.CountVo">
+        select a.questionNum,b.papNum,c.releaseNum
+             from(
+    (select COUNT(*) as questionNum from t_question) a,
+    (select COUNT(*) as papNum from t_paper) b,
+    (SELECT count(*) as releaseNum from t_releaseexam) c
+)
+    </select>
+    <select id="getUserInfo" resultType="com.onlineExam.domain.CountVo">
+         select a.stuNum,b.teacherNum
+             from(
+    (select COUNT(*) as stuNum from student) a,
+    (select COUNT(*) as teacherNum from teacher) b
+)
+    </select>
 </mapper>
