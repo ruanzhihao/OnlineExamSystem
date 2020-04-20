@@ -86,11 +86,6 @@ public class FileUpload {
         return questions;
     }
 
-
-    /**
-     * 解析第一行标题名得到列索引
-     * @param firstRow
-     */
     private static void getCellIndexs(XSSFRow firstRow) {
         int cellNum = firstRow.getLastCellNum()-firstRow.getFirstCellNum();
         for (int i=0; i<cellNum; i++) {
@@ -99,19 +94,19 @@ public class FileUpload {
                 questionNameIndex = i;
                 continue;
             }
-            if ("答案A".equals(cell)) {
+            if ("选项A".equals(cell)) {
                 optionAIndex = i;
                 continue;
             }
-            if ("答案B".equals(cell)) {
+            if ("选项B".equals(cell)) {
                 optionBIndex = i;
                 continue;
             }
-            if ("答案C".equals(cell)) {
+            if ("选项C".equals(cell)) {
                 optionCIndex = i;
                 continue;
             }
-            if ("答案D".equals(cell)) {
+            if ("选项D".equals(cell)) {
                 optionDIndex = i;
                 continue;
             }
