@@ -4,6 +4,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.onlineExam.domain.*;
 import com.onlineExam.service.QuestionService;
+import com.onlineExam.service.TeacherIndexService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,6 +27,8 @@ public class QuestionController {
     @Autowired
     private QuestionService ques;
 
+    @Autowired
+    private TeacherIndexService teacherIndexService;
     @RequestMapping("/Manager")
     public String Login(){
         return "ManagerIndex";
@@ -34,7 +37,7 @@ public class QuestionController {
     //进入试题管理页面
     @RequestMapping(value = "/testManage",method = RequestMethod.GET)
     public String goQuestion(Model model){
-        List<Question> list=ques.getAllQuestion();
+        List<Question> list=teacherIndexService.getAllQues();
         model.addAttribute("list",list);
         List<Course> courseList=ques.getCourse();
         model.addAttribute("courseList",courseList);

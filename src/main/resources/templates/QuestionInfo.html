@@ -10,26 +10,34 @@
 <body>
 
 <div class="demoTable" style="padding: 15px">
+    <form class="layui-form" action="">
+    <div class="layui-input-inline" style="width:180px ">
+        <select name="tgcourse" id="tgcourse" lay-verify="required" >
+            <option value=""></option>
+            <option  th:each="course :${courseList}" th:text="${course.courseName}" th:value="${course.courseId}"></option>
+        </select>
 
-    <div class="layui-inline">
-        <input placeholder="输入试题关键字" class="layui-input" id="findQuestionKey" name="findQuestionKey" autocomplete="off">
     </div>
-    <button class="layui-btn" data-type="reload" onclick="queryQuestion()" >搜索</button>
-    <a type="button" class="layui-btn" data-type="reload" href="/testManage" >刷新</a>
-    <script>
-        function queryQuestion () {
-            var questionName = $('#findQuestionKey').val()
+        <div class="layui-input-inline" >
+            <button class="layui-btn layui-btn-warm"  onclick="queryQuestionById()" >搜索</button>
+            <a type="button" class="layui-btn" data-type="reload" href="/QuestionInfo" >刷新</a>
+        </div>
+
+    <script th:inline="javascript">
+        function queryQuestionById () {
+            var tgcourse = $('#tgcourse option:selected').val()
+
             $.ajax({
-                url:'/queryQuestion',
-                type:'get',
+                url:'/queryQuestionByCourseId',
+                type:'post',
                 data:{
-                    questionName:questionName,
+                    courseId:tgcourse,
                 },
                 success:function () {
                     layer.msg('查询中...', {
                         time: 2000 //2秒关闭（如果不配置，默认是3秒）
                     }, function () {
-                        window.location.href="/queryShow?questionName="+questionName;
+                        window.location.href="/queryByCourseId?courseId="+courseId;
                     });
                 }
             })
@@ -38,15 +46,26 @@
 
     </script>
 
-    <!--  <button class="layui-btn" data-type="reload" >刷新</button>-->
-    &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;
-    <button type="button" class="layui-btn layui-btn " id="addQuestion" >
-        <i class="layui-icon">&#x1002;</i>手动录入试题
-    </button>
-    <a th:href="@{/getImport}" ><button type="button" class="layui-btn">
-        <i class="layui-icon">&#xe608;</i> 导入题目
-    </button>
-    </a>
+
+        <button type="button" class="layui-btn" onclick="AutomateExcel()">
+        <i class="layui-icon">&#xe608;</i> 导出试题
+
+<!--            <script>-->
+<!--                function  AutomateExcel(){-->
+<!--                    var elTable = document.getElementById("tables"); //要导出的table id。-->
+<!--                    var oRangeRef = document.body.createTextRange();-->
+<!--                    oRangeRef.moveToElementText(elTable);-->
+<!--                    oRangeRef.execCommand("Copy");-->
+<!--                    var appExcel = new ActiveXObject("Excel.Application");-->
+<!--                    appExcel.Workbooks.Add().Worksheets.Item(1).Paste();-->
+<!--                    appExcel.Visible = true;-->
+<!--                    appExcel = null;-->
+<!--                }-->
+<!--            </script>-->
+
+        </button>
+    </form>
+   <!-- </a>-->
 </div>
 <!--添加页面实现-->
 <div class="layui-row" id="popSearchRoleTest" style="display:none;">
@@ -91,18 +110,18 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">考试科目：</label>
                 <div class="layui-input-inline" style="width: 180px" >
-                    <!--<select name="courseId" id="courseId" lay-verify="required" >
+                    <select name="courseId" id="courseId" lay-verify="required" >
                         <option value=""></option>
                         <option  th:each="course :${courseList}" th:text="${course.courseName}" th:value="${course.courseId}"></option>
-                    </select>-->
+                    </select>
                 </div>
 
                 <label class="layui-form-label">专业：</label>
                 <div class="layui-input-inline" style="width: 180px">
-                    <!--<select name="majorId" id="majorId"  lay-verify="required" >
+                    <select name="majorId" id="majorId"  lay-verify="required" >
                         <option value=""></option>
                         <option th:each="major:${majorList}" th:text="${major.majorName}" th:value="${major.majorId}"></option>
-                    </select>-->
+                    </select>
                 </div>
             </div>
 
@@ -197,7 +216,7 @@
 
 
 <hr>
-<table class="layui-table" lay-filter="demo">
+<table class="layui-table" lay-filter="demo" id="tables">
     <thead>
     <tr>
         <th lay-data="{field:'1', width:40, sort:true}">ID</th>
@@ -218,7 +237,7 @@
     </tr>
     </thead>
     <tbody>
-   <!-- <tr th:each ="question :${list}">
+    <tr th:each="question :${quesList}">
         <td th:text="${question.questionId}"></td>
         <td th:text="${question.questionName}"></td>
         <td th:text="${question.optionA}"></td>
@@ -233,21 +252,19 @@
         <td th:text="${question.questionClass}"></td>
         <td> &nbsp;&nbsp;&nbsp;&nbsp;
 
-           &lt;!&ndash; <a type="button" title="修改" href="javascript:;" th:onclick="|javascript:updateIndex(this,${question.questionId})|" class="layui-btn layui-btn-sm layui-btn-warm" id="updateBtn" >
-                <i class="layui-icon">&#xe642;</i>
-            </a>&ndash;&gt;
-            &lt;!&ndash;  修改的实现&ndash;&gt;
+           <a type="button" title="错误" href="javascript:;" th:onclick="|javascript:updateIndex(this)|" class="layui-btn layui-btn-sm layui-btn-warm" id="updateBtn" >
+              报错
+            </a>
             <script>
                 /*  function updateIndex(id,name,optionA,optionB,optionC,optionD,answer,questionScore,courseName,majorName,questionType,questionClass){
                   $('#newquestionName').val(name);
-
                   }
   */
-            </script>
 
-           &lt;!&ndash; <a title="删除" class="layui-btn layui-btn-sm layui-btn-danger" th:onclick="|javascript:deleteQuestion(this,${question.questionId})|" href="javascript:;">
-                <i class="layui-icon">&#xe640;</i>
-            </a>&ndash;&gt;
+            </script>
+            <a title="删除" class="layui-btn layui-btn-sm layui-btn-danger" th:onclick="|javascript:deleteQuestion(this)|" href="javascript:;">
+               删除
+            </a>
             <script>
                 function deleteQuestion(obj,questionId){
                     layer.confirm('确认要删除吗？',
@@ -270,7 +287,7 @@
 
             </script>
         </td>
-    </tr>-->
+    </tr>
     </tbody>
 </table>
 
@@ -322,7 +339,6 @@
 
      }*/
 </script>
-
 
 <script>
     layui.use('layer', function(){

@@ -5,15 +5,15 @@
 
        insert into t_exam (examName,stuId,stuName,stuDept,stuClazz,examTime,examScore,paperId) value(#{examName},#{stuId},#{stuName},#{stuDept},#{stuClazz},#{examTime},#{examScore},#{paperid})
    </insert>
-    <select id="fingStuById" parameterType="java.lang.String" resultType="com.onlineExam.domain.Student">
-    select * from t_student where stuid=#{stuId}
+    <select id="fingStuById" parameterType="java.lang.Integer" resultType="com.onlineExam.domain.Student">
+    select * from student,t_clazz,t_depart where stuid=#{stuId} and student.clazzId=t_clazz.clazzId and t_depart.departId=student.departId
     </select>
 
     <select id="findPaperById" parameterType="java.lang.Integer" resultType="com.onlineExam.domain.Paper">
     select * from t_paper where paperId=#{paperId}
     </select>
 
-    <select id="findExamScoreById" parameterType="java.lang.String" resultType="com.onlineExam.domain.Exam">
+    <select id="findExamScoreById" parameterType="java.lang.Integer" resultType="com.onlineExam.domain.Exam">
 select * from t_exam where stuId=#{stuId}
     </select>
 </mapper>

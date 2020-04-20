@@ -1,6 +1,10 @@
 package com.onlineExam.controller;
 
+import com.onlineExam.domain.Course;
+import com.onlineExam.domain.Major;
+import com.onlineExam.domain.Question;
 import com.onlineExam.domain.Student;
+import com.onlineExam.service.QuestionService;
 import com.onlineExam.service.TeacherIndexService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,14 +26,50 @@ public class TeacherIndexController {
     @Autowired
     private TeacherIndexService teacherIndexService;
 
+    @Autowired
+    private QuestionService ques;
+
 
     @RequestMapping(value = "/QuestionInfo",method = RequestMethod.GET)
     public String goInfo(Model model){
+        List<Question> list=teacherIndexService.getAllQues();
+        model.addAttribute("quesList",list);
 
+        List<Course> courseList=ques.getCourse();
+        model.addAttribute("courseList",courseList);
+
+        List<Major> majorList=ques.getMajor();
+        model.addAttribute("majorList",majorList);
+        return "QuestionInfo";
+
+    }
+    @RequestMapping(value = "/queryQuestionByCourseId",method = RequestMethod.POST)
+    @ResponseBody
+    public String queryQuestionByCourseId(Model model,@RequestParam("courseId") int courseId){
+    List<Question> tgQues=teacherIndexService.getTgQues(courseId);
+    if (tgQues == null){
+        return "1";
+    }
+        return "2";
+    }
+
+    @RequestMapping(value = "/queryByCourseId",method = RequestMethod.GET)
+    public String queryByCourseId(Model model,@RequestParam("courseId") int courseId){
+
+        List<Question> tgQues=teacherIndexService.getTgQues(courseId);
+        model.addAttribute("quesList", tgQues);
+
+        List<Course> courseList=ques.getCourse();
+        model.addAttribute("courseList",courseList);
+
+        List<Major> majorList=ques.getMajor();
+        model.addAttribute("majorList",majorList);
 
         return "QuestionInfo";
 
     }
+
+
     @RequestMapping(value = "/queryStuInfo",method = RequestMethod.POST)
     @ResponseBody
     public String queryStuInfo(@RequestParam("stuId") int stuId, Model model){

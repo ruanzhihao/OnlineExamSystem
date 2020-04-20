@@ -1,9 +1,6 @@
 package com.onlineExam.controller;
 
-import com.onlineExam.domain.Exam;
-import com.onlineExam.domain.Paper;
-import com.onlineExam.domain.Question;
-import com.onlineExam.domain.ReleaseExam;
+import com.onlineExam.domain.*;
 import com.onlineExam.service.ExamService;
 import com.onlineExam.service.PaperService;
 import com.onlineExam.service.QuestionService;
@@ -15,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -122,13 +120,14 @@ public String goExam(Model model){
     }
     //点击考试界面 进入考试 获取试卷试题 并显示-----后去换生成随机数获取题目
     @RequestMapping(value = "/Examing",method = RequestMethod.GET)
-    public String goExaming(Model model,@RequestParam("paperId") int paperId, @RequestParam("number") String number, @RequestParam("score")String score, @RequestParam("stuId")String stuId){
+    public String goExaming(Model model,@RequestParam("paperId") int paperId, @RequestParam("number") String number, @RequestParam("score")String score, @RequestParam("stuId")int stuId){
         model.addAttribute("number",number);
         model.addAttribute("score",score);
         model.addAttribute("stuId",stuId);
         model.addAttribute("paperId",paperId);
-        List<Question> list=questionService.getAllQuestion();
+     /*   model.addAttribute("majorId",majorId);*/
 
+        List<Question> list=questionService.getAllQuestion();
         Question question=list.get(0);
         model.addAttribute("question1",question);
 
@@ -143,10 +142,10 @@ public String goExam(Model model){
         return "Examing";
     }
 
-    /*//点击交卷自动判分 实现
+    //点击交卷自动判分 实现
     @RequestMapping(value = "/jiaojuan",method = RequestMethod.POST)
     @ResponseBody
-    public int jiaojuan(@RequestParam("stuId") String stuid,@RequestParam("paperId") int paperId, @RequestParam("answer1") String answer1,@RequestParam("answer2")String answer2,@RequestParam("answer3")String answer3, @RequestParam("answer4")String answer4,
+    public int jiaojuan(@RequestParam("stuId") int stuid,@RequestParam("paperId") int paperId, @RequestParam("answer1") String answer1,@RequestParam("answer2")String answer2,@RequestParam("answer3")String answer3, @RequestParam("answer4")String answer4,
                         @RequestParam("ranswer1")String  ranswer1, @RequestParam("ranswer2")String ranswer2,@RequestParam("ranswer3")String  ranswer3, @RequestParam("ranswer4")String ranswer4,
                         @RequestParam("score1")int score1, @RequestParam("score2")int score2, @RequestParam("score3")int score3, @RequestParam("score4")int score4){
         int sum=0;
@@ -158,10 +157,10 @@ public String goExam(Model model){
         Student student=examService.fingStuById(stuid);
         Paper paper=examService.findPaperById(paperId);
         String examName=paper.getPaperName();
-        String stuId=student.getStuid();
+        int stuId=student.getStuid();
         String stuName=student.getStuname();
-        String stuDept=student.getDept();
-        String stuClazz=student.getClazz();
+        String stuDept=student.getDepartName();
+        String stuClazz=student.getClazzName();
         String examTime=new Date().toLocaleString();
         int paperid=paper.getPaperId();//后添加
         int examScore=sum;
@@ -174,7 +173,7 @@ public String goExam(Model model){
     //自动交卷判分
     @RequestMapping(value = "/AutoJiaoJuan",method = RequestMethod.POST)
     @ResponseBody
-    public int AutoJiaojuan( @RequestParam("stuId") String stuid,@RequestParam("paperId") int paperId, @RequestParam("answer1") String answer1,@RequestParam("answer2")String answer2,@RequestParam("answer3")String answer3, @RequestParam("answer4")String answer4,
+    public int AutoJiaojuan( @RequestParam("stuId") int stuid,@RequestParam("paperId") int paperId, @RequestParam("answer1") String answer1,@RequestParam("answer2")String answer2,@RequestParam("answer3")String answer3, @RequestParam("answer4")String answer4,
                              @RequestParam("ranswer1")String  ranswer1, @RequestParam("ranswer2")String ranswer2,@RequestParam("ranswer3")String  ranswer3, @RequestParam("ranswer4")String ranswer4,
                              @RequestParam("score1")int score1, @RequestParam("score2")int score2, @RequestParam("score3")int score3, @RequestParam("score4")int score4){
         int sum=0;
@@ -186,10 +185,10 @@ public String goExam(Model model){
         Student student=examService.fingStuById(stuid);
         Paper paper=examService.findPaperById(paperId);
         String examName=paper.getPaperName();
-        String stuId=student.getStuid();
+        int stuId=student.getStuid();
         String stuName=student.getStuname();
-        String stuDept=student.getDept();
-        String stuClazz=student.getClazz();
+        String stuDept=student.getDepartName();
+        String stuClazz=student.getClazzName();
         String examTime=new Date().toLocaleString();
         int paperid=paper.getPaperId();//后添加
         int examScore=sum;
@@ -198,7 +197,7 @@ public String goExam(Model model){
         int i=examService.StuInsertExam(examName,stuId,stuName,stuDept,stuClazz,examTime,examScore,paperid);
         return sum;
     }
-*/
+
     //学生主页 进入考试记录
     @RequestMapping(value = "/ExamHistory",method = RequestMethod.GET)
     public String goHistory(Model model,@RequestParam("stuId") int stuId){

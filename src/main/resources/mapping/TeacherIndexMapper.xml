@@ -16,4 +16,12 @@
 <select id="queryStuInfo" parameterType="java.lang.Integer" resultType="com.onlineExam.domain.Student">
     select * from student,t_clazz,t_depart where stuid=#{stuId} and student.clazzId=t_clazz.clazzId and student.departId=t_depart.departId
 </select>
+
+    <select id="getAllQues" resultType="com.onlineExam.domain.Question">
+           select * from t_question,t_major,t_course where  t_major.majorId = t_question.majorId and t_question.courseId=t_course.courseId and t_major.majorId=t_course.majorId
+    </select>
+
+    <select id="getTgQues" parameterType="java.lang.Integer" resultType="com.onlineExam.domain.Question">
+        select * from t_question where t_question.courseId=#{courseId}
+    </select>
 </mapper>

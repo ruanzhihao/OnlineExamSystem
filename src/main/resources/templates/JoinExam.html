@@ -13,6 +13,7 @@
     <link rel="stylesheet" type="text/css" th:href="@{Wjl/common/bootstrap/css/bootstrap.css}" media="all">
     <link rel="stylesheet" type="text/css" th:href="@{Wjl/common/global.css}" media="all">
     <link rel="stylesheet" type="text/css" th:href="@{Wjl/css/personal.css}" media="all">
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
 </head>
 <body>
 <section class="layui-larry-box">
@@ -72,6 +73,12 @@
         <div class="larry-personal-body clearfix changepwd" >
             <div style="width:25%;hight:100%;float:left; " th:each="releaseExam:${releaseExams}">
                 <table class="layui-table" lay-skin="row" >
+
+                    <input type="hidden" id="sumQuestionScore" th:value="${releaseExam.sumQuestionScore}"/>
+                    <input type="hidden" id="questionNumber" th:value="${releaseExam.questionNumber}"/>
+                    <input type="hidden" id="stuId" th:value="${session.stuid}"/>
+                    <input type="hidden" id="majorId" th:value="${releaseExam.majorId}"/>
+                    <input type="hidden" id="paperId" th:value="${releaseExam.paperId}"/>
                     <tr>
                         <td>考试名：<span style="font-weight: bold" th:text="${releaseExam.paperName}"></span></td>
                     </tr>
@@ -98,18 +105,22 @@
                     </tr>
                     <tr>
                         <td>
-                            <button class="layui-btn layui-btn-normal" disabled="disabled" id="btn">参加考试</button>
-                            <!-- <script>
-                                 function join(obj,paperId,stuId,score,number){
-                                     /*  var stuId=$('#stuId').val()
-                                       var paperId=$('#PaperId').val()*/
+                            <button class="layui-btn layui-btn-normal" disabled="disabled" id="btn" onclick="join()" >参加考试</button>
+                             <script>
+                                 function join(){
+                                       var stuId=$('#stuId').val()
+                                    /*   var majorId=$('#majorId').val()*/
+                                       var paperId=$('#paperId').val()
+                                       var sumQuestionScore=$('#sumQuestionScore').val()
+                                       var questionNumber=$('#questionNumber').val()
+
                                      layer.confirm('请在规定时间内完成答题，超时自动交卷！',{btn: ['清楚', '取消'], title: "考前提示"},
                                          function(index){
                                              layer.msg('试题加载中...',{icon:6,time:2000});
-                                             setTimeout(function () {window.parent.location.href='/Examing?score='+score+'&number='+number+'&stuId='+stuId+'&paperId='+paperId;},2000);
+                                             setTimeout(function () {window.parent.location.href='/Examing?score='+sumQuestionScore+'&number='+questionNumber+'&stuId='+stuId+'&paperId='+paperId;},2000);
                                          });
                                  }
-                             </script>-->
+                             </script>
                         </td>
                     </tr>
                 </table>

@@ -348,7 +348,7 @@
 <table class="layui-table" lay-filter="demo">
     <thead>
     <tr>
-        <th lay-data="{field:'1', width:40, sort:true}">ID</th>
+      <!--  <th lay-data="{field:'1', width:40, sort:true}">ID</th>-->
         <th lay-data="{field:'2', width:260}">&nbsp;&nbsp;&nbsp;&nbsp;试&nbsp;&nbsp;&nbsp;&nbsp;题&nbsp;&nbsp;&nbsp;&nbsp;内&nbsp;&nbsp;&nbsp;&nbsp;容</th>
         <th lay-data="{field:'3', width:80}">选项A</th>
         <th lay-data="{field:'4', width:80}">选项B</th>
@@ -367,7 +367,7 @@
     </thead>
     <tbody>
     <tr th:each ="question :${list}">
-        <td th:text="${question.questionId}"></td>
+<!--        <td th:text="${question.questionId}"></td>-->
         <td th:text="${question.questionName}"></td>
         <td th:text="${question.optionA}"></td>
         <td th:text="${question.optionB}"></td>
