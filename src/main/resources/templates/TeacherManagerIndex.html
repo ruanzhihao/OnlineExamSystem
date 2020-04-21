@@ -69,7 +69,7 @@
                 </li>
 
                <!-- <li class="layui-nav-item"><a  href="javascript:";>考试中心</a></li>-->
-                <li class="layui-nav-item"><a href="javascript:";>学生信息</a></li>
+                <li class="layui-nav-item"><a href="/findStudentByclazzId">学生信息</a></li>
                 <li class="layui-nav-item"><a  id="QuestionInfo" href="./QuestionInfo";>试题管理</a></li>
                 <li class="layui-nav-item"><a  href="javascript:";>试卷中心</a></li>
              <!--   <li class="layui-nav-item"><a >考试汇报</a></li>
@@ -83,7 +83,7 @@
 
     <div class="layui-body">
         <!-- 内容主体区域 -->
-        <iframe id="iframeMain" src=" " frameborder="0" height="100%" width="100%"></iframe>
+        <iframe id="iframeMain" th:src="@{/teacherHomePage} " frameborder="0" height="100%" width="100%"></iframe>
     </div>
 
     <div class="layui-footer">

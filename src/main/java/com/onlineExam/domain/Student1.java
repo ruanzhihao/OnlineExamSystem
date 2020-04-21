@@ -7,7 +7,7 @@ import lombok.Data;
 public class Student1 {
     private Integer id;
     private String username;
-    private Integer stuid;
+    private String stuid;
     private String stuname;
     private String stupassword;
     private String stuphonenumber;

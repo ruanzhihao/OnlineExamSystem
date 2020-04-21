@@ -65,7 +65,10 @@
         select * from student where id=#{id}
     </select>
     <select id="findStudentByclazzId" resultType="com.onlineExam.domain.Student1">
-        select * from student,t_major,t_depart,t_state,t_clazz where student.majorId=t_major.majorId and student.departId=t_depart.departId and student.stateId=t_state.stateId and id=#{id}
+        select * from student,t_major,t_depart,t_state,t_clazz where student.majorId=t_major.majorId and student.departId=t_depart.departId and student.stateId=t_state.stateId and student.clazzId=t_clazz.clazzId and student.clazzId=#{clazzId}
+    </select>
+    <select id="getScoreBystuname" resultType="com.onlineExam.domain.Exam">
+        select * from t_exam where stuName=#{stuname}
     </select>
     <!--添加学生信息-->
     <insert id="addStudent" parameterType="com.onlineExam.domain.Student1" keyProperty="id" useGeneratedKeys="true">

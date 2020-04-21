@@ -29,9 +29,12 @@ public interface StuUserService {
     int deleteStudent(Integer id);//删除学生
     int updateStudent(Student1 student1);//修改学生信息
     Student1 findStudentById(Integer id);//通过id查找
+    List<Student1> findStudentByclazzId(Integer clazzId);//根据班级查找
     List<Student1> queryStudent(String stuname);////根据学生姓名查询
+    List<Student1> queryStudent1(String stuname);////根据学生姓名查询
     List<Clazz> getClazzList();//获取班级列表
     List<Major> getMajorList();//获取专业列表
     List<Depart> getDepartList();//获取学院列表
     List<State> getStateList();//获取状态
+    List<Exam> getScoreBystuname(String stuname);
 }

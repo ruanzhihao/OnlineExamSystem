@@ -123,10 +123,19 @@ public class StuUserServiceImpl implements StuUserService {
         Student1 s=usermapper.findStudentById(id);
         return s;
     }
+    @Override
+    public List<Student1> findStudentByclazzId(Integer clazzId) {
+        return usermapper.findStudentByclazzId(clazzId);
+    }
 
     @Override
     public List<Student1> queryStudent(String stuname) {
         return usermapper.queryStudent(stuname);
+    }
+
+    @Override
+    public List<Student1> queryStudent1(String stuname) {
+        return usermapper.queryStudent1(stuname);
     }
 
     @Override
@@ -149,6 +158,9 @@ public class StuUserServiceImpl implements StuUserService {
         return usermapper.getStateList();
     }
 
-
+    @Override
+    public List<Exam> getScoreBystuname(String stuname) {
+        return usermapper.getScoreBystuname(stuname);
+    }
 
 }

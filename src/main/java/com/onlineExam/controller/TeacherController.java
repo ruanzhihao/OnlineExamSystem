@@ -1,7 +1,9 @@
 package com.onlineExam.controller;
 
 import com.google.code.kaptcha.impl.DefaultKaptcha;
+import com.onlineExam.domain.Exam;
 import com.onlineExam.domain.LoginUser;
+import com.onlineExam.domain.Student1;
 import com.onlineExam.domain.Teacher;
 import com.onlineExam.mapper.TeacherMapper;
 import com.onlineExam.modules.common.controller.MainController;
@@ -24,6 +26,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -38,64 +41,6 @@ public class TeacherController {
     @Autowired
     private StuUserService stuUserService;
 
-    /*//进去教师管理界面
-    @RequestMapping(value = "/teenager")
-    public String getTeacherList(Model model){
-        List<Teacher> list=teacherService.getAllTeacher();
-        model.addAttribute("list",list);
-        return "TeacherManagement";
-    }
-    //添加老师
-    @RequestMapping(value = "/addTeacher",method = RequestMethod.POST)
-    @ResponseBody
-    public String addTeacher(@RequestBody Teacher teacher){
-        //teacher.setTeacherpassword(MD5Util.MD5EncodeUtf8(teacher.getTeacherpassword()));
-        int a=teacherService.addTeacher(teacher);
-        return "TeacherManagement";
-    }
-
-    //删除教师信息
-    @RequestMapping("/deleteTeacher")
-    @ResponseBody
-    public String deleteTeacher(Integer teacherid){
-        int s=teacherService.deleteTeacher(teacherid);
-        return "TeacherManagement";
-    }
-
-    //修改教师信息
-    @RequestMapping(value = "/updateTeacher",method = RequestMethod.POST)
-    public String updateTeacher(Teacher teacher){
-        //teacher.setTeacherpassword(MD5Util.MD5EncodeUtf8(teacher.getTeacherpassword()));
-        int t=teacherService.updateTeacher(teacher);
-        return "redirect:/teenager";
-    }
-
-    //根据id查找学生
-    @RequestMapping("/findTeacherById")
-    public String findTeacherById(Integer teacherid, HttpSession session){
-        Teacher t=teacherService.findTeacherById(teacherid);
-        session.setAttribute("t",t);
-        return "Teacher_edit";
-    }
-    //教师查找
-    @RequestMapping(value = "/queryTeacher",method = RequestMethod.GET)
-    @ResponseBody
-    public String queryTeacher(@RequestParam("teachername") String teachername){
-        List<Teacher> list=teacherService.queryTeacher(teachername);
-        if (list ==null){
-            return "查找失败";
-        }else{
-            return "查找成功";
-        }
-    }
-
-    //查找后的显示信息
-    @RequestMapping(value = "/queryShowTeacher",method = RequestMethod.GET)
-    public String queryShow(@RequestParam("teachername") String teachername,Model model){
-        List<Teacher> list=teacherService.queryTeacher(teachername);
-        model.addAttribute("list",list);
-        return "TeacherManagement";
-    }*/
 
     //登录
     @RequestMapping(value="/TeaLogin",method = {RequestMethod.POST,RequestMethod.GET})
@@ -287,11 +232,43 @@ public class TeacherController {
     }
 
     //学生管理
-    /*@RequestMapping(value = "/t_teenager")
-    public String findStudentByClazzId(Model model,Integer id){
-        List<Student1> studentList= (List<Student1>) stuUserService.findStudentByclazzId(id);
+    @RequestMapping(value = "/findStudentByclazzId",method = RequestMethod.GET)
+    public String findStudentByClazzId(HttpSession session,Model model){
+        Integer clazzId=(int)session.getAttribute("clazzId");
+        List<Student1> studentList= stuUserService.findStudentByclazzId(clazzId);
         model.addAttribute("studentList",studentList);
         return "Teacher-StudentManager";
-    }*/
+    }
+
+    //学生查找
+    @RequestMapping(value = "/queryStudent1",method = RequestMethod.GET)
+    @ResponseBody
+    public String queryStudent(@RequestParam("stuname") String stuname){
+        List<Student1> list=stuUserService.queryStudent(stuname);
+        if (list ==null){
+            return "查找失败";
+        }else{
+            return "查找成功";
+        }
+    }
+    //查找后的显示信息
+    @RequestMapping(value = "/queryShowStudent1",method = RequestMethod.GET)
+    public String queryShow_s(@RequestParam("stuname") String stuname,Model model){
+        List<Student1> studentList=stuUserService.queryStudent(stuname);
+        model.addAttribute("studentList",studentList);
+        return "Teacher-StudentManager";
+    }
+    //查看学生的成绩
+    @RequestMapping(value = "/show",method = RequestMethod.GET)
+    public String show(String stuname,Model model){
+        List<Exam> examList=stuUserService.getScoreBystuname(stuname);
+        model.addAttribute("examList",examList);
+        return "Student_score";
+    }
+
+    @RequestMapping("/teacherHomePage")
+    public String teacherHomePage(){
+        return "teacherHomePage";
+    }
 
 }
