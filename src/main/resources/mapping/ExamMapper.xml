@@ -14,6 +14,6 @@
     </select>
 
     <select id="findExamScoreById" parameterType="java.lang.Integer" resultType="com.onlineExam.domain.Exam">
-select * from t_exam where stuId=#{stuId}
+select * from t_exam where stuId=#{stuId} order by examTime desc
     </select>
 </mapper>

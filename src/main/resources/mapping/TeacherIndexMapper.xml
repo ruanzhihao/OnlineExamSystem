@@ -24,4 +24,10 @@
     <select id="getTgQues" parameterType="java.lang.Integer" resultType="com.onlineExam.domain.Question">
         select * from t_question where t_question.courseId=#{courseId}
     </select>
+
+    <select id="getStuByStuId" parameterType="java.lang.Integer" resultType="com.onlineExam.domain.Student">
+
+        select * from student where stuId=#{stuId}
+    </select>
+
 </mapper>

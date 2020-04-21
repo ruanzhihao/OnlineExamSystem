@@ -1,10 +1,7 @@
 package com.onlineExam.controller;
 
 import com.onlineExam.domain.*;
-import com.onlineExam.service.ExamService;
-import com.onlineExam.service.PaperService;
-import com.onlineExam.service.QuestionService;
-import com.onlineExam.service.StudentFunctionService;
+import com.onlineExam.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
@@ -14,6 +11,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -35,6 +35,8 @@ public class StudentFunctionController {
     @Autowired
     private ExamService examService;
 
+    @Autowired
+    private TeacherIndexService teacherIndexService;
     //学生端进入
     @RequestMapping(value = "/student",method = RequestMethod.GET)
     public String goIndex(){
@@ -206,13 +208,37 @@ public String goExam(Model model){
         return "ExamHistory";
     }
 
-    //判分成功跳转
-    /*@RequestMapping(value = "/goStudent")
-    public String goStudent(){
-        return "stuLogin";
-    }*/
+    //判分成功跳转学生主页
+    @RequestMapping(value = "/goStudent")
+    public String goStudent(@RequestParam("stuId") int stuId, HttpServletRequest request, HttpServletResponse response, HttpSession session){
 
+    Student student=teacherIndexService.getStuByStuId(stuId);
+        Integer stuid=student.getStuid();
+        String stuname=student.getStuname();
+        String stupassword=student.getStupassword();
+        String stuphonenumber=student.getStuphonenumber();
+        String stuemail=student.getStuemail();
+        Integer clazzId=student.getClazzId();
+        Integer departId=student.getDepartId();
+        Integer stateId=student.getStateId();
+        Integer majorId=student.getMajorId();
 
+        request.getSession().setAttribute("stuid",stuid);
+        request.getSession().setAttribute("stuname",stuname);
+        request.getSession().setAttribute("stupassword",stupassword);
+        request.getSession().setAttribute("stuphonenumber",stuphonenumber);
+        request.getSession().setAttribute("stuemail",stuemail);
+        request.getSession().setAttribute("clazzId",clazzId);
+        request.getSession().setAttribute("departId",departId);
+        request.getSession().setAttribute("stateId",stateId);
+        request.getSession().setAttribute("majorId",majorId);
+        return "StudentIndex";
+    }
+
+@RequestMapping(value = "/Success")
+    public String success(){
+        return "JiaoJuanSuccess";
+}
 
 
 

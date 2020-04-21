@@ -45,4 +45,9 @@ public class TeacherIndexServiceImpl implements TeacherIndexService {
     public List<Question> getTgQues(int courseId) {
         return teacherIndexMapper.getTgQues(courseId);
     }
+
+    @Override
+    public Student getStuByStuId(int stuId) {
+        return teacherIndexMapper.getStuByStuId(stuId);
+    }
 }

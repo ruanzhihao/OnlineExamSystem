@@ -15,4 +15,5 @@ public interface TeacherIndexService {
     List<Student> queryStuInfo(int stuId);//查看学生信息
     List<Question> getAllQues();//获取全部试题
     List<Question> getTgQues(int courseId);//根据course搜索试题
+    Student getStuByStuId(int stuId);//根据ID进行获取学生信息
 }
