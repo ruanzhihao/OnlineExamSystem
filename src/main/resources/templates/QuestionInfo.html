@@ -45,7 +45,16 @@
         }
 
     </script>
-
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <button type="button" class="layui-btn layui-btn " id="addQuestion" >
+            <i class="layui-icon">&#x1002;</i>手动录入试题
+        </button>
 
         <button type="button" class="layui-btn" onclick="AutomateExcel()">
         <i class="layui-icon">&#xe608;</i> 导出试题
@@ -201,7 +210,7 @@
                                     layer.msg('添加成功', {icon:1,
                                         time: 2000 //2秒关闭（如果不配置，默认是3秒）
                                     }, function () {
-                                        window.location.href="/testManage";
+                                        window.location.href="/QuestionInfo";
                                     });
                                 }
                             })
@@ -252,17 +261,13 @@
         <td th:text="${question.questionClass}"></td>
         <td> &nbsp;&nbsp;&nbsp;&nbsp;
 
-           <a type="button" title="错误" href="javascript:;" th:onclick="|javascript:updateIndex(this)|" class="layui-btn layui-btn-sm layui-btn-warm" id="updateBtn" >
-              报错
+           <a type="button" title="错误" href="javascript:;" th:onclick="|javascript:updateIndex(this,${question.questionId})|" class="layui-btn layui-btn-sm layui-btn-warm" id="updateBtn" >
+              修改
             </a>
             <script>
-                /*  function updateIndex(id,name,optionA,optionB,optionC,optionD,answer,questionScore,courseName,majorName,questionType,questionClass){
-                  $('#newquestionName').val(name);
-                  }
-  */
 
             </script>
-            <a title="删除" class="layui-btn layui-btn-sm layui-btn-danger" th:onclick="|javascript:deleteQuestion(this)|" href="javascript:;">
+            <a title="删除" class="layui-btn layui-btn-sm layui-btn-danger" th:onclick="|javascript:deleteQuestion(this,${question.questionId})|" href="javascript:;">
                删除
             </a>
             <script>
@@ -275,11 +280,11 @@
                                 function (data) {
                                     if(data == true){
                                         layer.msg('删除成功',{icon:1,time:2000});
-                                        setTimeout(function () {window.location.href='/testManage';},2000);
+                                        setTimeout(function () {window.location.href='/QuestionInfo';},2000);
 
                                     }else {
                                         layer.msg('删除失败',{icon:2,time:3000});
-                                        setTimeout(function () {window.location.href='/testManage';},2000);
+                                        setTimeout(function () {window.location.href='/QuestionInfo';},2000);
                                     }
                                 });
                         });
@@ -327,7 +332,7 @@
             type:2,
             title: "试题修改",
             area: ['82%', '82%'],
-            content: '/updateQues?questionId='+id,
+            content: '/TeacherupdateQues?questionId='+id,
 
         });
 

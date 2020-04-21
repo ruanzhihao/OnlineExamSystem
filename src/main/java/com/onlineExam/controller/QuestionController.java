@@ -105,6 +105,29 @@ public class QuestionController {
     //试题修改实现
     @RequestMapping(value = "/updateQuestion",method = RequestMethod.GET)
     @ResponseBody
+    public String updateQuesBuTea(Integer questionId, String questionName, String optionA, String optionB, String optionC, String optionD, String answer, Integer questionScore, Integer courseId, Integer majorId, String questionType, String questionClass){
+        int i=ques.updateQuestion(questionId,  questionName,  optionA,  optionB,  optionC,  optionD,  answer,  questionScore,  courseId,  majorId,  questionType,  questionClass);
+        if (i==1){
+            return "1";
+        }
+        return "0";
+    }
+
+    //试题修改页面弹出
+    @RequestMapping(value = "/TeacherupdateQues",method = RequestMethod.GET)
+    public String TeaeditIndex(Integer questionId, Model model){
+        Question question=ques.showQuestion(questionId);
+        model.addAttribute("question",question);
+        List<Course> courseList=ques.getCourse();
+        model.addAttribute("courseList",courseList);
+        List<Major> majorList=ques.getMajor();
+        model.addAttribute("majorList",majorList);
+        return "TeacherQuestion_edit";
+    }
+
+    //试题修改实现
+    @RequestMapping(value = "/TeacherupdateQuestion",method = RequestMethod.GET)
+    @ResponseBody
     public String updateQues(Integer questionId, String questionName, String optionA, String optionB, String optionC, String optionD, String answer, Integer questionScore, Integer courseId, Integer majorId, String questionType, String questionClass){
         int i=ques.updateQuestion(questionId,  questionName,  optionA,  optionB,  optionC,  optionD,  answer,  questionScore,  courseId,  majorId,  questionType,  questionClass);
         if (i==1){
@@ -112,6 +135,8 @@ public class QuestionController {
         }
         return "0";
     }
+
+
 
     //导入试题
     @RequestMapping(value = "getImport")
@@ -122,6 +147,9 @@ public class QuestionController {
         model.addAttribute("majors",majors);
         return "importExcel";
     }
+
+
+
     //获取数据
     @RequestMapping(value = "getUpload",method = RequestMethod.POST)
     public String getUpload(HttpServletRequest request, @RequestParam("excelFile")MultipartFile excelFile, @RequestParam("courseId") Integer courseId, @RequestParam("majorId") Integer  majorId, Model model){
