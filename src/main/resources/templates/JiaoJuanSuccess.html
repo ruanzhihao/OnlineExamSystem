@@ -50,22 +50,23 @@
     <div class="tipInfo">
         <div class="in">
             <div class="textThis">
-                <h2>出错啦404！</h2>
-                <p><span>页面自动<a id="href" href="">跳转</a></span><span>等待<b id="wait">6</b>秒</span></p>
-                <script type="text/javascript">
+                <h2>交卷成功</h2>
+                <h2 th:text="'本次测试成绩:'+${score}+'分'"></h2>
+                <p><span>页面自动<a id="href" th:href="@{/logout}">跳转</a></span><span>等待<b id="wait">6</b>秒</span></p>
+                <script th:inline="javascript">
+  /*<![CDATA[*/
                     (function() {
                     var wait = document.getElementById('wait'), href = document.getElementById('href').href;
                     var interval = setInterval(function() {
                         var time = --wait.innerHTML;
-                        if (time &lt;= 0) {
-
+                        if (time <= 0) {
                             clearInterval(interval);
-                            //location.href = href;
-                            alert("开始跳转提示");
+                            location.href = href;
                         }
                         ;
                     }, 1000);
                 })();
+ /*]]>*/
                 </script>
             </div>
         </div>

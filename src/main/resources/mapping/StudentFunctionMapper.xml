@@ -24,4 +24,41 @@ ORDER BY examStateName DESC
     <select id="selectReleaseTime" resultType="com.onlineExam.domain.ReleaseExam">
       select  t_releaseexam.beginTime,t_paper.answerTime,t_releaseexam.releaseExamId from t_paper,t_releaseexam where t_paper.paperId=t_releaseexam.paperId
     </select>
+    <select id="getCheckQuestion" resultType="com.onlineExam.domain.Question">
+       select t_question.questionId,t_question.questionName,t_question.questionScore,t_question.optionA,t_question.optionB,t_question.optionC,t_question.optionD
+       from t_question,t_realpaper where t_realpaper.questionId=t_question.questionId and t_question.questionType='多选' and  t_realpaper.paperId=#{paperId}
+    </select>
+    <select id="getCheckBoxCount" resultType="integer">
+        SELECT COUNT(questionType)  from t_question,t_realpaper where  t_realpaper.questionId=t_question.questionId and  questionType='多选' and t_realpaper.paperId=#{paperId}
+    </select>
+    <select id="getCheckBoxQuestionScore" resultType="int">
+        SELECT SUM(questionScore)  from t_question,t_realpaper where  t_realpaper.questionId=t_question.questionId and  questionType='多选' and t_realpaper.paperId=#{paperId}
+    </select>
+    <insert id="insertExamRecord" parameterType="java.util.Map">
+        insert  into t_stuAnswer(stuAnswerId,stuId,paperId,questionId,stuAnswer,releaseExamId) values
+        <foreach collection="record" item="record" close=";" separator=",">
+            (DEFAULT ,#{stuId},#{paperId},#{record.questionId},#{record.stuAnswer},#{releaseExamId})
+        </foreach>
+    </insert>
+   <select id="useranswerRecord" resultType="com.onlineExam.domain.StuAnswer">
+         SELECT t_stuAnswer.stuAnswerId,t_stuanswer.questionId,t_stuanswer.stuAnswer from  t_stuanswer where t_stuanswer.releaseExamId=#{releaseExamId} and t_stuanswer.paperId=#{paperId}
+   </select>
+    <select id="questionAnswer" resultType="com.onlineExam.domain.Question">
+         select t_question.questionId,t_question.questionScore,t_question.answer
+         from t_realpaper,t_question
+         where t_realpaper.questionId=t_question.questionId AND t_realpaper.paperId=#{paperId}
+    </select>
+    <update id="setWrong" parameterType="com.onlineExam.domain.StuAnswer">
+          update t_stuAnswer set isWrong=#{isWrong} where t_stuanswer.stuAnswerId=#{stuAnswerId}
+    </update>
+    <select id="getRadioQuestion" resultType="com.onlineExam.domain.Question">
+       select t_question.questionId,t_question.questionName,t_question.questionScore,t_question.optionA,t_question.optionB,t_question.optionC,t_question.optionD
+       from t_question,t_realpaper where t_realpaper.questionId=t_question.questionId and t_question.questionType='单选' and t_realpaper.paperId=#{paperId}
+    </select>
+    <select id="getRadioCount" resultType="integer">
+        SELECT COUNT(questionType)  from t_question,t_realpaper where  t_realpaper.questionId=t_question.questionId and  questionType='单选' and t_realpaper.paperId=#{paperId}
+    </select>
+    <select id="getRadioQuestionScore" resultType="int">
+        SELECT SUM(questionScore)  from t_question,t_realpaper where  t_realpaper.questionId=t_question.questionId and  questionType='单选' and t_realpaper.paperId=#{paperId}
+    </select>
 </mapper>

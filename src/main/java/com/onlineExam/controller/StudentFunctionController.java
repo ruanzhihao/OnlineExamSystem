@@ -1,5 +1,8 @@
 package com.onlineExam.controller;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.onlineExam.domain.*;
 import com.onlineExam.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,8 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /*
  * 学生端主页
@@ -77,15 +79,24 @@ public class StudentFunctionController {
         return "JoinExam";
     }*/
 //进入参加考试界面  获取待考试 并显示
-@RequestMapping(value = "/JoinExam",method = RequestMethod.GET)
+/*@RequestMapping(value = "/JoinExam",method = RequestMethod.GET)
 public String goExam(Model model){
     List<ReleaseExam> releaseExams=studentFunctionService.getReleaseByMajor(1);
+    model.addAttribute("releaseExams",releaseExams);
+    return "JoinExam";
+}*/
+    //进入参加考试界面  获取待考试 并显示
+//进入参加考试界面  获取待考试 并显示
+@RequestMapping(value = "/JoinExam",method = RequestMethod.GET)
+public String goExam(Model model,HttpSession session){
+    int majorId=(int)session.getAttribute("majorId");
+    List<ReleaseExam> releaseExams=studentFunctionService.getReleaseByMajor(majorId);
     model.addAttribute("releaseExams",releaseExams);
     return "JoinExam";
 }
     //进入参加考试界面  获取待考试 并显示
 
-    @Scheduled(cron = "0/10 * * * * *")
+    @Scheduled(cron = "0/3 * * * * *")
 /*@RequestMapping("ddd")
 @ResponseBody*/
     public void  getStuReleaseExam() throws Exception{
@@ -103,6 +114,7 @@ public String goExam(Model model){
                 System.out.println("更新任务"+r.getReleaseExamId()+"状态为"+stateId);            }
         }
     }
+
     public int checkRelease(String beginTime,int answerTime)throws Exception {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date beginTimeDate = sdf.parse(beginTime);
@@ -120,14 +132,123 @@ public String goExam(Model model){
             return 1;
         }
     }
-    //点击考试界面 进入考试 获取试卷试题 并显示-----后去换生成随机数获取题目
+    @RequestMapping(value = "/stuExam",method = RequestMethod.GET)
+    public String getQuestion(@RequestParam("paperId") Integer paperId,@RequestParam("releaseExamId") Integer releaseExamId, Model model,HttpServletRequest request){
+
+        int checkBoxScore=studentFunctionService.getCheckBoxQuestionScore(paperId);
+        int checkBoxCount=studentFunctionService.getCheckBoxCount(paperId);
+        List<Question> checkboxQuestions=studentFunctionService.getCheckQuestion(paperId);
+        System.out.println("多选题量"+checkBoxCount+"多选分值"+checkBoxScore);
+        System.out.println(checkboxQuestions);
+        model.addAttribute("checkBoxQuestion",checkboxQuestions);
+        model.addAttribute("checkBoxCount",checkBoxCount);
+        model.addAttribute("checkBoxScore",checkBoxScore);
+        int radioScore=studentFunctionService.getRadioQuestionScore(paperId);
+        int radioCount=studentFunctionService.getRadioCount(paperId);
+        List<Question> radioQuestions=studentFunctionService.getRadioQuestion(paperId);
+        System.out.println("单选题数量"+radioCount+"单选题分值"+radioScore);
+        System.out.println(radioQuestions);
+        model.addAttribute("radioQuestions",radioQuestions);
+        model.addAttribute("radioCount",radioCount);
+        model.addAttribute("radioScore",radioScore);
+        HttpSession session=request.getSession();
+        session.setAttribute("paperId",paperId);
+        session.setAttribute("releaseExamId",releaseExamId);
+        System.out.println(session.getAttribute("paperId"));
+        System.out.println(session.getAttribute("releaseExamId"));
+        return "exam";
+    }
+    @RequestMapping(value = "getScore",produces="application/json; utf-8")
+    @ResponseBody
+    public Integer getScore(@RequestParam("answers") String answers,@RequestParam("questionIds") String questionIds,HttpSession session){
+        Integer releaseExamId=(Integer)session.getAttribute("releaseExamId");
+        JSONArray answer=JSON.parseArray(answers);
+        JSONArray questionId=JSON.parseArray(questionIds);
+        List<String> str1=JSONObject.parseArray(answer.toJSONString(),String.class);
+        List<Integer> str2=JSONObject.parseArray(questionId.toJSONString(),Integer.class);
+        Integer stuId=(Integer) session.getAttribute("stuid");
+        Integer paperId=(Integer) session.getAttribute("paperId");
+        System.out.println(paperId);
+        List<Map> record=new ArrayList<>();
+        for (int i=0;i<str1.size();i++){
+            Map map=new HashMap();
+            map.put("questionId",str2.get(i));
+            map.put("stuAnswer",str1.get(i));
+            record.add(map);
+            System.out.println(map);
+        }
+        Map<Object,Object> examRecord=new HashMap<>();
+        examRecord.put("stuId",stuId);
+        examRecord.put("releaseExamId",releaseExamId);
+        examRecord.put("paperId",paperId);
+        examRecord.put("record",record);
+
+/*
+        examRecord.put("questionId",str2);
+*/
+        /*examRecord.put("stuanswer",str1);*/
+       /* for (String s:str1) {
+            examRecord.put("stuAnswer",s);
+        }*/
+        int i=studentFunctionService.insertExamRecord(examRecord);
+        System.out.println("插入"+i);
+        Map<Object, Object> resultMap = new HashMap<>();
+        Map<Object, Object> answerMap = new HashMap<>();
+        List<StuAnswer> stuAnswers=studentFunctionService.useranswerRecord(paperId,releaseExamId);
+        List<Question> questionAnswer=studentFunctionService.questionAnswer(paperId);
+        List<Object> wrongAnswer=new ArrayList<>();
+        for (StuAnswer stuanswer : stuAnswers) {
+            answerMap.put(stuanswer.getQuestionId(), stuanswer);
+        }
+        for (Question questionresult : questionAnswer) {
+            resultMap.put(questionresult.getQuestionId(), questionresult);
+        }
+        System.out.println(answerMap);
+        int score = 0;
+        Set<Object> keySet = answerMap.keySet();
+        Iterator<Object> iterator = keySet.iterator();
+        while (iterator.hasNext()) {
+            Object key = iterator.next();
+            Question question=(Question) resultMap.get(key);
+            StuAnswer stuAnswer=(StuAnswer) answerMap.get(key);
+            System.out.println(question);
+            if (stuAnswer.getStuAnswer().equals(question.getAnswer())) {
+                score=score+question.getQuestionScore();
+            }else{
+                wrongAnswer.add(key);
+                //标记错题
+                studentFunctionService.setWrong(stuAnswer.getStuAnswerId(),2);
+            }
+        }
+        Student student=examService.fingStuById(stuId);
+        Paper paper=examService.findPaperById(paperId);
+        String examName=paper.getPaperName();
+        String stuName=student.getStuname();
+        String stuDept=student.getDepartName();
+        String stuClazz=student.getClazzName();
+        String examTime=new Date().toLocaleString();
+        int row= examService.StuInsertExam(examName,stuId,stuName,stuDept,stuClazz,examTime,score,paperId);
+        if(row>0){
+            System.out.println("考试记录同步成功");
+        }
+        System.out.println("错题ID"+wrongAnswer);
+        System.out.println("分数：" + score);
+        return score;
+    }
+
+    @RequestMapping("successSubmit")
+    public String getSuccessSubmit(@RequestParam("score") Integer score,Model model){
+        model.addAttribute("score",score);
+        return "JiaoJuanSuccess";
+    }
+   /* //点击考试界面 进入考试 获取试卷试题 并显示-----后去换生成随机数获取题目
     @RequestMapping(value = "/Examing",method = RequestMethod.GET)
     public String goExaming(Model model,@RequestParam("paperId") int paperId, @RequestParam("number") String number, @RequestParam("score")String score, @RequestParam("stuId")int stuId){
         model.addAttribute("number",number);
         model.addAttribute("score",score);
         model.addAttribute("stuId",stuId);
         model.addAttribute("paperId",paperId);
-     /*   model.addAttribute("majorId",majorId);*/
+     *//*   model.addAttribute("majorId",majorId);*//*
 
         List<Question> list=questionService.getAllQuestion();
         Question question=list.get(0);
@@ -142,7 +263,7 @@ public String goExam(Model model){
         Question question4=list.get(3);
         model.addAttribute("question4",question4);
         return "Examing";
-    }
+    }*/
 
     //点击交卷自动判分 实现
     @RequestMapping(value = "/jiaojuan",method = RequestMethod.POST)
