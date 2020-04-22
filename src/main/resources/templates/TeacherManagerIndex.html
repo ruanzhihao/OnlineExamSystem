@@ -43,6 +43,7 @@
                 </a>
                 <dl class="layui-nav-child">
                     <dd><a href="./teaPersoninfo" id="teaPersoninfo">个人资料</a></dd>
+                    <dd><a href="./teaMessage" id="teaMessage">消息通知</a></dd>
                     <dd><a href="./changeTeaPwd" id="changeTeaPwd">修改密码</a></dd>
                 </dl>
             </li>
@@ -120,6 +121,10 @@
             $("#iframeMain").attr("src",$(this).attr("href"));
         });
         $("#updatePass").click(function (e) {
+            e.preventDefault();
+            $("#iframeMain").attr("src",$(this).attr("href"));
+        });
+        $("#teaMessage").click(function (e) {
             e.preventDefault();
             $("#iframeMain").attr("src",$(this).attr("href"));
         });

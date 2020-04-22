@@ -76,14 +76,9 @@
                         <span class="layui-nav-more"></span>
                     </a>
                     <dl class="layui-nav-child">
-
-                        <dd>
-                            <a href="./personal" id="personal">个人中心</a>
-                        </dd>
-
-                        <dd>
-                            <a href="./updatePass" id="updatePass">修改密码</a>
-                        </dd>
+                        <dd><a href="./personal" id="personal">个人中心</a></dd>
+                        <dd><a href="./stumessage" id="stumessage">消息通知</a></dd>
+                        <dd><a href="./updatePass" id="updatePass">修改密码</a></dd>
                         <dd>
                             <a th:onclick="|javascript:updateIndex(this,${session.stuid})|"  id="addFace">绑定人脸</a>
                         </dd>
@@ -144,6 +139,12 @@
                             <a href="./myReport" id="myReport">
                                 <i class="iconfont icon-piliangicon" data-icon='icon-piliangicon'></i>
                                 <span>我的成绩单</span>
+                            </a>
+                        </dd>
+                        <dd>
+                            <a href="./kTouch" id="kTouch">
+                                <i class="iconfont icon-piliangicon" data-icon='icon-piliangicon'></i>
+                                <span>打字练习</span>
                             </a>
                         </dd>
                     </dl>
@@ -302,6 +303,14 @@
             e.preventDefault();
             var stuId=$('#stuId').val()
             $("#iframeMain").attr("src",$(this).attr("href")+'?stuId='+stuId);
+        });
+        $("#kTouch").click(function (e) {
+            e.preventDefault();
+            $("#iframeMain").attr("src",$(this).attr("href"));
+        });
+        $("#stumessage").click(function (e) {
+            e.preventDefault();
+            $("#iframeMain").attr("src",$(this).attr("href"));
         });
 
 

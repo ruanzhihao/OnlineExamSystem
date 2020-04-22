@@ -1,0 +1,494 @@
+﻿<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+<title>键盘打字练习</title>
+
+<link rel="stylesheet" href="Ch/keyboard.css" />
+
+<script src="js/jquery-1.12.3.js"></script>
+<script src="js/one.js"></script>
+<script src="js/two.js"></script>
+<!--sass样式-->
+
+</head>
+<body>
+	<div>
+		<!--渲染键盘 S-->
+		<div class="keyboard">
+			<!--显示键盘练习按钮 S-->
+			<div class="promptArea ">
+				<ul>
+				</ul>
+			</div>
+			<!--显示键盘练习按钮 E-->
+			<!--效率显示区 S-->
+			<div class="efficiencyPrompt">
+				<ul>
+					<li>时间：<span class="time">0时0分0秒</span></li>
+					<li>正确率：<span class="accuracy">--</span>%</li>
+					<li>完成率：<span class="percentageComplete">--</span>%</li>
+					<li>选择练习模式：
+						<select class="schemaChanges" >
+							<option value="0">键盘布局</option>
+							<option value="1">键位课程</option>
+						</select>
+					</li>
+					<!--键盘音效 S-->
+					<div class="keyboardSound" title="音效开关">
+						<svg class="icon sound" style="width: 1em; height: 1em;vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1610">
+							<path d="M758.3321402026667 421.0124523899259c-6.657625050074073-11.096042154666666-13.315251313777777-22.19208430933333-22.19208552296296-31.06891851851852l-6.657625050074073-6.657625050074073c-8.876834209185184-8.876834209185184-22.19208430933333-8.876834209185184-31.06891851851852 0s-8.876834209185184 22.19208430933333 0 31.06891851851852l6.657625050074073 6.657625050074073c6.657625050074073 6.657625050074073 11.096042154666666 13.315251313777777 15.53445925925926 22.19208552296296l2.219209159111111 2.2192079454814815c42.164960673185185 64.35704498251852 33.288126464 122.05646612859258-26.630501413925924 186.4135111111111-8.876834209185184 8.876834209185184-8.876834209185184 22.19208430933333 0 31.06891851851852 4.438417104592592 4.438417104592592 8.876834209185184 6.657625050074073 15.53445925925926 6.657625050074073 6.657625050074073 0 11.096042154666666-2.2192079454814815 15.53445925925926-6.657625050074073 73.2338791917037-79.89150424177778 84.32992134637037-162.00221764266664 31.06891851851852-241.89372309807408z" fill="" p-id="1611"></path><path d="M836.0044364989628 292.2983624248889c-6.657625050074073-8.876834209185184-13.315251313777777-15.53445925925926-19.97287636385185-19.97287636385185-8.876834209185184-8.876834209185184-22.19208430933333-8.876834209185184-31.06891851851852 0-8.876834209185184 8.876834209185184-8.876834209185184 22.19208430933333 0 31.06891851851852l4.438417104592592 4.438417104592592 11.096042154666666 11.096042154666666c11.096042154666666 15.53445925925926 24.411293468444445 28.849710573037036 35.50733562311111 46.60337777777777 84.32992134637037 126.49488201955555 66.57625414162963 248.55134814814815-51.041794882370375 370.60781306311105-8.876834209185184 8.876834209185184-8.876834209185184 22.19208430933333 0 31.06891851851852 4.438417104592592 4.438417104592592 8.876834209185184 6.657625050074073 15.53445925925926 6.657626263703703 6.657625050074073 0 11.096042154666666-2.2192079454814815 15.53445925925926-6.657626263703703 130.9332991241481-135.37171622874072 150.90617548799997-281.83947461214814 57.69941993244444-423.86881710459255-13.315251313777777-19.97287636385185-26.630501413925924-35.50733562311111-37.72654356859259-51.04179366874074zM538.6305014139259 143.61139488237035c-24.411293468444445-11.096042154666666-55.48021198696296-4.438417104592592-79.89150424177778 17.75366720474074L290.0791532657778 305.61361252503707h-79.89150424177778c-59.91862909155555 0-108.74121481481481 51.041794882370375-108.74121481481481 108.74121481481481v217.48242962962962c0 62.13783703703704 48.822585723259266 108.74121481481481 108.74121481481481 108.74121481481481h68.7954620871111l179.75588606103702 142.02934249244444c17.75366720474074 13.315251313777777 37.72654356859259 19.97287636385185 55.480210773333326 19.972875150222222 8.876834209185184 0 19.97287636385185-2.2192079454814815 26.630502627555554-6.657625050074073 24.411293468444445-11.096042154666666 37.72654356859259-37.72654356859259 37.72654356859259-73.2338791917037V219.0644820195556c0-35.50733562311111-13.315251313777777-64.35704498251852-39.9457527277037-75.45308713718518zM534.1920843093333 824.9083931306667c0 17.75366720474074-4.438417104592592 28.849710573037036-13.315250100148146 33.288127677629625-8.876834209185184 4.438417104592592-22.19208430933333 0-35.50733562311111-8.876834209185184l-190.8519282157037-150.90617548799997h-84.32992134637037c-35.50733562311111 0-64.35704498251852-28.849710573037036-64.35704619614813-64.35704498251852v-217.48242962962962c0-35.50733562311111 28.849710573037036-64.35704498251852 64.35704619614813-64.35704619614813h95.42596350103702l179.75588606103702-153.1253834334815c13.315251313777777-11.096042154666666 24.411293468444445-15.53445925925926 33.288126464-11.096043368296296 8.876834209185184 4.438417104592592 15.53445925925926 17.75366720474074 15.53445925925926 35.50733562311111v601.4054940065184z" fill="" p-id="1612">
+							</path>
+						</svg>
+						<svg hidden class="icon soundNo" style="width: 1em; height: 1em;vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1610">
+							<path d="M697.5 76v841.2l-105.6-49-26.2-69 81.8 37.5V156.5L370.1 283.7l-18-47.5L697.5 76zM412.8 729l-190.3-87.3-13.7-6.8-15.2 2.1-90.6 12.3V343.8l90.6 12.3 15.2 2.1 13.7-6.8 40-18.4-17.8-47-44.3 20.6-147.3-20v420l147.3-20 238.2 110.5-25.8-68.1zM268.5 111.8l-46.7 17.7L536 957.8l46.7-17.7-314.2-828.3z" fill="" p-id="2799">
+							</path>
+						</svg>
+						<div class="soundVideo">
+							<video class="rightSound" src="video/right.mp3" >您的浏览器不支持 video 标签。</video>
+							<video class="wrongSound" src="video/wrong.mp3" >您的浏览器不支持 video 标签。</video>
+						</div>
+					</div>
+					<!--键盘音效 E-->
+				</ul>
+			</div>
+			<!--效率显示区 E-->
+			
+			<!--键盘区域S-->
+			<div class="keyboardArea">
+				<!--第一排键盘 S-->
+				<ul>
+					<li keyCode="192">
+						<span>~</span>
+						<span>`</span>
+					</li>
+					<li keyCode="49">
+						<span>!</span>
+						<span>1</span>
+					</li>
+					<li keyCode="50">
+						<span>@</span>
+						<span>2</span>
+					</li>
+					<li keyCode="51">
+						<span>#</span>
+						<span>3</span>
+					</li>
+					<li keyCode="52">
+						<span>$</span>
+						<span>4</span>
+					</li>
+					<li keyCode="53">
+						<span>%</span>
+						<span>5</span>
+					</li>
+					<li keyCode="54">
+						<span>^</span>
+						<span>6</span>
+					</li>
+					<li keyCode="55">
+						<span>&</span>
+						<span>7</span>
+					</li>
+					<li keyCode="56">
+						<span>*</span>
+						<span>8</span>
+					</li>
+					<li keyCode="57">
+						<span>(</span>
+						<span>9</span>
+					</li>
+					<li keyCode="48">
+						<span>)</span>
+						<span>0</span>
+					</li>
+					<li keyCode="189">
+						<span>_</span>
+						<span>-</span>
+					</li>
+					<li keyCode="187">
+						<span>+</span>
+						<span>=</span>
+					</li>
+					<li class="width20"  keyCode="8">
+						<span>backspace</span>
+					</li>
+				</ul>
+				<!--第一排键盘 E-->
+				<!--第二排键盘 S-->
+				<ul class="specialEffects0">
+					<li class="width15" keyCode="9">
+						<span>Tab</span>
+					</li>
+					<li keyCode="81">
+						<span>Q</span>
+					</li>
+					<li keyCode="87">
+						<span>W</span>
+					</li>
+					<li keyCode="69">
+						<span>E</span>
+					</li>
+					<li keyCode="82">
+						<span>R</span>
+					</li>
+					<li keyCode="84">
+						<span>T</span>
+					</li>
+					<li keyCode="89">
+						<span>Y</span>
+					</li>
+					<li keyCode="85">
+						<span>U</span>
+					</li>
+					<li keyCode="73">
+						<span>I</span>
+					</li>
+					<li keyCode="79">
+						<span>O</span>
+					</li>
+					<li keyCode="80">
+						<span>P</span>
+					</li>
+					<li keyCode="219">
+						<span>{</span>
+						<span>[</span>
+					</li>
+					<li keyCode="221">
+						<span>}</span>
+						<span>]</span>
+					</li>
+					<li class="width15 enterBoard"  keyCode="13">
+						<span></span>
+					</li>
+				</ul>
+				<!--第二排键盘 E-->
+				<!--第三排键盘 S-->
+				<ul>
+					<li class="width18" keyCode="20">
+						<span>Caps Lock</span>
+					</li>
+					<li keyCode="65">
+						<span>A</span>
+					</li>
+					<li keyCode="83">
+						<span>S</span>
+					</li>
+					<li keyCode="68">
+						<span>D</span>
+						
+					</li>
+					<li keyCode="70">
+						<span>F</span>
+						<span class="keySign">_</span>
+					</li>
+					<li keyCode="71">
+						<span>G</span>
+					</li>
+					<li keyCode="72">
+						<span>H</span>
+					</li>
+					<li keyCode="74">
+						<span>J</span>
+						<span class="keySign">_</span>
+					</li>
+					<li keyCode="75">
+						<span>K</span>
+					</li>
+					<li keyCode="76">
+						<span>L</span>
+					</li>
+					<li keyCode="186">
+						<span>:</span>
+						<span>;</span>
+					</li>
+					<li keyCode="222">
+						<span>"</span>
+						<span>'</span>
+					</li>
+					<li keyCode="220">
+						<span>|</span>
+						<span>\</span>
+					</li>
+					<li class="width12 enterBoard enterDown" keyCode="13">
+						<span>Enter</span>
+					</li>
+				</ul>
+				<!--第三排键盘 E-->
+				<!--第四排键盘 S-->
+				<ul class="specialEffects1">
+					<li class="width275" keyCode="16">
+						<span>shift</span>
+					</li>
+					<li keyCode="90">
+						<span>Z</span>
+					</li>
+					<li keyCode="88">
+						<span>X</span>
+					</li>
+					<li keyCode="67">
+						<span>C</span>
+					</li>
+					<li keyCode="86">
+						<span>V</span>
+					</li>
+					<li keyCode="66">
+						<span>B</span>
+					</li>
+					<li keyCode="78">
+						<span>N</span>
+					</li>
+					<li keyCode="77">
+						<span>M</span>
+					</li>
+					<li keyCode="188">
+						<span><</span>
+						<span>,</span>
+					</li>
+					<li keyCode="190">
+						<span> > </span>
+						<span>.</span>
+					</li>
+					<li keyCode="191">
+						<span>?</span>
+						<span>/</span>
+					</li>
+					<li class="width275" keyCode="16">
+						<span>shift</span>
+					</li>
+				</ul>
+				<!--第四排键盘 E-->
+			</div>
+			<!--键盘区域 E-->
+			<!--<div>
+				<p>调整模式</p>
+				<button class="pattern0">默认</button>
+				<button class="pattern1 active">模式1</button>
+				<button class="pattern2">模式2</button>
+				<button class="pattern3">模式3</button>
+			</div>-->
+		</div>
+		<!--渲染键盘 E-->
+		
+	</div>
+	
+</body>
+<script>
+	$(function(){
+		var keyJson="",//一次性获取所有的数据，免得重复请求
+		ready=0,//初始化起始组
+		keyArrayNum=0,//获取总分组数
+		isComplete=false,//判断是否已经完成练习
+		keyArray=[];//每一组的数组
+		var accuracy=0,//正确率
+		clickKeyNum=0,//点击键盘次数，用于计算正确率
+		percentageComplete=0,//完成率
+		totalNums=0,//所有数据的条数，用于计算完成率
+		correctkeynNum=0,//正确点击键盘次数，用于计算正确率，和完成率
+		isSound=true,//音效开关
+		time="",//计算时间
+		timeStart=0;//初始化时间为0
+		
+		/*默认音效是打开状态，这里是修改音效开闭状态的*/
+		$(".keyboardSound").click(function(){
+			if(isSound){
+				isSound=false;
+				$(".sound").hide().siblings(".soundNo").show();
+			}else{
+				isSound=true;
+				$(".soundNo").hide().siblings(".sound").show();
+			}
+		})
+		schemaChanges(0);
+		/*练习模式的改变改变数据*/
+		$(".schemaChanges").change(function(){
+			keychange=$(this).val();
+			schemaChanges(keychange);
+		})
+		function schemaChanges(keyNumber){
+			/*初始化数据*/
+			ready=0,percentageComplete=0,clickKeyNum=0,accuracy=0,correctkeynNum=0,timeStart=0,isComplete=false,keyArray=[];//初始化所有参数，保证所有的数据重新计算
+			clearInterval(time);//关闭计时器，保证新的计时效果
+			/*获取不同的练习模式的数据*/
+			if(keyNumber==0){
+				data=oneArray;
+			}else{
+				data=TwoArray;
+			}
+			/*数据初始化，keyJson这个变量最初设置的时候时用于处理复杂的json格式，现在数据格式并不复杂，可以不使用*/
+			keyJson=data;
+			keyArrayNum=keyJson.length;//获取总分组数
+			for(var i in keyJson){
+				totalNums+=keyJson[i].length;//获取所有数据条数，用于计算完成量
+			};
+			/*虽然数据都初始化了，需要将页面展示也初始化*/
+			$(".time").html("0时0分0秒");
+			$(".accuracy").html("--");
+			$(".percentageComplete").html("--");
+			/*清空上一次的键盘输入效果*/
+			$(".keyboard ul>li").removeClass("active");
+			$(".keyboard ul>li").removeClass("errorKey");
+			/*初始化最上面的键盘练习按钮*/
+			typingPractice(ready);
+		}
+		/*console.log(data);*/
+		/*$.get("json/p.json",function(data){*/
+			/*var data={
+				"data":[
+					{
+						"keyboard":[
+							{"key":"g","keyCode":"71"},
+							{"key":"f","keyCode":"70"},
+							{"key":"d","keyCode":"68"},
+							{"key":"s","keyCode":"83"},
+							{"key":"a","keyCode":"65"}
+						]
+					},
+					{
+						"keyboard":[
+							{"key":"s","keyCode":"83"},
+							{"key":"d","keyCode":"68"},
+							{"key":"f","keyCode":"70"},
+							{"key":"g","keyCode":"71"},
+							{"key":"h","keyCode":"72"},
+							{"key":"j","keyCode":"74"},
+							{"key":"k","keyCode":"75"},
+							{"key":"l","keyCode":"76"},
+							{"key":";","keyCode":"186"}
+						]
+					},
+					{
+						"keyboard":[
+							{"key":"l","keyCode":"76"},
+							{"key":"k","keyCode":"75"},
+							{"key":"j","keyCode":"74"},
+							{"key":"h","keyCode":"72"}
+						]
+					},
+					{
+						"keyboard":[
+							{"key":";","keyCode":"186"},
+							{"key":"l","keyCode":"76"},
+							{"key":"k","keyCode":"75"},
+							{"key":"j","keyCode":"74"},
+							{"key":"h","keyCode":"72"}
+						]
+					},
+					{
+						"keyboard":[
+							{"key":"g","keyCode":"71"},
+							{"key":"f","keyCode":"70"},
+							{"key":"d","keyCode":"68"},
+							{"key":"s","keyCode":"83"},
+							{"key":"a","keyCode":"65"}
+						]
+					},
+					{
+						"keyboard":[
+							{"key":"h","keyCode":"72"},
+							{"key":"j","keyCode":"74"},
+							{"key":"k","keyCode":"75"},
+							{"key":"l","keyCode":"76"},
+							{"key":";","keyCode":"186"}
+						]
+					}
+				]
+				
+			}*/
+			/*keyJson=data;
+			keyArrayNum=keyJson.length;
+			for(var i in keyJson){
+				totalNums+=keyJson[i].length;
+			}
+			typingPractice(ready);*/
+		/*});*/
+		/*初始化键盘打字区域*/
+		function typingPractice(readyNum){
+			$(".promptArea").html("");
+			$(".promptArea").append($("<ul></ul>"));
+			for(var j in keyJson[readyNum]){
+				/*原本想直接用keyCode组建json数据，但是，每一个都去寻找对应的keycode工程量有点大，所以就用charCodeAt对比，有条件的可以创建keycode的json数据，*/
+				var promptAreaLi=$("<li prompCode="+keyJson[readyNum][j].charCodeAt(0)+">"+keyJson[readyNum][j]+"</li>");
+				$(".promptArea>ul").append(promptAreaLi);
+				keyArray.push(keyJson[readyNum][j].charCodeAt(0));//由于用键盘
+			}
+			$(".promptArea>ul>li:first-child").addClass("waitPractice");
+		}
+		/*定义时间函数*/
+		function timeFunc(){
+			clearInterval(time);
+			time=setInterval(function(){
+				timeStart++;
+				var minute=0,hour=0,second=0;//时分秒的处理
+				second=timeStart%60;
+				if(timeStart>=60){
+					minute=Math.floor(timeStart/60);
+				}
+				if(minute>=60){
+					hour=Math.floor(minute/60);
+				}
+				$(".time").html(hour+"时"+minute+"分"+second+"秒");
+			},1000)
+		}
+		/*console.log(keyJson);*/
+		/*开始记录键盘事件*/
+		$(document).keydown(function(event){
+			if(clickKeyNum<=0){
+				timeFunc();
+			}
+			clickKeyNum++;
+			$(".keyboard ul>li").removeClass("active");
+			$(".keyboard ul>li").removeClass("errorKey");
+			var e = event || window.event || arguments.callee.caller.arguments[0];
+			//判断是否完成，完成之后取消键盘点击特效
+			if(isComplete){
+				return false;
+			}
+			/*键盘输入值与已存的组数据对比效果*/
+		  	if(e.key.charCodeAt(0)==keyArray[0]){
+		  		/*键盘声音特效*/
+		  		if(isSound){
+		  			document.getElementsByClassName("rightSound")[0].play();
+		  		}
+		  		$("[keyCode="+e.keyCode+"]").addClass("active");//输入正确的键盘输入效果
+		  		keyArray.shift();//删除第一个数据，保持一直对比的时第一个数据
+		  		correctkeynNum++;
+		  		percentageComplete=((correctkeynNum/totalNums)*100).toFixed(2); /*计算完成率*/
+  				$('.percentageComplete').html(percentageComplete);
+  				accuracy=((correctkeynNum/clickKeyNum)*100).toFixed(2); /*计算正确率*/
+		  		$(".accuracy").html(accuracy);
+		  		
+		  		//当数组为最后一个时，更换一组数据，直到最后一组
+		  		if(keyArray.length>0){
+		  			$(".promptArea .waitPractice").removeClass("waitPractice").addClass("correctKey").next("li").addClass("waitPractice");
+		  		}else{
+		  			ready++;//比较数据组数，最后一组时需要提示完成
+		  			if(ready>=keyArrayNum){
+		  				alert("您已完成练习！");
+		  				$(".promptArea .waitPractice").removeClass("waitPractice").addClass("correctKey").next("li").addClass("waitPractice");
+		  				$(".promptArea").append($("<p>你已完成练习，键盘点击效果已封锁，请切换练习模式或者使用浏览器刷新之后继续操作！</p>"));
+		  				
+		  				isComplete=true;//当完成之后，点击键盘将不会再有特效
+		  				clearInterval(time);//清除定时器，免得持续计时
+		  				return;
+		  			}
+		  			typingPractice(ready);
+		  		}
+		  	}else{
+		  		/*键盘声音特效*/ 
+		  		if(isSound){
+		  			document.getElementsByClassName("wrongSound")[0].play();
+		  		}
+		  		$("[keyCode="+e.keyCode+"]").addClass("errorKey");
+		  		accuracy=((correctkeynNum/clickKeyNum)*100).toFixed(2); /*计算正确率*/
+		  		$(".accuracy").html(accuracy);
+		  	}
+		});
+	})
+</script>
+<div style="text-align:center;margin:50px 0; font:normal 14px/24px 'MicroSoft YaHei';">
+<p>适用浏览器：360、FireFox、Chrome、Opera、傲游、搜狗、世界之窗. 不支持Safari、IE8及以下浏览器。</p>
+</div>
+</html>
