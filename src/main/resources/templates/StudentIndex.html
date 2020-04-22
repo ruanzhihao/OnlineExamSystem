@@ -15,8 +15,17 @@
     <link rel="stylesheet" type="text/css" th:href="@{Wjl/css/adminstyle.css}" media="all">
     <script th:src="@{https://code.jquery.com/jquery-3.3.1.min.js}"></script>
 
+   <!-- <link rel="stylesheet" type="text/css" th:href="@{Wjl/css/bootstrap.css}" media="all">
+
+    <script th:src="@{Wjl/js/bootstrap.min.js}"></script>
+    <script th:src="@{Wjl/js/tracking-min.js}"></script>
+    <script th:src="@{Wjl/js/face-min.js}"></script>-->
+
 </head>
 <body>
+
+
+
 <div class="layui-layout layui-layout-admin" id="layui_layout">
     <!-- 顶部区域 -->
     <div class="layui-header header header-demo">
@@ -46,6 +55,13 @@
                     </script>
                 </div>
                 </li>
+
+
+              <!--  <button type="button" class="layui-btn layui-btn " th:onclick="|javascript:updateIndex(this,${session.stuid})|"  id="addFace" >
+                    <i class="layui-icon">&#x1002;</i>人脸绑定
+                </button>-->
+
+
                 <li class="layui-nav-item">
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -60,22 +76,26 @@
                         <span class="layui-nav-more"></span>
                     </a>
                     <dl class="layui-nav-child">
+
                         <dd>
                             <a href="./personal" id="personal">个人中心</a>
                         </dd>
+
                         <dd>
                             <a href="./updatePass" id="updatePass">修改密码</a>
                         </dd>
                         <dd>
+                            <a th:onclick="|javascript:updateIndex(this,${session.stuid})|"  id="addFace">绑定人脸</a>
+                        </dd>
+                        <dd>
                             <a href="./logout" id="logout">退出登录</a>
                         </dd>
+
                     </dl>
                 </li>
 
                 <li class="layui-nav-item">
-                    <!--<a href="##">
-                        <i class="iconfont icon-exit"></i>
-                        退出</a>-->
+
                     <a href="javascript:;">
                         <img width="40px" height="40px" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1586926099989&di=a6bece0c9ca8663ec07055b7ace1949e&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201607%2F22%2F20160722180244_4QYLN.jpeg" class="layui-nav-img">
                         <span id="stuInfo"></span>
@@ -85,7 +105,8 @@
         </div>
     </div>
     <!-- 左侧侧边导航开始 -->
-  <!--  <br>-->
+
+    <!--  <br>-->
     <div class="layui-side layui-side-bg layui-larry-side" id="larry-side">
         <div class="layui-side-scroll" id="larry-nav-side" lay-filter="side">
 
@@ -182,6 +203,66 @@
         </div>
     </div>
 </div>
+
+<!--添加页面实现-->
+<!--
+<div class="layui-row" id="popSearchRoleTest" style="display:none;">
+    <div class="layui-col-md11">
+        <form action="./registe" method="get">
+            <div id="media" style="right:60px">
+                <video id="video" width="350" height="200" autoplay></video></div>
+            <div style="display:none;overflow:hidden;">
+                <canvas id="canvas" width="350" height="200" ></canvas>
+            </div>
+            <hr>
+            <input type="button" class="btn btn-success" onclick="registe('${username}')"
+                   value="立即注册" />
+            <script type="text/javascript">
+                var canvans = document.getElementById("canvas");
+                var video = document.getElementById("video"); //获取video标签
+                var context = canvas.getContext("2d");
+
+                var con  ={
+                    audio:false,
+                    video:{
+                        width:1980,
+                        height:1980,
+                    }
+                };
+                //导航 获取用户媒体对象
+                navigator.mediaDevices.getUserMedia(con)
+                    .then(function(stream){
+                        video.src = window.URL.createObjectURL(stream);
+                        video.onloadmetadate = function(e){
+                            video.play();
+                        }
+                    });
+                function registe(username){
+                    context.drawImage(video,0,0,350,200);
+                    var imgData = canvans.toDataURL();
+                    var imgData1 = imgData.split("base64,")[1];
+                    $.ajax({
+                        type:"post",
+                        url:"${pageContext.request.contextPath}/registe",
+                        data: {"img":imgData1,
+                            "username":username
+                        },
+                        success:function(data){
+                            layer.msg('绑定成功',{icon:1,time:2000});
+                            setTimeout(function () {window.location.href='personal?username='+username;},2000);
+                        },error:function(msg){
+                            layer.msg('绑定失败',{icon:2,time:2000});
+                            setTimeout(function () {window.location.href='personal?username='+username;},2000);
+                        }
+                    });
+                }
+            </script>
+        </form>
+    </div>
+</div>
+</div>
+-->
+
 <!-- 加载js文件-->
 <script type="text/javascript" th:src="@{Wjl/common/layui/layui.js}"></script>
 <script type="text/javascript" th:src="@{Wjl/js/larry.js}"></script>
@@ -223,8 +304,38 @@
             $("#iframeMain").attr("src",$(this).attr("href")+'?stuId='+stuId);
         });
 
+
+
     });
 
+</script>
+
+<script>
+    //对弹出层的form 进行渲染;
+    layui.use('form', function(){
+        var form = layui.form;
+      /*  $('#addQuestion').click(function(){
+            layer.open({
+                //layer提供了5种层类型。可传入的值有：0（信息框，默认）1（页面层）2（iframe层）3（加载层）4（tips层）
+                type:1,
+                title:"人脸绑定",
+                area: ['50%','50%'],
+                content:$("#popSearchRoleTest"),
+            });
+            form.render();
+        });*/
+    });
+    function updateIndex(obj,stuid) {
+        layer.open({
+            type:2,
+            title: "人脸绑定",
+            area: ['370px', '310px'],
+            content: '/addFace?stuid='+stuid,
+
+        });
+
+        /* form.render();*/
+    }/*);*/
 </script>
 </body>
 </html>

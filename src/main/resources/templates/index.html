@@ -4,6 +4,9 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <title>在线考试平台登录页面</title>
   <link href="Ch/login.css" rel="stylesheet" rev="stylesheet" type="text/css" media="all" />
+
+  <link rel="stylesheet" type="text/css" href="Wjl/common/layui/css/layui.css" media="all">
+
   <script type="text/javascript" src="js/jQuery1.7.js"></script>
   <script type="text/javascript" src="js/jquery-1.8.2.min.js"></script>
   <script type="text/javascript" src="js/jquery1.42.min.js"></script>
@@ -151,10 +154,17 @@
           <button type="submit" onclick="checkLogin()">登录</button>
         </div>-->
         <div class="">
+
+          <input type="button" id="faceLogin" value="学生人脸" onclick="face()"
+                 style="background: darkgreen; height: 40px; width: 80px; color: white;">
+
+
           <input type="submit"  value="登录" name="submit"
                  style="background: red; height: 40px; width: 120px; color: white;">
           <input type="button"  value="注册" onclick="stuRegister()"
                  style="background: red; height: 40px; width: 120px; color: white;">
+
+
         </div>
       </form>
     </div>
@@ -229,4 +239,19 @@
   </ul>
 </div>
 </body>
+<script type="text/javascript" src="Wjl/common/layui/layui.js"></script>
+<script>
+  //对弹出层的form 进行渲染;
+  layui.use('form', function(){
+    var form = layui.form;
+  });
+  function face() {
+    layer.open({
+      type:2,
+      title: "人脸登陆",
+      area: ['355px', '300px'],
+      content: '/faceByLogin',
+    });
+  }
+</script>
 </html>

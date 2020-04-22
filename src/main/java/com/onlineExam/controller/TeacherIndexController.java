@@ -84,4 +84,10 @@ public class TeacherIndexController {
     model.addAttribute("list",list);
         return "QuestionInfo";
     }
+
+    //测试
+    @RequestMapping(value = "/testIndex",method = RequestMethod.GET)
+    public String goYset(){
+        return "Question_TestIndex";
+    }
 }

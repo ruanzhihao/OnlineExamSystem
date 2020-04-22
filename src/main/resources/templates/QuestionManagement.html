@@ -5,11 +5,14 @@
     <title>试题管理</title>
     <link rel="stylesheet" th:href="@{/layui/css/layui.css}" media="all">
     <script th:src="@{https://code.jquery.com/jquery-3.3.1.min.js}"></script>
+   <!-- <script th:src="@{http://www.jq22.com/jquery/jquery-1.10.2.js}"></script>
+    <script th:src="@{/Wjl/resources/script/configBase.js}"></script>
+    <script th:src="@{/Wjl/resources/script/exam/exam.js}"></script>-->
 
 </head>
 <body>
 
-<div class="demoTable" style="padding: 15px">
+<div class="demoTable" style="padding: 15px;">
 
     <div class="layui-inline">
         <input placeholder="输入试题关键字" class="layui-input" id="findQuestionKey" name="findQuestionKey" autocomplete="off">
@@ -195,160 +198,62 @@
     </div>
 </div>
 
-<!--修改的实现-->
-<!--<div class="layui-row" id="popUpdateQuestion" style="display:none;">
-    <div class="layui-col-md11">
-        <form class="layui-form" lay-filter="formTestFilter2121"  >
-            <div class="layui-form-item">
-                <label class="layui-form-label">试题内容：</label>
-                <div class="layui-input-block" style="width: 520px">
-                    <textarea  class="layui-textarea" name="questionName"  id="newquestionName" ></textarea>
-                </div>
-            </div>
-            <div class="layui-form-item">
-                <label class="layui-form-label">选项A：</label>
-                <div class="layui-input-inline">
-                    <input type="text" name="optionA" id="newoptionA" class="layui-input">
-                </div>
-                <label class="layui-form-label">选项B：</label>
-                <div class="layui-input-inline">
-                    <input type="text" name="optionB" id="newoptionB" class="layui-input">
-                </div>
-            </div>
-            <div class="layui-form-item">
-                <label class="layui-form-label">选项C：</label>
-                <div class="layui-input-inline">
-                    <input type="text" name="optionC" id="newoptionC" class="layui-input">
-                </div>
-                <label class="layui-form-label">选项D：</label>
-                <div class="layui-input-inline">
-                    <input type="text" name="optionD" id="newoptionD" class="layui-input">
-                </div>
-            </div>
-            <div class="layui-form-item">
-                <label class="layui-form-label">正确答案：</label>
-                <div class="layui-input-inline">
-                    <input type="text" name="answer" id="newanswer" class="layui-input">
-                </div>
-                <div class="layui-input-inline" style="color:red;">
-                    提示：请把保持答案内容与选项内容一致
-                </div>
-            </div>
-
-            <div class="layui-form-item">
-                <label class="layui-form-label">考试科目：</label>
-                <div class="layui-input-inline" style="width: 180px" >
-                    <select name="courseId" id="newcourseId" lay-verify="required" >
-                        <option value=""></option>
-                        <option  th:each="course :${courseList}" th:text="${course.courseName}" th:value="${course.courseId}"></option>
-                    </select>
-                </div>
-
-                <label class="layui-form-label">专业：</label>
-                <div class="layui-input-inline" style="width: 180px">
-                    <select name="majorId" id="newmajorId"  lay-verify="required" >
-                        <option value=""></option>
-                        <option th:each="major:${majorList}" th:text="${major.majorName}" th:value="${major.majorId}"></option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="layui-form-item">
-                <label class="layui-form-label">该题题型：</label>
-                <div class="layui-input-inline" style="width: 180px">
-                    <select name="questionType" id="newquestionType" lay-verify="required">
-                        <option value=""></option>
-                        <option value="单选">单选</option>
-                        <option value="多选">多选</option>
-                    </select>
-
-                </div>
-                <label class="layui-form-label">分值分配：</label>
-                <div class="layui-input-inline" style="width: 80px">
-                    <input type="text" name="questionScore" id="newquestionScore" class="layui-input" placeholder="单位：分">
-                </div>
-
-            </div>
-
-            <div class="layui-form-item">
-                <label class="layui-form-label">试题难度：</label>
-                <div class="layui-input-block" style="width: 180px">
-                    <select name="city" id="newquestionClass" lay-verify="required">
-                        <option value=""></option>
-                        <option value="简单">简单</option>
-                        <option value="中等">中等</option>
-                        <option value="困难">困难</option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="layui-form-item">
-                <div class="layui-input-block" >
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-
-                    <button type="button" onclick="updateQues()" class="layui-btn layui-btn-normal">提交修改</button>
-                    <script th:inline="javascript">
-                        function updateQues(){
-                            //获取不到值 为空值;
-                            var questionName=$("#newquestionName").val();
-                            var optionA=$('#newoptionA').val();
-                            var optionB=$('#newoptionB').val();
-                            var optionC=$('#newoptionC').val();
-                            var optionD=$('#newoptionD').val();
-                            var answer=$('#newanswer').val();
-                            var courseId=$('#newcourseId option:selected').val();
-                            var majorId=$('#newmajorId option:selected').val();
-                            var questionType=$('#newquestionType').val();
-                            var questionClass=$('#newquestionClass').val();
-                            var questionScore=$('#newquestionScore').val();
-                            $.ajax({
-                                url:'/updateQuestion',
-                                type:"get",
-                                contentType: "application/json;charset=UTF-8",
-                                data:{
-                                    questionName:questionName,
-                                    optionA:optionA,
-                                    optionB:optionB,
-                                    optionC:optionC,
-                                    optionD:optionD,
-                                    answer:answer,
-                                    questionScore:questionScore,
-                                    courseId:courseId,
-                                    majorId:majorId,
-                                    questionType:questionType,
-                                    questionClass:questionClass,
-
-                                },
-                                success:function(){
-                                    layer.msg('修改成功', {icon:1,
-                                        time: 2000 //2秒关闭（如果不配置，默认是3秒）
-                                    }, function () {
-                                        window.location.href="/testManage";
-                                    });
-                                }
-                            })
-                        }
-
-                    </script>
-                </div>
-            </div>
-        </form>
-    </div>
-</div>-->
-
-
-
 <hr>
+<!--<table class="layui-table" lay-filter="demo">
+    <thead>
+    <tr>a</tr>
+    <tr>a</tr>
+    </thead>-->
+   <!-- <ul class="ui-questions-content-list" >
+        <li class="ui-module items-questions"  style="width: 100%;">
+            <div class="theme-type">
+            &lt;!&ndash;    <div class="module-menu">
+                    <h4></h4>
+                    <div class="module-ctrl">
+                        <a href="javascript:void(0);" class="ui-clone-btn" data-tisp="修改"><i class="icon-clone"></i></a>
+                        <a href="javascript:void(0);" class="ui-del-btn" data-tisp="删除"><i class="icon-del"></i></a>
+                    </div>
+                </div>&ndash;&gt;
+                <div class="ui-drag-area">
+                    <div class="cq-title T_edit T_plugins" data-Tid="1"><span style="font-size:16px;">单选题目标题</span></div>
+                </div>
+                <div class="cq-items-content">
+                    <ul class="cq-unset-list" data-checkType="" data-nameStr="">
+                        <li><label class="input-check" style="font-weight: bold">A</label>
+                            <div class="cq-answer-content T_edit T_plugins" data-Tid="">1111</div>
+                        </li>
+                        <li><label class="input-check" style="font-weight: bold">B</label>
+                            <div class="cq-answer-content T_edit T_plugins" data-Tid="">1111</div>
+                        </li>
+                        <li><label class="input-check" style="font-weight: bold">C</label>
+                            <div class="cq-answer-content T_edit T_plugins" data-Tid="">11</div>
+                        </li>
+                        <li><label class="input-check" style="font-weight: bold">D</label>
+                            <div class="cq-answer-content T_edit T_plugins" data-Tid="">111</div>
+                        </li>
+                    </ul>
+                    <div class="cq-items-ctrl">
+
+                        <label class="input-check">正确答案：<span style="color: green;font-weight: bold">A</span></label>
+
+                    </div>
+                </div>
+            </div>
+        </li>
+
+    </ul>-->
+<!--
+</table>-->
+
+
+
+
+
+
+
 <table class="layui-table" lay-filter="demo">
     <thead>
     <tr>
-      <!--  <th lay-data="{field:'1', width:40, sort:true}">ID</th>-->
         <th lay-data="{field:'2', width:260}">&nbsp;&nbsp;&nbsp;&nbsp;试&nbsp;&nbsp;&nbsp;&nbsp;题&nbsp;&nbsp;&nbsp;&nbsp;内&nbsp;&nbsp;&nbsp;&nbsp;容</th>
         <th lay-data="{field:'3', width:80}">选项A</th>
         <th lay-data="{field:'4', width:80}">选项B</th>
@@ -367,7 +272,6 @@
     </thead>
     <tbody>
     <tr th:each ="question :${list}">
-<!--        <td th:text="${question.questionId}"></td>-->
         <td th:text="${question.questionName}"></td>
         <td th:text="${question.optionA}"></td>
         <td th:text="${question.optionB}"></td>
@@ -384,7 +288,7 @@
             <a type="button" title="修改" href="javascript:;" th:onclick="|javascript:updateIndex(this,${question.questionId})|" class="layui-btn layui-btn-sm layui-btn-warm" id="updateBtn" >
                 <i class="layui-icon">&#xe642;</i>
             </a>
-          <!--  修改的实现-->
+
             <script>
               /*  function updateIndex(id,name,optionA,optionB,optionC,optionD,answer,questionScore,courseName,majorName,questionType,questionClass){
                 $('#newquestionName').val(name);
@@ -428,8 +332,6 @@
     //静态表格布局
     layui.use('table',function() {
         var table = layui.table;//加载表格模块
-        /*var $ = layui.jquery;*/
-        /*  var $ = layui.jquery;*/
         table.init('demo', {
             height: 465 //设置高度
             , page: true //开启分页
