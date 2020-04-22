@@ -1,10 +1,8 @@
 package com.onlineExam.controller;
 
 import com.google.code.kaptcha.impl.DefaultKaptcha;
-import com.onlineExam.domain.Exam;
-import com.onlineExam.domain.LoginUser;
-import com.onlineExam.domain.Student1;
-import com.onlineExam.domain.Teacher;
+import com.onlineExam.domain.*;
+import com.onlineExam.mapper.MessageMapper;
 import com.onlineExam.mapper.TeacherMapper;
 import com.onlineExam.modules.common.controller.MainController;
 import com.onlineExam.modules.util.SendMail;
@@ -40,6 +38,8 @@ public class TeacherController {
     private DefaultKaptcha defaultKaptcha;
     @Autowired
     private StuUserService stuUserService;
+    @Autowired
+    private MessageMapper messageMapper;
 
 
     //登录
@@ -221,8 +221,16 @@ public class TeacherController {
             model.addAttribute("msg", "原密码错误");
         }
         return "changeTeapwd";
-
     }
+    //消息通知
+    @RequestMapping("/teaMessage")
+    public String findMessage(Model model){
+        List<Message> messageList= messageMapper.findMessage();
+
+        model.addAttribute("messageList",messageList);
+        return "teaMessage";
+    }
+
 
 
     //进入教师端

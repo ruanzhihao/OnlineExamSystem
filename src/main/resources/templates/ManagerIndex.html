@@ -21,7 +21,7 @@
                         <a href="">邮件管理</a>
                     </dd>
                     <dd>
-                        <a href="">消息管理</a>
+                        <a href="./addMessage" id="addMessage">消息管理</a>
                     </dd>
                     <dd>
                         <a href="">授权管理</a>
@@ -137,6 +137,10 @@
         });
 
         $("li>a").click(function (e) {
+            e.preventDefault();
+            $("#iframeMain").attr("src",$(this).attr("href"));
+        });
+        $("#addMessage").click(function (e) {
             e.preventDefault();
             $("#iframeMain").attr("src",$(this).attr("href"));
         });

@@ -3,6 +3,7 @@ package com.onlineExam.controller;
 import com.google.code.kaptcha.impl.DefaultKaptcha;
 import com.onlineExam.domain.*;
 import com.onlineExam.mapper.AdminMapper;
+import com.onlineExam.mapper.MessageMapper;
 import com.onlineExam.modules.common.controller.MainController;
 import com.onlineExam.service.StuUserService;
 import com.onlineExam.service.TeacherService;
@@ -29,6 +30,8 @@ public class AdminController {
     private TeacherService teacherService;
     @Autowired
     private StuUserService stuUserService;
+    @Autowired
+    private MessageMapper messageMapper;
 
     @RequestMapping(value="/adminLogin",method = {RequestMethod.POST,RequestMethod.GET})
     public String login(HttpServletRequest request, HttpServletResponse response, HttpSession session, @RequestParam("validateCode")String validateCode){
@@ -78,6 +81,29 @@ public class AdminController {
             }
         }
         return null;
+    }
+    @RequestMapping("/addMessage")
+    public String addMessage(){
+        return "addMessage";
+    }
+    @RequestMapping("/message")
+    public String Message(String sendername, String head, String content, String createtime,Model model){
+        /*SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//Date指定格式：yyyy-MM-dd HH:mm:ss
+        Date date = new Date();//创建一个date对象保存当前时间
+        String dateStr = simpleDateFormat.format(createtime);*/
+
+        Message message=new Message();
+        message.setSendername(sendername);
+        message.setHead(head);
+        message.setContent(content);
+        message.setCreatetime(createtime);
+        int result=messageMapper.addMessage(message);
+        if (result!=0){
+            model.addAttribute("msg","消息发布成功");
+        }else {
+            model.addAttribute("msg","消息发布失败");
+        }
+        return "addMessage";
     }
 
 

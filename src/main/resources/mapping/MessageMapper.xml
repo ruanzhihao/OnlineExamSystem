@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.onlineExam.mapper.MessageMapper">
+
+    <insert id="addMessage" parameterType="com.onlineExam.domain.Message" >
+        insert into t_message(sendername,head,content,createtime)
+         values(#{sendername},#{head},#{content},#{createtime})
+    </insert>
+    <select id="findMessage" resultType="com.onlineExam.domain.Message">
+        select * from t_message order by createtime desc;
+    </select>
+
+</mapper>

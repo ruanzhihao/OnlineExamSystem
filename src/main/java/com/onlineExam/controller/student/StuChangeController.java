@@ -23,6 +23,11 @@ public class StuChangeController {
     @Autowired
     private StuUserService stuUserService;
 
+    @RequestMapping("/kTouch")
+    public String kTouch(){
+       return "student/kTouch";
+    }
+
     //    //修改用户的信息
     @RequestMapping(value = "/ChangeStuInfo" ,method=RequestMethod.POST)
     public String ChangeInformation(HttpServletRequest request, HttpSession session, Model model, Integer stuid,
