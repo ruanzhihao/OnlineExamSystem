@@ -9,8 +9,11 @@
     <link th:href="@{/Wjl/css/main2.css}" rel="stylesheet" type="text/css" />
     <link th:href="@{/Wjl/css/iconfont.css}" rel="stylesheet" type="text/css" />
     <link th:href="@{/Wjl/css/test.css}" rel="stylesheet" type="text/css" />
-    <link rel="stylesheet" type="text/css" th:href="@{/Wjl/common/layui/css/layui.css}" media="all">
-    <script type="text/javascript" th:src="@{/Wjl/common/layui/layui.js}"></script>
+    <link rel="stylesheet" th:href="@{/Rzh/layui/css/layui.css}">
+    <link rel="stylesheet" th:href="@{/Rzh/layui/css/modules/layer/default/layer.css}">
+    <script type="text/javascript" th:src="@{/Rzh/js/jQuery1.7.2.js}"></script>
+    <script type="text/javascript" th:src="@{/Rzh/layui/layui.js}"></script>
+    <script type="text/javascript" th:src="@{/Rzh/layer/layer.js}"></script>
     <style>
         .hasBeenAnswer {
             background: #5d9cec;
@@ -43,11 +46,12 @@
                 <div class="test">
                     <form action="" method="post">
                         <div class="test_title">
-                            <p class="test_time">
-                                <i class="icon iconfont">&#xe6fb;</i><b class="alt-1">01:40</b>
+                            <p class="test_time" id="timer" style="font-size:20px;">
+                                <i class="icon iconfont">&#xe6fb;</i>
                             </p>
+                            <input type="hidden" th:value="${examTime}" id="examTime">
                             <input type="hidden" th:value="${session.paperId}" name="paperId">
-                            <font><input type="button" name="test_jiaojuan" value="交卷" th:onclick="|javascript:getAll()|"></font>
+                            <font><input type="button" id="jiaojuan" value="交卷" th:onclick="|javascript:getAll()|"></font>
                         </div>
 
                         <div class="test_content">
@@ -179,8 +183,8 @@
                             <h1>
                                 <i class="icon iconfont">&#xe692;</i>答题卡
                             </h1>
-                            <p class="test_time">
-                                <i class="icon iconfont">&#xe6fb;</i><b class="alt-1">01:40</b>
+                            <p class="test_time" id="timertop" style="font-size:20px;">
+
                             </p>
                         </div>
 
@@ -300,12 +304,45 @@
                 contentType:'application/json',
                 success:function (res) {
                     if(1){
-                        alert("交卷后不可再次进入考试")
-                        window.location.href="/successSubmit?score="+res;
+                        layer.msg("交卷中，正在判分...",{icon: 1, time: 2000},function () {
+                            window.location.href="/successSubmit?score="+res;
+                        });
                     }
                 }
             })
         }
+    </script>
+//自动交卷
+    <script type="text/javascript">
+        var examTime =$("#examTime").val();
+        function CountDown() {
+            if (examTime >= 1) {
+                minutes = Math.floor(examTime / 60);
+                seconds = Math.floor(examTime % 60);
+                console.log(minutes);
+                console.log(seconds);
+                msg = "距离考试结束还有" + minutes + "分" + seconds + "秒"+"届时自动交卷";
+                msgtop="倒计时"+minutes+"分"+seconds+"秒"
+                document.getElementById("timer").innerHTML = msg;
+                document.getElementById("timertop").innerHTML = msgtop;
+                /* if (examTime == 5 * 60)alert("还剩5分钟"); */
+                --examTime;
+            } else{
+                clearInterval(timer);
+                clearInterval(timertop);
+                setTimeout(function() {
+                    if(document.all) {
+                        document.getElementById("jiaojuan").click();
+                    }
+                    else {
+                        var e = document.createEvent("MouseEvents");
+                        e.initEvent("click", true, true);
+                        document.getElementById("jiaojuan").dispatchEvent(e);
+                    }
+                }, 2000);
+            }
+        }
+        setInterval("CountDown()", 1000);
     </script>
 </body>
 </html>

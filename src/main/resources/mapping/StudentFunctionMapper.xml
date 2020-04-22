@@ -15,9 +15,9 @@ or t_releaseexam.examStateId=1)
 ORDER BY examStateName DESC
 
     </select>
-    <select id="getAnswerTime" resultType="com.onlineExam.domain.Paper">
+   <!-- <select id="getAnswerTime" resultType="com.onlineExam.domain.Paper">
         select answerTime from t_paper where paperId=#{paperId}
-    </select>
+    </select>-->
     <update id="updateState" parameterType="com.onlineExam.domain.ReleaseExam">
       update t_releaseexam SET t_releaseexam.examStateId=#{examStateId} where t_releaseexam.releaseExamId=#{releaseExamId}
     </update>
@@ -60,5 +60,8 @@ ORDER BY examStateName DESC
     </select>
     <select id="getRadioQuestionScore" resultType="int">
         SELECT SUM(questionScore)  from t_question,t_realpaper where  t_realpaper.questionId=t_question.questionId and  questionType='单选' and t_realpaper.paperId=#{paperId}
+    </select>
+    <select id="getAnswerTime" resultType="integer">
+        SELECT t_paper.answerTime  from t_paper where paperId=#{paperId}
     </select>
 </mapper>

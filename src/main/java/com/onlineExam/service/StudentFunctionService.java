@@ -30,4 +30,5 @@ public interface StudentFunctionService {
     int getRadioCount(@Param("paperId") Integer paperId);
     //展示多选总分值
     int getRadioQuestionScore(@Param("paperId") Integer paperId);
+    int getAnswerTime(@Param("paperId") Integer paperId);
 }

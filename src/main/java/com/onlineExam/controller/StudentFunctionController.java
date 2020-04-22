@@ -134,7 +134,6 @@ public String goExam(Model model,HttpSession session){
     }
     @RequestMapping(value = "/stuExam",method = RequestMethod.GET)
     public String getQuestion(@RequestParam("paperId") Integer paperId,@RequestParam("releaseExamId") Integer releaseExamId, Model model,HttpServletRequest request){
-
         int checkBoxScore=studentFunctionService.getCheckBoxQuestionScore(paperId);
         int checkBoxCount=studentFunctionService.getCheckBoxCount(paperId);
         List<Question> checkboxQuestions=studentFunctionService.getCheckQuestion(paperId);
@@ -156,6 +155,9 @@ public String goExam(Model model,HttpSession session){
         session.setAttribute("releaseExamId",releaseExamId);
         System.out.println(session.getAttribute("paperId"));
         System.out.println(session.getAttribute("releaseExamId"));
+        int answerTime=studentFunctionService.getAnswerTime(paperId);
+        int examTime=answerTime*60;
+        model.addAttribute("examTime",examTime);
         return "exam";
     }
     @RequestMapping(value = "getScore",produces="application/json; utf-8")

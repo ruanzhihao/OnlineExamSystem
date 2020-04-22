@@ -91,4 +91,9 @@ public class StudentFunctionServiceImpl implements StudentFunctionService {
     public int getRadioQuestionScore(Integer paperId) {
         return studentFunctionMapper.getRadioQuestionScore(paperId);
     }
+
+    @Override
+    public int getAnswerTime(Integer paperId) {
+        return studentFunctionMapper.getAnswerTime(paperId);
+    }
 }
