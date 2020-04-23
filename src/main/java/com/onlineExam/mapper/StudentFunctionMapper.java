@@ -45,4 +45,11 @@ public interface StudentFunctionMapper {
     int getRadioQuestionScore(@Param("paperId") Integer paperId);
     //查询答题时间
     int getAnswerTime(@Param("paperId") Integer paperId);
+
+    //考试记录单选题目的详情
+    List<StuAnswer> getHistory(@Param("paperId")int paperId,@Param("stuId")int stuId);
+
+    //考试记录多选题目的详情
+    List<StuAnswer> getCheckHistory(@Param("paperId")int paperId,@Param("stuId")int stuId);
+
 }

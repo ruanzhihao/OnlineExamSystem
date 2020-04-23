@@ -64,4 +64,13 @@ ORDER BY examStateName DESC
     <select id="getAnswerTime" resultType="integer">
         SELECT t_paper.answerTime  from t_paper where paperId=#{paperId}
     </select>
+
+    <select id="getHistory" parameterType="java.lang.Integer" resultType="com.onlineExam.domain.StuAnswer">
+        select * from t_question,t_stuanswer,t_paper where t_stuanswer.questionId=t_question.questionId and t_stuanswer.stuId=#{stuId} and t_stuanswer.paperId=#{paperId} and t_question.questionType='单选'
+    </select>
+
+    <select id="getCheckHistory" parameterType="java.lang.Integer" resultType="com.onlineExam.domain.StuAnswer">
+       select * from t_question,t_stuanswer,t_paper where t_stuanswer.questionId=t_question.questionId and t_stuanswer.stuId=#{stuId} and t_stuanswer.paperId=#{paperId} and t_question.questionType='多选'
+    </select>
+
 </mapper>

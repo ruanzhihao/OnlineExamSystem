@@ -47,7 +47,26 @@
         <td th:text="${exam.examTime}"></td>
         <td th:text="${exam.examScore}"></td>
         <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <button class="layui-btn layui-btn-sm layui-btn-warm">详情</button>
+            <button class="layui-btn layui-btn-sm layui-btn-warm" th:onclick="|javascript:show(this,${exam.paperId},${exam.stuId},'${exam.examTime}')|">详情</button>
+
+            <script>
+                function show(obj,paperId,stuId,examTime){
+
+                    $.ajax({
+                        url:'./getHistory',
+                        type:'post',
+                        data:{
+                            paperId:paperId,
+                            stuId:stuId,
+                            examTime:examTime,
+                        },
+                        success:function () {
+                            layer.msg('加载中...',{time:2000});
+                            setTimeout(function () {window.parent.location.href='/HistoryGo?paperId='+paperId+'&stuId='+stuId+'&examTime='+examTime;},2000);
+                        }
+                    })
+                }
+            </script>
         </td>
     </tr>
     </tbody>

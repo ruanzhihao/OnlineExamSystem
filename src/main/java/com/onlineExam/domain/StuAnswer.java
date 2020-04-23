@@ -12,4 +12,14 @@ public class StuAnswer {
     Integer releaseExamId;
     Integer isWrong;
     String isCollect;
+
+    String questionName;
+    String optionA;
+    String optionB;
+    String optionC;
+    String optionD;
+    String answer;
+    int questionScore;
+    String questionType;
+    String questionClass;
 }

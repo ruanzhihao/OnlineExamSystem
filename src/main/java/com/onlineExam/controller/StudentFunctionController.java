@@ -363,6 +363,28 @@ public String goExam(Model model,HttpSession session){
         return "JiaoJuanSuccess";
 }
 
+    //考试详情加载
+    @RequestMapping(value = "/getHistory",method = RequestMethod.POST)
+    @ResponseBody
+    public String history(Model model,@RequestParam("paperId") int paperId,@RequestParam("stuId") int stuId,@RequestParam("examTime") String examTime){
+        List<StuAnswer> list=studentFunctionService.getHistory(paperId, stuId);
+        model.addAttribute("list",list);
+        return "0";
+    }
 
+    //考试详情加载访问
+    @RequestMapping(value = "/HistoryGo",method = RequestMethod.GET)
+    public String Gohistory(Model model,@RequestParam("paperId") int paperId,@RequestParam("stuId") int stuId,@RequestParam("examTime") String examTime){
+        //获取单选题目详情
+        List<StuAnswer> list=studentFunctionService.getHistory(paperId, stuId);
+        model.addAttribute("HistoryList",list);
+        model.addAttribute("stuId",stuId);
+        model.addAttribute("paperId",paperId);
+        model.addAttribute("examTime",examTime);
+        //获取多选题目详情
+        List<StuAnswer> list2=studentFunctionService.getCheckHistory(paperId, stuId);
+        model.addAttribute("CheckHistory",list2);
+        return "historyImpl";
+    }
 
 }

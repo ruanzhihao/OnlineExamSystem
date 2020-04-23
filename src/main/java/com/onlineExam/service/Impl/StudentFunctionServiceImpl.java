@@ -96,4 +96,14 @@ public class StudentFunctionServiceImpl implements StudentFunctionService {
     public int getAnswerTime(Integer paperId) {
         return studentFunctionMapper.getAnswerTime(paperId);
     }
+
+    @Override
+    public List<StuAnswer> getHistory(int paperId, int stuId) {
+        return studentFunctionMapper.getHistory(paperId, stuId);
+    }
+
+    @Override
+    public List<StuAnswer> getCheckHistory(int paperId, int stuId) {
+        return studentFunctionMapper.getCheckHistory(paperId, stuId);
+    }
 }
