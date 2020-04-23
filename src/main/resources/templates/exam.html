@@ -38,7 +38,7 @@
     </style>
 </head>
 
-<body>
+<body onblur="leaveHTML()">
     <div class="main">
         <!--nr start-->
         <div class="test_main">
@@ -344,6 +344,59 @@
         }
         setInterval("CountDown()", 1000);
     </script>
+
+<script>
+/*鼠标离开页面 自动交卷*/
+    function leaveHTML(){
+        layer.confirm('你已离开界面，考试自动结束！',{btn: ['确认'], title: "离开提示"},
+            function(index){
+                var length=Number($("#checkBoxCount").val());
+                var length1=Number($("#radioCount").val())
+                console.log(typeof (length));
+                answers=[];
+                questionIds=[];
+                var i,j;
+                for (j=1;j<length1+1;j++){
+                    robj0=document.getElementsByName("rquestion"+j);
+                    robj=document.getElementsByName("ranswer"+j);
+                    questionIds.push(robj0[0].value);
+                    for(k in robj){
+                        if(robj[k].checked)
+                            answers.push(String(robj[k].value));
+                    }
+                }
+                for(i=1;i<length+1;i++){
+                    obj0=document.getElementsByName("question"+i);
+                    obj = document.getElementsByName("answer"+i);
+                    check_val = [];
+                    for(k in obj){
+                        if(obj[k].checked)
+                            check_val.push(obj[k].value);
+                    }
+                    questionIds.push(obj0[0].value);
+                    answers.push(check_val.join(""));
+                }
+                console.log(questionIds);
+                console.log(answers);
+                var answer=JSON.stringify(answers);
+                var questionId=JSON.stringify(questionIds);
+                $.ajax({
+                    url:'getScore',
+                    type:'get',
+                    data:{'answers':answer,'questionIds':questionId},
+                    dataType:'json',
+                    contentType:'application/json',
+                    success:function (res) {
+                        if(1){
+                            layer.msg("你已离开页面 自动交卷中...",{icon: 2, time: 2000},function () {
+                                window.location.href="/successSubmit?score="+res;
+                            });
+                        }
+                    }
+                })
+            });
+    }
+</script>
 </body>
 </html>
 
