@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.onlineExam.mapper.StuUserMapper">
+    <select id="getErrorQuestion" resultType="com.onlineExam.domain.StuAnswer">
+       select * from t_stuanswer as s,t_realpaper as r,t_question as q,t_paper as p where  s.isWrong=2 and s.paperId=p.paperId and s.paperId=r.paperId
+       and r.paperId=s.paperId and s.questionId=r.questionId and r.questionId=q.questionId and
+       s.questionId=q.questionId and stuId=170101
+    </select>
     <select id="getStuByEmail" parameterType="String" resultType="com.onlineExam.domain.Student">
       select * from student where stuemail=#{stuemail}
     </select>

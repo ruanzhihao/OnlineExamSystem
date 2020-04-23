@@ -6,7 +6,8 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 public interface StuUserService {
-
+    //查看错题
+    public List<StuAnswer> getErrorQuestion(Integer stuId);
     public Student getStuByEmail(String stuemail);
     public String login(@Param("username") String username, @Param("password") String password);
 

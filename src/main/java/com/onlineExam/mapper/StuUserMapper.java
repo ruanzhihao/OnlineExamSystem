@@ -9,6 +9,8 @@ import java.util.List;
 //@Mapper
 @Component
 public interface StuUserMapper {
+    //查看错题
+    public List<StuAnswer> getErrorQuestion(Integer stuId);
     public Student getStuByEmail(String stuemail);
 
     public String login(@Param("username") String username, @Param("password") String password);

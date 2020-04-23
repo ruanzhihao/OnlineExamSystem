@@ -124,7 +124,7 @@
                     </a>
                     <dl class="layui-nav-child">
                         <dd>
-                            <a href="javascript:;" data-url="myloginfo.html">
+                            <a href="./myerror" data-url="myloginfo.html" id="myerror">
                                 <i class="iconfont icon-piliangicon" data-icon='icon-piliangicon'></i>
                                 <span>我的错题本</span>
                             </a>
@@ -309,6 +309,10 @@
             $("#iframeMain").attr("src",$(this).attr("href"));
         });
         $("#stumessage").click(function (e) {
+            e.preventDefault();
+            $("#iframeMain").attr("src",$(this).attr("href"));
+        });
+        $("#myerror").click(function (e) {
             e.preventDefault();
             $("#iframeMain").attr("src",$(this).attr("href"));
         });

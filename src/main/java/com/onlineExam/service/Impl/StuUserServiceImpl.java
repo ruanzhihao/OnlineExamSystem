@@ -17,6 +17,10 @@ public class StuUserServiceImpl implements StuUserService {
     private StuUserMapper usermapper;
 
     @Override
+    public List<StuAnswer> getErrorQuestion(Integer stuId) {
+        return usermapper.getErrorQuestion(stuId);
+    }
+    @Override
     public Student getStuByEmail(String stuemail) {
         return usermapper.getStuByEmail(stuemail);
     }

@@ -1,7 +1,10 @@
 package com.onlineExam.controller.student;
 
 import com.onlineExam.domain.LoginUser;
+import com.onlineExam.domain.Question;
+import com.onlineExam.domain.StuAnswer;
 import com.onlineExam.domain.Student;
+import com.onlineExam.service.QuestionService;
 import com.onlineExam.service.StuUserService;
 import io.swagger.annotations.Api;
 import org.apache.shiro.crypto.hash.Md5Hash;
@@ -14,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.Enumeration;
+import java.util.List;
 
 @Api(tags = "学生信息接口")
 @Controller
@@ -22,6 +26,8 @@ public class StuChangeController {
     //属性注入
     @Autowired
     private StuUserService stuUserService;
+    @Autowired
+    private QuestionService questionService;
 
     @RequestMapping("/kTouch")
     public String kTouch(){
@@ -84,6 +90,7 @@ public class StuChangeController {
         }
         return "changepwd";
     }
+    //退出登录
     @RequestMapping(value = "/logout",method = {RequestMethod.POST,RequestMethod.GET})
     public String logout(HttpServletRequest request){
 
@@ -94,5 +101,13 @@ public class StuChangeController {
         return "index";
     }
 
+    //错题本
+    @RequestMapping("/myerror")
+    public String myError(HttpSession session,Model model){
+        Integer stuId=(Integer)session.getAttribute("stuid");
+        List<StuAnswer> stuAnswerList= stuUserService.getErrorQuestion(stuId); //根据学号查找该学生答题情况
+        model.addAttribute("stuAnswerList",stuAnswerList);
+        return "student/errorQuestion";
+    }
 
 }
