@@ -16,6 +16,17 @@ public class StuUserServiceImpl implements StuUserService {
     @Autowired
     private StuUserMapper usermapper;
 
+    //移除错题
+    @Override
+    public boolean removeError(Integer questionId) {
+        int result=usermapper.removeError(questionId);
+        if (result==0){
+            return false;
+        }else {
+            return true;
+        }
+    }
+    //查看错题
     @Override
     public List<StuAnswer> getErrorQuestion(Integer stuId) {
         return usermapper.getErrorQuestion(stuId);

@@ -109,5 +109,10 @@ public class StuChangeController {
         model.addAttribute("stuAnswerList",stuAnswerList);
         return "student/errorQuestion";
     }
+    @RequestMapping("/removeErrors")
+    public String removeError(Integer questionId){
+        boolean flag= stuUserService.removeError(questionId);
+        return "student/errorQuestion";
+    }
 
 }
