@@ -22,7 +22,7 @@
     </select>
 
     <select id="getTgQues" parameterType="java.lang.Integer" resultType="com.onlineExam.domain.Question">
-        select * from t_question where courseId=#{courseId}
+        select * from t_question,t_major,t_course where  t_major.majorId = t_question.majorId and t_question.courseId=#{courseId} and t_major.majorId=t_course.majorId
     </select>
 
     <select id="getStuByStuId" parameterType="java.lang.Integer" resultType="com.onlineExam.domain.Student">
