@@ -12,6 +12,7 @@
 <div class="demoTable" style="padding: 15px">
     <form class="layui-form" action="">
     <div class="layui-input-inline" style="width:180px ">
+
         <select name="tgcourse" id="tgcourse" lay-verify="required" >
             <option value=""></option>
             <option  th:each="course :${courseList}" th:text="${course.courseName}" th:value="${course.courseId}"></option>
@@ -19,14 +20,14 @@
 
     </div>
         <div class="layui-input-inline" >
-            <button class="layui-btn layui-btn-warm"  onclick="queryQuestionById()" >搜索</button>
+            <button class="layui-btn layui-btn-warm" type="button" onclick="queryQuestionById()" >搜索</button>
             <a type="button" class="layui-btn" data-type="reload" href="/QuestionInfo" >刷新</a>
         </div>
 
-    <script th:inline="javascript">
+    <script  th:inline="javascript">
         function queryQuestionById () {
-            var tgcourse = $('#tgcourse option:selected').val()
 
+            var tgcourse = $('#tgcourse option:selected').val();
             $.ajax({
                 url:'/queryQuestionByCourseId',
                 type:'post',
@@ -34,11 +35,7 @@
                     courseId:tgcourse,
                 },
                 success:function () {
-                    layer.msg('查询中...', {
-                        time: 2000 //2秒关闭（如果不配置，默认是3秒）
-                    }, function () {
-                        window.location.href="/queryByCourseId?courseId="+courseId;
-                    });
+                        window.location.href="/queryByCourseId?courseId="+tgcourse;
                 }
             })
 
@@ -59,18 +56,6 @@
         <button type="button" class="layui-btn" onclick="AutomateExcel()">
         <i class="layui-icon">&#xe608;</i> 导出试题
 
-<!--            <script>-->
-<!--                function  AutomateExcel(){-->
-<!--                    var elTable = document.getElementById("tables"); //要导出的table id。-->
-<!--                    var oRangeRef = document.body.createTextRange();-->
-<!--                    oRangeRef.moveToElementText(elTable);-->
-<!--                    oRangeRef.execCommand("Copy");-->
-<!--                    var appExcel = new ActiveXObject("Excel.Application");-->
-<!--                    appExcel.Workbooks.Add().Worksheets.Item(1).Paste();-->
-<!--                    appExcel.Visible = true;-->
-<!--                    appExcel = null;-->
-<!--                }-->
-<!--            </script>-->
 
         </button>
     </form>
