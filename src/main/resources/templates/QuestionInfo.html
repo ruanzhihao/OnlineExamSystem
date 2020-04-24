@@ -5,7 +5,7 @@
     <title>试题管理</title>
     <link rel="stylesheet" th:href="@{/layui/css/layui.css}" media="all">
     <script th:src="@{https://code.jquery.com/jquery-3.3.1.min.js}"></script>
-
+    <script th:src="@{Wjl/excel.js}"></script>
 </head>
 <body>
 
@@ -53,11 +53,26 @@
             <i class="layui-icon">&#x1002;</i>手动录入试题
         </button>
 
-        <button type="button" class="layui-btn" onclick="AutomateExcel()">
+   <!--     <button type="button" class="layui-btn"  onclick="exportDataToExcel()" >
         <i class="layui-icon">&#xe608;</i> 导出试题
 
+        </button>-->
+        <button type="button" class="layui-btn layui-btn-warm" onclick="exportDataToExcel()"><i class="layui-icon"></i>导出试题</button>
+        <script>
+            function exportDataToExcel(){
+                //table的ID
+                $("#tables").table2excel({
+                    exclude: ".noExl",
+                    name: "导出",
+                    filename: "试题题库"+'.xls',
+                    fileext: ".xls",//文件后缀名
+                    exclude_img: true,
+                    exclude_links: true,
+                    exclude_inputs: true
+                });
+            }
 
-        </button>
+        </script>
     </form>
    <!-- </a>-->
 </div>

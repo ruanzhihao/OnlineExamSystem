@@ -5,7 +5,7 @@
     <title>试题管理</title>
     <link rel="stylesheet" th:href="@{/layui/css/layui.css}" media="all">
     <script th:src="@{https://code.jquery.com/jquery-3.3.1.min.js}"></script>
-
+    <script th:src="@{Wjl/excel.js}"></script>
 </head>
 <body>
 <div class="demoTable" style="padding: 15px">
@@ -16,10 +16,33 @@
     <!--<button class="layui-btn" data-type="reload" >搜索</button>-->
 <div style="font-weight: bold;font-size: 26px">
 考试记录 <span style="color: red;font-size: 15px">如果信息出错 请及时联系代课老师进行反馈！</span>
-</div>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <button type="button" class="layui-btn " onclick="exportDataToExcel()"><i class="layui-icon"></i>导出考试记录</button>
+    <script>
+        function exportDataToExcel(){
+            //table的ID
+            $("#tables").table2excel({
+                exclude: ".noExl",
+                name: "导出",
+                filename: "考试记录"+'.xls',
+                fileext: ".xls",//文件后缀名
+                exclude_img: true,
+                exclude_links: true,
+                exclude_inputs: true
+            });
+        }
+
+    </script>
 </div>
 
-<table class="layui-table" lay-filter="demo">
+</div>
+
+<table class="layui-table" lay-filter="demo" id="tables">
     <thead>
     <tr>   <!-- <tr>-->
         <!--  <th lay-data="{field:'1', width:40, sort:true}">ID</th>-->
