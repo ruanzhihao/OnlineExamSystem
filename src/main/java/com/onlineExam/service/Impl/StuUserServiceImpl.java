@@ -103,13 +103,13 @@ public class StuUserServiceImpl implements StuUserService {
             return true;
     }
     @Override
-    public List<Student1> getStudentList() {
+    public List<Student> getStudentList() {
         return usermapper.getStudentList();
     }
 
     @Override
-    public int addStudent(Student1 student1) {
-        return usermapper.addStudent(student1);
+    public int addStudent(Student student) {
+        return usermapper.addStudent(student);
     }
 
     @Override
@@ -118,27 +118,37 @@ public class StuUserServiceImpl implements StuUserService {
     }
 
     @Override
-    public int updateStudent(Student1 student1) {
-        return usermapper.updateStudent(student1);
+    public int updateStudent(Student student) {
+        return usermapper.updateStudent(student);
     }
 
     @Override
-    public Student1 findStudentById(Integer id) {
-        Student1 s=usermapper.findStudentById(id);
+    public Student findStudentById(Integer id) {
+        Student s=usermapper.findStudentById(id);
         return s;
     }
     @Override
-    public List<Student1> findStudentByclazzId(Integer clazzId) {
+    public List<Student> findStudentByclazzId(Integer clazzId) {
         return usermapper.findStudentByclazzId(clazzId);
     }
 
     @Override
-    public List<Student1> queryStudent(String stuname) {
+    public List<Exam> findScoreBystuname(String stuname) {
+        return usermapper.findScoreBystuname(stuname);
+    }
+
+    @Override
+    public List<Exam> findExamByexamName(String examName,String stuname) {
+        return usermapper.findExamByexamName(examName,stuname);
+    }
+
+    @Override
+    public List<Student> queryStudent(String stuname) {
         return usermapper.queryStudent(stuname);
     }
 
     @Override
-    public List<Student1> queryStudent1(String stuname) {
+    public List<Student> queryStudent1(String stuname) {
         return usermapper.queryStudent1(stuname);
     }
 

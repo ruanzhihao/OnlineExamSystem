@@ -243,7 +243,7 @@ public class TeacherController {
     @RequestMapping(value = "/findStudentByclazzId",method = RequestMethod.GET)
     public String findStudentByClazzId(HttpSession session,Model model){
         Integer clazzId=(int)session.getAttribute("clazzId");
-        List<Student1> studentList= stuUserService.findStudentByclazzId(clazzId);
+        List<Student> studentList= stuUserService.findStudentByclazzId(clazzId);
         model.addAttribute("studentList",studentList);
         return "Teacher-StudentManager";
     }
@@ -252,7 +252,7 @@ public class TeacherController {
     @RequestMapping(value = "/queryStudent1",method = RequestMethod.GET)
     @ResponseBody
     public String queryStudent(@RequestParam("stuname") String stuname){
-        List<Student1> list=stuUserService.queryStudent(stuname);
+        List<Student> list=stuUserService.queryStudent(stuname);
         if (list ==null){
             return "查找失败";
         }else{
@@ -262,7 +262,7 @@ public class TeacherController {
     //查找后的显示信息
     @RequestMapping(value = "/queryShowStudent1",method = RequestMethod.GET)
     public String queryShow_s(@RequestParam("stuname") String stuname,Model model){
-        List<Student1> studentList=stuUserService.queryStudent(stuname);
+        List<Student> studentList=stuUserService.queryStudent(stuname);
         model.addAttribute("studentList",studentList);
         return "Teacher-StudentManager";
     }

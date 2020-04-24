@@ -7,6 +7,7 @@ import com.onlineExam.mapper.MessageMapper;
 import com.onlineExam.modules.common.controller.MainController;
 import com.onlineExam.service.StuUserService;
 import com.onlineExam.service.TeacherService;
+import org.apache.shiro.crypto.hash.Md5Hash;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -122,7 +123,8 @@ public class AdminController {
     @RequestMapping(value = "/addTeacher",method = RequestMethod.POST)
     @ResponseBody
     public String addTeacher(@RequestBody Teacher teacher){
-        //teacher.setTeacherpassword(MD5Util.MD5EncodeUtf8(teacher.getTeacherpassword()));
+        Md5Hash md5password = new Md5Hash(teacher.getTeacherpassword(), teacher.getUsername(), 5);
+        teacher.setTeacherpassword(md5password.toString());
         int a=teacherService.addTeacher(teacher);
         return "TeacherManagement";
     }
@@ -173,15 +175,17 @@ public class AdminController {
     //进入学生信息管理界面
     @RequestMapping(value = "/strange")
     public String getStudentList(Model model){
-        List<Student1> studentList=stuUserService.getStudentList();
+        List<Student> studentList=stuUserService.getStudentList();
         model.addAttribute("studentList",studentList);
         return "StudentManagement";
     }
     //添加学生
     @RequestMapping(value = "/addStudent",method = RequestMethod.POST)
     @ResponseBody
-    public String addStudent(@RequestBody Student1 student1){
-        int a=stuUserService.addStudent(student1);
+    public String addStudent(@RequestBody Student student){
+        Md5Hash md5password = new Md5Hash(student.getStupassword(), student.getUsername(), 5);
+        student.setStupassword(md5password.toString());
+        int a=stuUserService.addStudent(student);
         return "StudentManagement";
     }
     //删除学生信息
@@ -193,14 +197,14 @@ public class AdminController {
     }
     //修改学生信息
     @RequestMapping(value = "updateStudent",method = RequestMethod.POST)
-    public String updateStudent(Student1 student1){
-        int s=stuUserService.updateStudent(student1);
+    public String updateStudent(Student student){
+        int s=stuUserService.updateStudent(student);
         return "redirect:/strange";
     }
     //根据id查找学生
     @RequestMapping("/findStudentById")
     public String findStudentById(Integer id,HttpSession session){
-        Student1 s=stuUserService.findStudentById(id);
+        Student s=stuUserService.findStudentById(id);
         session.setAttribute("s",s);
         return "Student_edit";
     }
@@ -208,7 +212,7 @@ public class AdminController {
     @RequestMapping(value = "/queryStudent",method = RequestMethod.GET)
     @ResponseBody
     public String queryStudent(@RequestParam("stuname") String stuname){
-        List<Student1> list=stuUserService.queryStudent(stuname);
+        List<Student> list=stuUserService.queryStudent(stuname);
         if (list ==null){
             return "查找失败";
         }else{
@@ -218,15 +222,15 @@ public class AdminController {
     //查找后的显示信息
     @RequestMapping(value = "/queryShowStudent",method = RequestMethod.GET)
     public String queryShow_s(@RequestParam("stuname") String stuname,Model model){
-        List<Student1> studentList=stuUserService.queryStudent(stuname);
+        List<Student> studentList=stuUserService.queryStudent(stuname);
         model.addAttribute("studentList",studentList);
         return "StudentManagement";
     }
     //导出为Excel
     @RequestMapping(value = "/exportstudentlist", method = RequestMethod.POST)
     @ResponseBody
-    public List<Student1> exportStudent(){
-        List<Student1> studentList1 = stuUserService.getStudentList();
+    public List<Student> exportStudent(){
+        List<Student> studentList1 = stuUserService.getStudentList();
         return studentList1;
     }
 
