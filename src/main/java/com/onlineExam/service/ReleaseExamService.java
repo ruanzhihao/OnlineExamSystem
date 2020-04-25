@@ -19,4 +19,7 @@ public interface ReleaseExamService {
     ReleaseExam getReleaseExamById(Integer releaseExamId);
     int updateReleaseExam(@Param("releaseExamId") Integer releaseExamId,@Param("departId")Integer departId , @Param("majorId") Integer majorId, @Param("courseId")Integer courseId, @Param("beginTime") String beginTime, @Param("authorId") Integer authorId, @Param("paperId") Integer paperId);
     List<ReleaseExam> getReleaseInfoByStateId(@Param("examStateId") Integer examStateId);
+    int getJoinReleseClassCount(String stuClazz,Integer releaseExamId);
+    List<String> getJoinReleseClass(Integer releaseExamId);
+    int getAvg(String stuClazz,Integer releaseExamId);
 }

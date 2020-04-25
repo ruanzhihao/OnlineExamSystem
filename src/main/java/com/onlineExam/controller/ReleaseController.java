@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -64,7 +65,12 @@ public class ReleaseController {
              model.addAttribute("states",states);
              return "releaseInfo";
     }
-
+    @RequestMapping("releaseInfoCenter1")
+    public String releaseInfo1(Model model){
+        List<ExamState> states=releaseExamService.getAllState();
+        model.addAttribute("states",states);
+        return "examAnalyze";
+    }
     @RequestMapping("releaseInfo")
     @ResponseBody
     public Page releaseInfo(@RequestParam(value = "page",defaultValue = "1") Integer page){
@@ -74,6 +80,16 @@ public class ReleaseController {
           PageInfo pageInfo=new PageInfo(releaseExams,limit);
           Page pages = Page.success(pageInfo.getTotal(), pageInfo.getList());
           return pages;
+    }
+    @RequestMapping("releaseInfo1")
+    @ResponseBody
+    public Page releaseInfo1(@RequestParam(value = "page",defaultValue = "1") Integer page){
+        int limit=10;
+        List<ReleaseExam> releaseExams=releaseExamService.getAllReleaseInfo();
+        PageHelper.startPage(page,limit);
+        PageInfo pageInfo=new PageInfo(releaseExams,limit);
+        Page pages = Page.success(pageInfo.getTotal(), pageInfo.getList());
+        return pages;
     }
     @RequestMapping("deleteReleaseInfoById")
     @ResponseBody
@@ -103,6 +119,54 @@ public class ReleaseController {
         model.addAttribute("releaseExam",releaseExam);
          return "editReleaseForm";
     }
+
+    @RequestMapping("joinClass")
+    public String getJoinClass(@RequestParam("releaseExamId") Integer releaseExamId,Model model){
+        model.addAttribute("releaseExamId",releaseExamId);
+        System.out.println(releaseExamId);
+        return "joinClassDetails";
+    }
+    @RequestMapping("joinDetails")
+    @ResponseBody
+    public List<Exam> getJoinDetails(@RequestParam("releaseExamId") Integer releaseExamId){
+        List<Exam> examInfo=new ArrayList<>();
+        List<String> stuClass=releaseExamService.getJoinReleseClass(releaseExamId);
+        for (String s:stuClass) {
+            int stuClassCount=releaseExamService.getJoinReleseClassCount(s,releaseExamId);
+            System.out.println(s+"班的数量"+stuClassCount);
+            Exam exam=new Exam(s,stuClassCount);
+            examInfo.add(exam);
+        }
+        return examInfo;
+    }
+    @RequestMapping("getScoreAnalyse")
+    public String getScoreAnalyse(@RequestParam("releaseExamId") Integer releaseExamId,Model model){
+        model.addAttribute("releaseExamId",releaseExamId);
+        System.out.println(releaseExamId);
+        return "ScoreAnalyseDetails";
+    }
+    @RequestMapping("getScoreAnalyseDetails")
+    @ResponseBody
+    public List<Exam> getScoreAnalyseDetails(@RequestParam("releaseExamId") Integer releaseExamId){
+        List<Exam> examInfo=new ArrayList<>();
+        List<String> stuClass=releaseExamService.getJoinReleseClass(releaseExamId);
+        for (String s:stuClass) {
+            int stuClassCount=releaseExamService.getJoinReleseClassCount(s,releaseExamId);
+            int avgScore=releaseExamService.getAvg(s,releaseExamId);
+            System.out.println(s+"的数量"+stuClassCount);
+            System.out.println(s+"的平均分"+avgScore);
+            Exam exam=new Exam(s,stuClassCount,avgScore);
+            examInfo.add(exam);
+        }
+        return examInfo;
+    }
+
+
+
+
+
+
+
     @RequestMapping("editReleaseInfo")
     @ResponseBody
     public Msg editReleaseInfo(@RequestParam("departId")Integer departId , @RequestParam("majorId") Integer majorId,

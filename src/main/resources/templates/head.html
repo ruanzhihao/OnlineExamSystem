@@ -8,5 +8,61 @@
         <script type="text/javascript" th:src="@{/Rzh/layui/layui.js}"></script>
         <script type="text/javascript" th:src="@{/Rzh/layer/layer.js}"></script>
         <script type="text/javascript" th:src="@{/js/echarts.min.js}"></script>
+        <script th:src="@{https://cdn.bootcss.com/echarts/3.5.3/echarts.min.js}"></script>
+        <style>
+            table {
+                cellspacing:0 ;
+                *border-collapse: collapse;
+                border-spacing: 0;
+                width: 100%;
+            }
+            .bordered tr:hover {
+                background: #fbf8e9;
+                -o-transition: all 0.1s ease-in-out;
+                -webkit-transition: all 0.1s ease-in-out;
+                -moz-transition: all 0.1s ease-in-out;
+                -ms-transition: all 0.1s ease-in-out;
+                transition: all 0.1s ease-in-out;
+            }
+
+            .bordered th {
+                padding: 7px;
+                text-align: center;
+                cellspacing:0;
+            }
+
+            .bordered td{
+                padding: 7px;
+                text-align: center;
+                cellspacing:0;
+            }
+
+
+            .bordered th {
+
+                background-image: -webkit-gradient(linear, left top, left bottom, from(#ebf3fc), to(#dce9f9));
+                background-image: -webkit-linear-gradient(top, #ebf3fc, #dce9f9);
+                background-image:    -moz-linear-gradient(top, #ebf3fc, #dce9f9);
+                background-image:     -ms-linear-gradient(top, #ebf3fc, #dce9f9);
+                background-image:      -o-linear-gradient(top, #ebf3fc, #dce9f9);
+                background-image:         linear-gradient(top, #ebf3fc, #dce9f9);
+            }
+            .bordered td:first-child, .bordered th:first-child {
+                border-left: none;
+            }
+
+
+
+            .bordered  tr:nth-of-type(2n){background:#FFFFFF;cursor: pointer;}
+            .bordered  tr:nth-of-type(2n+1){background:#F7FAFC;cursor: pointer;}
+
+            .bordered  tbody tr:hover{  background: #fbf8e9;
+                -o-transition: all 0.1s ease-in-out;
+                -webkit-transition: all 0.1s ease-in-out;
+                -moz-transition: all 0.1s ease-in-out;
+                -ms-transition: all 0.1s ease-in-out;
+                transition: all 0.1s ease-in-out;
+            }
+        </style>
     </head>
 </html>

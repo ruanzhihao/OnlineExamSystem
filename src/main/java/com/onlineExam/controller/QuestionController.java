@@ -266,7 +266,53 @@ public class QuestionController {
     public String adminHomePage(){
         return "adminHomePage";
     }
-
+    @RequestMapping(value = "/questionShow",method = RequestMethod.GET)
+    public String goQuestion1(Model model){
+        /*List<Question> list=teacherIndexService.getAllQues();
+        model.addAttribute("list",list);*/
+        List<Question> radioList=ques.radioQuestionList();
+        List<Question> checkboxList=ques.checkBoxQuestionList();
+        model.addAttribute("radioList",radioList);
+        model.addAttribute("checkBoxList",checkboxList);
+        List<Course> courseList=ques.getCourse();
+        model.addAttribute("courseList",courseList);
+        List<Major> majorList=ques.getMajor();
+        model.addAttribute("majorList",majorList);
+        int radioCount=ques.radioQuestion();
+        int checkBoxCount=ques.checkBoxQuestion();
+        model.addAttribute("radioCount",radioCount);
+        model.addAttribute("checkBoxCount",checkBoxCount);
+        return "QuestionShow";
+    }
+    @RequestMapping(value = "/queryQuestion1",method = RequestMethod.GET)
+    @ResponseBody
+    public String queryQuestion1(@RequestParam("questionName") String questionName){
+        List<Question> radioList=ques.queryQuestion1(questionName);
+        List<Question> checkboxList=ques.queryQuestion2(questionName);
+        if (radioList  ==null || checkboxList==null){
+            return "查找失败";
+        }
+        return "查找成功";
+    }
+    //查看之后 显示信息
+    @RequestMapping(value = "/queryShow1",method = RequestMethod.GET)
+    public String queryShow1(@RequestParam("questionName") String questionName,Model model){
+        List<Question> radioList=ques.queryQuestion1(questionName);
+        List<Question> checkboxList=ques.queryQuestion2(questionName);
+        model.addAttribute("radioList",radioList);
+        model.addAttribute("checkBoxList",checkboxList);
+        List<Course> courseList=ques.getCourse();
+        model.addAttribute("courseList",courseList);
+        List<Major> majorList=ques.getMajor();
+        model.addAttribute("majorList",majorList);
+        int radioCount=ques.radioQuestion1(questionName);
+        System.out.println("数量"+radioCount);
+        int checkBoxCount=ques.checkBoxQuestion2(questionName);
+        System.out.println("数量"+checkBoxCount);
+        model.addAttribute("radioCount",radioCount);
+        model.addAttribute("checkBoxCount",checkBoxCount);
+        return "QuestionShow";
+    }
 
 
 

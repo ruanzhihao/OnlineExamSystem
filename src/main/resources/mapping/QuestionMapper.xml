@@ -68,4 +68,28 @@ select t_question.questionType as questionType,count(*) as number from t_questio
     (select COUNT(*) as teacherNum from teacher) b
 )
     </select>
+    <select id="radioQuestion" resultType="integer">
+                select count(questionType) from t_question where t_question.questionType='单选'
+    </select>
+    <select id="checkBoxQuestion" resultType="integer">
+                select count(questionType) from t_question where t_question.questionType='多选'
+   </select>
+    <select id="radioQuestionList" resultType="com.onlineExam.domain.Question">
+        select * from t_question,t_major where  t_major.majorId = t_question.majorId and t_question.questionType='单选'
+    </select>
+    <select id="checkBoxQuestionList" resultType="com.onlineExam.domain.Question">
+        select * from t_question,t_major where  t_major.majorId = t_question.majorId and t_question.questionType='多选'
+   </select>
+    <select id="queryQuestion1" parameterType="java.lang.String" resultType="com.onlineExam.domain.Question">
+        select * from t_question,t_major,t_course where t_question.questionName like concat('%',#{questionName},'%') and t_course.courseId = t_question.courseId and t_major.majorId = t_question.majorId and t_course.majorId =t_major.majorId and questionType='单选'
+    </select>
+    <select id="queryQuestion2" parameterType="java.lang.String" resultType="com.onlineExam.domain.Question">
+        select * from t_question,t_major,t_course where t_question.questionName like concat('%',#{questionName},'%') and t_course.courseId = t_question.courseId and t_major.majorId = t_question.majorId and t_course.majorId =t_major.majorId and questionType='多选'
+    </select>
+    <select id="radioQuestion1" resultType="integer">
+                select count(questionType) from t_question where t_question.questionType='单选' and t_question.questionName like concat('%',#{questionName},'%')
+    </select>
+    <select id="checkBoxQuestion2" resultType="integer">
+                select count(questionType) from t_question where t_question.questionType='多选' and t_question.questionName like concat('%',#{questionName},'%')
+   </select>
 </mapper>

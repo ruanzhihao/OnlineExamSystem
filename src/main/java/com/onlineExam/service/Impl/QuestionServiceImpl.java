@@ -102,4 +102,44 @@ public class QuestionServiceImpl implements QuestionService {
     public List<CountVo> getUserInfo() {
         return questionMapper.getUserInfo();
     }
+    @Override
+    public int radioQuestion() {
+        return questionMapper.radioQuestion();
+    }
+
+    @Override
+    public List<Question> queryQuestion1(String questionName) {
+        return questionMapper.queryQuestion1(questionName);
+    }
+
+    @Override
+    public List<Question> queryQuestion2(String questionName) {
+        return questionMapper.queryQuestion2(questionName);
+    }
+
+    @Override
+    public List<Question> radioQuestionList() {
+        return questionMapper.radioQuestionList();
+    }
+
+
+    @Override
+    public int radioQuestion1(String questionName) {
+        return questionMapper.radioQuestion1(questionName);
+    }
+
+    @Override
+    public int checkBoxQuestion2(String questionName) {
+        return questionMapper.checkBoxQuestion2(questionName);
+    }
+
+    @Override
+    public List<Question> checkBoxQuestionList() {
+        return questionMapper.checkBoxQuestionList();
+    }
+
+    @Override
+    public int checkBoxQuestion() {
+        return questionMapper.checkBoxQuestion();
+    }
 }

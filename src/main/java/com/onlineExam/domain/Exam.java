@@ -21,4 +21,17 @@ public class Exam {
     String examTime;
     int examScore;
     int paperId;
+    Integer releaseExamId;
+    int countClass;
+    int avgScore;
+    public Exam(String stuClazz, int countClass) {
+        this.stuClazz = stuClazz;
+        this.countClass = countClass;
+    }
+
+    public Exam(String stuClazz, int countClass, int avgScore) {
+        this.stuClazz = stuClazz;
+        this.countClass = countClass;
+        this.avgScore = avgScore;
+    }
 }

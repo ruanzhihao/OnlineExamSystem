@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml" xmlns="http://www.thymeleaf.org">
+
+    <head th:replace="head::copy">
+
+
+<body>
+<input type="hidden" id="releaseExamId" th:value="${releaseExamId}">
+<div>
+    <div style="float:left;width: 200px;height:400px;"></div>
+    <div id="main" style="float:left;width: 600px;height:400px;"></div>
+</div><script type="text/javascript">
+    var releaseExamId=document.getElementById("releaseExamId").value;
+    console.log(releaseExamId);
+    var myChart = echarts.init(document.getElementById('main'));
+    var clazz = [];
+    var stuCount = [];
+    var avgScore = [];
+    var colors = ['#248EFD','#C916F2','#6669B1'];
+    $.ajax({
+        type:"get",
+        url:"/getScoreAnalyseDetails",
+        data:{releaseExamId:releaseExamId},
+        dataType:"json",
+        async:false,
+        success:function (result) {
+            for (var i = 0; i < result.length; i++){
+                clazz.push(result[i].stuClazz);
+                stuCount.push(result[i].countClass);
+                avgScore.push(result[i].avgScore)
+            }
+        },
+        error :function(errorMsg) {
+            alert("获取后台数据失败！");
+        }
+    });
+    var option = {
+        color:colors,
+        title: {
+            text: '班级平均成绩'
+        },
+        tooltip: {},
+        legend: {
+            data:['班级']
+        },
+        xAxis: {
+            data: clazz
+        },
+        yAxis: {},
+        toolbox:{
+            show:true,
+            orient: 'horizontal',
+            showTitle: true,
+            feature:{
+                magicType: {
+                    type: ['line', 'bar']
+                },
+                dataView:{
+                    show: true,
+                    title: '各班平均分对比展示',
+                    readOnly:false,
+                    optionToContent: function(opt) {
+                        var colName = "序号";
+                        var typeName = "班级";
+                        var dataview = opt.toolbox[0].feature.dataView;  //获取dataview
+                        var table = '<div style="position:absolute;top: 5px;left: 0px;right: 0px;line-height: 1.4em;text-align:center;font-size:14px;">'+dataview.title+'</div>'
+                        table += getTable(opt,colName,typeName);
+                        return table;
+                    }
+                },
+                saveAsImage:{
+                    type:'png',
+                    show:true,
+                    title:'保存为图片',
+                },
+                restore:{show:true}
+            }
+        },
+        series: [
+            {
+                name:'参与人数',
+                type:'bar',
+                barMaxWidth:'20%',
+                label:{
+                    normal:{
+                        show:true,
+                        position:'top'
+                    }
+                },
+                data:stuCount
+            },
+            {
+                name:'平均成绩',
+                type:'bar',
+                barMaxWidth:'20%',
+                label:{
+                    normal:{
+                        show:true,
+                        position:'top'
+                    }
+                },
+                data:avgScore
+            }]
+    };
+    function getTable(opt,colName,typeName){
+        var axisData = opt.xAxis[0].data;//获取图形的data数组
+        var series = opt.series;//获取series
+        var num = 0;
+        var sum = new Array();//获取合计数组（根据对应的系数生成相应数量的sum）
+        for(var i=0; i<series.length; i++){
+            sum[i] = 0;
+        }
+        var table = '<table class="bordered"><thead><tr>'
+            + '<th>'+colName+'</th>'
+            + '<th>'+typeName+'</th>';
+        for(var i=0; i<series.length;i++){
+            table += '<th>'+series[i].name+'</th>'
+        }
+        table += '</tr></thead><tbody>';
+        for (var i = 0, l = axisData.length; i < l; i++) {
+            num += 1;
+            for(var n=0;n<series.length;n++){
+                if(series[n].data[i]){
+                    sum[n] += Number(series[n].data[i]);
+                }else{
+                    sum[n] += Number(0);
+                }
+
+            }
+            table += '<tr>'
+                + '<td>' + num + '</td>'
+                + '<td>' + axisData[i] + '</td>';
+            for(var j=0; j<series.length;j++){
+                if(series[j].data[i]){
+                    table += '<td>' + series[j].data[i] + '</td>';
+                }else{
+                    table += '<td>' + 0 + '</td>';
+                }
+
+            }
+            table += '</tr>';
+        }
+        table += '<tr>'+ '<td>' + (num+1) + '</td>' + '<td>合计</td>';
+        for(var n=0;n<series.length;n++){
+            if(String(sum[n]).indexOf(".")>-1)
+                table += '<td>' + (Number(sum[n])).toFixed(2)  + '</td>';
+            else
+                table += '<td>' + Number(sum[n])  + '</td>';
+        }
+        table += '</tr></tbody></table>';
+        return table;
+    }
+    myChart.setOption(option);
+</script>
+</body>
+</html>

@@ -46,5 +46,14 @@ public interface QuestionMapper {
     List<QuestionVo>  getQuestionType();
     List<CountVo> getResourceInfo();
     List<CountVo> getUserInfo();
+    int  radioQuestion();
+    int checkBoxQuestion();
+    List<Question>  radioQuestionList();
+    List<Question> checkBoxQuestionList();
+    List<Question> queryQuestion1(@Param("questionName") String questionName);
+    List<Question> queryQuestion2(@Param("questionName") String questionName);
+    int  radioQuestion1(@Param("questionName") String questionName);
+    int checkBoxQuestion2(@Param("questionName") String questionName);
+
 }
 

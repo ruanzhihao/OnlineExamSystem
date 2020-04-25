@@ -24,4 +24,7 @@ public interface ReleseExamMapper {
    //更新
     int updateReleaseExam(@Param("releaseExamId") Integer releaseExamId,@Param("departId")Integer departId , @Param("majorId") Integer majorId, @Param("courseId")Integer courseId, @Param("beginTime") String beginTime, @Param("authorId") Integer authorId, @Param("paperId") Integer paperId);
     List<ReleaseExam> getReleaseInfoByStateId(@Param("examStateId") Integer examStateId);
- }
+    int getJoinReleseClassCount(@Param("stuClazz") String stuClazz,@Param("releaseExamId") Integer releaseExamId);
+    List<String> getJoinReleseClass(@Param("releaseExamId") Integer releaseExamId);
+    int  getAvg(@Param("stuClazz") String stuClazz,@Param("releaseExamId") Integer releaseExamId);
+}

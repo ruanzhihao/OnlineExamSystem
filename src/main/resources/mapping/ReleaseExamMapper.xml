@@ -59,4 +59,13 @@ and t_major.majorId=t_releaseexam.majorId and t_course.courseId=t_releaseexam.co
             </if>
 
     </select>
+    <select id="getJoinReleseClassCount" resultType="int">
+        SELECT COUNT(*) from t_exam where t_exam.stuClazz=#{stuClazz} and  t_exam.releaseExamId=#{releaseExamId};
+    </select>
+    <select id="getJoinReleseClass" resultType="java.lang.String">
+        select distinct stuClazz from t_exam where t_exam.releaseExamId=#{releaseExamId} ORDER BY stuClazz
+    </select>
+    <select id="getAvg" resultType="int">
+        SELECT AVG(examScore) FROM t_exam WHERE t_exam.stuClazz=#{stuClazz} and t_exam.releaseExamId=#{releaseExamId}
+    </select>
 </mapper>

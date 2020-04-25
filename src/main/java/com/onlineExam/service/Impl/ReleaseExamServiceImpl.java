@@ -20,7 +20,20 @@ public class ReleaseExamServiceImpl implements ReleaseExamService {
     public int releaseExam(Integer departId, Integer majorId, Integer courseId, String beginTime, Integer authorId, Integer paperId) {
         return releseExamMapper.releaseExam(departId ,majorId,courseId,beginTime,authorId,paperId);
     }
+    @Override
+    public int getJoinReleseClassCount(String stuClazz, Integer releaseExamId) {
+        return releseExamMapper.getJoinReleseClassCount(stuClazz,releaseExamId);
+    }
 
+    @Override
+    public int getAvg(String stuClazz, Integer releaseExamId) {
+        return releseExamMapper.getAvg(stuClazz,releaseExamId);
+    }
+
+    @Override
+    public List<String> getJoinReleseClass(Integer releaseExamId) {
+        return releseExamMapper.getJoinReleseClass(releaseExamId);
+    }
     @Override
     public List<Paper> getPaperName() {
         return  releseExamMapper.getPaperName();
