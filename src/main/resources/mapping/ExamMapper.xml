@@ -3,7 +3,7 @@
 <mapper namespace="com.onlineExam.mapper.ExamMapper">
    <insert id="StuInsertExam" parameterType="com.onlineExam.domain.Exam">
 
-       insert into t_exam (examName,stuId,stuName,stuDept,stuClazz,examTime,examScore,paperId) value(#{examName},#{stuId},#{stuName},#{stuDept},#{stuClazz},#{examTime},#{examScore},#{paperid})
+       insert into t_exam (examName,stuId,stuName,stuDept,stuClazz,examTime,examScore,paperId,releaseExamId) value(#{examName},#{stuId},#{stuName},#{stuDept},#{stuClazz},#{examTime},#{examScore},#{paperid},#{releaseExamId})
    </insert>
     <select id="fingStuById" parameterType="java.lang.Integer" resultType="com.onlineExam.domain.Student">
     select * from student,t_clazz,t_depart where stuid=#{stuId} and student.clazzId=t_clazz.clazzId and t_depart.departId=student.departId

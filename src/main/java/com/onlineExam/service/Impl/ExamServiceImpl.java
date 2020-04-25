@@ -5,6 +5,7 @@ import com.onlineExam.domain.Paper;
 import com.onlineExam.domain.Student;
 import com.onlineExam.mapper.ExamMapper;
 import com.onlineExam.service.ExamService;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,8 +19,8 @@ public class ExamServiceImpl implements ExamService {
 
 
     @Override
-    public int StuInsertExam(String examName, int stuId, String stuName, String stuDept, String stuClazz, String examTime, int examScore, int paperid) {
-        return examMapper.StuInsertExam(examName,stuId,stuName,stuDept,stuClazz,examTime,examScore,paperid);
+    public int StuInsertExam(String examName, int stuId, String stuName, String stuDept, String stuClazz, String examTime, int examScore, int paperid, Integer releaseExamId) {
+        return examMapper.StuInsertExam(examName,stuId,stuName,stuDept,stuClazz,examTime,examScore,paperid,releaseExamId);
     }
 
     @Override

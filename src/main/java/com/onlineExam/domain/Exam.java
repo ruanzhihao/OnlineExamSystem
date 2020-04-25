@@ -24,6 +24,28 @@ public class Exam {
     Integer releaseExamId;
     int countClass;
     int avgScore;
+
+    public Exam(int examid, String examName, int stuId, String stuName, int departId, String stuDept, int courseId, String stuCourse, int majorId, String stuClazz, String stuMajor, String examTime, int examScore, int paperId) {
+        this.examid = examid;
+        this.examName = examName;
+        this.stuId = stuId;
+        this.stuName = stuName;
+        this.departId = departId;
+        this.stuDept = stuDept;
+        this.courseId = courseId;
+        this.stuCourse = stuCourse;
+        this.majorId = majorId;
+        this.stuClazz = stuClazz;
+        this.stuMajor = stuMajor;
+        this.examTime = examTime;
+        this.examScore = examScore;
+        this.paperId = paperId;
+    }
+
+    public Exam() {
+
+    }
+
     public Exam(String stuClazz, int countClass) {
         this.stuClazz = stuClazz;
         this.countClass = countClass;
