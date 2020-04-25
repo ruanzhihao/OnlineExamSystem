@@ -98,6 +98,8 @@ public class AdminController {
         message.setHead(head);
         message.setContent(content);
         message.setCreatetime(createtime);
+        message.setSturead("未读");
+        message.setTearead("未读");
         int result=messageMapper.addMessage(message);
         if (result!=0){
             model.addAttribute("msg","消息发布成功");

@@ -9,4 +9,7 @@ public interface MessageService {
 
     public List<Message> findMessage();
 
+    public boolean updateStuRead(Long id);
+    public boolean updateTeaRead(Long id);
+
 }

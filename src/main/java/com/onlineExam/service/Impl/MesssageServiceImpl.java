@@ -27,4 +27,24 @@ public class MesssageServiceImpl implements MessageService {
     public List<Message> findMessage() {
         return messageMapper.findMessage();
     }
+
+    @Override
+    public boolean updateStuRead(Long id) {
+        int rs= messageMapper.updateStuRead(id);
+        if (rs==0){
+            return false;
+        }else{
+            return true;
+        }
+    }
+
+    @Override
+    public boolean updateTeaRead(Long id) {
+        int rs= messageMapper.updateTeaRead(id);
+        if (rs==0){
+            return false;
+        }else{
+            return true;
+        }
+    }
 }

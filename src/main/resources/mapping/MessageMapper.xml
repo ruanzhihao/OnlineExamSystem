@@ -3,11 +3,17 @@
 <mapper namespace="com.onlineExam.mapper.MessageMapper">
 
     <insert id="addMessage" parameterType="com.onlineExam.domain.Message" >
-        insert into t_message(sendername,head,content,createtime)
-         values(#{sendername},#{head},#{content},#{createtime})
+        insert into t_message(sendername,head,content,createtime,sturead,tearead)
+         values(#{sendername},#{head},#{content},#{createtime},#{sturead},#{tearead})
     </insert>
     <select id="findMessage" resultType="com.onlineExam.domain.Message">
         select * from t_message order by createtime desc;
     </select>
+    <update id="updateStuRead" parameterType="Long" >
+        update t_message set sturead="已读" where id=#{id}
+    </update>
+    <update id="updateTeaRead" parameterType="Long">
+        update t_message set tearead="已读" where id=#{id}
+    </update>
 
 </mapper>

@@ -9,5 +9,6 @@ public class Message {
     private String  head;
     private String content;
     private String createtime;
-    private String isread;
+    private String sturead;
+    private String tearead;
 }

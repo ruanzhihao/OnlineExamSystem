@@ -12,6 +12,7 @@ import org.apache.shiro.crypto.hash.Md5Hash;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -228,6 +229,12 @@ public class TeacherController {
         List<Message> messageList= messageMapper.findMessage();
 
         model.addAttribute("messageList",messageList);
+        return "teaMessage";
+    }
+    @RequestMapping("/tearead")
+    @Transactional
+    public String updateTeaRead(Long id){
+        int result= messageMapper.updateTeaRead(id);
         return "teaMessage";
     }
 
