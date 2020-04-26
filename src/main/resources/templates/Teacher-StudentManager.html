@@ -54,18 +54,18 @@
     </tr>
     </thead>
     <tbody>
-    <tr th:each="student1 :${studentList}">
-        <td th:text="${student1.id}"></td>
-        <td th:text="${student1.stuname}"></td>
-        <td th:text="${student1.username}"></td>
-        <td th:text="${student1.stuphonenumber}"></td>
-        <td th:text="${student1.stuemail}"></td>
-        <td th:text="${student1.clazzName}"></td>
-        <td th:text="${student1.majorName}"></td>
-        <td th:text="${student1.departName}"></td>
-        <td th:text="${student1.state}"></td>
+    <tr th:each="student :${studentList}">
+        <td th:text="${student.id}"></td>
+        <td th:text="${student.stuname}"></td>
+        <td th:text="${student.username}"></td>
+        <td th:text="${student.stuphonenumber}"></td>
+        <td th:text="${student.stuemail}"></td>
+        <td th:text="${student.clazzName}"></td>
+        <td th:text="${student.majorName}"></td>
+        <td th:text="${student.departName}"></td>
+        <td th:text="${student.state}"></td>
         <td>&nbsp;
-            <a title="查看成绩"    id= "showScore"    th:href="@{/show(stuname=${student1.stuname})}">
+            <a title="查看成绩"    id= "showScore"    th:href="@{/show(stuname=${student.stuname})}">
                 <i class="layui-icon">&#xe642;</i>
             </a>
         </td>

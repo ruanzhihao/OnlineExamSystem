@@ -39,6 +39,10 @@ public class StudentFunctionController {
 
     @Autowired
     private TeacherIndexService teacherIndexService;
+
+    @Autowired
+    private StuUserService stuUserService;
+
     //学生端进入
     @RequestMapping(value = "/student",method = RequestMethod.GET)
     public String goIndex(){
@@ -60,8 +64,30 @@ public class StudentFunctionController {
 
     //进入我的成绩单
     @RequestMapping(value = "/myReport",method = RequestMethod.GET)
-    public String goMyInfo(){
-
+    public String goMyInfo(Model model,HttpSession session){
+        String stuname= (String) session.getAttribute("stuname");
+        List<Exam> examList=stuUserService.findScoreBystuname(stuname);
+        model.addAttribute("examList",examList);
+        return "myReport";
+    }
+    //根据考试名查找
+    @RequestMapping(value = "/findExamByexamName",method = RequestMethod.GET)
+    @ResponseBody
+    public String queryExam(@RequestParam("examName") String examName,HttpSession session){
+        String stuname=(String)session.getAttribute("stuname");
+        List<Exam> examList=stuUserService.findExamByexamName(examName,stuname);
+        if (examList ==null){
+            return "查找失败";
+        }else{
+            return "查找成功";
+        }
+    }
+    //查找后的显示信息
+    @RequestMapping(value = "/queryExam",method = RequestMethod.GET)
+    public String queryShow_e(@RequestParam("examName") String examName,Model model,HttpSession session){
+        String stuname=(String)session.getAttribute("stuname");
+        List<Exam> examList=stuUserService.findExamByexamName(examName,stuname);
+        model.addAttribute("examList",examList);
         return "myReport";
     }
 

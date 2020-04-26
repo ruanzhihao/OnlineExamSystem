@@ -4,8 +4,9 @@
     <meta charset="UTF-8">
     <title>学生管理</title>
     <link rel="stylesheet" th:href="@{/layui/css/layui.css}" media="all" />
-    <script th:src="@{/layui/layui.js}"></script>
+    <!--<script th:src="@{/layui/layui.js}"></script>-->
     <script th:src="@{/js/jquery-1.8.2.min.js}"></script>
+    <script th:src="@{/Skz/excel.js}"></script>
 </head>
 <body>
 <div class="x-body">
@@ -19,10 +20,25 @@
         <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right" href="./strange" title="刷新">
             <i class="layui-icon" style="line-height:30px">ဂ</i></a>
         <button id="addStudentBtn" class="layui-btn layui-btn-normal" style="line-height:1.6em;margin-top:3px;float:right"> <i class="layui-icon " style="line-height:30px">&#xe654;</i> </button>
-        <button class="layui-btn layui-btn-warm" id="exportExcel" name="exportExcel"><i class="layui-icon">&#xe67c;</i>导出</button>
+        <button class="layui-btn layui-btn-warm" onclick="exportDataToExcel()"><i class="layui-icon">&#xe67c;</i>导出</button>
 
     </div>
     <script>
+
+        function exportDataToExcel(){
+            //table的ID
+            $("#tables").table2excel({
+                exclude: ".noExl",
+                name: "导出",
+                filename: "学生信息"+'.xls',
+                fileext: ".xls",//文件后缀名
+                exclude_img: true,
+                exclude_links: true,
+                exclude_inputs: true
+            });
+        }
+
+
         function queryStudent(){
             var stuname=$('#findStudentKey').val();
             $.ajax({
@@ -128,7 +144,7 @@
 </div>
 
 
-<table lay-filter="demo">
+<table id="tables" lay-filter="demo">
     <thead>
     <tr>
         <th lay-data="{field:'1',align: 'center'}">ID</th>
@@ -169,21 +185,13 @@
     </tbody>
 </table>
 
+<script type="text/javascript" th:src="@{/layui/layui.js}"></script>
 <script>
-
-    layui.config({
-        base: 'layui_exts/',
-    }).extend({
-        excel: 'excel',
-    });
-
-
-    layui.use(['table','form','layer','jquery','excel'],function(){
+    layui.use(['table','form','layer','jquery'],function(){
         var table = layui.table;//加载表格模块
         var layer = layui.layer;
         var form=layui.form;
         var $=layui.jquery;
-        var excel = parent.layui.excel;
         table.init('demo', {
             height: 500 //设置高度
             ,cellMinWidth: 80
@@ -191,50 +199,6 @@
         });
 
 
-
-        $('#exportExcel').on('click', function(){
-            $.ajax({
-                url:'/exportstudentlist',
-                type:'post',
-                dataType:'json',
-                contentType: "application/json; charset=utf-8",
-                success:function(data){
-                    console.log(data);
-                    var dt = excel.filterExportData(data,[
-                        'id'
-                        ,'stuname'
-                        ,'username'
-                        ,'stuphonenumber'
-                        ,'stuemail'
-                        ,'clazzName'
-                        ,'majorName'
-                        ,'departName'
-                        , 'state'
-                    ]);
-                    dt.unshift({id:'序号',stuname:'学生姓名',username:'账号名',stuphonenumber:'手机号',stuemail:'邮箱',clazzName:'班级名',majorName:'专业方向',departName:'所属院系',state:'账号状态'});
-                    var colConf = excel.makeColConfig({
-                        'B': 90,
-                        'C': 80,
-                        'F': 90
-                    }, 60);
-                    var timestart = Date.now();
-                    excel.exportExcel({
-                        sheet1: dt
-                    }, '学生数据.xlsx', 'xlsx', {
-                        extend: {
-                            '!cols': colConf
-                        }
-                    });
-                    var timeend = Date.now();
-
-                    var spent = (timeend - timestart) / 1000;
-                    layer.alert('导出耗时 '+spent+' s');
-                },
-                error: function () {
-                    setTimeout(function () {window.location.href='/strange';},2000);
-                }
-            });
-        });
 
         $("#addStudentBtn").click(function () {
             layer.open({
