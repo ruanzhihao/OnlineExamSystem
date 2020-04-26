@@ -87,12 +87,31 @@ public String goExam(Model model){
 }*/
     //进入参加考试界面  获取待考试 并显示
 //进入参加考试界面  获取待考试 并显示
+/*
 @RequestMapping(value = "/JoinExam",method = RequestMethod.GET)
-public String goExam(Model model,HttpSession session){
+    public String goExam(Model model,HttpSession session){
+        int majorId=(int)session.getAttribute("majorId");
+        List<ReleaseExam> releaseExams=studentFunctionService.getReleaseByMajor(majorId);
+        model.addAttribute("releaseExams",releaseExams);
+        return "JoinExam";
+    }
+*/
+
+@RequestMapping(value = "JoinExam",method = RequestMethod.GET)
+public  String goExam(Model model,HttpSession session){
+    List<JoinExamInfo> joinExamInfo=new ArrayList<>();
     int majorId=(int)session.getAttribute("majorId");
     List<ReleaseExam> releaseExams=studentFunctionService.getReleaseByMajor(majorId);
-    model.addAttribute("releaseExams",releaseExams);
-    return "JoinExam";
+    System.out.println("要发布的任务："+releaseExams);
+    int stuId=(int)session.getAttribute("stuid");
+    for (ReleaseExam r:releaseExams) {
+        String exam=studentFunctionService.getExamInfoByStuId(stuId,r.getReleaseExamId());
+        JoinExamInfo ExamInfo=new JoinExamInfo(r,exam);
+        joinExamInfo.add(ExamInfo);
+    }
+    System.out.println("最终结合："+joinExamInfo);
+    model.addAttribute("joinExamInfo",joinExamInfo);
+    return "joinExams";
 }
     //进入参加考试界面  获取待考试 并显示
 
@@ -331,7 +350,7 @@ public String goExam(Model model,HttpSession session){
         return "ExamHistory";
     }
 
-    //判分成功跳转学生主页
+ /*   //判分成功跳转学生主页
     @RequestMapping(value = "/goStudent")
     public String goStudent(@RequestParam("stuId") int stuId, HttpServletRequest request, HttpServletResponse response, HttpSession session){
 
@@ -356,8 +375,12 @@ public String goExam(Model model,HttpSession session){
         request.getSession().setAttribute("stateId",stateId);
         request.getSession().setAttribute("majorId",majorId);
         return "StudentIndex";
-    }
-
+    }*/
+ //判分成功跳转学生主页
+ @RequestMapping(value = "/goStudent")
+ public String goStudent(){
+     return "StudentIndex";
+ }
 @RequestMapping(value = "/Success")
     public String success(){
         return "JiaoJuanSuccess";

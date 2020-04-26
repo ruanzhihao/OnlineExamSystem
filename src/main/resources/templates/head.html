@@ -9,7 +9,7 @@
         <script type="text/javascript" th:src="@{/Rzh/layer/layer.js}"></script>
         <script type="text/javascript" th:src="@{/js/echarts.min.js}"></script>
         <script th:src="@{https://cdn.bootcss.com/echarts/3.5.3/echarts.min.js}"></script>
-        <style>
+        <style type="text/css">
             table {
                 cellspacing:0 ;
                 *border-collapse: collapse;
@@ -62,6 +62,35 @@
                 -moz-transition: all 0.1s ease-in-out;
                 -ms-transition: all 0.1s ease-in-out;
                 transition: all 0.1s ease-in-out;
+            }
+            .seal-content{
+                width: 300px;
+                min-height: 60px;
+                vertical-align: bottom;
+                word-wrap: break-word;
+                position: relative;
+            }
+
+            .seal-result{
+                width: 60px;
+                height: 60px;
+                transform: rotate(30deg);
+                border: solid 2px green;
+                border-radius: 100%;
+                text-align: center;
+                color: green;
+                font-size: 16px;
+                font-weight: bold;
+                line-height: 60px;
+                right: 5px;
+                bottom: 0px;
+                position: absolute;
+                background-color: rgba(255,255,255,0.8)
+            }
+
+            .seal-result-fail{
+                border-color: red;
+                color: red;
             }
         </style>
     </head>

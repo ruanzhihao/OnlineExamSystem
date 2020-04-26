@@ -65,6 +65,9 @@ ORDER BY examStateName DESC
         SELECT t_paper.answerTime  from t_paper where paperId=#{paperId}
     </select>
 
+    <select id="getExamInfoByStuId" resultType="java.lang.String">
+        SELECT examTime from t_exam where t_exam.stuId=#{stuId} and t_exam.releaseExamId=#{releaseExamId}
+    </select>
     <select id="getHistory" parameterType="java.lang.Integer" resultType="com.onlineExam.domain.StuAnswer">
         select * from t_question,t_stuanswer,t_paper where t_stuanswer.questionId=t_question.questionId and t_stuanswer.stuId=#{stuId} and t_stuanswer.paperId=#{paperId} and t_question.questionType='单选'
     </select>

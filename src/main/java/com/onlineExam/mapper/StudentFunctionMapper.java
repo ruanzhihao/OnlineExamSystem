@@ -1,10 +1,7 @@
 package com.onlineExam.mapper;
 
-import com.onlineExam.domain.Paper;
+import com.onlineExam.domain.*;
 
-import com.onlineExam.domain.Question;
-import com.onlineExam.domain.ReleaseExam;
-import com.onlineExam.domain.StuAnswer;
 import io.swagger.models.auth.In;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
@@ -45,7 +42,7 @@ public interface StudentFunctionMapper {
     int getRadioQuestionScore(@Param("paperId") Integer paperId);
     //查询答题时间
     int getAnswerTime(@Param("paperId") Integer paperId);
-
+    String getExamInfoByStuId(@Param("stuId") Integer stuId,@Param("releaseExamId") Integer releseExamId);
     //考试记录单选题目的详情
     List<StuAnswer> getHistory(@Param("paperId")int paperId,@Param("stuId")int stuId);
 

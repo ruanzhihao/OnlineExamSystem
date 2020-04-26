@@ -1,6 +1,7 @@
 package com.onlineExam.service.Impl;
 
 
+import com.onlineExam.domain.Exam;
 import com.onlineExam.domain.Question;
 import com.onlineExam.domain.ReleaseExam;
 import com.onlineExam.domain.StuAnswer;
@@ -95,6 +96,11 @@ public class StudentFunctionServiceImpl implements StudentFunctionService {
     @Override
     public int getAnswerTime(Integer paperId) {
         return studentFunctionMapper.getAnswerTime(paperId);
+    }
+
+    @Override
+    public String getExamInfoByStuId(Integer stuId, Integer releseExamId) {
+        return studentFunctionMapper.getExamInfoByStuId(stuId,releseExamId);
     }
 
     @Override

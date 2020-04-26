@@ -1,6 +1,7 @@
 package com.onlineExam.service;
 
 
+import com.onlineExam.domain.Exam;
 import com.onlineExam.domain.Question;
 import com.onlineExam.domain.ReleaseExam;
 import com.onlineExam.domain.StuAnswer;
@@ -31,7 +32,7 @@ public interface StudentFunctionService {
     //展示多选总分值
     int getRadioQuestionScore(@Param("paperId") Integer paperId);
     int getAnswerTime(@Param("paperId") Integer paperId);
-
+    String getExamInfoByStuId(@Param("stuId") Integer stuId, @Param("releaseExamId") Integer releseExamId);
     //考试记录查看详情
     List<StuAnswer> getHistory(int paperId,int stuId);
     //考试记录多选题目的详情
