@@ -1,6 +1,7 @@
 package com.onlineExam.service;
 
 import com.onlineExam.domain.LoginUser;
+import com.onlineExam.domain.StuAnswer;
 import com.onlineExam.domain.Teacher;
 import org.apache.ibatis.annotations.Param;
 
@@ -14,6 +15,8 @@ public interface TeacherService {
     public int updateTeacher(Teacher teacher);
     public Teacher findTeacherById(Integer teacherid);
     List<Teacher> queryTeacher(String teachername);
+    public List<StuAnswer> getQuestion(@Param("stuId")int stuId, @Param("paperId") int paperId, @Param("releaseExamId")int releaseExamId);
+
 
 
     //修改用户信息

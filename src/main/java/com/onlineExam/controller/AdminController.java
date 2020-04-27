@@ -42,6 +42,7 @@ public class AdminController {
         String flag=map.get("status").toString();
 
         String username=request.getParameter("username");
+        request.getSession().setAttribute("username",username);
         String password=request.getParameter("password");
         System.out.println("账号："+username+"密码："+password);
 

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>我的错题</title>
+    <title>答题情况</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script type="text/javascript"
             src="//api.map.baidu.com/api?v=2.0&ak=OfMzjrzcNpMcHzayyMVGY3YLCQ6we3KU"></script>
@@ -15,14 +15,11 @@
 <div class="container">
     <div class="test_content_nr">
         <ul >
-            <li  th:each="elist,elistStat:${stuAnswerList}">
+            <li  th:each="elist:${stuAnswerList}">
                 <div class="test_content_nr_tt">
                     <!--<input type="hidden" th:name="'rquestion'+${state.index+1}" th:value="${radioQuestion.questionId}">-->
                     <i class="layui-icon">&#xe623;</i>
-                    <i th:text="${elistStat.index+1}"></i>
-                    <!--<label th:text="${elistStat.index+1}"></label>
-                    <label>.</label>&nbsp;-->
-                    <font th:text="${elist.getQuestionName()}"></font>
+                    <font th:text="${elist.getQuestionName()}"></font><!--</span><b class="icon iconfont">&#xe881;</b>-->
                 </div>
                 <div class="test_content_nr_main">
                     <ul>
@@ -60,42 +57,13 @@
                         <label>正确答案是：</label>
                         <span th:text="${elist.getAnswer()}"></span>
                     </span>
-
-                    <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   <!--th:href="@{/removeErrors(questionId=${elist.getQuestionId()})}"-->
-                        <a title="移除该题"  th:onclick="|javascript:remove_error(this,${elist.getQuestionId()})|">
-                           <i class="layui-icon" style="color:#0c7fd1">&#xe640;</i>
-                           <label style="color:#0c7fd1">移除该题</label>
-                        </a>
-                    </span>
                 </div>
+
             </li>
         </ul>
     </div>
 </div>
-<script th:src="@{/layui/layui.js}"></script>
-<script th:src="@{/js/jquery-3.4.1.js}"></script>
-<script type="text/javascript">
-      function remove_error(obj,questionId) {
-          layui.use('layer', function () {
-              var layer = layui.layer;
-              $.ajax({
-                  url: "removeErrors",
-                  data: {'questionId': questionId},
-                  success: function (data) {
-                      layer.open({
-                          content: '移除成功'
-                      });
-                      setTimeout(function () {window.location.href="myerror"},2000);
-                  },
-                  error: function (data) {
-                      layer.open({
-                          content: '移除失败'
-                      });
-                      setTimeout(function () {window.location.href="myerror"},2000);
-                  }
-              });
-          });
-      }
+<script>
 
 </script>
 </body>

@@ -54,7 +54,9 @@
     <select id="queryTeacher" resultType="com.onlineExam.domain.Teacher">
         select * from teacher,t_major,t_depart,t_state,t_clazz where teachername=#{teachername} and teacher.majorId=t_major.majorId and teacher.departId=t_depart.departId and teacher.stateId=t_state.stateId and teacher.clazzId=t_clazz.clazzId
     </select>
-
+    <select id="getQuestion" resultType="com.onlineExam.domain.StuAnswer">
+        select * from t_stuanswer,t_question where stuId=#{stuId} and paperId=#{paperId} and releaseExamId=#{releaseExamId} and t_stuanswer.questionId=t_question.questionId
+    </select>
 
     <!--	修改用户信息-->
     <update id="updateInformation" parameterType="com.onlineExam.domain.Teacher">

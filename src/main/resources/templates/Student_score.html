@@ -14,6 +14,7 @@
         <th lay-data="{field:'1',align: 'center'}">测试</th>
         <th lay-data="{field:'2', align: 'center'}">测试时间</th>
         <th lay-data="{field:'3', align: 'center'}">分数</th>
+        <th lay-data="{field:'4', align: 'center'}">查看答题情况</th>
     </tr>
     </thead>
     <tbody>
@@ -21,6 +22,11 @@
         <td th:text="${exam.examName}"></td>
         <td th:text="${exam.examTime}"></td>
         <td th:text="${exam.examScore}"></td>
+        <td>
+            <a title="查看答题情况"    id= "show-q"    th:href="@{/showquestion(stuId=${exam.stuId},paperId=${exam.paperId},releaseExamId=${exam.releaseExamId})}">
+                <i class="layui-icon">&#xe642;</i>
+            </a>
+        </td>
     </tr>
     </tbody>
 </table>
