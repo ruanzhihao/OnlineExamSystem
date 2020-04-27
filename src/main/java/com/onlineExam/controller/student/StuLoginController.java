@@ -47,7 +47,7 @@ public class StuLoginController {
 
         Student student=new Student();
         student=stuUserMapper.findInformationByUsername(username);
-        Integer stuid=student.getStuid();
+        Integer stuid=student.getId();
         String stuname=student.getStuname();
         String stupassword=student.getStupassword();
         String stuphonenumber=student.getStuphonenumber();

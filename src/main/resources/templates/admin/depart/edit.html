@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>编辑院系</title>
+        <link rel="stylesheet" th:href="@{/layui/css/layui.css}" media="all" />
+        <script th:src="@{/layui/layui.js}"></script>
+        <script th:src="@{/Skz/jquery-3.4.1.js}"></script>
+    </head>
+    <body>
+        <div style="margin-top:20px; padding-right: 80px;">
+            <form class="layui-form" action="#" method="post" onsubmit="return false">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">ID</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="id" required lay-verify="required" placeholder="请输入ID"
+                               autocomplete="off" class="layui-input" id="id" disabled>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">院系名称</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="name" required lay-verify="required" placeholder="请输入名称"
+                               autocomplete="off" class="layui-input" id="name">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <button class="layui-btn" lay-submit lay-filter="form-data">提交</button>
+                        <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <script>
+            //            <![CDATA[
+            var layer = layui.layer;
+            var index = parent.layer.getFrameIndex(window.name);
+
+            layui.use('form', function () {
+                var form = layui.form;
+
+                $.get(parent.prefix + "/get?id=" + parent.parentId, function (res) {
+                    if (res.code == 0) {
+                        $("#id").val(res.data.departId);
+                        $("#name").val(res.data.departName);
+                        form.render();
+                    } else {
+                        parent.layer.msg("读取数据失败");
+                        parent.layer.close(index);
+                    }
+                });
+
+                form.on('submit(form-data)', function (data) {
+                    $.ajax({
+                        url: parent.prefix + "/edit",
+                        type: "POST",
+                        async: true,
+                        contentType: "application/json",
+                        data: JSON.stringify({
+                            departId: $("#id").val(),
+                            departName: $("#name").val()
+                        }),
+                        dataType: "json",
+                        success: function (result) {
+                            if (result.code == 0) {
+                                parent.layer.msg("编辑成功");
+                                parent.layer.close(index);
+                                parent.layui.table.reload('data-table');
+                            } else {
+                                layer.msg(result.msg);
+                            }
+                        },
+                        fail: function () {
+                            layer.msg("请求失败！");
+                        }
+                    });
+                    return true;
+                });
+            });
+            // ]]>
+        </script>
+    </body>
+</html>

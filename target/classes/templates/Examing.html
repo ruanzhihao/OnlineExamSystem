@@ -1,0 +1,967 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <meta http-equiv="content-type" content="text/html;charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>正在考试</title>
+    <script type="text/javascript"
+            src="//api.map.baidu.com/api?v=2.0&ak=OfMzjrzcNpMcHzayyMVGY3YLCQ6we3KU"></script>
+    <link th:href="@{Wjl/css/main2.css}" rel="stylesheet" type="text/css" />
+    <link th:href="@{Wjl/css/iconfont.css}" rel="stylesheet" type="text/css" />
+    <link th:href="@{Wjl/css/test.css}" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" th:href="@{Wjl/common/layui/css/layui.css}" media="all">
+    <script type="text/javascript" th:src="@{Wjl/common/layui/layui.js}"></script>
+    <style>
+        .hasBeenAnswer {
+            background: #5d9cec;
+            color:#fff;
+        }
+
+    </style>
+</head>
+<body>
+<div class="main">
+    <!--nr start-->
+    <div class="test_main">
+        <div class="nr_left">
+            <div class="test">
+                <form>
+                    <div class="test_title">
+                        <p class="test_time" >
+                            <i class="icon iconfont">&#xe6fb;</i><b class="alt-1"  id="tarTime">00:20:00</b><!--定时-->
+                        </p>
+                        <input type="hidden" id="stuId" th:value="${stuId}">
+                        <input type="hidden" id="paperId" th:value="${paperId}">
+                        <input type="hidden" th:value="${question1.answer}" id="ranswer1">
+                        <input type="hidden" th:value="${question2.answer}" id="ranswer2">
+                        <input type="hidden" th:value="${question3.answer}" id="ranswer3">
+                        <input type="hidden" th:value="${question4.answer}" id="ranswer4">
+                        <input type="hidden" th:value="${question1.questionScore}" id="score1">
+                        <input type="hidden" th:value="${question2.questionScore}" id="score2">
+                        <input type="hidden" th:value="${question3.questionScore}" id="score3">
+                        <input type="hidden" th:value="${question4.questionScore}" id="score4">
+                        <font><input type="button" name="test_jiaojuan" value="交卷"  th:onclick="|javascript:jiaojuan('${question1.answer}',${question1.questionScore},'${question2.answer}',${question2.questionScore},'${question3.answer}',${question3.questionScore},'${question4.answer}',${question4.questionScore})|"></font>
+                        <script th:inline="javascript">
+                            function jiaojuan(ok1,score1,ok2,score2,ok3,score3,ok4,score4) {
+                                var stuId=$('#stuId').val()
+                                var paperId=$('#paperId').val()
+                                var answer1= $("input[name='answer1']:checked").val();
+                                if(answer1==null){
+                                    answer1=null;
+                                }
+                                var answer2= $("input[name='answer2']:checked").val();
+                                if(answer2==null){
+                                    answer2=null;
+                                }
+                                var answer3= $("input[name='answer3']:checked").val();
+                                if(answer3==null){
+                                    answer3=null;
+                                }
+                                var answer4= $("input[name='answer4']:checked").val();
+                                if(answer4==null){
+                                    answer4=null;
+                                }
+                                $.ajax({
+                                    url:'/jiaojuan',
+                                    type:'post',
+                                    data:{
+                                        stuId:stuId,
+                                        paperId:paperId,
+                                        answer1:answer1,
+                                        answer2:answer2,
+                                        answer3:answer3,
+                                        answer4:answer4,
+                                        ranswer1:ok1,
+                                        ranswer2:ok2,
+                                        ranswer3:ok3,
+                                        ranswer4:ok4,
+                                        score1:score1,
+                                        score2:score2,
+                                        score3:score3,
+                                        score4:score4,
+                                    },
+                                    success:function (data) {
+                                        layer.msg('考试结束 等待自动判分',{time:2000});
+                                       setTimeout(function () {window.location.href="/goStudent?stuId="+stuId;},2000);
+                                       /* setTimeout(function () {window.location.href="/Success";},2000);*/
+                                    }
+                                })
+                            }
+                        </script>
+
+                    </div>
+
+                    <div class="test_content">
+
+                        <div style="color: red ; font-weight: bold;font-size: 25px"   align="center" id="e"></div>
+
+                        <div class="test_content_title ">
+
+                            <h2>单选题</h2>
+                            <p>
+                                <span>共</span><i class="content_lit" th:text="${number}"></i><span>题，</span><span>合计</span><i class="content_fs" th:text="${score}"></i><span>分</span>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="test_content_nr" >
+                        <ul>
+                            <li id="qu_0_0" >
+                                <div class="test_content_nr_tt">
+                                    <i th:text="${question1.questionId}"></i> [<span th:text="${question1.questionScore}"></span>分 ]  <font th:text="${question1.questionName}"></font><span>(   &nbsp;&nbsp;&nbsp;&nbsp; )</span><b class="icon iconfont">&#xe881;</b>
+                                </div>
+
+                                <div class="test_content_nr_main">
+                                    <ul>
+
+                                        <li class="option">
+
+                                            <input type="radio" class="radioOrCheck" name="answer1"
+                                                   id="0_answer_1_option_1" value="A"
+                                            />
+
+                                            <label for="0_answer_1_option_1">
+                                                A.
+                                                <p class="ue" style="display: inline;" th:text="${question1.optionA}"></p>
+                                            </label>
+                                        </li>
+
+                                        <li class="option">
+
+                                            <input type="radio" class="radioOrCheck" name="answer1"
+                                                   id="0_answer_1_option_2" value="B"
+                                            />
+
+
+                                            <label for="0_answer_1_option_2">
+                                                B.
+                                                <p class="ue" style="display: inline;"  th:text="${question1.optionB}"></p>
+                                            </label>
+                                        </li>
+
+                                        <li class="option">
+
+                                            <input type="radio" class="radioOrCheck" name="answer1"
+                                                   id="0_answer_1_option_3" value="C"
+                                            />
+
+
+                                            <label for="0_answer_1_option_3">
+                                                C.
+                                                <p class="ue" style="display: inline;"  th:text="${question1.optionC}"></p>
+                                            </label>
+                                        </li>
+
+                                        <li class="option">
+
+                                            <input type="radio" class="radioOrCheck" name="answer1"
+                                                   id="0_answer_1_option_4" value="D"
+                                            />
+
+
+                                            <label for="0_answer_1_option_4">
+                                                D.
+                                                <p class="ue" style="display: inline;" th:text="${question1.optionD}"></p>
+                                            </label>
+                                        </li>
+
+                                    </ul>
+                                </div>
+                            </li>
+
+                            <li id="qu_0_1">
+                                <div class="test_content_nr_tt">
+                                    <i th:text="${question2.questionId}"></i> [<span th:text="${question2.questionScore}"></span>分 ]  <font th:text="${question2.questionName}"></font><span>(   &nbsp;&nbsp;&nbsp;&nbsp; )</span><b class="icon iconfont">&#xe881;</b>
+                                </div>
+
+                                <div class="test_content_nr_main">
+                                    <ul>
+
+                                        <li class="option">
+
+                                            <input type="radio" class="radioOrCheck" name="answer2"
+                                                   id="0_answer_2_option_1" value="A"
+                                            />
+
+
+                                            <label for="0_answer_2_option_1">
+                                                A.
+                                                <p class="ue" style="display: inline;" th:text="${question1.optionA}"></p>
+                                            </label>
+                                        </li>
+
+                                        <li class="option">
+
+                                            <input type="radio" class="radioOrCheck" name="answer2"
+                                                   id="0_answer_2_option_2" value="B"
+                                            />
+
+
+                                            <label for="0_answer_2_option_2">
+                                                B.
+                                                <p class="ue" style="display: inline;" th:text="${question1.optionB}"></p>
+                                            </label>
+                                        </li>
+
+                                        <li class="option">
+
+                                            <input type="radio" class="radioOrCheck" name="answer2"
+                                                   id="0_answer_2_option_3" value="C"
+                                            />
+
+
+                                            <label for="0_answer_2_option_3">
+                                                C.
+                                                <p class="ue" style="display: inline;" th:text="${question1.optionC}"></p>
+                                            </label>
+                                        </li>
+
+                                        <li class="option">
+
+                                            <input type="radio" class="radioOrCheck" name="answer2"
+                                                   id="0_answer_2_option_4" value="D"
+                                            />
+
+
+                                            <label for="0_answer_2_option_4">
+                                                D.
+                                                <p class="ue" style="display: inline;" th:text="${question1.optionD}"></p>
+                                            </label>
+                                        </li>
+
+                                    </ul>
+                                </div>
+                            </li>
+
+                            <li id="qu_0_2">
+                                <div class="test_content_nr_tt">
+                                    <i th:text="${question3.questionId}"></i> [<span th:text="${question3.questionScore}"></span>分 ]  <font th:text="${question3.questionName}"></font><span>(   &nbsp;&nbsp;&nbsp;&nbsp; )</span><b class="icon iconfont">&#xe881;</b>
+                                </div>
+
+                                <div class="test_content_nr_main">
+                                    <ul>
+
+                                        <li class="option">
+
+                                            <input type="radio" class="radioOrCheck" name="answer3"
+                                                   id="0_answer_3_option_1" value="A"
+                                            />
+
+
+                                            <label for="0_answer_3_option_1">
+                                                A.
+                                                <p class="ue" style="display: inline;" th:text="${question3.optionA}"></p>
+                                            </label>
+                                        </li>
+
+                                        <li class="option">
+
+                                            <input type="radio" class="radioOrCheck" name="answer3"
+                                                   id="0_answer_3_option_2" value="B"
+                                            />
+
+
+                                            <label for="0_answer_3_option_2">
+                                                B.
+                                                <p class="ue" style="display: inline;" th:text="${question3.optionB}"></p>
+                                            </label>
+                                        </li>
+
+                                        <li class="option">
+
+                                            <input type="radio" class="radioOrCheck" name="answer3"
+                                                   id="0_answer_3_option_3" value="C"
+                                            />
+
+
+                                            <label for="0_answer_3_option_3">
+                                                C.
+                                                <p class="ue" style="display: inline;" th:text="${question3.optionC}"></p>
+                                            </label>
+                                        </li>
+
+                                        <li class="option">
+
+                                            <input type="radio" class="radioOrCheck" name="answer3"
+                                                   id="0_answer_3_option_4" value="D"
+                                            />
+
+
+                                            <label for="0_answer_3_option_4">
+                                                D.
+                                                <p class="ue" style="display: inline;" th:text="${question3.optionD}"></p>
+                                            </label>
+                                        </li>
+
+                                    </ul>
+                                </div>
+                            </li>
+
+                            <li id="qu_0_3">
+                                <div class="test_content_nr_tt">
+                                    <i th:text="${question4.questionId}"></i> [<span th:text="${question4.questionScore}"></span>分 ]  <font th:text="${question4.questionName}"></font><span>(   &nbsp;&nbsp;&nbsp;&nbsp; )</span><b class="icon iconfont">&#xe881;</b>
+                                </div>
+
+                                <div class="test_content_nr_main">
+                                    <ul>
+
+                                        <li class="option">
+
+                                            <input type="radio" class="radioOrCheck" name="answer4"
+                                                   id="0_answer_4_option_1" value="A"
+                                            />
+
+
+                                            <label for="0_answer_4_option_1">
+                                                A.
+                                                <p class="ue" style="display: inline;" th:text="${question4.optionA}"></p>
+                                            </label>
+                                        </li>
+
+                                        <li class="option">
+
+                                            <input type="radio" class="radioOrCheck" name="answer4"
+                                                   id="0_answer_4_option_2" value="B"
+                                            />
+
+
+                                            <label for="0_answer_4_option_2">
+                                                B.
+                                                <p class="ue" style="display: inline;" th:text="${question4.optionB}"></p>
+                                            </label>
+                                        </li>
+
+                                        <li class="option">
+
+                                            <input type="radio" class="radioOrCheck" name="answer4"
+                                                   id="0_answer_4_option_3" value="C"
+                                            />
+
+
+                                            <label for="0_answer_4_option_3">
+                                                C.
+                                                <p class="ue" style="display: inline;" th:text="${question4.optionC}"></p>
+                                            </label>
+                                        </li>
+
+                                        <li class="option">
+
+                                            <input type="radio" class="radioOrCheck" name="answer4"
+                                                   id="0_answer_4_option_4" value="D"
+                                            />
+
+
+                                            <label for="0_answer_4_option_4">
+                                                D.
+                                                <p class="ue" style="display: inline;" th:text="${question4.optionD}"></p>
+                                            </label>
+                                        </li>
+
+                                    </ul>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <!--
+                                        <div class="test_content">
+                                            <div class="test_content_title">
+                                                <h2>多选题</h2>
+                                                <p>
+                                                    <span>共</span><i class="content_lit">30</i><span>题，</span><span>合计</span><i class="content_fs">30</i><span>分</span>
+                                                </p>
+                                            </div>
+                                        </div>-->
+                    <div class="test_content_nr">
+                        <!-- <ul>
+
+                             <li id="qu_1_0">
+                                 <div class="test_content_nr_tt">
+                                     <i>1</i><span>(1分)</span><font>以下属于南方电网员工职业操守中明文规定的有()</font><b class="icon iconfont">&#xe881;</b>
+                                 </div>
+
+                                 <div class="test_content_nr_main">
+                                     <ul>
+
+                                         <li class="option">
+
+
+                                             <input type="checkbox" class="radioOrCheck" name="answer1"
+                                                    id="1_answer_1_option_1"
+                                             />
+
+                                             <label for="1_answer_1_option_1">
+                                                 A.
+                                                 <p class="ue" style="display: inline;">热爱祖国、热爱南网、热爱岗位</p>
+                                             </label>
+                                         </li>
+
+                                         <li class="option">
+
+
+                                             <input type="checkbox" class="radioOrCheck" name="answer1"
+                                                    id="1_answer_1_option_2"
+                                             />
+
+                                             <label for="1_answer_1_option_2">
+                                                 B.
+                                                 <p class="ue" style="display: inline;">遵纪守法、忠于职守、令行禁止</p>
+                                             </label>
+                                         </li>
+
+                                         <li class="option">
+
+
+                                             <input type="checkbox" class="radioOrCheck" name="answer1"
+                                                    id="1_answer_1_option_3"
+                                             />
+
+                                             <label for="1_answer_1_option_3">
+                                                 C.
+                                                 <p class="ue" style="display: inline;">客户至上、诚实守信、优质服务</p>
+                                             </label>
+                                         </li>
+
+                                         <li class="option">
+
+
+                                             <input type="checkbox" class="radioOrCheck" name="answer1"
+                                                    id="1_answer_1_option_4"
+                                             />
+
+                                             <label for="1_answer_1_option_4">
+                                                 D.
+                                                 <p class="ue" style="display: inline;">公平竞争、互相监督、服从监管</p>
+                                             </label>
+                                         </li>
+
+                                     </ul>
+                                 </div>
+                             </li>
+
+                             <li id="qu_1_1">
+                                 <div class="test_content_nr_tt">
+                                     <i>2</i><span>(1分)</span><font>以下属于南方电网员工职业禁区的有()</font><b class="icon iconfont">&#xe881;</b>
+                                 </div>
+
+                                 <div class="test_content_nr_main">
+                                     <ul>
+
+                                         <li class="option">
+
+
+                                             <input type="checkbox" class="radioOrCheck" name="answer2"
+                                                    id="1_answer_2_option_1"
+                                             />
+
+                                             <label for="1_answer_2_option_1">
+                                                 A.
+                                                 <p class="ue" style="display: inline;">严禁违反人文道德</p>
+                                             </label>
+                                         </li>
+
+                                         <li class="option">
+
+
+                                             <input type="checkbox" class="radioOrCheck" name="answer2"
+                                                    id="1_answer_2_option_2"
+                                             />
+
+                                             <label for="1_answer_2_option_2">
+                                                 B.
+                                                 <p class="ue" style="display: inline;">严禁违反安全规定</p>
+                                             </label>
+                                         </li>
+
+                                         <li class="option">
+
+
+                                             <input type="checkbox" class="radioOrCheck" name="answer2"
+                                                    id="1_answer_2_option_3"
+                                             />
+
+                                             <label for="1_answer_2_option_3">
+                                                 C.
+                                                 <p class="ue" style="display: inline;">严禁违背行风规定</p>
+                                             </label>
+                                         </li>
+
+                                         <li class="option">
+
+
+                                             <input type="checkbox" class="radioOrCheck" name="answer2"
+                                                    id="1_answer_2_option_4"
+                                             />
+
+                                             <label for="1_answer_2_option_4">
+                                                 D.
+                                                 <p class="ue" style="display: inline;">严禁违反财经纪律</p>
+                                             </label>
+                                         </li>
+
+                                     </ul>
+                                 </div>
+                             </li>
+
+                             <li id="qu_1_2">
+                                 <div class="test_content_nr_tt">
+                                     <i>3</i><span>(1分)</span><font>对 “热爱祖国、热爱南网、热爱岗位”理解正确的是()</font><b class="icon iconfont">&#xe881;</b>
+                                 </div>
+
+                                 <div class="test_content_nr_main">
+                                     <ul>
+
+                                         <li class="option">
+
+
+                                             <input type="checkbox" class="radioOrCheck" name="answer3"
+                                                    id="1_answer_3_option_1"
+                                             />
+
+                                             <label for="1_answer_3_option_1">
+                                                 A.
+                                                 <p class="ue" style="display: inline;">坚持南网的利益高于一切</p>
+                                             </label>
+                                         </li>
+
+                                         <li class="option">
+
+
+                                             <input type="checkbox" class="radioOrCheck" name="answer3"
+                                                    id="1_answer_3_option_2"
+                                             />
+
+                                             <label for="1_answer_3_option_2">
+                                                 B.
+                                                 <p class="ue" style="display: inline;">忠诚南网事业，维护南网利益，实践南网文化，维护南网形象，与公司同呼吸、共命运</p>
+                                             </label>
+                                         </li>
+
+                                         <li class="option">
+
+
+                                             <input type="checkbox" class="radioOrCheck" name="answer3"
+                                                    id="1_answer_3_option_3"
+                                             />
+
+                                             <label for="1_answer_3_option_3">
+                                                 C.
+                                                 <p class="ue" style="display: inline;">人往高处走，水往低处流，专注于爬上更高的岗位</p>
+                                             </label>
+                                         </li>
+
+                                         <li class="option">
+
+
+                                             <input type="checkbox" class="radioOrCheck" name="answer3"
+                                                    id="1_answer_3_option_4"
+                                             />
+
+                                             <label for="1_answer_3_option_4">
+                                                 D.
+                                                 <p class="ue" style="display: inline;">个人利益第一，南网利益第二</p>
+                                             </label>
+                                         </li>
+
+                                     </ul>
+                                 </div>
+                             </li>
+
+                             <li id="qu_1_3">
+                                 <div class="test_content_nr_tt">
+                                     <i>4</i><span>(1分)</span><font>优质服务工作的主线是（）</font><b class="icon iconfont">&#xe881;</b>
+                                 </div>
+
+                                 <div class="test_content_nr_main">
+                                     <ul>
+
+                                         <li class="option">
+
+
+                                             <input type="checkbox" class="radioOrCheck" name="answer4"
+                                                    id="1_answer_4_option_1"
+                                             />
+
+                                             <label for="1_answer_4_option_1">
+                                                 A.
+                                                 <p class="ue" style="display: inline;">以客户为中心，提高供电可靠率、减少客户停电时间</p>
+                                             </label>
+                                         </li>
+
+                                         <li class="option">
+
+
+                                             <input type="checkbox" class="radioOrCheck" name="answer4"
+                                                    id="1_answer_4_option_2"
+                                             />
+
+                                             <label for="1_answer_4_option_2">
+                                                 B.
+                                                 <p class="ue" style="display: inline;">以客户为中心，为客户节省更多的花费</p>
+                                             </label>
+                                         </li>
+
+                                         <li class="option">
+
+
+                                             <input type="checkbox" class="radioOrCheck" name="answer4"
+                                                    id="1_answer_4_option_3"
+                                             />
+
+                                             <label for="1_answer_4_option_3">
+                                                 C.
+                                                 <p class="ue" style="display: inline;">以公司利益为中心，从客户手中赚取更多的金钱</p>
+                                             </label>
+                                         </li>
+
+                                         <li class="option">
+
+
+                                             <input type="checkbox" class="radioOrCheck" name="answer4"
+                                                    id="1_answer_4_option_4"
+                                             />
+
+                                             <label for="1_answer_4_option_4">
+                                                 D.
+                                                 <p class="ue" style="display: inline;">以公司利益为中心，提高供电可靠率、减少客户投诉率</p>
+                                             </label>
+                                         </li>
+
+                                     </ul>
+                                 </div>
+                             </li>
+
+                             <li id="qu_1_4">
+                                 <div class="test_content_nr_tt">
+                                     <i>5</i><span>(1分)</span><font>职业操守中明确注明需要增强的意识有哪些（）
+                                     ①道德意识 ②忧患意识 ③环保意识 ④自律意识 ⑤节约意识</font><b class="icon iconfont">&#xe881;</b>
+                                 </div>
+
+                                 <div class="test_content_nr_main">
+                                     <ul>
+
+                                         <li class="option">
+
+
+                                             <input type="checkbox" class="radioOrCheck" name="answer5"
+                                                    id="1_answer_5_option_1"
+                                             />
+
+                                             <label for="1_answer_5_option_1">
+                                                 A.
+                                                 <p class="ue" style="display: inline;">①②③④⑤</p>
+                                             </label>
+                                         </li>
+
+                                         <li class="option">
+
+
+                                             <input type="checkbox" class="radioOrCheck" name="answer5"
+                                                    id="1_answer_5_option_2"
+                                             />
+
+                                             <label for="1_answer_5_option_2">
+                                                 B.
+                                                 <p class="ue" style="display: inline;">①②③</p>
+                                             </label>
+                                         </li>
+
+                                         <li class="option">
+
+
+                                             <input type="checkbox" class="radioOrCheck" name="answer5"
+                                                    id="1_answer_5_option_3"
+                                             />
+
+                                             <label for="1_answer_5_option_3">
+                                                 C.
+                                                 <p class="ue" style="display: inline;">②③④</p>
+                                             </label>
+                                         </li>
+
+                                         <li class="option">
+
+
+                                             <input type="checkbox" class="radioOrCheck" name="answer5"
+                                                    id="1_answer_5_option_4"
+                                             />
+
+                                             <label for="1_answer_5_option_4">
+                                                 D.
+                                                 <p class="ue" style="display: inline;">②③⑤</p>
+                                             </label>
+                                         </li>
+
+                                     </ul>
+                                 </div>
+                             </li>
+                         </ul>-->
+                    </div>
+
+                </form>
+            </div>
+
+        </div>
+        <div class="nr_right">
+            <div class="nr_rt_main">
+                <div class="rt_nr1">
+                    <div class="rt_nr1_title">
+                        <h1>
+                            <i class="icon iconfont">&#xe692;</i>答题卡
+                        </h1>
+                        <!--   <p class="test_time">
+                               <i class="icon iconfont">&#xe6fb;</i><b class="alt-1">00:01</b>&lt;!&ndash;定时&ndash;&gt;
+                           </p>-->
+                    </div>
+
+                    <div class="rt_content">
+                        <div class="rt_content_tt">
+                            <h2>单选题</h2>
+                            <p>
+                                <span>共</span><i class="content_lit" th:text="${number}"></i><span>题</span>
+                            </p>
+                        </div>
+
+                        <div class="rt_content_nr answerSheet">
+                            <ul>
+
+                                <li><a href="#qu_0_0">1</a></li>
+
+                                <li><a href="#qu_0_1">2</a></li>
+
+                                <li><a href="#qu_0_2">3</a></li>
+
+                                <li><a href="#qu_0_3">4</a></li>
+
+                                <!-- <li><a href="#qu_0_4">5</a></li>
+
+                                 <li><a href="#qu_0_5">6</a></li>
+
+                                 <li><a href="#qu_0_6">7</a></li>
+
+                                 <li><a href="#qu_0_7">8</a></li>
+
+                                 <li><a href="#qu_0_8">9</a></li>
+
+                                 <li><a href="#qu_0_9">10</a></li>-->
+
+                                <!--<li><a href="#qu_0_10">11</a></li>
+
+                                <li><a href="#qu_0_11">12</a></li>
+
+                                <li><a href="#qu_0_12">13</a></li>
+
+                                <li><a href="#qu_0_13">14</a></li>
+
+                                <li><a href="#qu_0_14">15</a></li>
+
+                                <li><a href="#qu_0_15">16</a></li>
+
+                                <li><a href="#qu_0_16">17</a></li>
+
+                                <li><a href="#qu_0_17">18</a></li>
+
+                                <li><a href="#qu_0_18">19</a></li>
+
+                                <li><a href="#qu_0_19">20</a></li>
+-->
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="rt_content">
+                        <!-- <div class="rt_content_tt">
+                             <h2>多选题</h2>
+                             <p>
+                                 <span>共</span><i class="content_lit">30</i><span>题</span>
+                             </p>
+                         </div>-->
+                        <!-- <div class="rt_content_nr answerSheet">
+                             <ul>
+
+                                 <li><a href="#qu_1_0">1</a></li>
+
+                                 <li><a href="#qu_1_1">2</a></li>
+
+                                 <li><a href="#qu_1_2">3</a></li>
+
+                                 <li><a href="#qu_1_3">4</a></li>
+
+                                 <li><a href="#qu_1_4">5</a></li>
+
+                                &lt;!&ndash; <li><a href="#qu_1_5">6</a></li>
+
+                                 <li><a href="#qu_1_6">7</a></li>
+
+                                 <li><a href="#qu_1_7">8</a></li>
+
+                                 <li><a href="#qu_1_8">9</a></li>
+
+                                 <li><a href="#qu_1_9">10</a></li>
+ &ndash;&gt;
+                                &lt;!&ndash; <li><a href="#qu_1_10">11</a></li>
+
+                                 <li><a href="#qu_1_11">12</a></li>
+
+                                 <li><a href="#qu_1_12">13</a></li>
+
+                                 <li><a href="#qu_1_13">14</a></li>
+
+                                 <li><a href="#qu_1_14">15</a></li>
+
+                                 <li><a href="#qu_1_15">16</a></li>
+
+                                 <li><a href="#qu_1_16">17</a></li>
+
+                                 <li><a href="#qu_1_17">18</a></li>
+
+                                 <li><a href="#qu_1_18">19</a></li>
+
+                                 <li><a href="#qu_1_19">20</a></li>
+ &ndash;&gt;
+
+                             </ul>
+                         </div>-->
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!--nr end-->
+    <div class="foot"></div>
+</div>
+<div id="allmap"></div>
+<script th:src="@{Wjl/js/jquery-1.11.3.min.js}"></script>
+<script th:src="@{Wjl/js/jquery.easy-pie-chart.js}"></script>
+<!--时间js-->
+<script th:src="@{Wjl/time/jquery.countdown.js}"></script>
+<script>
+    window.jQuery(
+        function($) {
+            "use strict";
+
+            $('time').countDown({
+                with_separators : false
+            });
+            $('.alt-1').countDown({
+                css_class : 'countdown-alt-1',
+            });
+            $('.alt-1').on(' time.elapsed ',function(){
+                var stuId=$('#stuId').val()
+                var paperId=$('#paperId').val()
+                var answer1= $("input[name='answer1']:checked").val();
+                if(answer1==null){
+                    answer1=null;
+                }
+                var answer2= $("input[name='answer2']:checked").val();
+                if(answer2==null){
+                    answer2=null;
+                }
+                var answer3= $("input[name='answer3']:checked").val();
+                if(answer3==null){
+                    answer3=null;
+                }
+                var answer4= $("input[name='answer4']:checked").val();
+                if(answer4==null){
+                    answer4=null;
+                }
+                var ranswer1=$('#ranswer1').val();
+                var ranswer2=$('#ranswer2').val();
+                var ranswer3=$('#ranswer3').val();
+                var ranswer4=$('#ranswer4').val();
+                var score1=$('#score1').val();
+                var score2=$('#score2').val();
+                var score3=$('#score3').val();
+                var score4=$('#score4').val();
+                $.ajax({
+                    url:'/AutoJiaoJuan',
+                    type:'post',
+                    data:{
+                        stuId:stuId,
+                        paperId:paperId,
+                        answer1:answer1,
+                        answer2:answer2,
+                        answer3:answer3,
+                        answer4:answer4,
+                        ranswer1:ranswer1,
+                        ranswer2:ranswer2,
+                        ranswer3:ranswer3,
+                        ranswer4:ranswer4,
+                        score1:score1,
+                        score2:score2,
+                        score3:score3,
+                        score4:score4,
+                    },
+                    success:function () {
+                        layer.msg('考试时间到，考试结束,系统自动交卷',{icon:2,time:2000});
+                        setTimeout(function () {window.location.href="/goStudent?stuId="+stuId;},2000);
+
+                    }
+                })
+            });
+        }
+    );
+
+
+    $(function() {
+        $('li.option label').click(function() {
+            debugger;
+            var examId = $(this).closest('.test_content_nr_main').closest('li').attr('id'); // 得到题目ID
+            var cardLi = $('a[href=#' + examId + ']'); // 根据题目ID找到对应答题卡
+            // 设置已答题
+            if(!cardLi.hasClass('hasBeenAnswer')){
+                cardLi.addClass('hasBeenAnswer');
+            }
+
+        });
+    });
+</script>
+
+<script type="text/javascript">
+    layui.use(['form','upload'],function(){
+        var form = layui.form();
+    });
+</script>
+<!--<script th:src="@{Wjl/common/layui/layui.js}">
+    $("html").mouseleave(
+        layer.confirm('请勿离开页面',{btn: ['清楚', '取消'], title: "提醒"},
+            function(index){
+               window.location.reload();
+            }
+    )
+    )
+</script>-->
+<script type="text/javascript">
+    // 使用浏览器定位到该位置
+    var map = new BMap.Map("allmap");
+    var point = new BMap.Point(116.331398, 39.897445);
+    map.centerAndZoom(point, 12);
+
+    var geolocation = new BMap.Geolocation();
+    var gc = new BMap.Geocoder();//地址解析类
+    geolocation.getCurrentPosition(function(r) {
+        if (this.getStatus() == BMAP_STATUS_SUCCESS) {
+            var mk = new BMap.Marker(r.point);
+            map.addOverlay(mk);
+            map.panTo(r.point);
+            gc.getLocation(r.point, function(rs) {
+                showLocationInfo(r.point, rs);
+            });
+        } else {
+            alert('failed' + this.getStatus());
+        }
+    }, {
+        enableHighAccuracy : true
+    })
+
+    function showLocationInfo(pt, rs) {
+        var addComp = rs.addressComponents;
+        var addr = "当前考试定位：" + addComp.province + "- " + addComp.city + "- "
+            + addComp.district + "- " + addComp.street+'  '+'  '+"请注意考试定位 杜绝作弊";
+        $('#e').html(addr);
+    }
+</script>
+</body>
+
+</html>

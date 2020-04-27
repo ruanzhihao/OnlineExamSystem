@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>试题管理</title>
+    <link rel="stylesheet" th:href="@{/layui/css/layui.css}" media="all">
+    <script th:src="@{https://code.jquery.com/jquery-3.3.1.min.js}"></script>
+    <script th:src="@{Wjl/excel.js}"></script>
+</head>
+<body>
+<div class="demoTable" style="padding: 15px">
+
+   <!-- <div class="layui-inline">
+        <input placeholder="输入试题关键字" class="layui-input" id="findQuestionKey" name="findQuestionKey" autocomplete="off">
+    </div>-->
+    <!--<button class="layui-btn" data-type="reload" >搜索</button>-->
+<div style="font-weight: bold;font-size: 26px">
+考试记录 <span style="color: red;font-size: 15px">如果信息出错 请及时联系代课老师进行反馈！</span>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <button type="button" class="layui-btn " onclick="exportDataToExcel()"><i class="layui-icon"></i>导出考试记录</button>
+    <script>
+        function exportDataToExcel(){
+            //table的ID
+            $("#tables").table2excel({
+                exclude: ".noExl",
+                name: "导出",
+                filename: "考试记录"+'.xls',
+                fileext: ".xls",//文件后缀名
+                exclude_img: true,
+                exclude_links: true,
+                exclude_inputs: true
+            });
+        }
+
+    </script>
+</div>
+
+</div>
+
+<table class="layui-table" lay-filter="demo" id="tables">
+    <thead>
+    <tr>   <!-- <tr>-->
+        <!--  <th lay-data="{field:'1', width:40, sort:true}">ID</th>-->
+        <th lay-data="{field:'2', width:130}">学生姓名</th>
+        <th lay-data="{field:'3', width:220}">学院</th>
+        <th lay-data="{field:'4', width:200}">班级</th>
+        <th lay-data="{field:'5', width:200}">考试科目</th>
+        <th lay-data="{field:'6', width:220}">考试时间</th>
+        <th lay-data="{field:'7', width:130}">考试分数</th>
+      <!--  <th lay-data="{field:'8', width:80}">答题详情</th>-->
+        <th lay-data="{field:'13'}">&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;操&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;作</th>
+    </tr>
+
+    </thead>
+
+    <tbody th:each="exam :${list}">
+    <tr>
+       <!-- <td></td>-->
+        <td th:text="${exam.stuName}"></td>
+        <td th:text="${exam.stuDept}"></td>
+        <td th:text="${exam.stuClazz}"></td>
+        <td th:text="${exam.examName}"></td>
+        <td th:text="${exam.examTime}"></td>
+        <td th:text="${exam.examScore}"></td>
+        <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button class="layui-btn layui-btn-sm layui-btn-warm" th:onclick="|javascript:show(this,${exam.paperId},${exam.stuId},'${exam.examTime}')|">详情</button>
+
+            <script>
+                function show(obj,paperId,stuId,examTime){
+
+                    $.ajax({
+                        url:'./getHistory',
+                        type:'post',
+                        data:{
+                            paperId:paperId,
+                            stuId:stuId,
+                            examTime:examTime,
+                        },
+                        success:function () {
+                            layer.msg('加载中...',{time:2000});
+                            setTimeout(function () {window.parent.location.href='/HistoryGo?paperId='+paperId+'&stuId='+stuId+'&examTime='+examTime;},2000);
+                        }
+                    })
+                }
+            </script>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+
+<script type="text/javascript" th:src="@{/layui/layui.js}"></script>
+<!--<script th:src="@{/layui/layui.js}"></script>-->
+<script>
+    //静态表格布局
+    layui.use('table',function() {
+        var table = layui.table;//加载表格模块
+        /*var $ = layui.jquery;*/
+        /*  var $ = layui.jquery;*/
+        table.init('demo', {
+            height: 465 //设置高度
+            , page: true //开启分页
+        });
+    });
+</script>
+
+<script>
+    layui.use('layer', function(){
+        var layer = layui.layer;
+
+    });
+
+</script>
+</body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>专业详情</title>
+        <link rel="stylesheet" th:href="@{/layui/css/layui.css}" media="all" />
+        <script th:src="@{/layui/layui.js}"></script>
+        <script th:src="@{/Skz/jquery-3.4.1.js}"></script>
+    </head>
+    <body>
+        <div style="margin-top:20px; padding-right: 80px;">
+            <form class="layui-form" action="#" method="post" onsubmit="return false">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">ID</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="id" required lay-verify="required" placeholder="请输入ID"
+                               autocomplete="off" class="layui-input" id="id" disabled>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">班级名称</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="name" required lay-verify="required" placeholder="请输入名称"
+                               autocomplete="off" class="layui-input" id="name" disabled>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">所属院系</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="departName" required lay-verify="required" autocomplete="off"
+                               class="layui-input" id="departName" disabled>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">所属专业</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="majorName" required lay-verify="required" autocomplete="off"
+                               class="layui-input" id="majorName" disabled>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <script>
+            //            <![CDATA[
+            var layer = layui.layer;
+            var index = parent.layer.getFrameIndex(window.name);
+
+            layui.use('form', function () {
+                const form = layui.form,
+                    $ = layui.jquery;
+
+                $.get(parent.prefix + "/get?id=" + parent.parentId, function (res) {
+                    if (res.code == 0) {
+                        $("#id").val(res.data.clazzId);
+                        $("#name").val(res.data.clazzName);
+                        $("#departName").val(res.data.departName);
+                        $("#majorName").val(res.data.majorName);
+                        form.render();
+                    } else {
+                        parent.layer.msg("读取数据失败");
+                        parent.layer.close(index);
+                    }
+                });
+            });
+            // ]]>
+        </script>
+    </body>
+</html>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.onlineExam.mapper.TeacherIndexMapper">
+    <select id="getAllStudent" resultType="com.onlineExam.domain.Student">
+        select * from student,t_clazz,t_depart,t_exam where student.clazzId=t_clazz.clazzId and student.departId=t_depart.departId and student.stuid=t_exam.stuId
+    </select>
+
+    <select id="getAllClazz" resultType="com.onlineExam.domain.Clazz">
+        select * from t_clazz
+    </select>
+
+    <select id="getAllDepart" resultType="com.onlineExam.domain.Depart">
+        select * from t_depart
+    </select>
+
+<select id="queryStuInfo" parameterType="java.lang.Integer" resultType="com.onlineExam.domain.Student">
+    select * from student,t_clazz,t_depart where stuid=#{stuId} and student.clazzId=t_clazz.clazzId and student.departId=t_depart.departId
+</select>
+
+    <select id="getAllQues" resultType="com.onlineExam.domain.Question">
+           select * from t_question,t_major,t_course where  t_major.majorId = t_question.majorId and t_question.courseId=t_course.courseId and t_major.majorId=t_course.majorId
+    </select>
+
+    <select id="getTgQues" parameterType="java.lang.Integer" resultType="com.onlineExam.domain.Question">
+        select * from t_question,t_major,t_course where  t_major.majorId = t_question.majorId and t_question.courseId=#{courseId} and t_major.majorId=t_course.majorId
+    </select>
+
+    <select id="getStuByStuId" parameterType="java.lang.Integer" resultType="com.onlineExam.domain.Student">
+
+        select * from student where stuId=#{stuId}
+    </select>
+
+</mapper>

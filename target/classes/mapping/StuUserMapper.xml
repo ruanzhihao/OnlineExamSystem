@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.onlineExam.mapper.StuUserMapper">
+    <!--移除错题-->
+    <update id="removeError" parameterType="com.onlineExam.domain.StuAnswer">
+       update t_stuanswer set isWrong=1 where questionId=#{questionId}
+    </update>
+    <!--查看错题-->
+    <select id="getErrorQuestion" resultType="com.onlineExam.domain.StuAnswer">
+       select * from t_stuanswer as s,t_realpaper as r,t_question as q,t_paper as p where  s.isWrong=2 and s.paperId=p.paperId and s.paperId=r.paperId
+       and r.paperId=s.paperId and s.questionId=r.questionId and r.questionId=q.questionId and
+       s.questionId=q.questionId and stuId=#{stuId}
+    </select>
+    <select id="getStuByEmail" parameterType="String" resultType="com.onlineExam.domain.Student">
+      select * from student where stuemail=#{stuemail}
+    </select>
+
+    <select id="login"   parameterType="String" resultType="String" >
+    select roles from t_login where username = #{username} and password=#{password}
+    </select>
+    <!--	登录验证 -->
+    <select id="findByUsername"   parameterType="String" resultType="com.onlineExam.domain.LoginUser" >
+    select username,password,roles from t_login where username = #{value}
+  </select>
+
+    <!--	验证注册用户名是否存在 -->
+    <select id="findRegisterUsername"   parameterType="String" resultType="com.onlineExam.domain.LoginUser" >
+    select username  from t_login where username = #{value}
+  </select>
+    <!-- 添加学生用户账号 -->
+    <insert id="register" parameterType="com.onlineExam.domain.LoginUser">
+		INSERT INTO t_login(username,password,roles)
+			VALUES(#{username},#{password},#{roles})
+	</insert>
+
+    <!-- 添加用户账号信息 -->
+    <insert id="addStuInformation" parameterType="com.onlineExam.domain.Student">
+		INSERT INTO student(username,stuid,stuname,stupassword,stuphonenumber,stuemail,clazzId,departId,stateId,majorId)
+		VALUES(#{username},#{stuid},#{stuname},#{stupassword},#{stuphonenumber},#{stuemail},#{clazzId},#{departId},#{stateId},#{majorId})
+	</insert>
+
+    <!--修改用户密码-->
+    <update id="updatePassword" parameterType="com.onlineExam.domain.LoginUser" >
+    update t_login set password = #{password} where username=#{username}
+  </update>
+    <!--	修改学生密码-->
+    <update id="updateStuPassword" parameterType="com.onlineExam.domain.Student" >
+    update student set stupassword = #{stupassword} where username=#{username}
+  </update>
+
+    <!--查询学生信息	 -->
+    <select id="findInformationByUsername"   parameterType="String" resultType="com.onlineExam.domain.Student" >
+    select * from student where username = #{value}
+  </select>
+
+    <!--	修改用户信息-->
+    <update id="updateInformation" parameterType="com.onlineExam.domain.Student">
+	 update student set stuid = #{stuid} ,stuname=#{stuname},stuemail=#{stuemail},stuphonenumber=#{stuphonenumber},
+	 clazzId=#{clazzId},majorId=#{majorId},departId=#{departId}
+    where username=#{username}
+	</update>
+
+
+
+    <!--查询所有学生-->
+    <select id="getStudentList" resultType="com.onlineExam.domain.Student">
+        select * from student,t_major,t_depart,t_state,t_clazz where student.majorId=t_major.majorId and student.departId=t_depart.departId and student.stateId=t_state.stateId and student.clazzId=t_clazz.clazzId
+    </select>
+    <!--通过id删除学生-->
+    <delete id="deleteStudent" parameterType="Integer">
+        delete from student where id=#{id}
+    </delete>
+    <!--通过id查找-->
+    <select id="findStudentById" parameterType="Integer" resultType="com.onlineExam.domain.Student">
+        select * from student where id=#{id}
+    </select>
+    <select id="findStudentByclazzId" resultType="com.onlineExam.domain.Student">
+        select * from student,t_major,t_depart,t_state,t_clazz where student.majorId=t_major.majorId and student.departId=t_depart.departId and student.stateId=t_state.stateId and student.clazzId=t_clazz.clazzId and student.clazzId=#{clazzId}
+    </select>
+    <select id="findScoreBystuname" resultType="com.onlineExam.domain.Exam">
+        select * from t_exam where stuName=#{stuname} order by examid desc
+    </select>
+    <select id="getScoreBystuname" resultType="com.onlineExam.domain.Exam">
+        select * from t_exam where stuName=#{stuname}
+    </select>
+    <!--添加学生信息-->
+    <insert id="addStudent" parameterType="com.onlineExam.domain.Student" keyProperty="id" useGeneratedKeys="true">
+        insert into student(username,stuid,stuname,stupassword,stuphonenumber,stuemail,clazzId,majorId,departId,stateId)
+        values (#{username},#{stuid},#{stuname},#{stupassword},#{stuphonenumber},#{stuemail},#{clazzId},#{majorId},#{departId},#{stateId})
+    </insert>
+    <!--修改学生信息-->
+    <update id="updateStudent" parameterType="com.onlineExam.domain.Student">
+        update student
+        <set>
+            <if test="username!=null and username!=''">
+                username=#{username},
+            </if>
+            <if test="stuid!=null and username!=0">
+                stuid=#{stuid},
+            </if>
+            <if test="stuname!=null and stuname!=''">
+                stuname=#{stuname},
+            </if>
+            <if test="stuphonenumber!=null and stuphonenumber!=''">
+                stuphonenumber=#{stuphonenumber},
+            </if>
+            <if test="stuemail!=null and stuemail!=''">
+                stuemail=#{stuemail},
+            </if>
+            <if test="clazzId!=null and clazzId!=0">
+                clazzId=#{clazzId},
+            </if>
+            <if test="majorId!=null and majorId!=0">
+                majorId=#{majorId},
+            </if>
+            <if test="departId!=null and departId!=0">
+                departId=#{departId},
+            </if>
+            <if test="stateId!=null and stateId!=0">
+                stateId=#{stateId}
+            </if>
+        </set>
+        where id=#{id}
+    </update>
+
+    <select id="queryStudent" resultType="com.onlineExam.domain.Student">
+        select * from student,t_major,t_depart,t_state,t_clazz where student.majorId=t_major.majorId and student.departId=t_depart.departId and student.stateId=t_state.stateId and student.clazzId=t_clazz.clazzId and stuname=#{stuname}
+    </select>
+    <select id="findExamByexamName" resultType="com.onlineExam.domain.Exam">
+        select * from t_exam where examName=#{examName} and stuName=#{stuname}
+    </select>
+
+    <select id="getClazzList" resultType="com.onlineExam.domain.Clazz">
+        select * from t_clazz
+    </select>
+    <select id="getMajorList" resultType="com.onlineExam.domain.Major">
+        select * from t_major
+    </select>
+    <select id="getDepartList" resultType="com.onlineExam.domain.Depart">
+        select * from t_depart
+    </select>
+    <select id="getStateList" resultType="com.onlineExam.domain.State">
+        select * from t_state
+    </select>
+</mapper>

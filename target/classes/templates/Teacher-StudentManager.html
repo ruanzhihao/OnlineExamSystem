@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>学生管理</title>
+    <link rel="stylesheet" th:href="@{/layui/css/layui.css}" media="all" />
+    <script th:src="@{/layui/layui.js}"></script>
+    <script th:src="@{/Skz/jquery-3.4.1.js}"></script>
+    <script type="text/javascript" th:src="@{/layui/layui.js}"></script>
+    <script th:src="@{/js/jquery-1.8.2.min.js}"></script>
+</head>
+<body>
+<div class="x-body">
+    <div class="demoTable" style="padding: 15px">
+        <div class="layui-inline">
+            <input placeholder="输入要查找学生姓名" class="layui-input" id="findStudentKey" autocomplete="off">
+        </div>
+        <button class="layui-btn" data-type="reload" onclick="queryStudent1()">搜索</button>
+    </div>
+    <script>
+        function queryStudent1(){
+            var stuname=$('#findStudentKey').val();
+            $.ajax({
+                url:'/queryStudent1',
+                type:'get',
+                data:{
+                    stuname:stuname,
+                },
+                success:function () {
+                    layer.msg('查询中...',{
+                        time:2000
+                    },function () {
+                        window.location.href="/queryShowStudent1?stuname="+stuname;
+                    });
+                }
+            });
+        }
+    </script>
+</div>
+
+<table class="layui-table" lay-filter="demo">
+    <thead>
+    <tr>
+        <th lay-data="{field:'1',align: 'center'}">ID</th>
+        <th lay-data="{field:'2', align: 'center'}">学生姓名</th>
+        <th lay-data="{field:'3', align: 'center'}">学生账号名</th>
+        <th lay-data="{field:'5', align: 'center'}">手机号</th>
+        <th lay-data="{field:'6', align: 'center'}">email</th>
+        <th lay-data="{field:'7', align: 'center'}">班级名</th>
+        <th lay-data="{field:'8', align: 'center'}">专业</th>
+        <th lay-data="{field:'9', align: 'center'}">所在学院</th>
+        <th lay-data="{field:'10', align: 'center'}">账号状态</th>
+        <th lay-data="{field:'11', align: 'center'}">查看成绩</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="student :${studentList}">
+        <td th:text="${student.id}"></td>
+        <td th:text="${student.stuname}"></td>
+        <td th:text="${student.username}"></td>
+        <td th:text="${student.stuphonenumber}"></td>
+        <td th:text="${student.stuemail}"></td>
+        <td th:text="${student.clazzName}"></td>
+        <td th:text="${student.majorName}"></td>
+        <td th:text="${student.departName}"></td>
+        <td th:text="${student.state}"></td>
+        <td>&nbsp;
+            <a title="查看成绩"    id= "showScore"    th:href="@{/show(stuname=${student.stuname})}">
+                <i class="layui-icon">&#xe642;</i>
+            </a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+
+
+<script>
+    layui.use('table',function(){
+
+        var table = layui.table;//加载表格模块
+        table.init('demo', {
+            height: 500 //设置高度
+            ,cellMinWidth: 80
+            ,page: true //开启分页
+        });
+
+    });
+</script>
+
+</body>
+</html>

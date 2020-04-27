@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>学生成绩</title>
+    <link rel="stylesheet" th:href="@{/layui/css/layui.css}" media="all" />
+    <script th:src="@{/layui/layui.js}"></script>
+    <script th:src="@{/Skz/jquery-3.4.1.js}"></script>
+</head>
+<body>
+<table class="layui-table" lay-filter="demo">
+    <thead>
+    <tr>
+        <th lay-data="{field:'1',align: 'center'}">测试</th>
+        <th lay-data="{field:'2', align: 'center'}">测试时间</th>
+        <th lay-data="{field:'3', align: 'center'}">分数</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="exam :${examList}">
+        <td th:text="${exam.examName}"></td>
+        <td th:text="${exam.examTime}"></td>
+        <td th:text="${exam.examScore}"></td>
+    </tr>
+    </tbody>
+</table>
+<script>
+    layui.use('table',function(){
+
+        var table = layui.table;//加载表格模块
+        table.init('demo', {
+            height: 500 //设置高度
+            ,cellMinWidth: 80
+            ,page: true //开启分页
+        });
+
+    });
+</script>
+
+</body>
+</html>

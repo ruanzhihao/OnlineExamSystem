@@ -1,0 +1,313 @@
+<!--
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>参加考试</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" type="text/css" th:href="@{Wjl/common/layui/css/layui.css}" media="all">
+    <link rel="stylesheet" type="text/css" th:href="@{Wjl/common/bootstrap/css/bootstrap.css}" media="all">
+    <link rel="stylesheet" type="text/css" th:href="@{Wjl/common/global.css}" media="all">
+    <link rel="stylesheet" type="text/css" th:href="@{Wjl/css/personal.css}" media="all">
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+</head>
+<body>
+<section class="layui-larry-box">
+&lt;!&ndash;
+    <div class="larry-personal">
+        <header class="larry-personal-tit">
+            <span style="font-size: 28px ;color: black">待考试区</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <span style="color: red">请在考试开始前进入考试 考试期间禁止关闭考试页，否则无法继续考试</span>
+        </header>&lt;!&ndash; /header &ndash;&gt;
+        <div class="larry-personal-body clearfix changepwd" >
+            <input type="hidden" id="stuId" th:value="${session.stuid}"/>
+            <div style="width:25%;hight:100%;float:left; " th:each="Paper:${PaperList}">
+                <table class="layui-table" lay-skin="row" >
+
+                    <tr>
+                        <td>考试名：<span style="font-weight: bold" th:text="${Paper.paperName}"></span></td>
+                    </tr>
+                    <tr>
+                        <td>班级：<span style="font-weight: bold;color: #0c7fd1">Java1-5</span></td>
+                    </tr>
+                    <tr>
+                        <td>考试难度：<span style="font-weight: bold;color: #0c9076"  th:text="${Paper.paperClass}"></span></td>
+                    </tr>
+                    <tr>
+                        <input type="hidden" id="PaperId" th:value="${Paper.paperId}"/>
+                        <td>考试时间：<span style="color: red" th:text="${Paper.answerTime}"></span>&nbsp;分钟</td>
+                    </tr>
+                    <tr>
+                        <td style="color: #ac2925">注意：参加考试浏览器建议使用 火狐/谷歌 </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <a th:onclick="|javascript:join(this,${Paper.paperId},${session.stuid},${Paper.sumQuestionScore},${Paper.questionNumber})|" href="javascript:;"  class="layui-btn layui-btn-danger" >参加考试</a>
+                            <script>
+                                function join(obj,paperId,stuId,score,number){
+                                    /*  var stuId=$('#stuId').val()
+                                      var paperId=$('#PaperId').val()*/
+                                    layer.confirm('请在规定时间内完成答题，超时自动交卷！',{btn: ['清楚', '取消'], title: "考前提示"},
+                                        function(index){
+                                            layer.msg('试题加载中...',{icon:6,time:2000});
+                                            setTimeout(function () {window.parent.location.href='/Examing?score='+score+'&number='+number+'&stuId='+stuId+'&paperId='+paperId;},2000);
+                                        });
+                                }
+                            </script>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+&ndash;&gt;
+    <div class="larry-personal">
+        <header class="larry-personal-tit">
+            <span style="font-size: 28px ;color: black">待考试区</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <span style="color: red">请在考试开始前进入考试 考试期间禁止关闭考试页，否则无法继续考试</span>
+        </header>&lt;!&ndash; /header &ndash;&gt;
+        <div class="larry-personal-body clearfix changepwd" >
+            <div style="width:25%;hight:100%;float:left; " th:each="releaseExam:${releaseExams}">
+                <table class="layui-table" lay-skin="row" >
+
+                    <input type="hidden" id="sumQuestionScore" th:value="${releaseExam.sumQuestionScore}"/>
+                    <input type="hidden" id="questionNumber" th:value="${releaseExam.questionNumber}"/>
+                    <input type="hidden" id="stuId" th:value="${session.stuid}"/>
+                    <input type="hidden" id="majorId" th:value="${releaseExam.majorId}"/>
+                    <input type="hidden" id="paperId" th:value="${releaseExam.paperId}"/>
+                    <tr>
+                        <td>考试名：<span style="font-weight: bold" th:text="${releaseExam.paperName}"></span></td>
+                    </tr>
+                    <tr>
+                        <td>总分：<span style="font-weight: bold;color: #0c7fd1" th:text="${releaseExam.sumQuestionScore}"></span></td>
+                    </tr>
+                    <tr>
+                        <td>题量：<span style="font-weight: bold;color: #0c9076"  th:text="${releaseExam.questionNumber}"></span></td>
+                    </tr>
+                    <tr>
+                        <td>答题时间：<span style="color: red" th:text="${releaseExam.answerTime}"></span>&nbsp;分钟</td>
+                    </tr>
+                    <tr>
+                        <td>开始时间：<span style="color: red" th:text="${releaseExam.beginTime}"></span></td>
+                    </tr>
+                    <tr>
+                        <td><span style="color: red" th:text="${releaseExam.examStateName}"></span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="jsTime" th:attr="data-time=${releaseExam.beginTime}" ></span></td>
+                    </tr>
+                    <tr>
+                        <td style="color: #ac2925">注意：参加考试浏览器建议使用 火狐/谷歌 </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <button class="layui-btn layui-btn-normal" disabled="disabled" id="btn" onclick="join()" >参加考试</button>
+                             <script>
+                                 function join(){
+                                       var stuId=$('#stuId').val()
+                                    /*   var majorId=$('#majorId').val()*/
+                                       var paperId=$('#paperId').val()
+                                       var sumQuestionScore=$('#sumQuestionScore').val()
+                                       var questionNumber=$('#questionNumber').val()
+
+                                     layer.confirm('请在规定时间内完成答题，超时自动交卷！',{btn: ['清楚', '取消'], title: "考前提示"},
+                                         function(index){
+                                             layer.msg('试题加载中...',{icon:6,time:2000});
+                                             setTimeout(function () {window.parent.location.href='/Examing?score='+sumQuestionScore+'&number='+questionNumber+'&stuId='+stuId+'&paperId='+paperId;},2000);
+                                         });
+                                 }
+                             </script>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+<script type="text/javascript" th:src="@{Wjl/common/layui/layui.js}"></script>
+<script type="text/javascript">
+    layui.use(['form','upload'],function(){
+        var form = layui.form();
+    });
+</script>
+<script type="text/javascript">
+    const countdown = {
+        domList : document.querySelectorAll('.jsTime'),
+        formatNumber(n){
+            n = n.toString();
+            return n[1] ? n : '0' + n;
+        },
+        setTime(dom){
+            console.log(dom.getAttribute('data-time'));
+            const leftTime = new Date(dom.getAttribute('data-time')) - new Date();
+            console.log(leftTime);
+            if (leftTime >= 0) {
+                const d = Math.floor(leftTime / 1000 / 60 / 60 / 24);
+                const h = Math.floor(leftTime / 1000 / 60 / 60 % 24);
+                const m = Math.floor(leftTime / 1000 / 60 % 60);
+                const s = Math.floor(leftTime / 1000 % 60);
+                dom.innerHTML = `距考试开始还有${ d > 0 ? d + '天' : '' }${ [h, m, s].map(this.formatNumber).join(':') }`;
+            } else {
+                //      clearInterval(dom.$timer);
+                /*
+                                dom.innerHTML = '拼团截止';
+                */
+                document.getElementById("btn").setAttribute("class", "layui-btn layui-btn-danger");
+                document.getElementById("btn").disabled=false;
+                dom.innerHTML = '考试已开始';
+            }
+        },
+        start(){
+            this.domList.forEach((dom) => {
+                this.setTime(dom);
+            dom.$timer = setInterval(() => {
+                this.setTime(dom);
+        }, 1e3);
+        });
+        },
+    };
+    countdown.start();
+</script>
+<script th:inline="javascript">
+    var url="/JoinExam";
+    setTimeout('location.href=url', 10000);
+</script>
+</body>
+</html>-->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>参加考试</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <script type="text/javascript" th:src="@{/Rzh/js/jQuery1.7.2.js}"></script>
+    <link rel="stylesheet" type="text/css" th:href="@{Wjl/common/layui/css/layui.css}" media="all">
+    <link rel="stylesheet" type="text/css" th:href="@{Wjl/common/bootstrap/css/bootstrap.css}" media="all">
+    <link rel="stylesheet" type="text/css" th:href="@{Wjl/common/global.css}" media="all">
+    <link rel="stylesheet" type="text/css" th:href="@{Wjl/css/personal.css}" media="all">
+</head>
+<body>
+<section class="layui-larry-box">
+
+    <div class="larry-personal">
+        <header class="larry-personal-tit">
+            <span style="font-size: 28px ;color: black">待考试区</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <span style="color: red">请在考试开始前进入考试 考试期间禁止关闭考试页，否则无法继续考试</span>
+        </header><!-- /header -->
+        <div class="larry-personal-body clearfix changepwd" >
+            <div style="width:25%;hight:100%;float:left; " th:each="releaseExam:${releaseExams}">
+                <input type="hidden" id="paperId" th:value="${releaseExam.paperId}">
+                <input type="hidden" id="releaseExamId" th:value="${releaseExam.releaseExamId}">
+                <table class="layui-table" lay-skin="row" >
+                    <tr>
+                        <td>考试名：<span style="font-weight: bold" th:text="${releaseExam.paperName}"></span></td>
+                    </tr>
+                    <tr>
+                        <td>总分：<span style="font-weight: bold;color: #0c7fd1" th:text="${releaseExam.sumQuestionScore}"></span></td>
+                    </tr>
+                    <tr>
+                        <td>题量：<span style="font-weight: bold;color: #0c9076"  th:text="${releaseExam.questionNumber}"></span></td>
+                    </tr>
+                    <tr>
+                        <td>答题时间：<span style="color: red" th:text="${releaseExam.answerTime}"></span>&nbsp;分钟</td>
+                    </tr>
+                    <tr>
+                        <td>开始时间：<span style="color: red" th:text="${releaseExam.beginTime}"></span></td>
+                    </tr>
+                    <tr>
+                        <td><span style="color: red" th:text="${releaseExam.examStateName}"></span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="jsTime" th:attr="data-time=${releaseExam.beginTime}" ></span></td>
+                    </tr>
+                    <tr>
+                        <td style="color: #ac2925">注意：参加考试浏览器建议使用 火狐/谷歌 </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <!--
+                                                        <button class="layui-btn layui-btn-normal"  id="btn">参加考试</button>
+                            -->
+                            <button  title="考试" href="javascript:;" disabled="disabled" id="btn" th:onclick="|javascript:getQuestion(this,${releaseExam.paperId},${releaseExam.releaseExamId})|" class="layui-btn layui-btn-normal"  >
+                                开始考试
+                            </button>
+                            <script>
+                                function getQuestion(obj,paperId){
+                                    var paperId=$('#paperId').val();
+                                    var releaseExamId=$('#releaseExamId').val();
+
+                                    layer.confirm('请在规定时间内完成答题，超时自动交卷！',{btn: ['确认', '取消'], title: "考前提示"},
+                                        function(index){
+                                            layer.msg('试题加载中...',{icon:6,time:2000});
+                                            setTimeout(function () {window.parent.location.href='/stuExam?paperId='+paperId+'&releaseExamId='+releaseExamId;},2000);
+                                        });
+                                }
+                            </script>
+
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+<script type="text/javascript" th:src="@{Wjl/common/layui/layui.js}"></script>
+<script type="text/javascript">
+    layui.use(['form','upload'],function(){
+        var form = layui.form();
+    });
+</script>
+<script type="text/javascript">
+    const countdown = {
+        domList : document.querySelectorAll('.jsTime'),
+        formatNumber(n){
+            n = n.toString();
+            return n[1] ? n : '0' + n;
+        },
+        setTime(dom){
+            console.log(dom.getAttribute('data-time'));
+            const leftTime = new Date(dom.getAttribute('data-time')) - new Date();
+            console.log(leftTime);
+            if (leftTime >= 0) {
+                const d = Math.floor(leftTime / 1000 / 60 / 60 / 24);
+                const h = Math.floor(leftTime / 1000 / 60 / 60 % 24);
+                const m = Math.floor(leftTime / 1000 / 60 % 60);
+                const s = Math.floor(leftTime / 1000 % 60);
+                dom.innerHTML = `距考试开始还有${ d > 0 ? d + '天' : '' }${ [h, m, s].map(this.formatNumber).join(':') }`;
+            } else {
+                //      clearInterval(dom.$timer);
+                /*
+                                dom.innerHTML = '拼团截止';
+                */
+                document.getElementById("btn").setAttribute("class", "layui-btn layui-btn-danger");
+                document.getElementById("btn").disabled=false;
+                dom.innerHTML = '考试已开始';
+            }
+        },
+        start(){
+            this.domList.forEach((dom) => {
+                this.setTime(dom);
+            dom.$timer = setInterval(() => {
+                this.setTime(dom);
+        }, 1e3);
+        });
+        },
+    };
+    countdown.start();
+</script>
+<script th:inline="javascript">
+    var url="/JoinExam";
+    setTimeout('location.href=url',5000);
+</script>
+</body>
+</html>

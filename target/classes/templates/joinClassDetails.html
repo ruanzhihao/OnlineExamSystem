@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml" xmlns="http://www.thymeleaf.org">
+<head th:replace="head::copy">
+<body>
+<input type="hidden" id="releaseExamId" th:value="${releaseExamId}">
+<div>
+    <div style="float:left;width: 200px;height:400px;"></div>
+    <div id="main" style="float:left;width: 600px;height:400px;"></div>
+</div>
+<script type="text/javascript">
+    var releaseExamId=document.getElementById("releaseExamId").value;
+    console.log(releaseExamId);
+    var myChart = echarts.init(document.getElementById('main'));
+    var stuClass = [];
+    var numbers = [];
+    var colors = ['#248EFD'];
+    $.ajax({
+        type:"get",
+        url:"/joinDetails",
+        data:{releaseExamId:releaseExamId},
+        dataType:"json",
+        async:false,
+        success:function (result) {
+            for (var i = 0; i < result.length; i++){
+                stuClass.push(result[i].stuClazz);
+                numbers.push(result[i].countClass);
+            }
+        },
+        error :function(errorMsg) {
+            alert("获取后台数据失败！");
+        }
+    });
+    // 指定图表的配置项和数据
+    var option = {
+        colors:colors,
+        title: {
+            text: '参与情况'
+        },
+        tooltip: {},
+        legend: {
+            data:['参与班级']
+        },
+        xAxis: {
+            //结合
+            name:'班级',
+            data: stuClass
+        },
+        yAxis: {
+                name:'人数',
+                    type: 'value',
+                    minInterval: 1
+        },
+        series: [{
+            name: '参与人数',
+            type:'bar',
+            barMaxWidth:'20%',
+            label:{
+                normal:{
+                    show:true,
+                    position:'top'
+                }
+            },
+            data: numbers
+        }]
+    };
+    // 使用刚指定的配置项和数据显示图表。
+    myChart.setOption(option);
+</script>
+</body>
+</html>

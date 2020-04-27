@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.onlineExam.mapper.ReleseExamMapper">
+<select id="getAllDepart" resultType="com.onlineExam.domain.Depart">
+    select * from t_depart
+</select>
+    <select id="getPaperName" resultType="com.onlineExam.domain.Paper">
+      select paperId,paperName from t_paper
+    </select>
+    <insert id="releaseExam" parameterType="com.onlineExam.domain.ReleaseExam">
+        insert into t_releaseexam values (DEFAULT ,#{departId},#{majorId},#{courseId},#{beginTime},1,#{authorId},#{paperId})
+    </insert>
+    <select id="getAllReleaseInfo" resultType="com.onlineExam.domain.ReleaseExam">
+        SELECT t_releaseexam.releaseExamId,t_depart.departId,t_depart.departName,t_major.majorId,t_major.majorName,t_course.courseId,t_course.courseName,t_paper.paperId,t_paper.paperName,t_examstate.examStateName,t_releaseexam.beginTime
+from t_releaseexam,t_major,t_depart,t_course,t_paper,t_examstate where t_releaseexam.departId=t_depart.departId
+and t_major.majorId=t_releaseexam.majorId and t_course.courseId=t_releaseexam.courseId and t_paper.paperId=t_releaseexam.paperId and t_examstate.examStateId=t_releaseexam.examStateId
+    </select>
+    <select id="getAllState" resultType="com.onlineExam.domain.ExamState">
+        select * from t_examState
+    </select>
+    <delete id="deleteReleaseInfoById" parameterType="INTEGER">
+        delete from t_releaseexam where releaseExamId=#{releaseExamId}
+    </delete>
+    <select id="getReleaseExamById" resultType="com.onlineExam.domain.ReleaseExam">
+        SELECT t_releaseexam.releaseExamId,t_depart.departId,t_depart.departName,t_major.majorId,t_major.majorName,t_course.courseId,t_course.courseName,t_paper.paperId,t_paper.paperName,t_examstate.examStateName,t_releaseexam.beginTime
+from t_releaseexam,t_major,t_depart,t_course,t_paper,t_examstate where t_releaseexam.departId=t_depart.departId
+and t_major.majorId=t_releaseexam.majorId and t_course.courseId=t_releaseexam.courseId and t_paper.paperId=t_releaseexam.paperId and t_examstate.examStateId=t_releaseexam.examStateId and t_releaseexam.releaseExamId=#{releaseExamId}
+    </select>
+    <update id="updateReleaseExam" parameterType="com.onlineExam.domain.ReleaseExam">
+        update t_releaseExam
+        <set>
+            <if test="paperId!=null and paperId!=0">
+                paperId=#{paperId},
+            </if>
+            <if test="departId!=0 and departId!=''">
+                departId=#{departId},
+            </if>
+            <if test="majorId!=0 and majorId!=null">
+                majorId=#{majorId},
+            </if>
+            <if test="courseId!=null and courseId!=0">
+                courseId=#{courseId},
+            </if>
+            <if test="beginTime!=null and beginTime!=''">
+                beginTime=#{beginTime},
+            </if>
+            <if test="authorId!=null and authorId!=0">
+                authorId=#{authorId},
+            </if>
+        </set>
+        where releaseExamId=#{releaseExamId}
+    </update>
+    <select id="getReleaseInfoByStateId" resultType="com.onlineExam.domain.ReleaseExam">
+                SELECT t_releaseexam.releaseExamId,t_depart.departId,t_depart.departName,t_major.majorId,t_major.majorName,t_course.courseId,t_course.courseName,t_paper.paperId,t_paper.paperName,t_examstate.examStateName,t_releaseexam.beginTime
+               from t_releaseexam,t_major,t_depart,t_course,t_paper,t_examstate where t_releaseexam.departId=t_depart.departId
+               and t_major.majorId=t_releaseexam.majorId and t_course.courseId=t_releaseexam.courseId and t_paper.paperId=t_releaseexam.paperId and t_examstate.examStateId=t_releaseexam.examStateId
+            <if test="examStateId !=0 and examStateId != null">
+               and t_releaseexam.examStateId=#{examStateId}
+            </if>
+
+    </select>
+    <select id="getJoinReleseClassCount" resultType="int">
+        SELECT COUNT(*) from t_exam where t_exam.stuClazz=#{stuClazz} and  t_exam.releaseExamId=#{releaseExamId};
+    </select>
+    <select id="getJoinReleseClass" resultType="java.lang.String">
+        select distinct stuClazz from t_exam where t_exam.releaseExamId=#{releaseExamId} ORDER BY stuClazz
+    </select>
+    <select id="getAvg" resultType="int">
+        SELECT AVG(examScore) FROM t_exam WHERE t_exam.stuClazz=#{stuClazz} and t_exam.releaseExamId=#{releaseExamId}
+    </select>
+</mapper>

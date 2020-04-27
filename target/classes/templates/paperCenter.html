@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>试题管理</title>
+    <link rel="stylesheet" th:href="@{/layui/css/layui.css}" media="all">
+    <script th:src="@{/layui/layui.js}"></script>
+    <script th:src="@{/Wjl/jquery-3.4.1.js}"></script>
+</head>
+<body>
+<div class="demoTable" style="padding: 15px">
+    <div class="layui-inline">
+        <input placeholder="输入试题关键字" class="layui-input" id="find" autocomplete="off">
+    </div>
+    <button class="layui-btn" data-type="reload" id="queryRole" >搜索</button>
+    <button type="button" class="layui-btn layui-btn ">
+        <i class="layui-icon">&#x1002;</i>添加试卷
+    </button>
+&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;
+    <a th:href="@{/getImport}" ><button type="button" class="layui-btn">
+        <i class="layui-icon">&#xe608;</i> 导入题目到试卷
+</button>
+    </a>
+</div>
+
+<hr>
+<table lay-filter="demo">
+    <thead>
+    <tr>
+        <th lay-data="{field:'1', width:40, sort:true}">ID</th>
+        <th lay-data="{field:'3', width:200}">试卷名称</th>
+        <th lay-data="{field:'4', width:80}">题量</th>
+        <th lay-data="{field:'5', width:200}">答题时间</th>
+        <th lay-data="{field:'6', width:80}">总分</th>
+        <th lay-data="{field:'7', width:200}">所属专业</th>
+        <th lay-data="{field:'8', width:200}">难度类型</th>
+        <th lay-data="{field:'11'}">&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;操&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;作</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each ="papers :${papers}">
+        <td th:text="${papers.paperId}"></td>
+        <td th:text="${papers.paperName}"></td>
+        <td th:text="${papers.questionNumber}"></td>
+        <td th:text="${papers.answerTime}"></td>
+        <td th:text="${papers.sumQuestionScore}"></td>
+        <td th:text="${papers.majorName}"></td>
+        <td th:text="${papers.paperClass}"></td>
+        <td> &nbsp;&nbsp;&nbsp;&nbsp;
+
+            <button type="button" class="layui-btn layui-btn-sm layui-btn-warm">
+                <i class="layui-icon">&#xe642;</i>
+            </button>
+            <button type="button" th:onclick="|deletePaper(${papers.paperId})|" class="layui-btn layui-btn-sm layui-btn-warm">
+                <i class="layui-icon">&#xe642;</i>
+            </button>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<script type="text/javascript" th:src="@{/layui/layui.js}">
+    deletePaper =function(paperId){
+        layer.confirm('确认要删除吗？',function(index){
+            //发异步删除数据
+            $.get("deletePaper",{paperId:paperId},function (data) {
+                if(data =true){
+                    layer.msg('删除成功!',{icon:1,time:2000});
+                    setTimeout(function () {window.location.href='/paperCenter';},2000);
+
+                }else {
+                    layer.msg('删除失败!',{icon:1,time:3000});
+                    setTimeout(function () {window.location.href='/paperCenter';},2000);
+                }
+            });
+        });
+    }
+
+</script>
+<script>
+    //静态表格
+    layui.use('table',function(){
+        var table = layui.table;//加载表格模块
+        table.init('demo', {
+            height: 550 //设置高度
+            ,page: true //开启分页
+        });
+    });
+    </script>
+<!--<script type="text/javascript" th:src="@{/Rzh/layui/lay/modules/jquery.js}">
+    function deletePaper(id){
+        $.ajax({
+            url:'deletePaper',
+            data:{paperId:id},
+            type:'post',
+            success:function (data) {
+                if (data=="ok") {
+                    layer.message("删除成功")
+                    window.location.reload();
+                }else {
+                    layer.message("删除失败");
+                }
+            }
+
+        })
+    }
+
+</script>-->
+</body>
+</html>

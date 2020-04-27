@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.onlineExam.mapper.RealPaperMapper">
+<insert id="addRealPaper" parameterType="java.util.Map">
+    INSERT INTO t_realpaper VALUES
+    <if test="paperId != null">
+        <if test="questionIds != null">
+            <foreach collection="questionIds" item="questionId" close=";" separator=",">
+                (DEFAULT , #{paperId}, #{questionId})
+            </foreach>
+        </if>
+    </if>
+</insert>
+    <delete id="deletePapQues" parameterType="Integer">
+DELETE FROM t_realpaper WHERE t_realpaper.realPaperId=#{realPaperId}
+    </delete>
+    <insert id="addOnePap" parameterType="com.onlineExam.domain.RealPaper">
+        insert into t_realPaper values (DEFAULT ,#{paperId},#{questionId})
+    </insert>
+    <select id="selectOneUnique" resultType="com.onlineExam.domain.RealPaper">
+        select * from t_realpaper where questionId=#{questionId} AND paperId=#{paperId}
+    </select>
+    <select id="countQuestionNumber" resultType="integer">
+        SELECT count(*) from t_realpaper where paperId=#{paperId}
+    </select>
+</mapper>

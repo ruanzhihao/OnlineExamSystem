@@ -1,9 +1,7 @@
 package com.onlineExam.controller.student;
 
-import com.onlineExam.domain.LoginUser;
-import com.onlineExam.domain.Question;
-import com.onlineExam.domain.StuAnswer;
-import com.onlineExam.domain.Student;
+import com.onlineExam.domain.*;
+import com.onlineExam.service.MyCollectionService;
 import com.onlineExam.service.QuestionService;
 import com.onlineExam.service.StuUserService;
 import io.swagger.annotations.Api;
@@ -11,11 +9,11 @@ import org.apache.shiro.crypto.hash.Md5Hash;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.Date;
 import java.util.Enumeration;
 import java.util.List;
 
@@ -28,6 +26,8 @@ public class StuChangeController {
     private StuUserService stuUserService;
     @Autowired
     private QuestionService questionService;
+    @Autowired
+    private MyCollectionService myCollectionService;
 
     @RequestMapping("/kTouch")
     public String kTouch(){
@@ -113,6 +113,33 @@ public class StuChangeController {
     public String removeError(Integer questionId){
         boolean flag= stuUserService.removeError(questionId);
         return "student/errorQuestion";
+    }
+
+    // 我的收藏
+    @GetMapping(value = "/collection")
+    public String getIndex(HttpSession session, Model model) {
+        Integer stuId = (Integer) session.getAttribute("stuid");
+        List<MyCollection> myCollections = myCollectionService.getList(stuId);
+        model.addAttribute("myCollections", myCollections);
+        return "student/myCollection";
+    }
+
+    @GetMapping(value = "/collection/add")
+    @ResponseBody
+    public ResponseData add(HttpSession session,
+                            @RequestParam(value = "questionId") Integer questionId) {
+        Integer stuId = (Integer) session.getAttribute("stuid");
+        MyCollection myCollection =
+                MyCollection.builder().questionid(questionId).userid(stuId).createtime(new Date()).build();
+        myCollectionService.add(myCollection);
+        return ResponseData.success();
+    }
+
+    @GetMapping(value = "/collection/del")
+    @ResponseBody
+    public ResponseData del(@RequestParam(value = "id") Integer id) {
+        myCollectionService.del(id);
+        return ResponseData.success();
     }
 
 }

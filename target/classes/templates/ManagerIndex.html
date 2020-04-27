@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>在线考试平台后台管理</title>
+    <link th:href="@{/layui/css/layui.css}" rel="stylesheet" />
+
+</head>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header">
+        <div class="layui-logo">在线考试平台后台管理</div>
+        <!-- 头部区域（可配合layui已有的水平导航） -->
+        <ul class="layui-nav layui-layout-left">
+            <li class="layui-nav-item"><a href="">界面1</a></li>
+            <li class="layui-nav-item"><a href="">界面2</a></li>
+            <li class="layui-nav-item"><a href="">界面3</a></li>
+            <li class="layui-nav-item"><a href="javascript:;">其它</a>
+                <dl class="layui-nav-child">
+                    <dd>
+                        <a href="">邮件管理</a>
+                    </dd>
+                    <dd>
+                        <a href="./addMessage" id="addMessage">消息管理</a>
+                    </dd>
+                    <dd>
+                        <a href="">授权管理</a>
+                    </dd>
+                </dl></li>
+        </ul>
+        <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item">
+                <a href="javascript:;">
+                    <img src="http://thirdwx.qlogo.cn/mmopen/O0B2cNsVaCBqrjX4KtHLs53hEt0GFbLXZCAIFd1ue8tCXRhFTxEs1INIm9ibicK1PqiaxMlRTCgZ43wHorewZ0wHKicfvB9gHWWF/132" class="layui-nav-img">
+                    <span id="usernameInfo"></span>
+                </a>
+                <dl class="layui-nav-child">
+                    <dd><a href="">基本资料</a></dd>
+                    <dd><a href="">安全设置</a></dd>
+                </dl>
+            </li>
+            <li class="layui-nav-item"><a href="javascript:">退出</a></li>
+        </ul>
+    </div>
+
+    <div class="layui-side layui-bg-black">
+        <div class="layui-side-scroll">
+            <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+            <ul class="layui-nav layui-nav-tree" lay-filter="test">
+                <li class="layui-nav-item layui-nav-itemed"><a class=""
+                                                               href="javascript:;">基本信息</a>
+                    <dl class="layui-nav-child">
+                        <dd>
+                            <a href="/admin/depart">院系管理</a>
+                        </dd>
+                        <dd>
+                            <a href="/admin/major">专业方向</a>
+                        </dd>
+                        <dd>
+                            <a href="/admin/clazz">班级管理</a>
+                        </dd>
+<!--                        <dd>-->
+<!--                            <a href="./test2">院系管理</a>-->
+<!--                        </dd>-->
+<!--                        <dd>-->
+<!--                            <a href="./login">专业方向</a>-->
+<!--                        </dd>-->
+                    </dl>
+                </li>
+                <li class="layui-nav-item"><a href="/admin/clazz">班级管理</a></li>
+                <li class="layui-nav-item"><a  href="./teenager";>教师管理</a></li>
+
+                <li class="layui-nav-item"><a  href="./strange";>学生管理</a></li>
+
+                <li class="layui-nav-item"><a  href="javascript:";>试题库</a>
+                    <dl class="layui-nav-child">
+                        <dd>
+                            <a href="./getEcharts">题目分布</a>
+                        </dd>
+                        <dd>
+                            <a href="./testManage">试题管理</a>
+                        </dd>
+                        <dd>
+                            <a href="./questionShow">试题详情</a>
+                        </dd>
+                    </dl>
+
+                </li>
+
+                <li class="layui-nav-item"><a  href="javascript:";>试卷库</a>
+                    <dl class="layui-nav-child">
+                        <dd>
+                            <a href="./getAddPaper">添加试卷</a>
+                        </dd>
+                        <dd>
+                            <a href="./paperCenter">试卷中心</a>
+                        </dd>
+
+                    </dl>
+                </li>
+                <li class="layui-nav-item"><a  href="javascript:";>考务信息</a>
+
+                    <dl class="layui-nav-child">
+                        <dd>
+                            <a href="./getReleaseForm">发布考试</a>
+                        </dd>
+                        <dd>
+                            <a href="./releaseInfoCenter">考务大厅</a>
+                        </dd>
+                        <dd>
+                            <a href="./releaseInfoCenter1">数据分析</a>
+                        </dd>
+                    </dl>
+                </li>
+                </ul>
+        </div>
+    </div>
+
+    <div class="layui-body">
+        <!-- 内容主体区域 -->
+        <iframe id="iframeMain" th:src="@{/adminHomePage} " frameborder="0" height="100%" width="100%"></iframe>
+    </div>
+
+    <div class="layui-footer">
+欢迎您 管理员
+    </div>
+</div>
+<script th:src="@{/layui/layui.js}"></script>
+<script th:src="@{/js/jquery-1.8.2.min.js}"></script>
+<script>
+    //JavaScript代码区域
+    layui.use('element', function() {
+        var element = layui.element;
+
+    });
+
+
+    $(document).ready(function(){
+        $("dd>a").click(function (e) {
+            e.preventDefault();
+            $("#iframeMain").attr("src",$(this).attr("href"));
+        });
+
+        $("li>a").click(function (e) {
+            e.preventDefault();
+            $("#iframeMain").attr("src",$(this).attr("href"));
+        });
+        $("#addMessage").click(function (e) {
+            e.preventDefault();
+            $("#iframeMain").attr("src",$(this).attr("href"));
+        });
+    });
+
+</script>
+</body>
+</html>

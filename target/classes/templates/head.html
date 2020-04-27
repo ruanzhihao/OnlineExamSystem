@@ -1,0 +1,97 @@
+<html xmlns="http://www.thymeleaf.org" xmlns:th="http://www.w3.org/1999/xhtml">
+    <head th:fragment="copy">
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <link rel="stylesheet" th:href="@{/Rzh/layui/css/layui.css}">
+        <link rel="stylesheet" th:href="@{/Rzh/layui/css/modules/layer/default/layer.css?v=3.1.1}">
+        <script type="text/javascript" th:src="@{/Rzh/js/jQuery1.7.2.js}"></script>
+        <script type="text/javascript" th:src="@{/Rzh/layui/layui.js}"></script>
+        <script type="text/javascript" th:src="@{/Rzh/layer/layer.js}"></script>
+        <script type="text/javascript" th:src="@{/js/echarts.min.js}"></script>
+        <script th:src="@{https://cdn.bootcss.com/echarts/3.5.3/echarts.min.js}"></script>
+        <style type="text/css">
+            table {
+                cellspacing:0 ;
+                *border-collapse: collapse;
+                border-spacing: 0;
+                width: 100%;
+            }
+            .bordered tr:hover {
+                background: #fbf8e9;
+                -o-transition: all 0.1s ease-in-out;
+                -webkit-transition: all 0.1s ease-in-out;
+                -moz-transition: all 0.1s ease-in-out;
+                -ms-transition: all 0.1s ease-in-out;
+                transition: all 0.1s ease-in-out;
+            }
+
+            .bordered th {
+                padding: 7px;
+                text-align: center;
+                cellspacing:0;
+            }
+
+            .bordered td{
+                padding: 7px;
+                text-align: center;
+                cellspacing:0;
+            }
+
+
+            .bordered th {
+
+                background-image: -webkit-gradient(linear, left top, left bottom, from(#ebf3fc), to(#dce9f9));
+                background-image: -webkit-linear-gradient(top, #ebf3fc, #dce9f9);
+                background-image:    -moz-linear-gradient(top, #ebf3fc, #dce9f9);
+                background-image:     -ms-linear-gradient(top, #ebf3fc, #dce9f9);
+                background-image:      -o-linear-gradient(top, #ebf3fc, #dce9f9);
+                background-image:         linear-gradient(top, #ebf3fc, #dce9f9);
+            }
+            .bordered td:first-child, .bordered th:first-child {
+                border-left: none;
+            }
+
+
+
+            .bordered  tr:nth-of-type(2n){background:#FFFFFF;cursor: pointer;}
+            .bordered  tr:nth-of-type(2n+1){background:#F7FAFC;cursor: pointer;}
+
+            .bordered  tbody tr:hover{  background: #fbf8e9;
+                -o-transition: all 0.1s ease-in-out;
+                -webkit-transition: all 0.1s ease-in-out;
+                -moz-transition: all 0.1s ease-in-out;
+                -ms-transition: all 0.1s ease-in-out;
+                transition: all 0.1s ease-in-out;
+            }
+            .seal-content{
+                width: 300px;
+                min-height: 60px;
+                vertical-align: bottom;
+                word-wrap: break-word;
+                position: relative;
+            }
+
+            .seal-result{
+                width: 60px;
+                height: 60px;
+                transform: rotate(30deg);
+                border: solid 2px green;
+                border-radius: 100%;
+                text-align: center;
+                color: green;
+                font-size: 16px;
+                font-weight: bold;
+                line-height: 60px;
+                right: 5px;
+                bottom: 0px;
+                position: absolute;
+                background-color: rgba(255,255,255,0.8)
+            }
+
+            .seal-result-fail{
+                border-color: red;
+                color: red;
+            }
+        </style>
+    </head>
+</html>

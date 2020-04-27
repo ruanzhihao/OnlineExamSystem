@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.onlineExam.mapper.DepartMapper" >
+  <resultMap id="BaseResultMap" type="com.onlineExam.domain.Depart" >
+    <id column="departId" property="departId" jdbcType="INTEGER" />
+    <result column="departName" property="departName" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    departId, departName
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_depart
+    where departId = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAllByOption" resultMap="BaseResultMap" parameterType="java.lang.String">
+    SELECT <include refid="Base_Column_List"/>
+    FROM t_depart
+    <where>
+      <if test="keyword != null and keyword != ''">
+        AND departName LIKE concat('%', #{keyword}, '%')
+      </if>
+    </where>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_depart
+    where departId = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insertSelective" parameterType="com.onlineExam.domain.Depart" >
+    insert into t_depart
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="departId != null" >
+        departId,
+      </if>
+      <if test="departName != null" >
+        departName,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="departId != null" >
+        #{departId,jdbcType=INTEGER},
+      </if>
+      <if test="departName != null" >
+        #{departName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.onlineExam.domain.Depart" >
+    update t_depart
+    <set >
+      <if test="departName != null" >
+        departName = #{departName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where departId = #{departId,jdbcType=INTEGER}
+  </update>
+</mapper>
