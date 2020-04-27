@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>答题情况</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="text/javascript"
+            src="//api.map.baidu.com/api?v=2.0&ak=OfMzjrzcNpMcHzayyMVGY3YLCQ6we3KU"></script>
+    <!--<link th:href="@{Wjl/css/main2.css}" rel="stylesheet" type="text/css" />-->
+    <link th:href="@{Wjl/css/iconfont.css}" rel="stylesheet" type="text/css" />
+    <link th:href="@{Wjl/css/test.css}" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" th:href="@{layui/css/layui.css}" media="all">
+    <script type="text/javascript" th:src="@{layui/layui.js}"></script>
+</head>
+<body>
+<div class="container">
+    <div class="test_content_nr">
+        <ul >
+            <li  th:each="elist:${stuAnswerList}">
+                <div class="test_content_nr_tt">
+                    <!--<input type="hidden" th:name="'rquestion'+${state.index+1}" th:value="${radioQuestion.questionId}">-->
+                    <i class="layui-icon">&#xe623;</i>
+                    <font th:text="${elist.getQuestionName()}"></font><!--</span><b class="icon iconfont">&#xe881;</b>-->
+                </div>
+                <div class="test_content_nr_main">
+                    <ul>
+                        <li class="option">
+                            <label>
+                                A.
+                                <p class="ue" style="display: inline;" th:text="${elist.getOptionA()}"></p>
+                            </label>
+                        </li>
+                        <li class="option">
+                            <label>
+                                B.
+                                <p class="ue" style="display: inline;"  th:text="${elist.getOptionB()}"></p>
+                            </label>
+                        </li>
+                        <li class="option">
+                            <label>
+                                C.
+                                <p class="ue" style="display: inline;"  th:text="${elist.getOptionC()}"></p>
+                            </label>
+                        </li>
+                        <li class="option">
+                            <label>
+                                D.
+                                <p class="ue" style="display: inline;" th:text="${elist.getOptionD()}"></p>
+                            </label>
+                        </li>
+                    </ul>
+                </div>
+                <div class="test_content_nr_main" style="color:#e60000">
+                    <label>您选择的是：</label>
+                    <span th:text="${elist.getStuAnswer()}"></span>
+
+                    <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <label>正确答案是：</label>
+                        <span th:text="${elist.getAnswer()}"></span>
+                    </span>
+                </div>
+
+            </li>
+        </ul>
+    </div>
+</div>
+<script>
+
+</script>
+</body>
+</html>

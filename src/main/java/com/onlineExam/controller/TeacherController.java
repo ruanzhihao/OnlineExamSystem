@@ -286,4 +286,11 @@ public class TeacherController {
         return "teacherHomePage";
     }
 
+    @RequestMapping(value = "/showquestion")
+    public String showquestion(@RequestParam("stuId") int stuId,@RequestParam("paperId") int paperId,@RequestParam("releaseExamId")int releaseExamId,Model model){
+        List<StuAnswer> stuAnswerList=teacherMapper.getQuestion(stuId,paperId,releaseExamId);
+        model.addAttribute("stuAnswerList",stuAnswerList);
+        return "QuestionBypersion";
+    }
+
 }
