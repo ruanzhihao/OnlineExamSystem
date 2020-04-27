@@ -15,11 +15,14 @@
 <div class="container">
     <div class="test_content_nr">
         <ul >
-            <li  th:each="elist:${stuAnswerList}">
+            <li  th:each="elist,elistStat:${stuAnswerList}">
                 <div class="test_content_nr_tt">
                     <!--<input type="hidden" th:name="'rquestion'+${state.index+1}" th:value="${radioQuestion.questionId}">-->
                     <i class="layui-icon">&#xe623;</i>
-                    <font th:text="${elist.getQuestionName()}"></font><!--</span><b class="icon iconfont">&#xe881;</b>-->
+                    <i th:text="${elistStat.index+1}"></i>
+                    <!--<label th:text="${elistStat.index+1}"></label>
+                    <label>.</label>&nbsp;-->
+                    <font th:text="${elist.getQuestionName()}"></font>
                 </div>
                 <div class="test_content_nr_main">
                     <ul>
