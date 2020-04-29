@@ -47,7 +47,7 @@
                     <dd><a href="./changeTeaPwd" id="changeTeaPwd">修改密码</a></dd>
                 </dl>
             </li>
-            <li class="layui-nav-item"><a href="javascript:">退出</a></li>
+            <li class="layui-nav-item"><a href="" onclick="logout()">退出</a></li>
         </ul>
     </div>
 
@@ -61,18 +61,36 @@
                 <li class="layui-nav-item"><a  href="javascript:";>考务中心</a>
                     <dl class="layui-nav-child">
                         <dd>
-                            <a href="javascript:;">安排考试</a>
+                            <a href="./getReleaseForm">发布考试</a>
                         </dd>
                         <dd>
-                            <a href="javascript:;">考试记录</a>
+                            <a href="./releaseInfoCenter">我的发布</a>
                         </dd>
                     </dl>
                 </li>
 
                <!-- <li class="layui-nav-item"><a  href="javascript:";>考试中心</a></li>-->
                 <li class="layui-nav-item"><a href="/findStudentByclazzId">学生信息</a></li>
-                <li class="layui-nav-item"><a  id="QuestionInfo" href="./QuestionInfo";>试题管理</a></li>
-                <li class="layui-nav-item"><a  href="javascript:";>试卷中心</a></li>
+                <li class="layui-nav-item"><a  id="QuestionInfo" href="./QuestionInfo";>试题管理</a>
+                    <dl class="layui-nav-child">
+                        <dd>
+                            <a href="./getEcharts">题目分布</a>
+                        </dd>
+                        <dd>
+                            <a href="./questionShow">试题详情</a>
+                        </dd>
+                    </dl>
+
+                </li>
+                <li class="layui-nav-item"><a  href="javascript:";>试卷中心</a>
+                    <dl class="layui-nav-child">
+                        <dd>
+                            <a href="./paperCenter">试卷中心</a>
+                        </dd>
+
+                    </dl>
+
+                </li>
              <!--   <li class="layui-nav-item"><a >考试汇报</a></li>
 -->
             </ul>
@@ -129,6 +147,9 @@
             $("#iframeMain").attr("src",$(this).attr("href"));
         });
     });
+    function logout(){
+        window.location.href="login";
+    }
 
 </script>
 </body>

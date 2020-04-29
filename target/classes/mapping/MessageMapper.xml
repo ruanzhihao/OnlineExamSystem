@@ -2,6 +2,13 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.onlineExam.mapper.MessageMapper">
 
+    <!--标记全部已读-->
+    <update id="stuReadAll">
+        update t_message set sturead="已读"
+    </update>
+    <update id="teaReadAll">
+        update t_message set tearead="已读"
+    </update>
     <insert id="addMessage" parameterType="com.onlineExam.domain.Message" >
         insert into t_message(sendername,head,content,createtime,sturead,tearead)
          values(#{sendername},#{head},#{content},#{createtime},#{sturead},#{tearead})
