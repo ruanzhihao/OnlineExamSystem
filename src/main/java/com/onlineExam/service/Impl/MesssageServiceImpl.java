@@ -14,6 +14,25 @@ public class MesssageServiceImpl implements MessageService {
     private MessageMapper messageMapper;
 
     @Override
+    public boolean stuReadAll() {
+        int rs=messageMapper.stuReadAll();
+        if (rs==0){
+            return false;
+        }else {
+            return true;
+        }
+    }
+    @Override
+    public boolean teaReadAll() {
+        int rs=messageMapper.teaReadAll();
+        if (rs==0){
+            return false;
+        }else {
+            return true;
+        }
+    }
+
+    @Override
     public boolean addMessage(Message message) {
         int rs=messageMapper.addMessage(message);
         if (rs==0){

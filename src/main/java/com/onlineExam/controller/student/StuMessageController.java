@@ -28,5 +28,10 @@ public class StuMessageController {
         int result= messageMapper.updateStuRead(id);
         return "student/stumessage";
     }
+    @RequestMapping("/stuReadAll")
+    public String stuReadAll(){
+        int rs=messageMapper.stuReadAll();
+        return "student/stumessage";
+    }
 
 }

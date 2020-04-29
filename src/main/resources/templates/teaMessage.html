@@ -9,6 +9,9 @@
 
 </head>
 <body>
+<div class="layui-logo">
+    <button class="layui-btn layui-btn-warm" style="margin-top: 25px;margin-left: 12px" th:onclick="'javascript:teaReadAll()'">全部标记为已读</button>
+</div>
 <table lay-filter="demo">
     <thead>
     <tr>
@@ -63,6 +66,27 @@
                 setTimeout(function (){window.location.href="teaMessage"},1000);
             }
         })
+    }
+    function teaReadAll(){
+        layui.use('layer',function () {
+            var layer=layui.layer;
+            layer.confirm('全部标为已读？', {btn: ['确定', '取消'], title: "提示"}, function () {
+                $.ajax({
+                    url: "teaReadAll",
+                    success: function () {
+                        setTimeout(function () {
+                            window.location.href = "teaMessage"
+                        }, 1000);
+                    },
+                    error: function () {
+                        setTimeout(function () {
+                            window.location.href = "teaMessage"
+                        }, 1000);
+                    }
+                })
+            })
+        })
+
     }
 </script>
 </body>

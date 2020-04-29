@@ -237,6 +237,11 @@ public class TeacherController {
         int result= messageMapper.updateTeaRead(id);
         return "teaMessage";
     }
+    @RequestMapping("/teaReadAll")
+    public String teaReadAll(){
+        int rs=messageMapper.teaReadAll();
+        return "teaMessage";
+    }
 
 
 
