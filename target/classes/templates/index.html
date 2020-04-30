@@ -12,6 +12,25 @@
   <script type="text/javascript" src="js/jquery1.42.min.js"></script>
   <script type="text/javascript" src="js/jquery.SuperSlide.js"></script>
   <script type="text/javascript" src="js/Validform_v5.3.2_min.js"></script>
+    <style type="text/css">
+
+        .my_input
+        {
+            background: #a64bf4;
+            background: -webkit-linear-gradient(right, #fc00ff ,#a64bf4,#007DDB, #1E9FFF);
+            background: -o-linear-gradient(right, #fc00ff ,#a64bf4,#007DDB, #1E9FFF);
+            background: -moz-linear-gradient(right, #fc00ff ,#a64bf4,#007DDB, #1E9FFF);
+            background: linear-gradient(right,  #fc00ff ,#a64bf4,#007DDB, #1E9FFF);
+
+            width:120px;
+            height:40px;
+            left: -100%;
+            color: #fff;
+            font-size: 20px;
+
+        }
+         
+    </style>
   <script type="text/javascript">
       $(document).ready(function(){
           var $tab_li = $('#tab ul li');
@@ -159,10 +178,8 @@
                  style="background: darkgreen; height: 40px; width: 80px; color: white;">
 
 
-          <input type="submit"  value="登录" name="submit"
-                 style="background: red; height: 40px; width: 120px; color: white;">
-          <input type="button"  value="注册" onclick="stuRegister()"
-                 style="background: red; height: 40px; width: 120px; color: white;">
+          <input class="my_input" type="submit"  value="登录" name="submit" style="font-size: 16px">
+          <input class="my_input" type="button"  value="注册" style="font-size: 16px" onclick="stuRegister()">
 
 
         </div>
@@ -196,10 +213,10 @@
           <button type="submit" onclick="checkLogin()">登录</button>
         </div>-->
         <div class="">
-          <input type="submit"  value="登录" name="submit"
-                 style="background: red; height: 40px; width: 120px; color: white;">
-          <input type="button"  value="注册" onclick="teaRegister()"
-                 style="background: red; height: 40px; width: 120px; color: white;">
+          <input class="my_input" type="submit"  value="登录" name="submit"
+                 style="font-size: 16px">
+          <input class="my_input" type="button"  value="注册" onclick="teaRegister()"
+                 style="font-size: 16px">
         </div>
       </form>
     </div>
@@ -227,7 +244,7 @@
           <label>记住密码</label>
         </div>
         <div id="login">
-          <button type="submit">登录</button>
+          <button type="submit" style="border-radius:25px;">登录</button>
         </div>
       </form>
     </div>
