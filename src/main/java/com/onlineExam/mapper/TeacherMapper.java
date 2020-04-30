@@ -1,6 +1,7 @@
 package com.onlineExam.mapper;
 
 import com.onlineExam.domain.LoginUser;
+import com.onlineExam.domain.Question;
 import com.onlineExam.domain.StuAnswer;
 import com.onlineExam.domain.Teacher;
 import org.apache.ibatis.annotations.Param;
@@ -20,6 +21,8 @@ public interface TeacherMapper {
     List<Teacher> queryTeacher(@Param("teachername") String teachername);//根据教师姓名查询
     //查看学生答题情况
     List<StuAnswer> getQuestion(@Param("stuId")int stuId, @Param("paperId") int paperId, @Param("releaseExamId")int releaseExamId);
+    //显示试题
+    List<Question> getQuestion1(@Param("majorId") int majorId, @Param("teachername") String teachername);
 
 
     //修改用户信息

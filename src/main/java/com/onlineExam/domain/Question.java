@@ -21,5 +21,5 @@ public class Question {
     private String majorName;
     private String questionType;
     private String questionClass;
-
+    private String paperName;
 }

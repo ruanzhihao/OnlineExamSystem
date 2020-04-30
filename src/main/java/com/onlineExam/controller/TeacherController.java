@@ -302,6 +302,16 @@ public class TeacherController {
         model.addAttribute("stuAnswerList",stuAnswerList);
         return "QuestionBypersion";
     }
+
+    @RequestMapping(value = "/questionAnalyze")
+    public String getQuestion1(HttpSession session, Model model){
+        Integer majorId=(int)session.getAttribute("majorId");
+        String teachername=(String)session.getAttribute("teachername");
+        List questionList=teacherMapper.getQuestion1(majorId,teachername);
+        model.addAttribute("questionList",questionList);
+        return "QuestionAnalyze";
+    }
+
     @RequestMapping("TeacherreleaseInfoCenter")
     public String releaseInfo(Model model){
         List<ExamState> states=releaseExamService.getAllState();

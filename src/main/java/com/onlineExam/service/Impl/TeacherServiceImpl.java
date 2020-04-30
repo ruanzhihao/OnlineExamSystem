@@ -1,6 +1,7 @@
 package com.onlineExam.service.Impl;
 
 import com.onlineExam.domain.LoginUser;
+import com.onlineExam.domain.Question;
 import com.onlineExam.domain.StuAnswer;
 import com.onlineExam.domain.Teacher;
 import com.onlineExam.mapper.TeacherMapper;
@@ -46,6 +47,11 @@ public class TeacherServiceImpl implements TeacherService {
     @Override
     public List<StuAnswer> getQuestion(int stuId, int paperId, int releaseExamId) {
         return teacherMapper.getQuestion(stuId,paperId,releaseExamId);
+    }
+
+    @Override
+    public List<Question> getQuestion1(int majorId, String teachername) {
+        return teacherMapper.getQuestion1(majorId, teachername);
     }
 
 
