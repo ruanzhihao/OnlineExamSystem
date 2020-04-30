@@ -10,7 +10,9 @@
                 <div class="layui-card">
                     <div class="layui-card-header">
                         <form class="layui-form" onclick="return false;" id="search_form">
+<!--
                             <button class="layui-btn layui-btn-normal" id="add_release">发布考务</button>
+-->
                             <div class="layui-form-item" style="float: left;">
                                 <div class="layui-inline">
                                     <div class="layui-input-inline">
@@ -58,9 +60,10 @@
             , cellMinWidth: 80
             , cols: [[
                 {type: 'checkbox', fixed: 'left'}
-                , {field: 'releaseExamId', width: '10%', title: '考务编号', sort: true}
-                , {field: 'paperName', width: '12%', title: '试卷名称'}
-                , {field: 'departName', width: '12%', title: '部门名称'}
+                ,{align:'center', title: '编号', sort: true,type:'numbers',width:100}
+                , {field: 'releaseExamId', width: '10%', title: '考务编号', sort: true,hide:true}
+                , {field: 'paperName', width: 150, title: '试卷名称'}
+                , {field: 'departName', width: 250, title: '部门名称'}
                 , {field: 'majorName', width: '12%', title: '专业名称'}
                 , {width: '10%', title: '参与情况',toolbar:'#barDemo1'}
                 /*

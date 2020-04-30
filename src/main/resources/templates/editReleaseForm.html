@@ -48,6 +48,7 @@
                     </div>
                 </div>
             </div>
+            <input type="hidden" th:value="${session.teacherid}" name="authorId">
             <div class="layui-form-item">
                 <div class="layui-inline">
                     <label class="layui-form-label">开始时间</label>
@@ -60,7 +61,7 @@
 <!--
             <input type="hidden" name="examStateId" th:value="${releaseExam.examStateId}">
 -->
-            <input type="hidden" th:value="${1}" name="authorId">
+
             <div class="layui-form-item">
                 <div class="layui-input-block">
                     <button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>

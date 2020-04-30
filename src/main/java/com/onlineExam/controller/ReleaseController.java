@@ -42,6 +42,20 @@ public class ReleaseController {
    model.addAttribute("departs",departs);
    return "releaseExam";
 }
+    @RequestMapping("getAdminReleaseForm")
+    public String getAdminReleaseForm(Model model){
+        List<Depart> departs=releaseExamService.getAllDepart();
+        List<Course> courses=questionService.getAllCourse();
+        List<Major>  majors=questionService.getAllMajor();
+        List<Paper>  papers=releaseExamService.getPaperName();
+        List<Teacher> teachers=releaseExamService.getAllTeacher();
+        model.addAttribute("courses",courses);
+        model.addAttribute("papers",papers);
+        model.addAttribute("majors",majors);
+        model.addAttribute("departs",departs);
+        model.addAttribute("teachers",teachers);
+        return "adminReleaseExam";
+    }
    @RequestMapping("getReleaseInfo")
         public String getReleaseInfoForm(@RequestParam("departId")Integer departId , @RequestParam("majorId") Integer majorId,
                                          @RequestParam("courseId")Integer courseId, @RequestParam("beginTime") String beginTime,

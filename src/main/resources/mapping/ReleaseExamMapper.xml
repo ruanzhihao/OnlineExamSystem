@@ -11,9 +11,9 @@
         insert into t_releaseexam values (DEFAULT ,#{departId},#{majorId},#{courseId},#{beginTime},1,#{authorId},#{paperId})
     </insert>
     <select id="getAllReleaseInfo" resultType="com.onlineExam.domain.ReleaseExam">
-        SELECT t_releaseexam.releaseExamId,t_depart.departId,t_depart.departName,t_major.majorId,t_major.majorName,t_course.courseId,t_course.courseName,t_paper.paperId,t_paper.paperName,t_examstate.examStateName,t_releaseexam.beginTime
-from t_releaseexam,t_major,t_depart,t_course,t_paper,t_examstate where t_releaseexam.departId=t_depart.departId
-and t_major.majorId=t_releaseexam.majorId and t_course.courseId=t_releaseexam.courseId and t_paper.paperId=t_releaseexam.paperId and t_examstate.examStateId=t_releaseexam.examStateId
+        SELECT t_releaseexam.releaseExamId,t_depart.departId,t_depart.departName,t_major.majorId,t_major.majorName,t_course.courseId,t_course.courseName,t_paper.paperId,t_paper.paperName,t_examstate.examStateName,t_releaseexam.beginTime,teachername as authorName
+from t_releaseexam,t_major,t_depart,t_course,t_paper,t_examstate,teacher where t_releaseexam.departId=t_depart.departId
+and t_major.majorId=t_releaseexam.majorId and t_course.courseId=t_releaseexam.courseId and t_paper.paperId=t_releaseexam.paperId and t_examstate.examStateId=t_releaseexam.examStateId and teacher.teacherid=authorId
     </select>
     <select id="getAllState" resultType="com.onlineExam.domain.ExamState">
         select * from t_examState
@@ -22,9 +22,9 @@ and t_major.majorId=t_releaseexam.majorId and t_course.courseId=t_releaseexam.co
         delete from t_releaseexam where releaseExamId=#{releaseExamId}
     </delete>
     <select id="getReleaseExamById" resultType="com.onlineExam.domain.ReleaseExam">
-        SELECT t_releaseexam.releaseExamId,t_depart.departId,t_depart.departName,t_major.majorId,t_major.majorName,t_course.courseId,t_course.courseName,t_paper.paperId,t_paper.paperName,t_examstate.examStateName,t_releaseexam.beginTime
-from t_releaseexam,t_major,t_depart,t_course,t_paper,t_examstate where t_releaseexam.departId=t_depart.departId
-and t_major.majorId=t_releaseexam.majorId and t_course.courseId=t_releaseexam.courseId and t_paper.paperId=t_releaseexam.paperId and t_examstate.examStateId=t_releaseexam.examStateId and t_releaseexam.releaseExamId=#{releaseExamId}
+        SELECT t_releaseexam.releaseExamId,t_depart.departId,t_depart.departName,t_major.majorId,t_major.majorName,t_course.courseId,t_course.courseName,t_paper.paperId,t_paper.paperName,t_examstate.examStateName,t_releaseexam.beginTime,teacher.teachername as authorName
+from teacher,t_releaseexam,t_major,t_depart,t_course,t_paper,t_examstate where t_releaseexam.departId=t_depart.departId
+and t_major.majorId=t_releaseexam.majorId and t_course.courseId=t_releaseexam.courseId and t_paper.paperId=t_releaseexam.paperId and t_examstate.examStateId=t_releaseexam.examStateId and teacher.teacherid=t_releaseexam.authorId and  t_releaseexam.releaseExamId=#{releaseExamId}
     </select>
     <update id="updateReleaseExam" parameterType="com.onlineExam.domain.ReleaseExam">
         update t_releaseExam
@@ -50,14 +50,13 @@ and t_major.majorId=t_releaseexam.majorId and t_course.courseId=t_releaseexam.co
         </set>
         where releaseExamId=#{releaseExamId}
     </update>
-    <select id="getReleaseInfoByStateId" resultType="com.onlineExam.domain.ReleaseExam">
+    <select id="getTeacherReleaseInfoByStateId" resultType="com.onlineExam.domain.ReleaseExam">
                 SELECT t_releaseexam.releaseExamId,t_depart.departId,t_depart.departName,t_major.majorId,t_major.majorName,t_course.courseId,t_course.courseName,t_paper.paperId,t_paper.paperName,t_examstate.examStateName,t_releaseexam.beginTime
                from t_releaseexam,t_major,t_depart,t_course,t_paper,t_examstate where t_releaseexam.departId=t_depart.departId
                and t_major.majorId=t_releaseexam.majorId and t_course.courseId=t_releaseexam.courseId and t_paper.paperId=t_releaseexam.paperId and t_examstate.examStateId=t_releaseexam.examStateId
             <if test="examStateId !=0 and examStateId != null">
                and t_releaseexam.examStateId=#{examStateId}
             </if>
-
     </select>
     <select id="getJoinReleseClassCount" resultType="int">
         SELECT COUNT(*) from t_exam where t_exam.stuClazz=#{stuClazz} and  t_exam.releaseExamId=#{releaseExamId};
@@ -67,5 +66,22 @@ and t_major.majorId=t_releaseexam.majorId and t_course.courseId=t_releaseexam.co
     </select>
     <select id="getAvg" resultType="int">
         SELECT AVG(examScore) FROM t_exam WHERE t_exam.stuClazz=#{stuClazz} and t_exam.releaseExamId=#{releaseExamId}
+    </select>
+    <select id="getReleaseInfoByStateId" resultType="com.onlineExam.domain.ReleaseExam">
+        SELECT t_releaseexam.releaseExamId,t_depart.departId,t_depart.departName,t_major.majorId,t_major.majorName,t_course.courseId,t_course.courseName,t_paper.paperId,t_paper.paperName,t_examstate.examStateName,t_releaseexam.beginTime
+        from t_releaseexam,t_major,t_depart,t_course,t_paper,t_examstate where t_releaseexam.departId=t_depart.departId
+        and t_major.majorId=t_releaseexam.majorId and t_course.courseId=t_releaseexam.courseId and t_paper.paperId=t_releaseexam.paperId and t_examstate.examStateId=t_releaseexam.examStateId
+        <if test="examStateId !=0 and examStateId != null">
+            and t_releaseexam.examStateId=#{examStateId}
+        </if>
+
+    </select>
+    <select id="getAllReleaseInfoByTeacherId" resultType="com.onlineExam.domain.ReleaseExam">
+        SELECT t_releaseexam.releaseExamId,t_depart.departId,t_depart.departName,t_major.majorId,t_major.majorName,t_course.courseId,t_course.courseName,t_paper.paperId,t_paper.paperName,t_examstate.examStateName,t_releaseexam.beginTime
+from t_releaseexam,t_major,t_depart,t_course,t_paper,t_examstate where t_releaseexam.departId=t_depart.departId
+and t_major.majorId=t_releaseexam.majorId and t_course.courseId=t_releaseexam.courseId and t_paper.paperId=t_releaseexam.paperId and t_examstate.examStateId=t_releaseexam.examStateId and authorId=#{authorId}
+    </select>
+    <select id="getAllTeacher" resultType="com.onlineExam.domain.Teacher">
+        SELECT teacher.teacherid,teacher.teachername from teacher
     </select>
 </mapper>

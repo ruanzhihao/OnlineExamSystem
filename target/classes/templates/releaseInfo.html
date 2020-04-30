@@ -55,16 +55,15 @@
                 , cellMinWidth: 80
                 , cols: [[
                     {type: 'checkbox', fixed: 'left'}
-                    , {field: 'releaseExamId', width: '10%', title: '考务编号', sort: true}
-                    , {field: 'paperName', width: '12%', title: '试卷名称'}
-                    , {field: 'departName', width: '12%', title: '部门名称'}
-                    , {field: 'majorName', width: '12%', title: '专业名称'}
-                    , {field: 'courseName', width: '10%', title: '课程名称'}
-/*
-                    , {field: 'authorId', title: '发布人', width: '8%'}
-*/
-                    , {field: 'examStateName', title: '状态', width: '10%'}
-                    , {field: 'beginTime', title: '开始时间', width: '19%'}
+                    ,{align:'center', title: '编号', sort: true,type:'numbers',width:100}
+                    , {field: 'releaseExamId', width: '10%', title: '考务编号', sort: true,hide:true}
+                    , {field: 'paperName', width:100, title: '试卷名称'}
+                    , {field: 'departName', width:245, title: '部门名称'}
+                    , {field: 'majorName', width:150, title: '专业名称'}
+                    , {field: 'courseName', width:100, title: '课程名称'}
+                    , {field: 'examStateName', title: '状态', width:100}
+                    , {field: 'beginTime', title: '开始时间', width:200}
+                    , {field: 'authorName', title: '发布人', width:100}
 
                     /* ,{field:'courseName', title: '所属课程' , width:'9%'}*/
 
@@ -105,7 +104,7 @@
                 type: 2,
                 title: '添加试卷信息',
                 area: ['850px', '550px'],
-                content: "/getReleaseForm"
+                content: "/getAdminReleaseForm"
             });
         })
         $("#fresh").click(function () {

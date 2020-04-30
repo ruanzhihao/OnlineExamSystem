@@ -67,7 +67,8 @@
             ,cellMinWidth: 80
             ,cols: [[
                 {type:'checkbox', fixed: 'left'}
-                ,{field:'paperId', width:'5%', title: '试卷ID', sort: true}
+                ,{align:'center', title: '编号', sort: true,type:'numbers',width:50}
+                ,{field:'paperId', width:'5%', title: '试卷ID', sort: true,hide:true}
                 ,{field:'paperName', width:'10%', title: '试卷名称'}
                 ,{field:'questionNumber', width:'9%', title: '题量'}
                 ,{field:'answerTime', width:'10%', title: '答题时间'}
@@ -77,7 +78,7 @@
 
                /* ,{field:'courseName', title: '所属课程' , width:'9%'}*/
 
-                ,{fixed: 'right', title: '操作', align:'center', toolbar: '#barDemo', width:'34%'}
+                ,{fixed: 'right', title: '操作', align:'center', toolbar: '#barDemo', width:'38%'}
             ]]
             ,page:true
             ,limit: 7
@@ -139,7 +140,8 @@
                                     , width: '100%'
                                     ,cols: [[
                                         {type:'checkbox', fixed: 'left'}
-                                        ,{field:'questionId',  title: '题目ID', sort: true}
+                                     ,{align:'center', title: '编号', sort: true,type:'numbers',width:50}
+                                     ,{field:'questionId',  title: '题目ID', sort: true,hide:true}
                                         ,{field:'questionName',  title: '题目'}
                                         ,{field:'optionA',  title: '选项A'}
                                         ,{field:'optionB', title: '选项B'}
@@ -288,7 +290,8 @@
                                 , width: '100%'
                                 ,cols: [[
                                     {type:'checkbox', fixed: 'left'}
-                                    ,{field:'realPaperId',  title: 'ID', sort: true}
+                                   ,{align:'center', title: '编号', sort: true,type:'numbers',width:50}
+                                   ,{field:'realPaperId',  title: 'ID', sort: true,hide:true}
                                     ,{field:'questionName',  title: '题目'}
                                     ,{field:'optionA',  title: '选项A'}
                                     ,{field:'optionB', title: '选项B'}

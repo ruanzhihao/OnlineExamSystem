@@ -3,9 +3,9 @@
 <head th:replace="head::copy">
 </head>
 <body class="layui-layout-body">
-    <div class="layui-container">
-        <div style="width: auto;height: 80px;"></div>
-        <div style="text-align: center;">
+<div class="layui-container">
+    <div style="width: auto;height: 80px;"></div>
+    <div style="text-align: center;">
         <form class="layui-form" onclick="return false;" >
 
             <div class="layui-form-item">
@@ -57,7 +57,16 @@
                     </div>
                 </div>
             </div>
-            <input type="hidden" th:value="${session.teacherid}" name="authorId">
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">负责老师</label>
+                    <div class="layui-input-block" style="width:300px;">
+                        <select name="authorId" lay-filter="authorId">
+                            <option th:each="teacher:${teachers}" th:text="${teacher.teachername}" th:value="${teacher.teacherid}"></option>
+                        </select>
+                    </div>
+                </div>
+            </div>
             <div class="layui-form-item">
                 <div class="layui-input-block">
                     <button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
@@ -65,8 +74,8 @@
                 </div>
             </div>
         </form>
-        </div>
     </div>
+</div>
 <script type="text/javascript" data-th-inline="javascript">
     layui.use(['form','laydate'], function(){
         var  form = layui.form ;
@@ -86,7 +95,7 @@
                     icon: 1,
                     time: 2000 //2秒关闭（如果不配置，默认是3秒）
                 }, function(){
-                    window.location.href="/TeacherreleaseInfoCenter";
+                    window.location.href="/releaseInfoCenter";
                     var index = parent.layer.getFrameIndex(window.name);
                     parent.layer.close(index);
                     parent.layui.table.reload('test');

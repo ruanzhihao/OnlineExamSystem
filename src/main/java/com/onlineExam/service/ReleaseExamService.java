@@ -1,9 +1,6 @@
 package com.onlineExam.service;
 
-import com.onlineExam.domain.Depart;
-import com.onlineExam.domain.ExamState;
-import com.onlineExam.domain.Paper;
-import com.onlineExam.domain.ReleaseExam;
+import com.onlineExam.domain.*;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -22,4 +19,6 @@ public interface ReleaseExamService {
     int getJoinReleseClassCount(String stuClazz,Integer releaseExamId);
     List<String> getJoinReleseClass(Integer releaseExamId);
     int getAvg(String stuClazz,Integer releaseExamId);
+    List<ReleaseExam> getAllReleaseInfoByTeacherId(@Param("authorId") Integer authorId);
+    List<Teacher> getAllTeacher();
 }

@@ -57,7 +57,7 @@
                     </div>
                 </div>
             </div>
-            <input type="hidden" th:value="${1}" name="authorId">
+            <input type="hidden" th:value="${session.teacherid}" name="authorId">
             <div class="layui-form-item">
                 <div class="layui-input-block">
                     <button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
@@ -86,7 +86,7 @@
                     icon: 1,
                     time: 2000 //2秒关闭（如果不配置，默认是3秒）
                 }, function(){
-                    window.location.href="/releaseInfoCenter";
+                    window.location.href="/TeacherreleaseInfoCenter";
                     var index = parent.layer.getFrameIndex(window.name);
                     parent.layer.close(index);
                     parent.layui.table.reload('test');

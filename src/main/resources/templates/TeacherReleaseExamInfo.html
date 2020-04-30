@@ -10,9 +10,7 @@
                 <div class="layui-card">
                     <div class="layui-card-header">
                         <form class="layui-form" onclick="return false;" id="search_form">
-<!--
                             <button class="layui-btn layui-btn-normal" id="add_release">发布考务</button>
--->
                             <div class="layui-form-item" style="float: left;">
                                 <div class="layui-inline">
                                     <div class="layui-input-inline">
@@ -43,11 +41,8 @@
 </div>
 <script th:replace="script::copy"></script>
 <script type="text/html" id="barDemo">
-    <a  class="layui-btn layui-btn-xs" lay-event="edit">成绩分析</a>
+    <a  class="layui-btn layui-btn-xs" lay-event="edit">修改</a>
     <a  class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
-</script>
-<script type="text/html" id="barDemo1">
-    <a  class="layui-btn layui-btn-danger layui-btn-xs" lay-event="details">查看详情</a>
 </script>
 <script type="text/javascript" th:inline="javascript">
     layui.use('table', function() {
@@ -56,19 +51,20 @@
         load = table.render({
             elem: '#test'
             , id: 'test'
-            , url: '/releaseInfo1'
+            , url: '/TeacherreleaseInfo'
             , cellMinWidth: 80
             , cols: [[
                 {type: 'checkbox', fixed: 'left'}
                 ,{align:'center', title: '编号', sort: true,type:'numbers',width:100}
                 , {field: 'releaseExamId', width: '10%', title: '考务编号', sort: true,hide:true}
-                , {field: 'paperName', width: 150, title: '试卷名称'}
-                , {field: 'departName', width: 250, title: '部门名称'}
+                , {field: 'paperName', width: '12%', title: '试卷名称'}
+                , {field: 'departName', width: '12%', title: '部门名称'}
                 , {field: 'majorName', width: '12%', title: '专业名称'}
-                , {width: '10%', title: '参与情况',toolbar:'#barDemo1'}
+                , {field: 'courseName', width: '10%', title: '课程名称'}
                 /*
                                     , {field: 'authorId', title: '发布人', width: '8%'}
                 */
+                , {field: 'examStateName', title: '状态', width: '10%'}
                 , {field: 'beginTime', title: '开始时间', width: '19%'}
 
                 /* ,{field:'courseName', title: '所属课程' , width:'9%'}*/
@@ -96,19 +92,13 @@
                     layer.close(index);
                 });
             } else if(obj.event === 'edit'){
+                // layer.alert('编辑行：<br>'+ JSON.stringify(data))
                 layer.open({
                     type: 2,
-                    title: '成绩分析',
+                    title: '编辑考务',
                     area: ['850px', '550px'],
-                    content: "getScoreAnalyse?releaseExamId="+data.releaseExamId
+                    content: "getEditReleaseInfo?releaseExamId="+data.releaseExamId
                 });
-            }else if(obj.event=='details') {
-                     layer.open({
-                         type:2,
-                         title:'参与情况',
-                         area: ['850px', '550px'],
-                         content: "joinClass?releaseExamId="+data.releaseExamId
-                     })
             }
         });
         $("#add_release").click(function () {
@@ -140,6 +130,9 @@
         })
     });
 </script>
-
+<script th:inline="javascript">
+    var url="/releaseInfoCenter";
+    setTimeout('location.href=url',30000);
+</script>
 </body>
 </html>

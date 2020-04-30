@@ -1,11 +1,14 @@
 package com.onlineExam.controller;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.google.code.kaptcha.impl.DefaultKaptcha;
 import com.onlineExam.domain.*;
 import com.onlineExam.mapper.MessageMapper;
 import com.onlineExam.mapper.TeacherMapper;
 import com.onlineExam.modules.common.controller.MainController;
 import com.onlineExam.modules.util.SendMail;
+import com.onlineExam.service.ReleaseExamService;
 import com.onlineExam.service.StuUserService;
 import com.onlineExam.service.TeacherService;
 import org.apache.shiro.crypto.hash.Md5Hash;
@@ -41,7 +44,8 @@ public class TeacherController {
     private StuUserService stuUserService;
     @Autowired
     private MessageMapper messageMapper;
-
+   @Autowired
+   private ReleaseExamService releaseExamService;
 
     //登录
     @RequestMapping(value="/TeaLogin",method = {RequestMethod.POST,RequestMethod.GET})
@@ -114,6 +118,7 @@ public class TeacherController {
         }
         return null;
     }
+
     //找回密码
     @RequestMapping("/retrieveTeaPwd")
     public String toGetCode(){
@@ -297,5 +302,21 @@ public class TeacherController {
         model.addAttribute("stuAnswerList",stuAnswerList);
         return "QuestionBypersion";
     }
-
+    @RequestMapping("TeacherreleaseInfoCenter")
+    public String releaseInfo(Model model){
+        List<ExamState> states=releaseExamService.getAllState();
+        model.addAttribute("states",states);
+        return "TeacherReleaseExamInfo";
+    }
+    @RequestMapping("TeacherreleaseInfo")
+    @ResponseBody
+    public Page releaseInfo(@RequestParam(value = "page",defaultValue = "1") Integer page,HttpSession session){
+        int limit=10;
+        Integer teacherid=(Integer)session.getAttribute("teacherid");
+        List<ReleaseExam> releaseExams=releaseExamService.getAllReleaseInfoByTeacherId(teacherid);
+        PageHelper.startPage(page,limit);
+        PageInfo pageInfo=new PageInfo(releaseExams,limit);
+        Page pages = Page.success(pageInfo.getTotal(), pageInfo.getList());
+        return pages;
+    }
 }
