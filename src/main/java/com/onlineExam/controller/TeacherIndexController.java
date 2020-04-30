@@ -40,7 +40,7 @@ public class TeacherIndexController {
 
         List<Major> majorList=ques.getMajor();
         model.addAttribute("majorList",majorList);
-        return "QuestionInfo";
+        return "teacher/release/question/QuestionInfo";
 
     }
     @RequestMapping(value = "/queryQuestionByCourseId",method = RequestMethod.POST)
@@ -65,7 +65,7 @@ public class TeacherIndexController {
         List<Major> majorList=ques.getMajor();
         model.addAttribute("majorList",majorList);
 
-        return "QuestionInfo";
+        return "teacher/release/question/QuestionInfo";
 
     }
 
@@ -82,7 +82,7 @@ public class TeacherIndexController {
     public String showInfo(Model model,@RequestParam("stuId") int stuId){
     List<Student> list=teacherIndexService.queryStuInfo(stuId);
     model.addAttribute("list",list);
-        return "QuestionInfo";
+        return "teacher/release/question/QuestionInfo";
     }
 
     //测试

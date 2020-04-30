@@ -24,13 +24,13 @@ public class FaceController {
     @RequestMapping(value = "/addFace")
     public String addFace(@RequestParam("stuid") int stuid, Model model){
         model.addAttribute("stuid",stuid);
-        return "addFace";
+        return "student/faceLogin/addFace";
     }
 
 
     @RequestMapping(value = "/faceByLogin")
     public String addFace(){
-        return "faceLogin";
+        return "student/faceLogin/faceLogin";
     }
 
     @RequestMapping("/registe")

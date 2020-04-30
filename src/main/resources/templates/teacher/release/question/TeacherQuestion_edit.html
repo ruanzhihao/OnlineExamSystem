@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>试题修改</title>
-    <link rel="stylesheet" th:href="@{/layui/css/layui.css}" media="all" />
-    <script th:src="@{/layui/layui.js}"></script>
-    <script th:src="@{/Skz/jquery-3.4.1.js}"></script>
+    <link rel="stylesheet" th:href="@{/static/layui/css/layui.css}" media="all" />
+    <script th:src="@{/static/layui/layui.js}"></script>
+    <script th:src="@{/static/Skz/jquery-3.4.1.js}"></script>
 </head>
 <body>
 
@@ -123,7 +123,7 @@
                             var questionClass=$('#newquestionClass').val();
                             var questionScore=$('#newquestionScore').val();
                             $.ajax({
-                                url:'/updateQuestion',
+                                url:'/TeacherupdateQuestion',
                                 type:"get",
                                 contentType: "application/json;charset=UTF-8",
                                 data:{
@@ -145,7 +145,7 @@
                                     layer.msg('修改成功', {icon:1,
                                         time: 2000 //2秒关闭（如果不配置，默认是3秒）
                                     }, function () {
-                                       /* window.location.href="/testManage";*/
+                                        /* window.location.href="/testManage";*/
                                         window.parent.location.reload();
                                     });
                                 }
@@ -164,26 +164,6 @@
     layui.use(['form','layer'], function(){
         var form = layui.form;
 
- /*       form.on('submit(updateForm)',function(data){
-            var param=data.field;
-            $.ajax({
-                url:'updateTeacher',
-                type:"post",
-                data:JSON.stringify(param),
-                contentType:"application/json;charset=utf-8",
-                success:function () {
-                    setTimeout(function () {
-                        layer.msg('修改成功',{icon:1,time:3000});
-                        window.location.href='/teenager';},2000);
-                },
-                error:function(){
-                    console.log($("#teacherid").val());
-                    layer.msg('修改失败',{icon:1,time:3000});
-                    setTimeout(function () {
-                        window.location.href='/teenager';},2000);
-                }
-            })
-        })*/
 
     });
 

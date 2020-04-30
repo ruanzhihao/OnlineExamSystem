@@ -31,7 +31,7 @@ public class QuestionController {
     private TeacherIndexService teacherIndexService;
     @RequestMapping("/Manager")
     public String Login(){
-        return "ManagerIndex";
+        return "admin/index/ManagerIndex";
     }
 
     //进入试题管理页面
@@ -43,7 +43,7 @@ public class QuestionController {
         model.addAttribute("courseList",courseList);
         List<Major> majorList=ques.getMajor();
         model.addAttribute("majorList",majorList);
-        return "QuestionManagement";
+        return "admin/question/QuestionManagement";
     }
 
     //试题增加
@@ -87,7 +87,7 @@ public class QuestionController {
     public String queryShow(@RequestParam("questionName") String questionName,Model model){
         List<Question> list=ques.queryQuestion(questionName);
         model.addAttribute("list",list);
-        return "QuestionManagement";
+        return "admin/question/QuestionManagement";
     }
 
     //试题修改页面弹出
@@ -99,7 +99,7 @@ public class QuestionController {
         model.addAttribute("courseList",courseList);
         List<Major> majorList=ques.getMajor();
         model.addAttribute("majorList",majorList);
-        return "Question_edit";
+        return "admin/question/Question_edit";
     }
 
     //试题修改实现
@@ -122,7 +122,7 @@ public class QuestionController {
         model.addAttribute("courseList",courseList);
         List<Major> majorList=ques.getMajor();
         model.addAttribute("majorList",majorList);
-        return "TeacherQuestion_edit";
+        return "teacher/release/question/TeacherQuestion_edit";
     }
 
     //试题修改实现

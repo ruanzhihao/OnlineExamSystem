@@ -46,7 +46,7 @@ public class StudentFunctionController {
     @RequestMapping(value = "/student",method = RequestMethod.GET)
     public String goIndex(){
 
-        return "StudentIndex";
+        return "student/index/StudentIndex";
     }
     //进入修改个人资料界面
     @RequestMapping(value = "/personal",method = RequestMethod.GET)
@@ -372,7 +372,7 @@ public  String goExam(Model model,HttpSession session){
     public String goHistory(Model model,@RequestParam("stuId") int stuId){
         List<Exam> list=examService.findExamScoreById(stuId);
         model.addAttribute("list",list);
-        return "ExamHistory";
+        return "student/history/ExamHistory";
     }
 
  /*   //判分成功跳转学生主页
@@ -404,7 +404,7 @@ public  String goExam(Model model,HttpSession session){
  //判分成功跳转学生主页
  @RequestMapping(value = "/goStudent")
  public String goStudent(){
-     return "StudentIndex";
+     return "student/index/StudentIndex";
  }
 @RequestMapping(value = "/Success")
     public String success(){
@@ -432,7 +432,7 @@ public  String goExam(Model model,HttpSession session){
         //获取多选题目详情
         List<StuAnswer> list2=studentFunctionService.getCheckHistory(paperId, stuId);
         model.addAttribute("CheckHistory",list2);
-        return "historyImpl";
+        return "student/history/historyImpl";
     }
 
 }

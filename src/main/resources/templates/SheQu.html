@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head><meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>
+    安徽信息工程学院
+</title>
+    <script src="/Scripts/config.js?version=20200401"></script>
+    <link id="cssID1" rel="stylesheet" /><link id="cssID2" rel="stylesheet" /><link id="cssID3" rel="stylesheet" /><link id="cssID4" rel="stylesheet" /><link id="cssID5" rel="stylesheet" />
+    <script>
+        var url = sessionStorage.getItem("StaticUrl");
+        if (url == "" || url == null) {
+            document.getElementById("cssID1").href = "../../Styles/css/bootstrap.min.css";
+            document.getElementById("cssID2").href = "../../Styles/css/common.css?version=20200401";
+            document.getElementById("cssID3").href = "../../Styles/css/report.css?version=20200401";
+            document.getElementById("cssID4").href = "../../Styles/css/help.css?version=20200401";
+            document.getElementById("cssID5").href = "../../Content/artDialog/skins/green.css";
+        }
+        else {
+            document.getElementById("cssID1").href = "http://" + url + "/Styles/css/bootstrap.min.css";
+            document.getElementById("cssID2").href = "http://" + url + "/Styles/css/common.css?version=20200401";
+            document.getElementById("cssID3").href = "http://" + url + "/Styles/css/report.css?version=20200401";
+            document.getElementById("cssID4").href = "http://" + url + "/Styles/css/help.css?version=20200401";
+            document.getElementById("cssID5").href = "http://" + url + "/Content/artDialog/skins/green.css";
+        }
+    </script>
+    <link href="/Scripts/layer/skin/layer.css" rel="stylesheet" />
+    <link href="/Styles/css/main.css?version=20200103" rel="stylesheet" />
+    <script src="/Scripts/common/jquery.min.js"></script>
+    <script src="/Scripts/jquery.signalR-2.2.1.min.js"></script>
+    <script src="/Scripts/hubs.js?version=20200103"></script>
+    <script src="/Scripts/common/jquery.cookie.min.js"></script>
+    <script src="/Scripts/layer/layer.js"></script>
+    <link href="/Content/layui/css/layui.css" rel="stylesheet" />
+    <script src="/Content/layui/layui.js"></script>
+    <script src="/Scripts/common/remind.js?version=20200103"></script>
+    <script src="/Scripts/common/chart.js?version=20200103"></script>
+    <script src="/Scripts/common/accesslog.js?version=20200103"></script>
+    <link href="/Styles/common/jquery-confirm.min.css" rel="stylesheet" />
+    <script src="/Scripts/common/jquery-confirm.min.js"></script>
+    <script src="/Scripts/common/header.js"></script>
+    <link href="/Styles/CssNew/header.css" rel="stylesheet" />
+
+    <div class="rightbtn-plane" oncontextmenu="return false">
+        <input type="hidden" id="objID" />
+        <input type="hidden" id="objType" />
+        <ul class="rightul">
+            <li id="delfriend">删除好友
+            </li>
+            <li id="delgroup">退出该组
+            </li>
+        </ul>
+    </div>
+    <div id="miaov_float_layer">
+        <div class="float_layer">
+            <div class="float_layer_title">
+                <span class="wrap_title"></span>
+                <a class="box_close">
+                    <img src="/Styles/image/cha.png" /></a>
+            </div>
+            <div class="wrap">
+
+            </div>
+
+        </div>
+    </div>
+    <div class="loaddiv" id="loaddiv">
+        <img src="/Styles/image/loading.gif" />
+    </div>
+
+    <script>
+        $(".notice-warp").css("left", (window.innerWidth - 742) / 2);
+        window.onresize = function () {
+            $(".notice-warp").css("left", (window.innerWidth - 742) / 2);
+        }
+        //显示
+        if (!checkBrowser() && localStorage.getItem('checkBrower') == null) {
+            $("#divNotice").show()
+        }
+        //关闭
+        $("#btnClose").click(function () {
+            this.isShow = false
+            localStorage.setItem('checkBrower', 1)
+            $("#divNotice").hide()
+        });
+    </script>
+
+
+
+
+    <script src="/Scripts/common/bootstrap.min.js"></script>
+    <script src="/Content/artDialog/artDialog.js"></script>
+    <script src="/Content/artDialog/plugins/iframeTools.js"></script>
+    <script src="/Scripts/common/iframe.js"></script>
+    <script src="/Scripts/common/template.js"></script>
+    <script src="/Scripts/common/bootstrap-progressbar.min.js"></script>
+
+</head>
+<body>
+<div class="body">
+    <!-- 头部 -->
+    <div class="header">
+        <div class='vue-header stu-header'>
+            <div class='stu-header-content'>
+                <ul  class='vue-menu menu'>
+                    <li class='vue-menu-item vue-logo'>
+                        <a href='/web/student' class='router-link-active'>
+                            <img src='/Styles/vue/logo.png' /></a></li>
+                    <li id='heard_index'><a href='/web/student'>首页</a></li>
+                    <li id='heard_recourse'><a href='/web/student/learn-center/online-class'>学习中心</a></li>
+                    <li id='heard_live'><a href='/Pages/Live/Index.aspx'>直播</a></li>
+                    <li id='heard_exam'><a href='/Pages/Exams/Index.aspx'>评测</a></li>
+                    <li id='heard_talk'><a href='/Pages/Ask/Index.aspx'>社区</a></li>
+                    <li id='heard_shop'><a href='/Pages/Shop/Index.aspx'>商城</a></li>
+                </ul>
+                <ul class='vue-right-menu'>
+                    <li><a href='/Pages/Student/PersonalCenter.aspx' class='vue-msg'>
+                        <span class='vue-tip' id='msgCount'></span>
+                        <img src='/Styles/vue/msg_header.png' /></a></li>
+                    <li onmouseover='popverMouseover(this)' onmouseout='popverMouseout(this)'><a href='JavaScript:void(0)' class='vue-photo'>
+                        <img src='http://iflyssedata.oss-cn-shanghai.aliyuncs.com/images/341222199907126533_20180809041527.png'/><span class='glyphicon glyphicon-menu-down'></span></a>
+                        <div class='vue-popver'>
+                            <ul class='vue-popver-menu'>
+                                <li class=' myelmenu'><a href='/Pages/Student/PersonalCenter.aspx'>个人中心</a></li>
+                                <li  class='myelmenu exittop'><a href='javascript:void(0)' onclick='Exit();'>退出</a></li></ul>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+    <div class="clearfix"></div>
+    <div class="report_content">
+        <div class="left_nav">
+            <div class="photo_area " id="userInfo">
+            </div>
+            <ul>
+                <li class="accesslog active" onclick="askcommon.nav.changeType(0,this)" data-clickcode='5100'>
+                    <img src="../../Styles/image/house3.png" title="首页" />首页
+                </li>
+                <li class="accesslog" onclick="askcommon.nav.changeType(1,this)" id="myA" data-clickcode='5200'>
+                    <img src="../../Styles/image/tee1.png" title="我发起的话题" />发起的话题
+                </li>
+                <li class="accesslog " onclick="askcommon.nav.changeType(2,this)" id="myAA" data-clickcode='5300'>
+                    <img src="../../Styles/image/tee.png" title="我参与的话题" />参与的话题
+                </li>
+                <li class="accesslog" onclick="askcommon.nav.changeType(3,this)" id="myClass" data-clickcode='5400'>
+                    <img src="../../Styles/image/myclass.png" title="我班级的话题" />班级的话题
+                </li>
+                <li class="accesslog act-nav" onclick="askcommon.nav.changeType(4,this)" id="activity" data-clickcode='5103'>
+                    <img src="../../Styles/image/activity.png" title="限时活动" />限时活动
+                </li>
+            </ul>
+        </div>
+        <div class="right_area">
+            <div class="area">
+                <iframe src="OverIndex.aspx" marginheight="0" marginwidth="0" frameborder="0" scrolling="no" height="100%" id="iframepage" name="iframepage"></iframe>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../../Scripts/common/common.js?version=20200401"></script>
+<script src="../../Scripts/Ask/Index.js?version=20200401"></script>
+<script id="userInfo_content" type="text/x-jquery-tmpl" charset="utf-8">
+        <img src="{{Msg}}" class="photo">
+        <p class="stu-name">{{Info1}}<span class="explevel" title="等级：{{Data.ExpLevel}}">Lv<span>.{{Data.ExpLevel}}</span></span></p>
+        <div id="jifen">
+            <p>积分：<span>{{Data.IntegrationCount}}</span></p>
+            <p class="">打赏率：<span>{{Info}}%</span></p>
+        </div>
+        <div class="level_op">
+            <div>
+                经验值：
+                 <div class="progress  exp_progress">
+                     <div class="exp_value"><span>{{Data.ExperienceCount}}</span>/{{Data.NextExp}}</div>
+                     <div class="progress-bar  " role="progressbar"></div>
+                 </div>
+            </div>
+            <div class="level_img">
+                {{each Data.L_4 as value i}}
+                <img src="../../Styles/image/level/L_4.png" title="钻石"/>
+                   {{/each}}
+                    {{each Data.L_3 as value i}}
+                <img src="../../Styles/image/level/L_3.png" title="金牌"/>
+                   {{/each}}
+                    {{each Data.L_2 as value i}}
+                <img src="../../Styles/image/level/L_2.png" title="银牌"/>
+                   {{/each}}
+                    {{each Data.L_1 as value i}}
+                <img src="../../Styles/image/level/L_1.png" title="铜牌"/>
+                   {{/each}}
+            </div>
+
+        </div>
+    </script>
+</body>
+</html>
+
