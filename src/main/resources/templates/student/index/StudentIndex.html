@@ -172,15 +172,14 @@
                     </dl>
                 </li>
                 <!-- 内容管理 -->
-<!--
+
                 <li class="layui-nav-item">
-                    <a href="javascript:;" data-url="table.html">
+                    <a href="./scoreAna" id="analyse">
                         <i class="iconfont icon-wenzhang1" ></i>
-                        <span>考试档案</span>
-                        <em class="layui-nav-more"></em>
+                        <span>成绩分析</span>
                     </a>
                 </li>
--->
+
             </ul>
         </div>
     </div>
@@ -322,7 +321,10 @@
             e.preventDefault();
             $("#iframeMain").attr("src",$(this).attr("href"));
         });
-
+        $("#analyse").click(function (e) {
+            e.preventDefault();
+            $("#iframeMain").attr("src",$(this).attr("href"));
+        });
 
 
     });

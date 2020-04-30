@@ -1,5 +1,6 @@
 package com.onlineExam.service.Impl;
 
+import com.onlineExam.domain.CountVo;
 import com.onlineExam.domain.Exam;
 import com.onlineExam.domain.Paper;
 import com.onlineExam.domain.Student;
@@ -36,5 +37,10 @@ public class ExamServiceImpl implements ExamService {
     @Override
     public List<Exam> findExamScoreById(int stuId) {
         return examMapper.findExamScoreById(stuId);
+    }
+
+    @Override
+    public List<CountVo> getResource() {
+        return examMapper.getResource();
     }
 }

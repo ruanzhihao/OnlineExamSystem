@@ -5,6 +5,8 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.onlineExam.domain.*;
 import com.onlineExam.service.*;
+import org.apache.ibatis.annotations.Param;
+import org.apache.poi.ss.formula.functions.Count;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
@@ -435,4 +437,28 @@ public  String goExam(Model model,HttpSession session){
         return "student/history/historyImpl";
     }
 
+    //个人成绩分析
+@RequestMapping(value = "/scoreAna")
+    public String ana(){
+     return "student/ScoreAnaly/ScoreAnaly";
+}
+
+//Echart图
+@RequestMapping("getResource")
+@ResponseBody
+public List<CountModel> getResourceInfo(){
+    List<CountVo> countVo=examService.getResource();
+    System.out.println(countVo);
+    Integer questionNum=countVo.get(0).getQuestionNum();
+    Integer releaseNum=countVo.get(0).getReleaseNum();
+    Integer papNum=countVo.get(0).getPapNum();
+    CountModel countModel=new CountModel("不及格",questionNum);
+    CountModel countModel2=new CountModel("良好",papNum);
+    CountModel countModel3=new CountModel("优秀",releaseNum);
+    List<CountModel> countModels=new ArrayList<>();
+    countModels.add(countModel);
+    countModels.add(countModel2);
+    countModels.add(countModel3);
+    return  countModels;
+}
 }

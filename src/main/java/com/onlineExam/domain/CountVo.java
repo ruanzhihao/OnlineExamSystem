@@ -10,4 +10,5 @@ public class CountVo {
     Integer releaseNum;
     Integer teacherNum;
     Integer stuNum;
+    String examName;
 }

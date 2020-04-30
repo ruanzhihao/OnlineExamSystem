@@ -16,4 +16,15 @@
     <select id="findExamScoreById" parameterType="java.lang.Integer" resultType="com.onlineExam.domain.Exam">
 select * from t_exam where stuId=#{stuId} order by examTime desc
     </select>
+
+    <select id="getResource" resultType="com.onlineExam.domain.CountVo">
+
+        select a.questionNum,b.papNum,c.releaseNum
+             from(
+    (select COUNT(*) as questionNum from t_exam where examScore &lt; 6) a,
+    (select COUNT(*) as papNum from t_exam where examScore &gt; 6) b,
+    (SELECT count(*) as releaseNum from t_exam where examScore  &gt; 12) c
+)
+
+    </select>
 </mapper>
