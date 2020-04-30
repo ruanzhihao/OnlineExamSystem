@@ -306,7 +306,7 @@ public class TeacherController {
     public String releaseInfo(Model model){
         List<ExamState> states=releaseExamService.getAllState();
         model.addAttribute("states",states);
-        return "TeacherReleaseExamInfo";
+        return "teacher/release/TeacherReleaseExamInfo";
     }
     @RequestMapping("TeacherreleaseInfo")
     @ResponseBody

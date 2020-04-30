@@ -36,7 +36,7 @@ public class PaperController {
     public String getPaperCenter(Model model) {
         List<Major> majors = questionService.getAllMajor();
         model.addAttribute("majors", majors);
-        return "addPaper";
+        return "admin/paper/addPaper";
     }
 
     @RequestMapping(value = "addPapers", method = RequestMethod.POST)
@@ -58,7 +58,7 @@ public class PaperController {
         model.addAttribute("papers", papers);
         List<Major> majors = paperService.getAllMajor();
         model.addAttribute("major", majors);
-        return "paperList";
+        return "admin/paper/paperList";
     }
 
     @RequestMapping(value = "/groupPaper", method = RequestMethod.GET)
@@ -86,7 +86,7 @@ public class PaperController {
         model.addAttribute("majors", majors);
         model.addAttribute("paper", paper);
         model.addAttribute("easyClass", easyClass);
-        return "edit";
+        return "admin/paper/edit";
     }
 
     @RequestMapping(value = "/editPaper", method = RequestMethod.POST)
@@ -116,7 +116,7 @@ public class PaperController {
         model.addAttribute("majors", majors);
         model.addAttribute("paper", paper);
         model.addAttribute("easyClass", easyClass);
-        return "addQuesIntoPap";
+        return "admin/paper/addQuesIntoPap";
     }
 
     @GetMapping(value = "imp_addIntoPaper")

@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -137,7 +136,7 @@ public  String goExam(Model model,HttpSession session){
     }
     System.out.println("最终结合："+joinExamInfo);
     model.addAttribute("joinExamInfo",joinExamInfo);
-    return "joinExams";
+    return "student/exam/joinExams";
 }
     //进入参加考试界面  获取待考试 并显示
 
@@ -203,7 +202,7 @@ public  String goExam(Model model,HttpSession session){
         int answerTime=studentFunctionService.getAnswerTime(paperId);
         int examTime=answerTime*60;
         model.addAttribute("examTime",examTime);
-        return "exam";
+        return "student/exam/exam";
     }
     @RequestMapping(value = "getScore",produces="application/json; utf-8")
     @ResponseBody
@@ -286,7 +285,7 @@ public  String goExam(Model model,HttpSession session){
     @RequestMapping("successSubmit")
     public String getSuccessSubmit(@RequestParam("score") Integer score,Model model){
         model.addAttribute("score",score);
-        return "JiaoJuanSuccess";
+        return "student/exam/JiaoJuanSuccess";
     }
    /* //点击考试界面 进入考试 获取试卷试题 并显示-----后去换生成随机数获取题目
     @RequestMapping(value = "/Examing",method = RequestMethod.GET)
@@ -409,7 +408,7 @@ public  String goExam(Model model,HttpSession session){
  }
 @RequestMapping(value = "/Success")
     public String success(){
-        return "JiaoJuanSuccess";
+        return "student/exam/JiaoJuanSuccess";
 }
 
     //考试详情加载

@@ -40,7 +40,7 @@ public class ReleaseController {
     model.addAttribute("papers",papers);
     model.addAttribute("majors",majors);
    model.addAttribute("departs",departs);
-   return "releaseExam";
+   return "admin/release/releaseExam";
 }
     @RequestMapping("getAdminReleaseForm")
     public String getAdminReleaseForm(Model model){
@@ -54,7 +54,7 @@ public class ReleaseController {
         model.addAttribute("majors",majors);
         model.addAttribute("departs",departs);
         model.addAttribute("teachers",teachers);
-        return "adminReleaseExam";
+        return "admin/release/adminReleaseExam";
     }
    @RequestMapping("getReleaseInfo")
         public String getReleaseInfoForm(@RequestParam("departId")Integer departId , @RequestParam("majorId") Integer majorId,
@@ -77,13 +77,13 @@ public class ReleaseController {
     public String releaseInfo(Model model){
              List<ExamState> states=releaseExamService.getAllState();
              model.addAttribute("states",states);
-             return "releaseInfo";
+             return "admin/release/releaseInfo";
     }
     @RequestMapping("releaseInfoCenter1")
     public String releaseInfo1(Model model){
         List<ExamState> states=releaseExamService.getAllState();
         model.addAttribute("states",states);
-        return "examAnalyze";
+        return "admin/exam/examAnalyze";
     }
     @RequestMapping("releaseInfo")
     @ResponseBody
@@ -131,14 +131,14 @@ public class ReleaseController {
         model.addAttribute("majors",majors);
         model.addAttribute("departs",departs);
         model.addAttribute("releaseExam",releaseExam);
-         return "editReleaseForm";
+         return "admin/release/editReleaseForm";
     }
 
     @RequestMapping("joinClass")
     public String getJoinClass(@RequestParam("releaseExamId") Integer releaseExamId,Model model){
         model.addAttribute("releaseExamId",releaseExamId);
         System.out.println(releaseExamId);
-        return "joinClassDetails";
+        return "admin/release/joinClassDetails";
     }
     @RequestMapping("joinDetails")
     @ResponseBody
@@ -157,7 +157,7 @@ public class ReleaseController {
     public String getScoreAnalyse(@RequestParam("releaseExamId") Integer releaseExamId,Model model){
         model.addAttribute("releaseExamId",releaseExamId);
         System.out.println(releaseExamId);
-        return "ScoreAnalyseDetails";
+        return "admin/release/ScoreAnalyseDetails";
     }
     @RequestMapping("getScoreAnalyseDetails")
     @ResponseBody

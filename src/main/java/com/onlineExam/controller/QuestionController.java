@@ -145,7 +145,7 @@ public class QuestionController {
         List<Major>  majors=ques.getAllMajor();
         model.addAttribute("courses",courses);
         model.addAttribute("majors",majors);
-        return "importExcel";
+        return "admin/question/importExcel";
     }
 
 
@@ -223,7 +223,7 @@ public class QuestionController {
     }
     @RequestMapping("getEcharts")
     public String  getEcharts(){
-        return "QuestionTypeEchart";
+        return "admin/question/QuestionTypeEchart";
     }
     @RequestMapping("getAllQuestionType")
     @ResponseBody
@@ -264,7 +264,7 @@ public class QuestionController {
     }
     @RequestMapping("adminHomePage")
     public String adminHomePage(){
-        return "adminHomePage";
+        return "admin/adminHomePage";
     }
     @RequestMapping(value = "/questionShow",method = RequestMethod.GET)
     public String goQuestion1(Model model){
@@ -282,7 +282,7 @@ public class QuestionController {
         int checkBoxCount=ques.checkBoxQuestion();
         model.addAttribute("radioCount",radioCount);
         model.addAttribute("checkBoxCount",checkBoxCount);
-        return "QuestionShow";
+        return "admin/question/QuestionShow";
     }
     @RequestMapping(value = "/queryQuestion1",method = RequestMethod.GET)
     @ResponseBody
@@ -311,7 +311,7 @@ public class QuestionController {
         System.out.println("数量"+checkBoxCount);
         model.addAttribute("radioCount",radioCount);
         model.addAttribute("checkBoxCount",checkBoxCount);
-        return "QuestionShow";
+        return "admin/question/QuestionShow";
     }
 
 
