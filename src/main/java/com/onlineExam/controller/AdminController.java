@@ -53,7 +53,7 @@ public class AdminController {
             if(request.getParameter("rememberMe_admin")!=null){
                 addCookie(username,password,response,request);
             }
-            return "ManagerIndex";
+            return "admin/index/ManagerIndex";
 
         }else{
             return "index";
@@ -64,7 +64,7 @@ public class AdminController {
         Cookie nameCookie = new Cookie(username, password);
         nameCookie.setPath("/");//设置cookie路径
         //设置cookie保存的时间 单位：秒
-        nameCookie.setMaxAge(60*60*24);
+        nameCookie.setMaxAge(60*60*24*7);
         //将cookie添加到响应
         response.addCookie(nameCookie);
     }
@@ -107,7 +107,7 @@ public class AdminController {
         }else {
             model.addAttribute("msg","消息发布失败");
         }
-        return "addMessage";
+        return "admin/addMessage";
     }
 
 

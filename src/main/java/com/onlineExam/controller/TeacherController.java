@@ -98,7 +98,7 @@ public class TeacherController {
         Cookie nameCookie = new Cookie(username, password);
         nameCookie.setPath("/");//设置cookie路径
         //设置cookie保存的时间 单位：秒
-        nameCookie.setMaxAge(60*60*24);
+        nameCookie.setMaxAge(60*60*24*7);
         //将cookie添加到响应
         response.addCookie(nameCookie);
     }
@@ -122,7 +122,7 @@ public class TeacherController {
     //找回密码
     @RequestMapping("/retrieveTeaPwd")
     public String toGetCode(){
-        return "retrieveTeaPwd";
+        return "teacher/retrieveTeaPwd";
     }
 
     //找回密码控制器
@@ -172,23 +172,22 @@ public class TeacherController {
     //教师端个人信息页面
     @RequestMapping("/teaPersoninfo")
     public String teaPersoninfo(){
-        return "teaPersoninfo";
+        return "teacher/teaPersoninfo";
     }
     //教师端修改密码
     @RequestMapping("/changeTeaPwd")
     public String changeTeaPwd(){
-        return "changeTeapwd";
+        return "teacher/changeTeapwd";
     }
 
     //修改教师个人信息
     @RequestMapping(value = "/ChangeTeaInfo",method = RequestMethod.POST)
-    public String ChangeTeaInfo(HttpServletRequest request,HttpSession session,Model model,String teachername,Integer clazzId,
+    public String ChangeTeaInfo(HttpServletRequest request,HttpSession session,Model model,Integer clazzId,
                                 Integer majorId,Integer departId,String teacherphoneNumber,String teacheremail){
 
         String username=(String)request.getSession().getAttribute("username");
         Teacher teacher=teacherService.findTeaByUsername(username);
         teacher.setUsername(username);
-        teacher.setTeachername(teachername);
         teacher.setTeacherphoneNumber(teacherphoneNumber);
         teacher.setTeacheremail(teacheremail);
         teacher.setClazzId(clazzId);
@@ -200,7 +199,7 @@ public class TeacherController {
         }else {
             model.addAttribute("msg","修改失败");
         }
-        return "teaPersoninfo";
+        return "teacher/teaPersoninfo";
 
     }
     //修改教师密码
@@ -226,7 +225,7 @@ public class TeacherController {
         } else {
             model.addAttribute("msg", "原密码错误");
         }
-        return "changeTeapwd";
+        return "teacher/changeTeapwd";
     }
     //消息通知
     @RequestMapping("/teaMessage")
@@ -234,18 +233,18 @@ public class TeacherController {
         List<Message> messageList= messageMapper.findMessage();
 
         model.addAttribute("messageList",messageList);
-        return "teaMessage";
+        return "teacher/teaMessage";
     }
     @RequestMapping("/tearead")
     @Transactional
     public String updateTeaRead(Long id){
         int result= messageMapper.updateTeaRead(id);
-        return "teaMessage";
+        return "teacher/teaMessage";
     }
     @RequestMapping("/teaReadAll")
     public String teaReadAll(){
         int rs=messageMapper.teaReadAll();
-        return "teaMessage";
+        return "teacher/teaMessage";
     }
 
 

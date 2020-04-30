@@ -36,14 +36,12 @@ public class StuChangeController {
 
     //    //修改用户的信息
     @RequestMapping(value = "/ChangeStuInfo" ,method=RequestMethod.POST)
-    public String ChangeInformation(HttpServletRequest request, HttpSession session, Model model, Integer stuid,
-            String stuname, Integer clazz, String phone,Integer major,Integer dept ,String email) throws Exception {
+    public String ChangeInformation(HttpServletRequest request, HttpSession session, Model model,
+             Integer clazz, String phone,Integer major,Integer dept ,String email) throws Exception {
         String username=(String)request.getSession().getAttribute("username");
 
         Student stuInformation=new Student();
         stuInformation.setUsername(username);
-        stuInformation.setStuname(stuname);
-        stuInformation.setStuid(stuid);
         stuInformation.setClazzId(clazz);
         stuInformation.setStuphonenumber(phone);
         stuInformation.setMajorId(major);
@@ -59,7 +57,7 @@ public class StuChangeController {
             model.addAttribute("msg", "修改失败");
         }
         //return "student/changeInformation";
-        return "personInfo";
+        return "student/personInfo";
     }
 
     //修改密码，先加密认证原密码，再对加密新密码进行修改
@@ -88,7 +86,7 @@ public class StuChangeController {
         } else {
             model.addAttribute("msg", "原密码错误");
         }
-        return "changepwd";
+        return "student/changepwd";
     }
     //退出登录
     @RequestMapping(value = "/logout",method = {RequestMethod.POST,RequestMethod.GET})

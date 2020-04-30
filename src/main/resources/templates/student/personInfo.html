@@ -23,30 +23,30 @@
 		</header><!-- /header -->
 		<div class="larry-personal-body clearfix">
 			<form class="layui-form col-lg-5" action="/ChangeStuInfo" method="post">
-				<!--<div class="layui-form-item">
+				<div class="layui-form-item">
 					<label class="layui-form-label">用户名</label>
 					<div class="layui-input-block">  
-						<input type="text" name="title"  autocomplete="off"  class="layui-input layui-disabled" disabled   >
+						<input type="text" name="title"  autocomplete="off"  class="layui-input layui-disabled" disabled="disabled" th:value="${session.username}">
 					</div>
-				</div>-->
+				</div>
 				<!--<div class="layui-form-item">
 					<label class="layui-form-label">所属角色</label>
 					<div class="layui-input-block">
 						<input type="text" name="username"  autocomplete="off" class="layui-input layui-disabled" value="超级管理员" disabled="disabled">
 					</div>
 				</div>-->
-				<div class="layui-form-item">
+				<!--<div class="layui-form-item">
 					<label class="layui-form-label">学号</label>
 					<div class="layui-input-block">
 						<input type="text" name="stuid"   autocomplete="off" class="layui-input" th:value="${session.stuid}">
 					</div>
-				</div>
-				<div class="layui-form-item">
+				</div>-->
+				<!--<div class="layui-form-item">
 					<label class="layui-form-label">姓名</label>
 					<div class="layui-input-block">
 						<input type="text" name="stuname"  autocomplete="off" class="layui-input" th:value="${session.stuname}">
 					</div>
-				</div>
+				</div>-->
 				<!--<div class="layui-form-item">
 					<label class="layui-form-label">性别</label>
 					<div class="layui-input-block">

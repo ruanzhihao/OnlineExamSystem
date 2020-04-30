@@ -78,7 +78,7 @@ public class StuLoginController {
             if(request.getParameter("rememberMe_stu")!=null){
                 addCookie(username,password,response,request);
             }
-            return "StudentIndex";
+            return "student/index/StudentIndex";
         }else{
             return "index";
         }
@@ -88,7 +88,7 @@ public class StuLoginController {
         Cookie nameCookie = new Cookie(username, password);
         nameCookie.setPath("/");//设置cookie路径
         //设置cookie保存的时间 单位：秒
-        nameCookie.setMaxAge(60*60*24);
+        nameCookie.setMaxAge(60*60*24*7);
         //将cookie添加到响应
         response.addCookie(nameCookie);
     }
