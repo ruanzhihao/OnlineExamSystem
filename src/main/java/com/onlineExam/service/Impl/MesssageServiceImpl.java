@@ -14,6 +14,26 @@ public class MesssageServiceImpl implements MessageService {
     private MessageMapper messageMapper;
 
     @Override
+    public Message findMessageById(Long id) {
+        return messageMapper.findMessageById(id);
+    }
+
+    @Override
+    public int editMessage(Message message) {
+        return messageMapper.editMessage(message);
+    }
+
+    @Override
+    public boolean deleteMessage(Long id) {
+        int rs=messageMapper.deleteMessage(id);
+        if (rs==0){
+            return false;
+        }else {
+            return true;
+        }
+    }
+
+    @Override
     public boolean stuReadAll() {
         int rs=messageMapper.stuReadAll();
         if (rs==0){

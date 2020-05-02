@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>公告信息修改</title>
+    <script type="text/javascript" th:src="@{layui/lay/modules/laydate.js}"></script>
+    <link rel="stylesheet" type="text/css" th:href="@{layui/css/layui.css}" media="all">
+    <link rel="stylesheet" type="text/css" th:href="@{Wjl/common/bootstrap/css/bootstrap.css}" media="all">
+    <link rel="stylesheet" type="text/css" th:href="@{Wjl/common/global.css}" media="all">
+    <link rel="stylesheet" type="text/css" th:href="@{Wjl/css/personal.css}" media="all">
+    <link rel="stylesheet" th:href="@{layui/css/modules/laydate/default/laydate.css}"  type="text/css" />
+</head>
+<body>
+<section class="layui-larry-box">
+    <div class="larry-personal">
+        <header class="larry-personal-tit">
+            <span>公告信息</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <span style="color:red;font-size: 20px;" th:text="${msgs}"></span>
+        </header><!-- /header -->
+        <div class="larry-personal-body clearfix">
+            <form class="layui-form col-lg-5" action="/editMessage" method="post">
+                <input type="hidden" name="id"  autocomplete="off" class="layui-input" th:value="${session.onemessage.getId()}">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">标题</label>
+                    <div class="layui-input-block">
+                        <input type="text"  name="head"  autocomplete="off" class="layui-input" th:value="${session.onemessage.getHead()}">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">时间</label>
+                    <div class="layui-input-block">
+                        <input type="text" id="createtime"  name="createtime" placeholder="yyyy-MM-dd HH:mm:ss" class="layui-input" th:value="${session.onemessage.getCreatetime()}">
+                    </div>
+                </div>
+                <div class="layui-form-item layui-form-text">
+                    <label class="layui-form-label">消息内容</label>
+                    <div class="layui-input-block">
+                        <textarea  name="content"  class="layui-textarea" th:text="${session.onemessage.getContent()}"></textarea>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <button class="layui-btn"  lay-submit  lay-filter="demo1">确认修改</button>
+                        <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+<script type="text/javascript" th:src="@{Wjl/common/layui/layui.js}"></script>
+<script type="text/javascript">
+    layui.use(['form','upload'],function(){
+        var form = layui.form();
+        layui.upload({
+            url: '' ,//上传接口
+            success: function(res){
+                //上传成功后的回调
+                console.log(res)
+            }
+        });
+        laydate.render({
+            elem: '#createtime'    //指定元素
+            ,type: 'datetime'
+            ,trigger: 'click'
+        });
+    });
+</script>
+<!--<script type="text/javascript">
+    layui.use(["jquery", "upload", "form", "layer", "element"], function () {
+        var $ = layui.$,
+            element = layui.element,
+            layer = layui.layer,
+            upload = layui.upload,
+            form = layui.form;
+        //拖拽上传
+        var uploadInst = upload.render({
+            elem: '#headImg'
+            , url: '/upload/headImg'
+            , size: 500
+            , before: function (obj) {
+                //预读本地文件示例，不支持ie8
+                obj.preview(function (index, file, result) {
+                    $('#demo1').attr('src', result); //图片链接（base64）
+                });
+            }
+            , done: function (res) {
+                //如果上传失败
+                if (res.code > 0) {
+                    return layer.msg('上传失败');
+                }
+                //上传成功
+                //打印后台传回的地址: 把地址放入一个隐藏的input中, 和表单一起提交到后台, 此处略..
+                /*   console.log(res.data.src);*/
+                window.parent.uploadHeadImage(res.data.src);
+                var demoText = $('#demoText');
+                demoText.html('<span style="color: #8f8f8f;">上传成功!!!</span>');
+            }
+            , error: function () {
+                //演示失败状态，并实现重传
+                var demoText = $('#demoText');
+                demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-mini demo-reload">重试</a>');
+                demoText.find('.demo-reload').on('click', function () {
+                    uploadInst.upload();
+                });
+            }
+        });
+        element.init();
+    });
+</script>-->
+</body>
+</html>

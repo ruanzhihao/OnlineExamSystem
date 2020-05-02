@@ -5,6 +5,10 @@ import com.onlineExam.domain.Message;
 import java.util.List;
 
 public interface MessageService {
+
+    public int editMessage(Message message);
+    public boolean deleteMessage(Long id);
+    public Message findMessageById(Long id);
     //全部已读
     public boolean stuReadAll();
     public boolean teaReadAll();

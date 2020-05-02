@@ -2,6 +2,15 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.onlineExam.mapper.MessageMapper">
 
+    <update id="editMessage" parameterType="com.onlineExam.domain.Message">
+        update t_message set head=#{head},createtime=#{createtime},content=#{content},sturead=#{sturead},tearead=#{tearead}  where id=#{id}
+    </update>
+    <delete id="deleteMessage">
+        delete  from t_message where id=#{id}
+    </delete>
+    <select id="findMessageById" resultType="com.onlineExam.domain.Message" >
+        select * from t_message where id=#{id}
+    </select>
     <!--标记全部已读-->
     <update id="stuReadAll">
         update t_message set sturead="已读"

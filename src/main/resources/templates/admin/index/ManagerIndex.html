@@ -21,10 +21,10 @@
                         <a href="">邮件管理</a>
                     </dd>
                     <dd>
-                        <a href="./addMessage" id="addMessage">消息管理</a>
+                        <a href="./addMessages" id="addMessage">发布公告</a>
                     </dd>
                     <dd>
-                        <a href="">授权管理</a>
+                        <a href="./adminmessage" id="adminmessage">公告管理</a>
                     </dd>
                 </dl></li>
         </ul>
@@ -146,6 +146,10 @@
             $("#iframeMain").attr("src",$(this).attr("href"));
         });
         $("#addMessage").click(function (e) {
+            e.preventDefault();
+            $("#iframeMain").attr("src",$(this).attr("href"));
+        });
+        $("#adminmessage").click(function (e) {
             e.preventDefault();
             $("#iframeMain").attr("src",$(this).attr("href"));
         });

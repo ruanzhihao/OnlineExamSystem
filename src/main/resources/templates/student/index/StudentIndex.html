@@ -71,14 +71,14 @@
                     <input th:value="${session.stuid}" type="hidden" id="stuId"/>
                 </li>
                 <li class="layui-nav-item first">
-                    <a href="./personal" id="personinfo">
+                    <a href="./stupersonal" id="personinfo">
                         <cite>个人信息</cite>
                         <span class="layui-nav-more"></span>
                     </a>
                     <dl class="layui-nav-child">
-                        <dd><a href="./personal" id="personal">个人中心</a></dd>
+                        <dd><a href="./stupersonal" id="personal">个人中心</a></dd>
                         <dd><a href="./stumessage" id="stumessage">消息通知</a></dd>
-                        <dd><a href="./updatePass" id="updatePass">修改密码</a></dd>
+                        <dd><a href="./updateStuPass" id="updatePass">修改密码</a></dd>
                         <dd>
                             <a th:onclick="|javascript:updateIndex(this,${session.stuid})|"  id="addFace">绑定人脸</a>
                         </dd>

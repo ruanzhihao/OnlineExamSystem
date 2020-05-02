@@ -8,6 +8,9 @@ import java.util.List;
 @Component
 public interface MessageMapper {
 
+    public int editMessage(Message message);
+    public int deleteMessage(Long id);
+    public Message findMessageById(Long id);
     //全部已读
     public int stuReadAll();
     public int teaReadAll();

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>消息</title>
+    <link rel="stylesheet" th:href="@{/layui/css/layui.css}" media="all" />
+    <script th:src="@{/layui/layui.js}"></script>
+    <script th:src="@{/js/jquery-3.4.1.js}"></script>
+
+</head>
+<body>
+<!--公告信息展示-->
+<table lay-filter="demo">
+    <thead>
+    <tr>
+        <th lay-data="{field:'1',width:80,align: 'center'}"></th>
+        <th lay-data="{field:'2',width:110, align: 'center'}">发送人</th>
+        <th lay-data="{field:'3',width:250, align: 'center'}">标题</th>
+        <th lay-data="{field:'4',width:180, align: 'center'}">发送时间</th>
+        <th lay-data="{field:'5',width:510, align: 'center'}">消息内容</th>
+        <th lay-data="{field:'6',width:180,  align: 'center'}">操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="messages: ${messageList}">
+        <td><i class="layui-icon">&#xe618;</i></td>
+        <td th:text="${messages.getSendername()}"></td>
+        <td th:text="${messages.getHead()}"></td>
+        <td th:text="${messages.getCreatetime()}"></td>
+        <td th:text="${messages.getContent()}"></td>
+        <td>&nbsp;
+            <a title="修改"  th:href="@{/findMessageById(id=${messages.getId()})}">
+                <i class="layui-icon"  style="font-size: large;color: #66afe9">&#xe642;</i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </a>
+            <a title="删除" th:onclick="|javascript:deleteMessage(${messages.getId()})|">
+                <i class="layui-icon" style="font-size: large;color: red">&#xe640;</i>
+            </a>
+
+        </td>
+    </tr>
+    </tbody>
+</table>
+<script type="text/javascript" th:src="@{/layui/layui.js}"></script>
+<script th:src="@{/js/jquery-3.4.1.js}"></script>
+<script>
+    //静态表格
+    layui.use(['table','form','layer'],function(){
+        var table = layui.table;//加载表格模块
+        var form=layui.form;
+        /*table.init('demo', {
+            height: 500 //设置高度
+            ,cellMinWidth: 80
+            ,page: true //开启分页
+        });*/
+        table.init('demo',{
+            height:500,
+            page:true
+        });
+    });
+    function deleteMessage(id){
+        layui.use('layer',function(){
+            layer.confirm('确定删除该公告？',{btn: ['确定', '取消'], title: "提示"},function(){
+                $.ajax({
+                    url:'deleteMessage',
+                    data:{'id':id},
+                    success:function (data) {
+                        layer.msg("删除成功");
+                        setTimeout(function (){window.location.href="adminmessage"},1000);
+                    },
+                    error:function (data) {
+                        layer.msg("删除失败");
+                        setTimeout(function (){window.location.href="adminmessage"},1000);
+                    }
+
+                })
+            })
+        })
+    }
+
+</script>
+</body>
+</html>

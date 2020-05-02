@@ -10,6 +10,7 @@ import com.onlineExam.service.TeacherService;
 import org.apache.shiro.crypto.hash.Md5Hash;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
@@ -84,9 +85,9 @@ public class AdminController {
         }
         return null;
     }
-    @RequestMapping("/addMessage")
+    @RequestMapping("/addMessages")
     public String addMessage(){
-        return "addMessage";
+        return "admin/addMessage";
     }
     @RequestMapping("/message")
     public String Message(String sendername, String head, String content, String createtime,Model model){
@@ -109,6 +110,47 @@ public class AdminController {
         }
         return "admin/addMessage";
     }
+    @RequestMapping("/adminmessage")
+    public String findMessage(Model model) {
+        List<Message> messageList = messageMapper.findMessage();
+
+        model.addAttribute("messageList", messageList);
+        return "admin/adminMessage";
+    }
+    @RequestMapping("/findMessageById")
+    public String findMessageById(Long id,Model model,HttpSession session,HttpServletRequest request){
+        Message messageinfo=messageMapper.findMessageById(id);
+        //model.addAttribute("messageinfo",messageinfo);
+        request.getSession().setAttribute("onemessage",messageinfo);
+
+        return "admin/messageedit";
+    }
+    @RequestMapping(value = "/editMessage")
+    @Transactional
+    public String editMessage(Long id,String head,String content,String createtime,Model model) {
+        Message message=new Message();
+        message.setId(id);
+        message.setHead(head);
+        message.setContent(content);
+        message.setCreatetime(createtime);
+        message.setSturead("未读");
+        message.setTearead("未读");
+        int result= messageMapper.editMessage(message);
+        if(result==0){
+            model.addAttribute("msgs", "修改失败");
+        }
+        else {
+            model.addAttribute("msgs", "修改成功");
+        }
+        return "admin/messageedit";
+    }
+    @RequestMapping("/deleteMessage")
+    @Transactional
+    public String deleteMessage(Long id){
+        int result=messageMapper.deleteMessage(id);
+        return "admin/adminMessage";
+    }
+
 
 
 
