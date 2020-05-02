@@ -180,6 +180,14 @@
                     </a>
                 </li>
 
+                <li class="layui-nav-item">
+                    <a href="./study" id="study">
+                        <i class="iconfont icon-3beifen" ></i>
+                        <span>学习社区</span>
+                    </a>
+                </li>
+
+
             </ul>
         </div>
     </div>
@@ -324,6 +332,12 @@
         $("#analyse").click(function (e) {
             e.preventDefault();
             $("#iframeMain").attr("src",$(this).attr("href"));
+        });
+
+        $("#study").click(function (e) {
+            e.preventDefault();
+            var stuId=$('#stuId').val()
+            $("#iframeMain").attr("src",$(this).attr("href")+'?stuId='+stuId);
         });
 
 

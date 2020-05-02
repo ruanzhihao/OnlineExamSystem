@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>学习论坛</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <link rel="stylesheet" type="text/css" th:href="@{Wjl/css2/animate.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{Wjl/css2/bootstrap.min.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{Wjl/css2/line-awesome.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{Wjl/css2/line-awesome-font-awesome.min.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{Wjl/css2/font-awesome.min.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{Wjl/css2/jquery.mCustomScrollbar.min.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{Wjl/lib/slick/slick.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{Wjl/lib/slick/slick-theme.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{Wjl/css2/style.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{Wjl/css2/responsive.css}">
+</head>
+
+
+<body>
+
+
+<div class="wrapper">
+
+
+
+    <header>
+        <div class="container">
+        </div>
+    </header><!--header end-->
+    <main>
+        <div class="main-section">
+            <div class="container">
+                <div class="main-section-data">
+                    <div class="row">
+                        <div class="col-lg-3 col-md-4 pd-left-none no-pd">
+                            <div class="main-left-sidebar no-margin">
+                                <div class="user-data full-width">
+                                    <div class="user-profile">
+                                        <div class="username-dt">
+                                            <div class="usr-pic">
+                                                <img th:src="@{Wjl/images/resources/user-pic.png}" alt="">
+                                            </div>
+                                        </div><!--username-dt end-->
+                                        <div class="user-specs">
+                                            <h3 th:text="${session.stuname}"></h3>
+                                            <span>邮箱：<span th:text="${session.stuemail}"></span></span>
+                                        </div>
+                                    </div><!--user-profile end-->
+                                    <ul class="user-fw-status">
+                                        <li>
+                                            <h4>话题总数</h4>
+                                            <span th:text="${count}"></span>
+                                        </li>
+                                        <li>
+                                            <h4>我参与的话题</h4>
+                                            <span>a</span>
+                                        </li>
+                                       <!-- <li>
+                                            <a href="#" title="">View Profile</a>
+                                        </li>-->
+                                    </ul>
+                                </div><!--user-data end-->
+                            </div><!--main-left-sidebar end-->
+                        </div>
+                        <div class="col-lg-6 col-md-8 no-pd">
+                            <div class="main-ws-sec">
+                                <div class="post-topbar" style="background-color: indianred">
+                                   <!-- <div class="user-picy">
+                                      aaaaaa
+                                    </div>-->
+                                 <!--   <div class="post-st">-->
+                                        <div class="search-bar">
+                                            <form role="form">
+                                                <select name="tgcourse" id="tgcourse" class="form-control">
+                                                    <option value=""></option>
+                                                    <option  th:each="course :${courseList}" th:text="${course.courseName}" th:value="${course.courseId}"></option>
+                                                </select>
+                                                <button type="button" class="btn btn-default">Go</button>
+                                            </form>
+
+                                        </div>
+
+                                   <!-- </div>-->
+
+                                </div>
+                                <div class="posts-section">
+                                    <div class="post-bar" th:each="study:${list}">
+                                        <div class="post_topbar">
+                                            <div class="usy-dt">
+                                                <img th:src="@{Wjl/images/resources/us-pic.png}" alt="">
+                                                <div class="usy-name">
+                                                    <h3 th:text="${study.username}"></h3>
+                                                    <span><img th:src="@{Wjl/images/clock.png}" alt="" th:text="${study.sharetime}"></span>
+                                                </div>
+                                            </div>
+                                            <!--<div class="ed-opts">
+                                                <a href="#" title="" class="ed-opts-open"><i class="la la-ellipsis-v"></i></a>
+                                                <ul class="ed-options">
+                                                    <li><a href="#" title="">Edit Post</a></li>
+                                                    <li><a href="#" title="">Unsaved</a></li>
+                                                    <li><a href="#" title="">Unbid</a></li>
+                                                    <li><a href="#" title="">Close</a></li>
+                                                    <li><a href="#" title="">Hide</a></li>
+                                                </ul>
+                                            </div>-->
+                                        </div>
+                                        <div class="epi-sec">
+                                            <ul class="descp">
+                                                <li><img th:src="@{Wjl/images/icon8.png}" alt=""><span th:text="${study.departName}"></span></li>
+                                                <li><img th:src="@{Wjl/images/icon9.png}" alt=""><span th:text="${study.clazzName}"></span></li>
+                                            </ul>
+                                        </div>
+                                        <div class="job_descp">
+                                            <ul class="job-dt">
+                                                <li><a href="#" title="">求助</a></li>
+                                                <!--<li><span>$30 / hr</span></li>-->
+                                            </ul>
+                                            <p th:text="${study.questionName}"></p>
+                                            <span>A：<span th:text="${study.optionA}"></span></span>&nbsp;&nbsp;&nbsp;&nbsp;
+                                            <span>B：<span th:text="${study.optionB}"></span></span>&nbsp;&nbsp;&nbsp;&nbsp;
+                                            <span>C：<span th:text="${study.optionC}"></span></span>&nbsp;&nbsp;&nbsp;&nbsp;
+                                            <span>D：<span th:text="${study.optionD}"></span></span>&nbsp;&nbsp;&nbsp;&nbsp;
+
+
+                                           <!-- B：<p th:text="${study.optionB}"></p>
+                                            C：<p th:text="${study.optionC}"></p>
+                                            D：<p th:text="${study.optionD}"></p>-->
+                                        </div>
+                                        <div class="job-status-bar">
+                                            <ul class="like-com">
+                                                <!--<li>
+                                                    <a href="#"><i class="la la-heart"></i> Like</a>
+                                                    <img th:src="@{Wjl/images/liked-img.png}" alt="">
+                                                    <span>25</span>
+                                                </li>-->
+                                                <li><a href="#" title="" class="com"><img th:src="@{Wjl/images/com.png}" alt=""> Comment 15</a></li>
+                                            </ul>
+                                            <a>views 50</a>
+                                        </div>
+                                    </div><!--post-bar end-->
+
+                                    <div class="process-comm">
+                                        <a href="#" title=""><img src="images/process-icon.png" alt=""></a>
+                                    </div><!--process-comm end-->
+                                </div><!--posts-section end-->
+                            </div><!--main-ws-sec end-->
+                        </div>
+                        <div class="col-lg-3 pd-right-none no-pd">
+                            <div class="right-sidebar">
+                                <div class="widget widget-about">
+                                    <img src="images/wd-logo.png" alt="">
+                                    <h3>Track Time on Workwise</h3>
+                                    <span>Pay only for the Hours worked</span>
+                                    <div class="sign_link">
+                                        <h3><a href="#" title="">Sign up</a></h3>
+                                        <a href="#" title="">Learn More</a>
+                                    </div>
+                                </div><!--widget-about end-->
+                                <div class="widget widget-jobs">
+                                    <div class="sd-title">
+                                        <h3>Top Jobs</h3>
+                                        <i class="la la-ellipsis-v"></i>
+                                    </div>
+                                    <div class="jobs-list">
+                                        <div class="job-info">
+                                            <div class="job-details">
+                                                <h3>Senior Product Designer</h3>
+                                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit..</p>
+                                            </div>
+                                            <div class="hr-rate">
+                                                <span>$25/hr</span>
+                                            </div>
+                                        </div><!--job-info end-->
+                                        <div class="job-info">
+                                            <div class="job-details">
+                                                <h3>Senior UI / UX Designer</h3>
+                                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit..</p>
+                                            </div>
+                                            <div class="hr-rate">
+                                                <span>$25/hr</span>
+                                            </div>
+                                        </div><!--job-info end-->
+                                        <div class="job-info">
+                                            <div class="job-details">
+                                                <h3>Junior Seo Designer</h3>
+                                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit..</p>
+                                            </div>
+                                            <div class="hr-rate">
+                                                <span>$25/hr</span>
+                                            </div>
+                                        </div><!--job-info end-->
+                                        <div class="job-info">
+                                            <div class="job-details">
+                                                <h3>Senior PHP Designer</h3>
+                                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit..</p>
+                                            </div>
+                                            <div class="hr-rate">
+                                                <span>$25/hr</span>
+                                            </div>
+                                        </div><!--job-info end-->
+                                        <div class="job-info">
+                                            <div class="job-details">
+                                                <h3>Senior Developer Designer</h3>
+                                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit..</p>
+                                            </div>
+                                            <div class="hr-rate">
+                                                <span>$25/hr</span>
+                                            </div>
+                                        </div><!--job-info end-->
+                                    </div><!--jobs-list end-->
+                            </div><!--right-sidebar end-->
+                        </div>
+                    </div>
+                </div><!-- main-section-data end-->
+            </div>
+        </div>
+    </main>
+</div><!--theme-layout end-->
+
+
+
+<script type="text/javascript" th:src="@{Wjl/js2/jquery.min.js}"></script>
+<script type="text/javascript" th:src="@{Wjl/js2/popper.js}"></script>
+<script type="text/javascript" th:src="@{Wjl/js2/bootstrap.min.js}"></script>
+<script type="text/javascript" th:src="@{Wjl/js2/jquery.mCustomScrollbar.js}"></script>
+<script type="text/javascript" th:src="@{Wjl/lib/slick/slick.min.js}"></script>
+<script type="text/javascript" th:src="@{Wjl/js2/scrollbar.js}"></script>
+<script type="text/javascript" th:src="@{Wjl/js2/script.js}"></script>
+
+</body>
+</html>

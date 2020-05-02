@@ -111,6 +111,11 @@
                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                     <span th:if="${Rquestion.isWrong} eq '1' "><span>你的得分：</span><span style="color: red" th:text="${Rquestion.questionScore}"></span><span style="color: red">分</span></span>
                                     <span th:if="${Rquestion.isWrong} eq '2'"><span>你的得分：</span><span style="color: red">0</span><span style="color: red">分</span></span>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <a style="color: darkred" th:onclick="|javascript:share(this,${Rquestion.questionId},${session.stuid})|">不懂？论坛求助</a>
                                 </div>
                             </li>
                         </ul>
@@ -176,7 +181,11 @@
                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                     <span th:if="${Cquestion.isWrong} eq '1' "><span>你的得分：</span><span style="color: red" th:text="${Cquestion.questionScore}"></span><span style="color: red">分</span></span>
                                     <span th:if="${Cquestion.isWrong} eq '2'"><span>你的得分：</span><span style="color: red">0</span><span style="color: red">分</span></span>
-
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <a style="color: darkred" th:onclick="|javascript:share(this,${Cquestion.questionId})|">不懂？论坛求助</a>
                                 </div>
                             </li>
                         </ul>
@@ -273,6 +282,31 @@
                     layer.open({
                         content: '添加失败'
                     });
+                }
+            });
+        });
+    }
+
+    function share(obj, id,stuId) {
+        layui.use('layer', function () {
+            var layer = layui.layer;
+            $.ajax({
+                url: "./toShare",
+                type:'post',
+                data:{
+                    questionId: id,
+                    stuId:stuId},
+                success: function () {
+                    /*layer.open({
+                        content: '添加成功'
+                    });*/
+                    layer.msg('求助成功',{icon:1,time:2000})
+                },
+                error: function () {
+                   /* layer.open({
+                        content: '添加失败'
+                    });*/
+                    layer.msg('求助失败',{icon:2,time:2000})
                 }
             });
         });

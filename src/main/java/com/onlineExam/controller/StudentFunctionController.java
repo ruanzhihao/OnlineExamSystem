@@ -44,6 +44,9 @@ public class StudentFunctionController {
     @Autowired
     private StuUserService stuUserService;
 
+    @Autowired
+    private StudyService studyService;
+
     //学生端进入
     @RequestMapping(value = "/student",method = RequestMethod.GET)
     public String goIndex(){
@@ -461,4 +464,29 @@ public List<CountModel> getResourceInfo(){
     countModels.add(countModel3);
     return  countModels;
 }
+
+//学习论坛进入
+    @RequestMapping(value = "/study")
+    public String study(@RequestParam("stuId") int stuId,Model model){
+   List<StudyLocation> list=studyService.getallList();
+   model.addAttribute("list",list);
+   int a =list.size();
+   model.addAttribute("count",a);
+   List<Course> courseList=questionService.getCourse();
+   model.addAttribute("courseList",courseList);
+     return "student/StudyLocation";
+    }
+
+
+//分享论坛
+    @RequestMapping(value = "/toShare",method = RequestMethod.POST)
+    @ResponseBody
+    public String share(@RequestParam("stuId") int stuId,@RequestParam("questionId")int questionId,Model model){
+    String time=new Date().toLocaleString();
+    int i=studyService.insertShare(stuId, questionId,time);
+    return "q1";
+}
+
+
+
 }

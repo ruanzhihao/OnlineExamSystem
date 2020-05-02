@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.onlineExam.mapper.StudyMapper">
+   <insert id="insertShare" parameterType="com.onlineExam.domain.StudyLocation" >
+       insert into t_study(questionId,stuId,sharetime) value(#{questionId},#{stuId},#{time})
+   </insert>
+
+    <select id="getallList" resultType="com.onlineExam.domain.StudyLocation">
+
+    select * from t_study,t_question,student,t_depart,t_clazz,t_major
+     where t_study.questionId = t_question.questionId and t_study.stuId=student.stuid
+     and student.departId=t_depart.departId and student.clazzId=t_clazz.clazzId and student.majorId=t_major.majorId
+    </select>
+</mapper>
