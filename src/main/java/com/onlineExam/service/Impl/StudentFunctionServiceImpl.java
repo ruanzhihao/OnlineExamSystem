@@ -112,4 +112,14 @@ public class StudentFunctionServiceImpl implements StudentFunctionService {
     public List<StuAnswer> getCheckHistory(int paperId, int stuId) {
         return studentFunctionMapper.getCheckHistory(paperId, stuId);
     }
+
+    @Override
+    public List<Question> getShortAnswer(Integer paperId) {
+        return studentFunctionMapper.getShortAnswer(paperId);
+    }
+
+    @Override
+    public int getShortAnswerCount(Integer paperId) {
+        return studentFunctionMapper.getShortAnswerCount(paperId);
+    }
 }

@@ -41,12 +41,16 @@
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">正确答案：</label>
-                <div class="layui-input-inline">
+                <!--<div class="layui-input-inline">
                     <input type="text" name="answer" id="newanswer" class="layui-input" th:value="${question.answer}">
-                </div>
+                </div>-->
+                <div class="layui-input-block" style="width: 520px">
+                    <textarea  class="layui-textarea" name="answer" th:value="${question.answer}" th:text="${question.answer}" id="newanswer" ></textarea>
+
+
                 <div class="layui-input-inline" style="color:red;">
-                    提示：请把保持答案内容与选项内容一致
-                </div>
+                    提示：请把保持答案内容与选项一致
+                </div></div>
             </div>
 
             <div class="layui-form-item">
@@ -74,6 +78,7 @@
                         <option value=""></option>
                         <option value="单选">单选</option>
                         <option value="多选">多选</option>
+                        <option value="简答">简答</option>
                     </select>
 
                 </div>

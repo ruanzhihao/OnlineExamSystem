@@ -45,8 +45,9 @@ public interface StudentFunctionMapper {
     String getExamInfoByStuId(@Param("stuId") Integer stuId,@Param("releaseExamId") Integer releseExamId);
     //考试记录单选题目的详情
     List<StuAnswer> getHistory(@Param("paperId")int paperId,@Param("stuId")int stuId);
-
     //考试记录多选题目的详情
     List<StuAnswer> getCheckHistory(@Param("paperId")int paperId,@Param("stuId")int stuId);
+    List<Question> getShortAnswer(@Param("paperId") Integer paperId);
+    int getShortAnswerCount(@Param("paperId") Integer paperId);
 
 }

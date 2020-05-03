@@ -75,5 +75,13 @@ ORDER BY examStateName DESC
     <select id="getCheckHistory" parameterType="java.lang.Integer" resultType="com.onlineExam.domain.StuAnswer">
        select * from t_question,t_stuanswer,t_paper where t_stuanswer.questionId=t_question.questionId and t_stuanswer.stuId=#{stuId} and t_stuanswer.paperId=#{paperId} and t_question.questionType='多选'
     </select>
+<select id="getShortAnswerCount" resultType="int">
+    SELECT COUNT(questionType)  from t_question,t_realpaper
+where  t_realpaper.questionId=t_question.questionId and  questionType='简答' and t_realpaper.paperId=#{paperId}
 
+</select>
+    <select id="getShortAnswer" resultType="com.onlineExam.domain.Question">
+         select t_question.questionId,t_question.questionName,t_question.questionScore
+       from t_question,t_realpaper where t_realpaper.questionId=t_question.questionId and t_question.questionType='简答' and t_realpaper.paperId=#{paperId}
+    </select>
 </mapper>

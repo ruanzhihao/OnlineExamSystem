@@ -37,4 +37,6 @@ public interface StudentFunctionService {
     List<StuAnswer> getHistory(int paperId,int stuId);
     //考试记录多选题目的详情
     List<StuAnswer> getCheckHistory(int paperId,int stuId);
+    List<Question> getShortAnswer(@Param("paperId") Integer paperId);
+    int getShortAnswerCount(@Param("paperId") Integer paperId);
 }
