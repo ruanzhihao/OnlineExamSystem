@@ -1,9 +1,6 @@
 package com.onlineExam.mapper;
 
-import com.onlineExam.domain.LoginUser;
-import com.onlineExam.domain.Question;
-import com.onlineExam.domain.StuAnswer;
-import com.onlineExam.domain.Teacher;
+import com.onlineExam.domain.*;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
 
@@ -23,6 +20,8 @@ public interface TeacherMapper {
     List<StuAnswer> getQuestion(@Param("stuId")int stuId, @Param("paperId") int paperId, @Param("releaseExamId")int releaseExamId);
     //显示试题
     List<Question> getQuestion1(@Param("majorId") int majorId, @Param("teachername") String teachername);
+    List<StuAnswer> showanalyze(@Param("questionId") Integer questionId);
+    List<QuestionA> getType(Integer questionId);
 
 
     //修改用户信息

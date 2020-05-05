@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml" xmlns="http://www.thymeleaf.org">
+<head th:replace="head::copy">
+<body>
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <meta charset="UTF-8">
+    <title>试题分析</title>
+    <link rel="stylesheet" th:href="@{/layui/css/layui.css}" media="all" />
+    <script th:src="@{/layui/layui.js}"></script>
+    <script th:src="@{/js/jquery-1.8.2.min.js}"></script>
+</head>
+<body>
+<div class="x-body">
+    <div class="demoTable" style="padding: 15px">
+        <button class="layui-btn layui-btn-warm" onclick="exportDataToExcel()"><i class="layui-icon">&#xe67c;</i>导出</button>
+    </div>
+</div>
+<table id="table" lay-filter="demo">
+    <thead>
+    <tr>
+        <th lay-data="{field:'1', align: 'center'}">学生姓名</th>
+        <th lay-data="{field:'2', align: 'center'}">选择的答案</th>
+        <th lay-data="{field:'3', align: 'center'}">答题情况</th>
+    </tr>
+    </thead>
+    <tr th:each="stuanswer :${stuAnswerList}">
+        <td th:text="${stuanswer.stuname}"></td>
+        <td th:text="${stuanswer.stuAnswer}"></td>
+        <td th:text="${stuanswer.type}"></td>
+    </tr>
+
+</table>
+<!--<div  style="width: 600px;height:150px;" ></div>-->
+<div>
+    <div style="float:left;width: 200px;height:400px;"></div>
+    <div id="main" style="float:left;width: 600px;height:400px;"></div>
+</div>
+<script>
+    var myChart1 = echarts.init(document.getElementById('main'));
+    var option1 = {
+        title : {
+            text: '答题分布',
+            x:'center'
+        },
+        tooltip : {
+            trigger: 'item',
+            formatter: "{a} <br/>{b} : {c} ({d}%)"
+        },
+        legend: {
+            orient: 'vertical',
+            left: 'left',
+        },
+        series : [
+            {
+                name: '个数',
+                type: 'pie',
+                radius : '55%',
+                center: ['50%', '60%'],
+                data:(function () {
+                    var datas = [];
+                    $.ajax({
+                        type:"GET",
+                        url:"/questionEcharts",
+                        dataType:"json",
+                        async:false,
+                        success:function (result) {
+                            for (var i = 0; i < result.length; i++){
+                                datas.push({
+                                    "value":result[i].number, "name":result[i].type
+                                })
+                            }
+                        }
+                    });
+                    return datas;
+
+                })(),
+                itemStyle: {
+                    emphasis: {
+                        shadowBlur: 10,
+                        shadowOffsetX: 0,
+                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+                    }
+                }
+            }
+        ]
+    };
+    myChart1.setOption(option1);
+</script>
+<script th:src="@{/Skz/excel.js}"></script>
+<script>
+    layui.use(['table','form','layer','jquery'],function() {
+        var table = layui.table;//加载表格模块
+        var layer = layui.layer;
+        var form = layui.form;
+        var $ = layui.jquery;
+        table.init('demo', {
+            height: 500 //设置高度
+            , cellMinWidth: 80
+            , page: true //开启分页
+        });
+    });
+    function exportDataToExcel(){
+        //table的ID
+        $("#table").table2excel({
+            exclude: ".noExl",
+            name: "导出",
+            filename: "学生答题情况"+'.xls',
+            fileext: ".xls",//文件后缀名
+            exclude_img: true,
+            exclude_links: true,
+            exclude_inputs: true
+        });
+    }
+</script>
+
+</body>
+</html>

@@ -34,7 +34,7 @@
         <td th:text="${question.questionScore}"></td>
         <td th:text="${question.questionClass}"></td>
         <td>&nbsp;
-            <a title="试题分析"    id= "showanalyze"  >
+            <a title="试题分析"    id= "showanalyze" th:href="@{/showanalyze(questionId=${question.questionId})}" >
                 <i class="layui-icon">&#xe642;</i>
             </a>
         </td>

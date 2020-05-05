@@ -1,9 +1,6 @@
 package com.onlineExam.service.Impl;
 
-import com.onlineExam.domain.LoginUser;
-import com.onlineExam.domain.Question;
-import com.onlineExam.domain.StuAnswer;
-import com.onlineExam.domain.Teacher;
+import com.onlineExam.domain.*;
 import com.onlineExam.mapper.TeacherMapper;
 import com.onlineExam.service.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,6 +49,16 @@ public class TeacherServiceImpl implements TeacherService {
     @Override
     public List<Question> getQuestion1(int majorId, String teachername) {
         return teacherMapper.getQuestion1(majorId, teachername);
+    }
+
+    @Override
+    public List<StuAnswer> showanalyze(Integer questionId) {
+        return teacherMapper.showanalyze(questionId);
+    }
+
+    @Override
+    public List<QuestionA> getType(Integer questionId) {
+        return teacherMapper.getType(questionId);
     }
 
 

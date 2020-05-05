@@ -311,6 +311,22 @@ public class TeacherController {
         return "QuestionAnalyze";
     }
 
+    @RequestMapping(value = "/showanalyze")
+    public  String showanalyze(@RequestParam("questionId") Integer questionId,Model model,HttpSession session){
+        List<StuAnswer> stuAnswerList=teacherMapper.showanalyze(questionId);
+        session.setAttribute("questionId",questionId);
+        model.addAttribute("stuAnswerList",stuAnswerList);
+        return "titleAnalyze";
+    }
+
+    @RequestMapping("questionEcharts")
+    @ResponseBody
+    public List<QuestionA> getType(HttpSession session){
+        Integer questionId=(int)session.getAttribute("questionId");
+        List<QuestionA> questionAList=teacherMapper.getType(questionId);
+        return questionAList;
+    }
+
     @RequestMapping("TeacherreleaseInfoCenter")
     public String releaseInfo(Model model){
         List<ExamState> states=releaseExamService.getAllState();
