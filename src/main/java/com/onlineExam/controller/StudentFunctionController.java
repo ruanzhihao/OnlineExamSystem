@@ -197,26 +197,36 @@ public  String goExam(Model model,HttpSession session){
         model.addAttribute("radioQuestions",radioQuestions);
         model.addAttribute("radioCount",radioCount);
         model.addAttribute("radioScore",radioScore);
-        HttpSession session=request.getSession();
+        List<Question> shortAnswerQuestion=studentFunctionService.getShortAnswer(paperId);
+        System.out.println(shortAnswerQuestion);
+        int shortAnswerCount=studentFunctionService.getShortAnswerCount(paperId);
+        int shortAnswerScore=studentFunctionService.getShortAnswerScore(paperId);
+        System.out.println("简答题数量"+shortAnswerCount+"简答题分值"+shortAnswerScore);
+        model.addAttribute("shortAnswerQuestion",shortAnswerQuestion);
+        model.addAttribute("shortAnswerCount",shortAnswerCount);
+        model.addAttribute("shortAnswerScore",shortAnswerScore);
+       /* HttpSession session=request.getSession();
         session.setAttribute("paperId",paperId);
-        session.setAttribute("releaseExamId",releaseExamId);
-        System.out.println(session.getAttribute("paperId"));
-        System.out.println(session.getAttribute("releaseExamId"));
+        session.setAttribute("releaseExamId",releaseExamId);*/
+        System.out.println("试卷Id"+paperId);
+        System.out.println("考务Id"+releaseExamId);
         int answerTime=studentFunctionService.getAnswerTime(paperId);
         int examTime=answerTime*60;
         model.addAttribute("examTime",examTime);
+        model.addAttribute("paperId",paperId);
+        model.addAttribute("releaseExamId",releaseExamId);
         return "student/exam/exam";
     }
-    @RequestMapping(value = "getScore",produces="application/json; utf-8")
+    @RequestMapping(value = "getScore",produces="application/json; utf-8",method = RequestMethod.GET)
     @ResponseBody
-    public Integer getScore(@RequestParam("answers") String answers,@RequestParam("questionIds") String questionIds,HttpSession session){
-        Integer releaseExamId=(Integer)session.getAttribute("releaseExamId");
+    public Integer getScore(@RequestParam("answers") String answers,@RequestParam("questionIds") String questionIds,HttpSession session,@RequestParam("paperId") Integer paperId,@RequestParam("releaseExamId") Integer releaseExamId){
+        System.out.println("传进来的考务Id" +releaseExamId);
+        /*Integer releaseExamId=(Integer)session.getAttribute("releaseExamId");*/
         JSONArray answer=JSON.parseArray(answers);
         JSONArray questionId=JSON.parseArray(questionIds);
         List<String> str1=JSONObject.parseArray(answer.toJSONString(),String.class);
         List<Integer> str2=JSONObject.parseArray(questionId.toJSONString(),Integer.class);
         Integer stuId=(Integer) session.getAttribute("stuid");
-        Integer paperId=(Integer) session.getAttribute("paperId");
         System.out.println(paperId);
         List<Map> record=new ArrayList<>();
         for (int i=0;i<str1.size();i++){
@@ -269,6 +279,12 @@ public  String goExam(Model model,HttpSession session){
                 studentFunctionService.setWrong(stuAnswer.getStuAnswerId(),2);
             }
         }
+        List<Question> shortAnswersIds=studentFunctionService.shortAnswerIdInPaper(paperId);
+        Map<Object,Object> shortAnswers=new HashMap<>();
+        shortAnswers.put("questionIds",shortAnswersIds);
+        shortAnswers.put("releaseExamId",releaseExamId);
+        shortAnswers.put("isWrong",3);
+        int j=studentFunctionService.updateShortAnswerState(shortAnswers);
         Student student=examService.fingStuById(stuId);
         Paper paper=examService.findPaperById(paperId);
         String examName=paper.getPaperName();
@@ -284,7 +300,6 @@ public  String goExam(Model model,HttpSession session){
         System.out.println("分数：" + score);
         return score;
     }
-
     @RequestMapping("successSubmit")
     public String getSuccessSubmit(@RequestParam("score") Integer score,Model model){
         model.addAttribute("score",score);
@@ -484,7 +499,84 @@ public List<CountModel> getResourceInfo(){
     int i=studyService.insertShare(stuId, questionId,time);
     return "q1";
 }
-
+    @RequestMapping("checkShortAnswer")
+    public String getCheckShortAnswerCenter(HttpSession session,Model model){
+        int teacherId=(int)session.getAttribute("teacherid");
+        List<JoinExamInfo> teaReleaseExamInfo=new ArrayList<>();
+        List<ReleaseExam> releaseExams=studentFunctionService.getTeaReleaseExam(teacherId);
+        for (ReleaseExam releaseExam:releaseExams) {
+            int CheckNumber=studentFunctionService.waitCheckNumber(releaseExam.getReleaseExamId());
+            JoinExamInfo joinExamInfo=new JoinExamInfo(releaseExam,CheckNumber);
+            teaReleaseExamInfo.add(joinExamInfo);
+        }
+        System.out.println(teaReleaseExamInfo);
+        String space="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+        String space1="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+        model.addAttribute("space",space);
+        model.addAttribute("space1",space1);
+        model.addAttribute("teaReleaseExams",teaReleaseExamInfo);
+        return "teacher/checkShortAnswer/checkShortAnswerCenter";
+    }
+    @RequestMapping("checkShortAnswerList")
+    public String getCheckShortAnswerList(@RequestParam("releaseExamId") Integer releaseExamId,Model model){
+        List<ReleaseExam> unCheckInfo=studentFunctionService.getUncheck(releaseExamId);
+        model.addAttribute("unCheckInfo",unCheckInfo);
+        return "teacher/checkShortAnswer/checkShortAnswerList";
+    }
+    @RequestMapping("checkShortAnswerDetail")
+    public String checkShortAnswerDetail(@RequestParam("releaseExamId") Integer releaseExamId,@RequestParam("paperId") Integer paperId,@RequestParam("stuId") Integer stuId, Model model){
+        List<StuAnswer> shortAnswerQuestion=studentFunctionService.stuShortAnswer(releaseExamId,stuId);
+        System.out.println(shortAnswerQuestion);
+        int shortAnswerCount=studentFunctionService.getShortAnswerCount(paperId);
+        int shortAnswerScore=studentFunctionService.getShortAnswerScore(paperId);
+        System.out.println("简答题数量"+shortAnswerCount+"简答题分值"+shortAnswerScore);
+        model.addAttribute("shortAnswerQuestion",shortAnswerQuestion);
+        model.addAttribute("shortAnswerCount",shortAnswerCount);
+        model.addAttribute("shortAnswerScore",shortAnswerScore);
+        return "teacher/checkShortAnswer/shortAnswerDetails";
+    }
+    @RequestMapping(value = "/getShortAnswerScore",produces="application/json; utf-8",method = RequestMethod.GET)
+    @ResponseBody
+    public int  getShortAnswerScore(@RequestParam("teaSuggests") String teaSuggests, @RequestParam("questionIds") String questionIds, @RequestParam("teaCheckScores") String teaCheckScores, @RequestParam("stuId") Integer stuId, @RequestParam("releaseExamId")Integer releaseExamId) {
+        int shortScore=0;
+        List<Question> shortAnsQues=studentFunctionService.getShortAnsScoreIntoPap(releaseExamId);
+        Map<String, Object> scoreMap = new HashMap<>();
+        JSONArray teaCheckScore = JSON.parseArray(teaCheckScores);
+        JSONArray questionId = JSON.parseArray(questionIds);
+        JSONArray teaSuggest = JSONArray.parseArray(teaSuggests);
+        List<Map> teaCheckRecords = new ArrayList<>();
+        Map<String, Object> teaCheckScoreMap = new HashMap<>();
+        List<String> str1 = JSONObject.parseArray(teaCheckScore.toJSONString(), String.class);
+        List<String> str2 = JSONObject.parseArray(questionId.toJSONString(), String.class);
+        List<String> str3 = JSONObject.parseArray(teaSuggest.toJSONString(), String.class);
+        for (int i = 0; i < str1.size(); i++) {
+            int score=Integer.parseInt(str1.get(i));
+            shortScore+=score;
+            Map<String, Object> map = new HashMap<>();
+            map.put("teaCheckScore", str1.get(i));
+            if(score<shortAnsQues.get(i).getQuestionScore()){
+                map.put("isWrong",2);
+            }else{
+                map.put("isWrong",1);
+            }
+            map.put("questionId", str2.get(i));
+            map.put("teaSuggest", str3.get(i));
+            teaCheckRecords.add(map);
+        }
+        scoreMap.put("shortAnswerScore",shortScore);
+        scoreMap.put("stuId",stuId);
+        scoreMap.put("releaseExamId",releaseExamId);
+        int k=studentFunctionService.getSumScore(scoreMap);
+        teaCheckScoreMap.put("stuId", stuId);
+        teaCheckScoreMap.put("releaseExamId", releaseExamId);
+        teaCheckScoreMap.put("reaCheckRecords", teaCheckRecords);
+        int j=studentFunctionService.updateIsCheck(releaseExamId,stuId);
+        int i = studentFunctionService.updateShortAnswer(teaCheckScoreMap);
+        if (i > 0 && j>0 && k>0) {
+            return 1;
+        }
+        return 0;
+    }
 
 
 }

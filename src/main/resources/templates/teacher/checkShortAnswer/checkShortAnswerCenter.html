@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<meta charset="UTF-8">
+<title>批阅中心</title>
+
+<link rel="stylesheet" type="text/css" th:href="@{Rzh/css/style.css}"/>
+<script th:src="@{https://www.jq22.com/jquery/jquery-1.10.2.js}"></script>
+
+</head>
+<body>
+
+<div class="ai_card">
+    <h2 class="t">待批阅测试</h2>
+    <p class="sub_t">简答题采用人工批阅,评分更合理</p>
+    <div class="w1200">
+        <ul >
+            <li class="active" th:each="teaReleaseExams:${teaReleaseExams}">
+                <div class="info">
+                    <div class="img">
+                        <img th:src="@{/images/档案袋.png}"/>
+                    </div>
+                    <br><br>
+                    <br>
+                    <h3 th:text="${teaReleaseExams.releaseExam.paperName}">测试名称：JavaEE第一次测试</h3>
+                          <h4 th:utext="${space}+'开始时间：'+${teaReleaseExams.releaseExam.beginTime}">
+                              开始时间：2020-05-03 19:24:12</h4>
+                    <h4 th:utext="${space1}+'待批阅：'+${teaReleaseExams.checkNumber}+'份'">待阅卷：7 份</h4>
+                </div>
+                <a th:href="@{checkShortAnswerList(releaseExamId=${teaReleaseExams.releaseExam.releaseExamId})}" class="btn">去批阅</a>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        $('.ai_card ul li').hover(function () {
+            $(this).addClass('active').siblings().removeClass('active');
+        })
+    })
+</script>
+
+</body>
+</html>

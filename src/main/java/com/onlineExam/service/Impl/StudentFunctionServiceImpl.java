@@ -1,13 +1,13 @@
 package com.onlineExam.service.Impl;
 
 
-import com.onlineExam.domain.Exam;
+
 import com.onlineExam.domain.Question;
 import com.onlineExam.domain.ReleaseExam;
 import com.onlineExam.domain.StuAnswer;
 import com.onlineExam.mapper.StudentFunctionMapper;
 import com.onlineExam.service.StudentFunctionService;
-import org.apache.ibatis.annotations.Param;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,6 +30,15 @@ public class StudentFunctionServiceImpl implements StudentFunctionService {
     }
 
 
+    @Override
+    public List<ReleaseExam> getTeaReleaseExam(int authorId) {
+        return studentFunctionMapper.getTeaReleaseExam(authorId);
+    }
+
+    @Override
+    public int waitCheckNumber(Integer releaseExamId) {
+        return studentFunctionMapper.waitCheckNumber(releaseExamId);
+    }
 
     @Override
     public int getCheckBoxCount(Integer paperId) {
@@ -42,8 +51,38 @@ public class StudentFunctionServiceImpl implements StudentFunctionService {
     }
 
     @Override
+    public int updateShortAnswer(Map<String,Object> teaCheckScoreMap) {
+        return studentFunctionMapper.updateShortAnswer(teaCheckScoreMap);
+    }
+
+    @Override
+    public List<StuAnswer> stuShortAnswer(Integer releaseExamId, Integer stuId) {
+        return studentFunctionMapper.stuShortAnswer(releaseExamId,stuId);
+    }
+
+    @Override
+    public int updateIsCheck(Integer releaseExamId, Integer stuId) {
+        return studentFunctionMapper.updateIsCheck(releaseExamId,stuId);
+    }
+
+    @Override
+    public List<Question> getShortAnsScoreIntoPap(Integer releaseExamId) {
+        return studentFunctionMapper.getShortAnsScoreIntoPap(releaseExamId);
+    }
+
+    @Override
+    public int getSumScore(Map<String, Object> scoreMap) {
+        return studentFunctionMapper.getSumScore(scoreMap);
+    }
+
+    @Override
     public List<Question> getCheckQuestion(Integer paperId) {
         return studentFunctionMapper.getCheckQuestion(paperId);
+    }
+
+    @Override
+    public List<ReleaseExam> getUncheck(Integer releaseExamId) {
+        return studentFunctionMapper.getUncheck(releaseExamId);
     }
 
     @Override
@@ -112,6 +151,10 @@ public class StudentFunctionServiceImpl implements StudentFunctionService {
     public List<StuAnswer> getCheckHistory(int paperId, int stuId) {
         return studentFunctionMapper.getCheckHistory(paperId, stuId);
     }
+    @Override
+    public List<Question> shortAnswerIdInPaper(Integer paperId) {
+        return studentFunctionMapper.shortAnswerIdInPaper(paperId);
+    }
 
     @Override
     public List<Question> getShortAnswer(Integer paperId) {
@@ -119,7 +162,17 @@ public class StudentFunctionServiceImpl implements StudentFunctionService {
     }
 
     @Override
+    public int updateShortAnswerState(Map<Object, Object> shortAnswers) {
+        return studentFunctionMapper.updateShortAnswerState(shortAnswers);
+    }
+
+    @Override
     public int getShortAnswerCount(Integer paperId) {
         return studentFunctionMapper.getShortAnswerCount(paperId);
+    }
+
+    @Override
+    public int getShortAnswerScore(Integer paperId) {
+        return studentFunctionMapper.getShortAnswerScore(paperId);
     }
 }

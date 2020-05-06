@@ -36,7 +36,23 @@ public interface StudentFunctionService {
     //考试记录查看详情
     List<StuAnswer> getHistory(int paperId,int stuId);
     //考试记录多选题目的详情
-    List<StuAnswer> getCheckHistory(int paperId,int stuId);
+    List<StuAnswer> getCheckHistory(int paperId, int stuId);
+
     List<Question> getShortAnswer(@Param("paperId") Integer paperId);
+
     int getShortAnswerCount(@Param("paperId") Integer paperId);
+
+    int getShortAnswerScore(@Param("paperId") Integer paperId);
+
+    List<Question> shortAnswerIdInPaper(@Param("paperId") Integer paperId);
+
+    int updateShortAnswerState(Map<Object, Object> shortAnswers);
+    List<ReleaseExam> getTeaReleaseExam(@Param("authorId") int authorId);
+    int waitCheckNumber(@Param("releaseExamId") Integer releaseExamId);
+    List<ReleaseExam> getUncheck(@Param("releaseExamId") Integer releaseExamId);
+    List<StuAnswer> stuShortAnswer(@Param("releaseExamId") Integer releaseExamId,@Param("stuId") Integer stuId);
+    int updateShortAnswer(Map<String,Object> teaCheckScoreMap);
+    int updateIsCheck(@Param("releaseExamId") Integer releaseExamId,@Param("stuId") Integer stuId);
+    int getSumScore(Map<String,Object> scoreMap);
+    List<Question> getShortAnsScoreIntoPap(@Param("releaseExamId") Integer releaseExamId);
 }

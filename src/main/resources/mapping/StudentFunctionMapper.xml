@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.onlineExam.mapper.StudentFunctionMapper">
-<select id="getStuMajor" resultType="Integer">
+    <select id="getStuMajor" resultType="Integer">
 SELECT student.majorId from t_major,student where t_major.majorId=student.majorId and student.username=#{username}
 </select>
     <select id="getReleaseByMajor" resultType="com.onlineExam.domain.ReleaseExam">
@@ -13,11 +13,10 @@ and t_releaseexam.majorId=#{majorId})
 and (t_releaseexam.examStateId=2
 or t_releaseexam.examStateId=1)
 ORDER BY examStateName DESC
-
     </select>
-   <!-- <select id="getAnswerTime" resultType="com.onlineExam.domain.Paper">
-        select answerTime from t_paper where paperId=#{paperId}
-    </select>-->
+    <!-- <select id="getAnswerTime" resultType="com.onlineExam.domain.Paper">
+         select answerTime from t_paper where paperId=#{paperId}
+     </select>-->
     <update id="updateState" parameterType="com.onlineExam.domain.ReleaseExam">
       update t_releaseexam SET t_releaseexam.examStateId=#{examStateId} where t_releaseexam.releaseExamId=#{releaseExamId}
     </update>
@@ -35,12 +34,12 @@ ORDER BY examStateName DESC
         SELECT SUM(questionScore)  from t_question,t_realpaper where  t_realpaper.questionId=t_question.questionId and  questionType='多选' and t_realpaper.paperId=#{paperId}
     </select>
     <insert id="insertExamRecord" parameterType="java.util.Map">
-        insert  into t_stuAnswer(stuAnswerId,stuId,paperId,questionId,stuAnswer,releaseExamId) values
+        insert into t_stuAnswer(stuAnswerId,stuId,paperId,questionId,stuAnswer,releaseExamId) values
         <foreach collection="record" item="record" close=";" separator=",">
             (DEFAULT ,#{stuId},#{paperId},#{record.questionId},#{record.stuAnswer},#{releaseExamId})
         </foreach>
     </insert>
-   <select id="useranswerRecord" resultType="com.onlineExam.domain.StuAnswer">
+    <select id="useranswerRecord" resultType="com.onlineExam.domain.StuAnswer">
          SELECT t_stuAnswer.stuAnswerId,t_stuanswer.questionId,t_stuanswer.stuAnswer from  t_stuanswer where t_stuanswer.releaseExamId=#{releaseExamId} and t_stuanswer.paperId=#{paperId}
    </select>
     <select id="questionAnswer" resultType="com.onlineExam.domain.Question">
@@ -75,13 +74,116 @@ ORDER BY examStateName DESC
     <select id="getCheckHistory" parameterType="java.lang.Integer" resultType="com.onlineExam.domain.StuAnswer">
        select * from t_question,t_stuanswer,t_paper where t_stuanswer.questionId=t_question.questionId and t_stuanswer.stuId=#{stuId} and t_stuanswer.paperId=#{paperId} and t_question.questionType='多选'
     </select>
-<select id="getShortAnswerCount" resultType="int">
+    <select id="getShortAnswerCount" resultType="int">
     SELECT COUNT(questionType)  from t_question,t_realpaper
 where  t_realpaper.questionId=t_question.questionId and  questionType='简答' and t_realpaper.paperId=#{paperId}
-
 </select>
     <select id="getShortAnswer" resultType="com.onlineExam.domain.Question">
-         select t_question.questionId,t_question.questionName,t_question.questionScore
+         select t_question.questionId,t_question.questionName,t_question.questionScore,t_question.answer
        from t_question,t_realpaper where t_realpaper.questionId=t_question.questionId and t_question.questionType='简答' and t_realpaper.paperId=#{paperId}
+    </select>
+    <select id="getShortAnswerScore" resultType="int">
+        SELECT SUM(questionScore)  from t_question,t_realpaper where  t_realpaper.questionId=t_question.questionId and  questionType='简答' and t_realpaper.paperId=#{paperId}
+    </select>
+    <select id="shortAnswerIdInPaper" resultType="com.onlineExam.domain.Question">
+      select t_question.questionId
+      from t_question,t_realpaper where t_realpaper.questionId=t_question.questionId
+      and t_question.questionType='简答' and t_realpaper.paperId=#{paperId}
+    </select>
+    <update id="updateShortAnswerState" parameterType="java.util.Map">
+        update t_stuanswer   set isWrong=#{isWrong} where  releaseExamId =#{releaseExamId}
+       and  questionId in
+        <foreach collection="questionIds" item="item" separator="," open="(" close=")">
+            #{item.questionId}
+        </foreach>
+    </update>
+<select id="getTeaReleaseExam" resultType="com.onlineExam.domain.ReleaseExam">
+    SELECT
+	t_releaseexam.releaseExamId,
+	t_releaseexam.beginTime,
+    t_paper.paperId,
+    t_paper.paperName,
+    count(DISTINCT t_stuanswer.stuId) as JoinNumber
+
+FROM
+	t_releaseexam,
+	t_stuanswer,
+	t_paper
+WHERE
+t_paper.paperId=t_releaseexam.paperId and t_releaseexam.releaseExamId=t_stuanswer.releaseExamId 	and t_releaseexam.authorId = 3 GROUP BY t_stuanswer.releaseExamId
+</select>
+    <select id="waitCheckNumber" resultType="int">
+        SELECT
+	COUNT(a.isCheckNumber) AS checkNumber
+FROM
+
+		(
+			SELECT
+				count(DISTINCT isCheck) AS isCheckNumber
+			FROM
+				t_stuanswer
+			WHERE
+				isCheck = '未批阅'
+			AND releaseExamId = #{releaseExamId}
+			GROUP BY
+				stuId
+		) a
+
+    </select>
+    <select id="getUncheck" resultType="com.onlineExam.domain.ReleaseExam">
+SELECT
+t_stuanswer.stuid,
+t_stuanswer.releaseExamId,
+t_stuanswer.paperId,
+	 student.stuname,
+	 t_paper.paperName
+FROM
+	t_stuanswer,
+	student,
+	t_paper
+WHERE
+	t_stuanswer.stuId = student.stuid
+AND t_stuanswer.releaseExamId = #{releaseExamId}
+and t_paper.paperId=t_stuanswer.paperId
+and isCheck='未批阅'
+GROUP BY t_stuanswer.stuId
+    </select>
+    <select id="stuShortAnswer" resultType="com.onlineExam.domain.StuAnswer">
+        SELECT
+    t_stuanswer.releaseExamId,
+	t_stuanswer.questionId,
+	t_question.questionName,
+	t_question.questionScore,
+	t_stuanswer.stuId,
+	t_stuanswer.stuAnswer
+FROM
+	t_stuanswer,
+	t_question
+WHERE
+	t_stuanswer.questionId = t_question.questionId
+AND t_stuanswer.releaseExamId = #{releaseExamId}
+AND stuId = #{stuId}
+AND isWrong = 3
+    </select>
+    <update id="updateShortAnswer" parameterType="java.util.Map">
+        <foreach collection="reaCheckRecords" item="record" open="" close="" separator=";">
+            update t_stuanswer
+            <set>
+                isWrong=#{record.isWrong},
+           teaCheckScore=#{record.teaCheckScore},
+            teaSuggest=#{record.teaSuggest}
+            </set>
+            where  releaseExamId=#{releaseExamId} and stuId=#{stuId} AND questionId=#{record.questionId}
+        </foreach>
+    </update>
+    <update id="updateIsCheck" parameterType="com.onlineExam.domain.StuAnswer">
+update t_stuanswer set isCheck='已批阅' where  releaseExamId=#{releaseExamId} and stuId=#{stuId}
+    </update>
+    <update id="getSumScore" parameterType="java.util.Map">
+        update t_exam SET shortAnswerScore=#{shortAnswerScore} ,sumScore=examScore+shortAnswerScore where stuId=#{stuId} and releaseExamId=#{releaseExamId}
+    </update>
+    <select id="getShortAnsScoreIntoPap" resultType="com.onlineExam.domain.Question">
+ SELECT t_question.questionId,t_question.questionScore from t_question,t_realpaper,t_releaseexam
+where  t_realpaper.questionId=t_question.questionId  and t_releaseexam.paperId=t_realpaper.paperId and t_releaseexam.releaseExamId=#{releaseExamId} and t_question.questionType='简答'
     </select>
 </mapper>
