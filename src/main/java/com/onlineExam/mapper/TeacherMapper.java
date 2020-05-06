@@ -20,8 +20,8 @@ public interface TeacherMapper {
     List<StuAnswer> getQuestion(@Param("stuId")int stuId, @Param("paperId") int paperId, @Param("releaseExamId")int releaseExamId);
     //显示试题
     List<Question> getQuestion1(@Param("majorId") int majorId, @Param("teachername") String teachername);
-    List<StuAnswer> showanalyze(@Param("questionId") Integer questionId);
-    List<QuestionA> getType(Integer questionId);
+    List<StuAnswer> showanalyze(@Param("questionId") Integer questionId,@Param("paperName")String paperName);
+    List<QuestionA> getType(@Param("questionId") Integer questionId,@Param("paperName") String paperName);
 
 
     //修改用户信息

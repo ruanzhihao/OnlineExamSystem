@@ -52,13 +52,13 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public List<StuAnswer> showanalyze(Integer questionId) {
-        return teacherMapper.showanalyze(questionId);
+    public List<StuAnswer> showanalyze(Integer questionId,String paperName) {
+        return teacherMapper.showanalyze(questionId,paperName);
     }
 
     @Override
-    public List<QuestionA> getType(Integer questionId) {
-        return teacherMapper.getType(questionId);
+    public List<QuestionA> getType(Integer questionId,String paperName) {
+        return teacherMapper.getType(questionId,paperName);
     }
 
 

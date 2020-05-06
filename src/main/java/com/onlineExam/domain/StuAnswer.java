@@ -23,4 +23,6 @@ public class StuAnswer {
     int questionScore;
     String questionType;
     String questionClass;
+    String stuname;
+    String type;
 }

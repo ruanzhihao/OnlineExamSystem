@@ -312,9 +312,10 @@ public class TeacherController {
     }
 
     @RequestMapping(value = "/showanalyze")
-    public  String showanalyze(@RequestParam("questionId") Integer questionId,Model model,HttpSession session){
-        List<StuAnswer> stuAnswerList=teacherMapper.showanalyze(questionId);
+    public  String showanalyze(@RequestParam("questionId") Integer questionId,@RequestParam ("paperName")String paperName, Model model,HttpSession session){
+        List<StuAnswer> stuAnswerList=teacherMapper.showanalyze(questionId,paperName);
         session.setAttribute("questionId",questionId);
+        session.setAttribute("paperName",paperName);
         model.addAttribute("stuAnswerList",stuAnswerList);
         return "titleAnalyze";
     }
@@ -323,7 +324,8 @@ public class TeacherController {
     @ResponseBody
     public List<QuestionA> getType(HttpSession session){
         Integer questionId=(int)session.getAttribute("questionId");
-        List<QuestionA> questionAList=teacherMapper.getType(questionId);
+        String paperName= (String)session.getAttribute("paperName");
+        List<QuestionA> questionAList=teacherMapper.getType(questionId,paperName);
         return questionAList;
     }
 

@@ -15,8 +15,8 @@ public interface TeacherService {
     List<Teacher> queryTeacher(String teachername);
     public List<StuAnswer> getQuestion(@Param("stuId")int stuId, @Param("paperId") int paperId, @Param("releaseExamId")int releaseExamId);
     List<Question> getQuestion1(@Param("majorId")int majorId, @Param("teachername")String teachername);
-    List<StuAnswer> showanalyze(@Param("questionId") Integer questionId);
-    List<QuestionA> getType(Integer questionId);
+    List<StuAnswer> showanalyze(@Param("questionId") Integer questionId,@Param("paperName")String paperName);
+    List<QuestionA> getType(Integer questionId,String paperName);
 
 
 
