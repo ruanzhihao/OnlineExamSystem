@@ -19,7 +19,7 @@
     <div class="Service-content clearfix">
         <a th:href="@{checkShortAnswerDetail(releaseExamId=${unCheckInfo.releaseExamId},paperId=${unCheckInfo.paperId},stuId=${unCheckInfo.stuId})}" class="Service-item"  th:each="unCheckInfo:${unCheckInfo}" >
             <div class="item-image">
-                <img th:src="@{/images/试卷.jpg}"alt="">
+                <img th:src="@{/imgs/试卷.jpg}"alt="">
             </div>
             <h3 class="item-title" th:text="'学生：'+${unCheckInfo.stuname}">姓名：阮志豪</h3>
             <div class="item-text" th:text="'  '+${unCheckInfo.paperName}">JavaEE</div>

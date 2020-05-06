@@ -62,10 +62,10 @@
         SELECT * from teacher,t_paper,t_realpaper,t_question where teacher.majorId=t_paper.majorId and t_paper.paperId=t_realpaper.paperId and t_realpaper.questionId=t_question.questionId and teacher.majorId=#{majorId} and teacher.teachername=#{teachername}
     </select>
     <select id="showanalyze" resultType="com.onlineExam.domain.StuAnswer">
-        select stuname,stuAnswer,questionId,type from t_stuanswer,t_type,student where questionId=#{questionId} and t_type.isWrong=t_stuanswer.isWrong and t_stuanswer.stuId=student.stuid GROUP BY t_stuanswer.stuId
+        select stuname,stuAnswer,questionId,type from t_stuanswer,t_type,student,t_paper where t_stuanswer.paperId=t_paper.paperId and t_paper.paperName=#{paperName} and questionId=#{questionId} and t_type.isWrong=t_stuanswer.isWrong and t_stuanswer.stuId=student.stuid GROUP BY t_stuanswer.stuId
     </select>
     <select id="getType" resultType="com.onlineExam.domain.QuestionA">
-        SELECT t_type.type as type,COUNT(*) as number from t_stuanswer,t_type where  t_stuanswer.isWrong=t_type.isWrong and questionId=#{questionId} GROUP BY t_stuanswer.isWrong
+        SELECT t_type.type as type,COUNT(*) as number from t_stuanswer,t_type,t_paper where t_stuanswer.paperId=t_paper.paperId and paperName=#{paperName} and t_stuanswer.isWrong=t_type.isWrong and questionId=#{questionId} GROUP BY t_stuanswer.isWrong
     </select>
 
     <!--	修改用户信息-->

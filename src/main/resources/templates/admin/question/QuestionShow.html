@@ -1,406 +1,447 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-	<link th:href="@{/Wjl/css/main.css}" rel="stylesheet" type="text/css" />
-	<link th:href="@{/Wjl/css/test.css}" rel="stylesheet" type="text/css" />
-	<link rel="stylesheet" th:href="@{/Rzh/layui/css/layui.css}">
-	<link rel="stylesheet" th:href="@{/Rzh/layui/css/modules/layer/default/layer.css}">
-	<script type="text/javascript" th:src="@{/Rzh/js/jQuery1.7.2.js}"></script>
-	<script type="text/javascript" th:src="@{/Rzh/layui/layui.js}"></script>
-	<script type="text/javascript" th:src="@{/Rzh/layer/layer.js}"></script>
-	<script type="text/javascript" th:src="@{/js/echarts.min.js}"></script>
+    <link th:href="@{/Wjl/css/main.css}" rel="stylesheet" type="text/css"/>
+    <link th:href="@{/Wjl/css/test.css}" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" th:href="@{/Rzh/layui/css/layui.css}">
+    <link rel="stylesheet" th:href="@{/Rzh/layui/css/modules/layer/default/layer.css}">
+    <script type="text/javascript" th:src="@{/Rzh/js/jQuery1.7.2.js}"></script>
+    <script type="text/javascript" th:src="@{/Rzh/layui/layui.js}"></script>
+    <script type="text/javascript" th:src="@{/Rzh/layer/layer.js}"></script>
+    <script type="text/javascript" th:src="@{/js/echarts.min.js}"></script>
 </head>
 <style>
-			.hasBeenAnswer {
-            background: #5d9cec;
-            color: #fff;
-        }
+    .hasBeenAnswer {
+        background: #5d9cec;
+        color: #fff;
+    }
 
-        .reading h2 {
-            width: 100%;
-            margin: 20px 0 70px;
-            text-align: center;
-            line-height: 2;
-            font-size: 20px;
-            color: #59595b;
-        }
+    .reading h2 {
+        width: 100%;
+        margin: 20px 0 70px;
+        text-align: center;
+        line-height: 2;
+        font-size: 20px;
+        color: #59595b;
+    }
 
-            .reading h2 a {
-                text-decoration: none;
-                color: #59595b;
-                font-size: 20px;
-            }
+    .reading h2 a {
+        text-decoration: none;
+        color: #59595b;
+        font-size: 20px;
+    }
 
-                .reading h2 a:hover {
-                    color: #2183f1;
-                }
-    </style>
-
-
-	<body>
-		<div class="main" style="text-align: center">
-			<!--nr start-->
-			<div class="test_main">
-				
-				<div class="nr_left">
-					<div class="test">
-						<div class="demoTable" style="padding: 15px;">
-						
-						    <div class="layui-inline">
-						        <input placeholder="输入试题关键字" class="layui-input" id="findQuestionKey" name="findQuestionKey" autocomplete="off">
-						    </div>
-						    <button class="layui-btn layui-btn-normal" data-type="reload" onclick="queryQuestion()" >搜索</button>
-							<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-							<button class="layui-btn layui-btn-normal" data-type="reload" id="addQuestion" >添加</button>
-						<form  action="" method="post">
-							<div class="test_content">
-								<div class="test_content_title">
-									<h2>单选题</h2>
-									<p>
-										<span>共</span><i class="content_lit"><span th:text="${radioCount}"></span></i><span>题</span>
-									</p>
-								</div>
-							</div>
-							<div class="test_content_nr">
-								<ul th:each="question,state1:${radioList}">
-									<li th:id="'qu_0_'+${state1.index+1}">
-										<div><img th:src="'images/'+${question.questionClass}+'.jpg'"/>
-											<input type="hidden" name="questionId" th:value="${question.questionId}">
-										<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-											<button type="button" href="javascript:;" th:onclick="|javascript:updateIndex(this,${question.questionId})|" class="layui-btn layui-btn-normal">更新</button><button type="button" th:onclick="|javascript:deleteQuestion(this,${question.questionId})|" href="javascript:;" class="layui-btn layui-btn-danger">删除</button></div>
-										<div class="test_content_nr_tt">
-											<i><span th:text="${state1.index+1}">1</span></i><span th:text="'('+${question.questionScore}+')分'">(1分)</span>
-											<font><span th:text="${question.questionName}">以下属于南方电网员工职业操守中明文规定的有()</span></font>
-											
-										</div>
-										<div class="test_content_nr_main">
-											<ul>
-
-												<li class="option">
-
-													<!-- <input type="radio" class="radioOrCheck" name="answer1" id="0_answer_1_option_1" /> -->
+    .reading h2 a:hover {
+        color: #2183f1;
+    }
+</style>
 
 
-													<label >
-														A.
-														<p class="ue" style="display: inline;" th:text="${question.optionA}">在工具栏中点击“workflow”标签</p>
-													</label>
-												</li>
+<body>
+<div class="main" style="text-align: center">
+    <!--nr start-->
+    <div class="test_main">
 
-												<li class="option">
+        <div class="nr_left">
+            <div class="test">
+                <div class="demoTable" style="padding: 15px;">
 
-<!-- 													<input type="radio" class="radioOrCheck" name="answer1" id="0_answer_1_option_2" /> -->
+                    <div class="layui-inline">
+                        <input placeholder="输入试题关键字" class="layui-input" id="findQuestionKey" name="findQuestionKey"
+                               autocomplete="off">
+                    </div>
+                    <button class="layui-btn layui-btn-normal" data-type="reload" onclick="queryQuestion()">搜索</button>
+                    <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                    <button class="layui-btn layui-btn-normal" data-type="reload" id="addQuestion">添加</button>
+                    <form action="" method="post">
+                        <div class="test_content">
+                            <div class="test_content_title">
+                                <h2>单选题</h2>
+                                <p>
+                                    <span>共</span><i class="content_lit"><span th:text="${radioCount}"></span></i><span>题</span>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="test_content_nr">
+                            <ul th:each="question,state1:${radioList}">
+                                <li th:id="'qu_0_'+${state1.index+1}">
+                                    <div><img th:src="'imgs/'+${question.questionClass}+'.jpg'"/>
+                                        <input type="hidden" name="questionId" th:value="${question.questionId}">
+                                        <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                                        <button type="button" href="javascript:;"
+                                                th:onclick="|javascript:updateIndex(this,${question.questionId})|"
+                                                class="layui-btn layui-btn-normal">更新
+                                        </button>
+                                        <button type="button"
+                                                th:onclick="|javascript:deleteQuestion(this,${question.questionId})|"
+                                                href="javascript:;" class="layui-btn layui-btn-danger">删除
+                                        </button>
+                                    </div>
+                                    <div class="test_content_nr_tt">
+                                        <i><span th:text="${state1.index+1}">1</span></i><span
+                                            th:text="'('+${question.questionScore}+')分'">(1分)</span>
+                                        <font><span
+                                                th:text="${question.questionName}">以下属于南方电网员工职业操守中明文规定的有()</span></font>
 
+                                    </div>
+                                    <div class="test_content_nr_main">
+                                        <ul>
 
-													<label >
-														B.
-														<p class="ue" style="display: inline;" th:text="${question.optionB}">在缺陷单界面中点击“推进流程”按钮</p>
-													</label>
-												</li>
+                                            <li class="option">
 
-												<li class="option">
-
-<!-- 													<input type="radio" class="radioOrCheck" name="answer1" id="0_answer_1_option_3" /> -->
-
-
-													<label >
-														C.
-														<p class="ue" style="display: inline;" th:text="${question.optionC}">在缺陷单界面中点击“提交”按钮</p>
-													</label>
-												</li>
-
-												<li class="option">
-
-<!-- 													<input type="radio" class="radioOrCheck" name="answer1" id="0_answer_1_option_4" /> -->
-
-
-													<label >
-														D.
-														<p class="ue" style="display: inline;" th:text="${question.optionD}">后台启动流程推进</p>
-													</label>
-												</li>
-
-											</ul>
-											<hr>
-											<span>正确答案：<span style="color: red" th:text="${question.answer}"></span></span>
-											<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-											<span>所属课程：<span style="color: green" th:text="${question.majorName}"></span></span>
-										</div>
-									</li>
-
-								</ul>
-								<div></div>
-							</div>
-
-							<div class="test_content">
-								<div class="test_content_title">
-									<h2>多选题</h2>
-									<p>
-										<span>共</span><i class="content_lit"><span th:text="${checkBoxCount}"></span></i><span>题</span>
-									</p>
-								</div>
-							</div>
-							<div class="test_content_nr">
-								<ul th:each="cquestion,state:${checkBoxList}">
-									<li th:id="'qu_1_'+${state.index}">
-										<div><img th:src="'images/'+${cquestion.questionClass}+'.jpg'"/>
-											<input type="hidden" name="questionId" th:value="${cquestion.questionId}">
-											<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-										<button type="button" href="javascript:;" th:onclick="|javascript:updateIndex(this,${cquestion.questionId})|" class="layui-btn layui-btn-normal">更新</button><button type="button" class="layui-btn layui-btn-danger" th:onclick="|javascript:deleteQuestion(this,${cquestion.questionId})|" href="javascript:;">删除</button></div><div class="test_content_nr_tt">
-											<i><span th:text="${state.index+1}"></span></i><span th:text="'('+${cquestion.questionScore}+')分'">(1分)</span>
-											<font><span th:text="${cquestion.questionName}">以下属于南方电网员工职业操守中明文规定的有()</span></font>
-										</div>
-										<div class="test_content_nr_main">
-											<ul >
-
-												<li class="option">
+                                                <!-- <input type="radio" class="radioOrCheck" name="answer1" id="0_answer_1_option_1" /> -->
 
 
-<!-- 													<input type="checkbox" class="radioOrCheck" name="answer2" id="1_answer_1_option_1" value="A" /> -->
+                                                <label>
+                                                    A.
+                                                    <p class="ue" style="display: inline;"
+                                                       th:text="${question.optionA}">在工具栏中点击“workflow”标签</p>
+                                                </label>
+                                            </li>
 
-													<label >
-														A.
-														<p class="ue" style="display: inline;"th:text="${cquestion.optionA}">热爱祖国、热爱南网、热爱岗位</p>
-													</label>
-												</li>
+                                            <li class="option">
 
-												<li class="option">
-
-
-<!-- 													<input type="checkbox" class="radioOrCheck" name="answer2" id="1_answer_1_option_2" value="B" /> -->
-
-													<label >
-														B.
-														<p class="ue" style="display: inline;"th:text="${cquestion.optionB}">遵纪守法、忠于职守、令行禁止</p>
-													</label>
-												</li>
-
-												<li class="option">
+                                                <!-- 													<input type="radio" class="radioOrCheck" name="answer1" id="0_answer_1_option_2" /> -->
 
 
-													<!-- <input type="checkbox" class="radioOrCheck" name="answer2" id="1_answer_1_option_3" value="C" /> -->
+                                                <label>
+                                                    B.
+                                                    <p class="ue" style="display: inline;"
+                                                       th:text="${question.optionB}">在缺陷单界面中点击“推进流程”按钮</p>
+                                                </label>
+                                            </li>
 
-													<label >
-														C.
-														<p class="ue" style="display: inline;" th:text="${cquestion.optionC}">客户至上、诚实守信、优质服务</p>
-													</label>
-												</li>
+                                            <li class="option">
 
-												<li class="option">
-
-
-<!-- 													<input type="checkbox" class="radioOrCheck" name="answer2" id="1_answer_1_option_4" value="D" /> -->
-
-													<label >
-														D.
-														<p class="ue" style="display: inline;" th:text="${cquestion.optionD}">公平竞争、互相监督、服从监管</p>
-													</label>
-												</li>
-
-											</ul>
-											<hr>
-											<span>正确答案：<span style="color: red" th:text="${cquestion.answer}"></span></span>
-											<span>所属专业：<span style="color: green" th:text="${cquestion.majorName}"></span></span>
-										</div>
-									</li>
-
-								</ul>
-							</div>
-						</form>
-					</div>
-
-					<div class="foot"></div>
+                                                <!-- 													<input type="radio" class="radioOrCheck" name="answer1" id="0_answer_1_option_3" /> -->
 
 
-				</div>
-				</div>
-			</div>
-		</div>
-		<div class="layui-row" id="popSearchRoleTest" style="display:none;">
-		<div class="layui-col-md11">
-			<form class="layui-form" lay-filter="formTestFilter2121"  >
-				<div class="layui-form-item">
-					<label class="layui-form-label">试题内容：</label>
-					<div class="layui-input-block" style="width: 520px">
-						<textarea placeholder="请输入试题内容" class="layui-textarea" name="questionName" id="questionName" ></textarea>
-					</div>
-				</div>
-				<div class="layui-form-item">
-					<label class="layui-form-label">选项A：</label>
-					<div class="layui-input-inline">
-						<input type="text" name="optionA" id="optionA" class="layui-input">
-					</div>
-					<label class="layui-form-label">选项B：</label>
-					<div class="layui-input-inline">
-						<input type="text" name="optionB" id="optionB" class="layui-input">
-					</div>
-				</div>
-				<div class="layui-form-item">
-					<label class="layui-form-label">选项C：</label>
-					<div class="layui-input-inline">
-						<input type="text" name="optionC" id="optionC" class="layui-input">
-					</div>
-					<label class="layui-form-label">选项D：</label>
-					<div class="layui-input-inline">
-						<input type="text" name="optionD" id="optionD" class="layui-input">
-					</div>
-				</div>
-				<div class="layui-form-item">
-					<label class="layui-form-label">正确答案：</label>
-					<div class="layui-input-inline">
-						<input type="text" name="answer" id="answer" class="layui-input">
-					</div>
-					<div class="layui-input-inline" style="color:red;">
-						提示：请把保持答案内容与选项内容一致
-					</div>
-				</div>
+                                                <label>
+                                                    C.
+                                                    <p class="ue" style="display: inline;"
+                                                       th:text="${question.optionC}">在缺陷单界面中点击“提交”按钮</p>
+                                                </label>
+                                            </li>
 
-				<div class="layui-form-item">
-					<label class="layui-form-label">考试科目：</label>
-					<div class="layui-input-inline" style="width: 180px" >
-						<select name="courseId" id="courseId" lay-verify="required" >
-							<option value=""></option>
-							<option  th:each="course :${courseList}" th:text="${course.courseName}" th:value="${course.courseId}"></option>
-						</select>
-					</div>
+                                            <li class="option">
 
-					<label class="layui-form-label">专业：</label>
-					<div class="layui-input-inline" style="width: 180px">
-						<select name="majorId" id="majorId"  lay-verify="required" >
-							<option value=""></option>
-							<option th:each="major:${majorList}" th:text="${major.majorName}" th:value="${major.majorId}"></option>
-						</select>
-					</div>
-				</div>
+                                                <!-- 													<input type="radio" class="radioOrCheck" name="answer1" id="0_answer_1_option_4" /> -->
 
-				<div class="layui-form-item">
-					<label class="layui-form-label">该题题型：</label>
-					<div class="layui-input-inline" style="width: 180px">
-						<select name="questionType" id="questionType" lay-verify="required">
-							<option value=""></option>
-							<option value="单选">单选</option>
-							<option value="多选">多选</option>
-						</select>
 
-					</div>
-					<label class="layui-form-label">分值分配：</label>
-					<div class="layui-input-inline" style="width: 80px">
-						<input type="text" name="questionScore" id="questionScore" class="layui-input" placeholder="单位：分">
-					</div>
+                                                <label>
+                                                    D.
+                                                    <p class="ue" style="display: inline;"
+                                                       th:text="${question.optionD}">后台启动流程推进</p>
+                                                </label>
+                                            </li>
 
-				</div>
+                                        </ul>
+                                        <hr>
+                                        <span>正确答案：<span style="color: red" th:text="${question.answer}"></span></span>
+                                        <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                                        <span>所属课程：<span style="color: green"
+                                                         th:text="${question.majorName}"></span></span>
+                                    </div>
+                                </li>
 
-				<div class="layui-form-item">
-					<label class="layui-form-label">试题难度：</label>
-					<div class="layui-input-block" style="width: 180px">
-						<select name="city" id="questionClass" lay-verify="required">
-							<option value=""></option>
-							<option value="简单">简单</option>
-							<option value="中等">中等</option>
-							<option value="困难">困难</option>
-						</select>
-					</div>
-				</div>
+                            </ul>
+                            <div></div>
+                        </div>
 
-				<div class="layui-form-item">
-					<div class="layui-input-block" >
-						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <div class="test_content">
+                            <div class="test_content_title">
+                                <h2>多选题</h2>
+                                <p>
+                                    <span>共</span><i class="content_lit"><span
+                                        th:text="${checkBoxCount}"></span></i><span>题</span>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="test_content_nr">
+                            <ul th:each="cquestion,state:${checkBoxList}">
+                                <li th:id="'qu_1_'+${state.index}">
+                                    <div><img th:src="'imgs/'+${cquestion.questionClass}+'.jpg'"/>
+                                        <input type="hidden" name="questionId" th:value="${cquestion.questionId}">
+                                        <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                                        <button type="button" href="javascript:;"
+                                                th:onclick="|javascript:updateIndex(this,${cquestion.questionId})|"
+                                                class="layui-btn layui-btn-normal">更新
+                                        </button>
+                                        <button type="button" class="layui-btn layui-btn-danger"
+                                                th:onclick="|javascript:deleteQuestion(this,${cquestion.questionId})|"
+                                                href="javascript:;">删除
+                                        </button>
+                                    </div>
+                                    <div class="test_content_nr_tt">
+                                        <i><span th:text="${state.index+1}"></span></i><span
+                                            th:text="'('+${cquestion.questionScore}+')分'">(1分)</span>
+                                        <font><span
+                                                th:text="${cquestion.questionName}">以下属于南方电网员工职业操守中明文规定的有()</span></font>
+                                    </div>
+                                    <div class="test_content_nr_main">
+                                        <ul>
 
-						<button type="button" onclick="addQues()" class="layui-btn layui-btn-normal">确定新增</button>
-						<script th:inline="javascript">
-                            function addQues(){
-                                //获取不到值 为空值;
-                                var questionName=$("#questionName").val();
-                                var optionA=$('#optionA').val();
-                                var optionB=$('#optionB').val();
-                                var optionC=$('#optionC').val();
-                                var optionD=$('#optionD').val();
-                                var answer=$('#answer').val();
-                                var courseId=$('#courseId option:selected').val();
-                                var majorId=$('#majorId option:selected').val();
-                                var questionType=$('#questionType').val();
-                                var questionClass=$('#questionClass').val();
-                                var questionScore=$('#questionScore').val();
-                                $.ajax({
-                                    url:'/addQuestion',
-                                    type:"get",
-                                    contentType: "application/json;charset=UTF-8",
-                                    data:{
-                                        questionName:questionName,
-                                        optionA:optionA,
-                                        optionB:optionB,
-                                        optionC:optionC,
-                                        optionD:optionD,
-                                        answer:answer,
-                                        questionScore:questionScore,
-                                        courseId:courseId,
-                                        majorId:majorId,
-                                        questionType:questionType,
-                                        questionClass:questionClass,
+                                            <li class="option">
 
-                                    },
-                                    success:function(){
-                                        layer.msg('添加成功', {icon:1,
-                                            time: 2000 //2秒关闭（如果不配置，默认是3秒）
-                                        }, function () {
-                                            window.location.href="/questionShow";
-                                        });
-                                    }
-                                })
-                            }
 
-						</script>
-					</div>
-				</div>
-			</form>
-		</div>
-		</div>
-	</body>
-				<script th:src="@{http://cdn.bootstrapmb.com/jquery/jquery-1.11.1.min.js}"></script>
-				<script th:src="@{Wjl/js/jquery.easy-pie-chart.js}"></script>
-				<!--时间js-->
-				<script th:src="@{/Wjl/time/jquery.countdown.js}"></script>
+                                                <!-- 													<input type="checkbox" class="radioOrCheck" name="answer2" id="1_answer_1_option_1" value="A" /> -->
+
+                                                <label>
+                                                    A.
+                                                    <p class="ue" style="display: inline;"
+                                                       th:text="${cquestion.optionA}">热爱祖国、热爱南网、热爱岗位</p>
+                                                </label>
+                                            </li>
+
+                                            <li class="option">
+
+
+                                                <!-- 													<input type="checkbox" class="radioOrCheck" name="answer2" id="1_answer_1_option_2" value="B" /> -->
+
+                                                <label>
+                                                    B.
+                                                    <p class="ue" style="display: inline;"
+                                                       th:text="${cquestion.optionB}">遵纪守法、忠于职守、令行禁止</p>
+                                                </label>
+                                            </li>
+
+                                            <li class="option">
+
+
+                                                <!-- <input type="checkbox" class="radioOrCheck" name="answer2" id="1_answer_1_option_3" value="C" /> -->
+
+                                                <label>
+                                                    C.
+                                                    <p class="ue" style="display: inline;"
+                                                       th:text="${cquestion.optionC}">客户至上、诚实守信、优质服务</p>
+                                                </label>
+                                            </li>
+
+                                            <li class="option">
+
+
+                                                <!-- 													<input type="checkbox" class="radioOrCheck" name="answer2" id="1_answer_1_option_4" value="D" /> -->
+
+                                                <label>
+                                                    D.
+                                                    <p class="ue" style="display: inline;"
+                                                       th:text="${cquestion.optionD}">公平竞争、互相监督、服从监管</p>
+                                                </label>
+                                            </li>
+
+                                        </ul>
+                                        <hr>
+                                        <span>正确答案：<span style="color: red" th:text="${cquestion.answer}"></span></span>
+                                        <span>所属专业：<span style="color: green"
+                                                         th:text="${cquestion.majorName}"></span></span>
+                                    </div>
+                                </li>
+
+                            </ul>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="foot"></div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="layui-row" id="popSearchRoleTest" style="display:none;">
+    <div class="layui-col-md11">
+        <form class="layui-form" lay-filter="formTestFilter2121">
+            <div class="layui-form-item">
+                <label class="layui-form-label">试题内容：</label>
+                <div class="layui-input-block" style="width: 520px">
+                    <textarea placeholder="请输入试题内容" class="layui-textarea" name="questionName"
+                              id="questionName"></textarea>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">选项A：</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="optionA" id="optionA" class="layui-input">
+                </div>
+                <label class="layui-form-label">选项B：</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="optionB" id="optionB" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">选项C：</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="optionC" id="optionC" class="layui-input">
+                </div>
+                <label class="layui-form-label">选项D：</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="optionD" id="optionD" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">正确答案：</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="answer" id="answer" class="layui-input">
+                </div>
+                <div class="layui-input-inline" style="color:red;">
+                    提示：请把保持答案内容与选项内容一致
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">考试科目：</label>
+                <div class="layui-input-inline" style="width: 180px">
+                    <select name="courseId" id="courseId" lay-verify="required">
+                        <option value=""></option>
+                        <option th:each="course :${courseList}" th:text="${course.courseName}"
+                                th:value="${course.courseId}"></option>
+                    </select>
+                </div>
+
+                <label class="layui-form-label">专业：</label>
+                <div class="layui-input-inline" style="width: 180px">
+                    <select name="majorId" id="majorId" lay-verify="required">
+                        <option value=""></option>
+                        <option th:each="major:${majorList}" th:text="${major.majorName}"
+                                th:value="${major.majorId}"></option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">该题题型：</label>
+                <div class="layui-input-inline" style="width: 180px">
+                    <select name="questionType" id="questionType" lay-verify="required">
+                        <option value=""></option>
+                        <option value="单选">单选</option>
+                        <option value="多选">多选</option>
+                    </select>
+
+                </div>
+                <label class="layui-form-label">分值分配：</label>
+                <div class="layui-input-inline" style="width: 80px">
+                    <input type="text" name="questionScore" id="questionScore" class="layui-input" placeholder="单位：分">
+                </div>
+
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">试题难度：</label>
+                <div class="layui-input-block" style="width: 180px">
+                    <select name="city" id="questionClass" lay-verify="required">
+                        <option value=""></option>
+                        <option value="简单">简单</option>
+                        <option value="中等">中等</option>
+                        <option value="困难">困难</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+                    <button type="button" onclick="addQues()" class="layui-btn layui-btn-normal">确定新增</button>
+                    <script th:inline="javascript">
+                        function addQues() {
+                            //获取不到值 为空值;
+                            var questionName = $("#questionName").val();
+                            var optionA = $('#optionA').val();
+                            var optionB = $('#optionB').val();
+                            var optionC = $('#optionC').val();
+                            var optionD = $('#optionD').val();
+                            var answer = $('#answer').val();
+                            var courseId = $('#courseId option:selected').val();
+                            var majorId = $('#majorId option:selected').val();
+                            var questionType = $('#questionType').val();
+                            var questionClass = $('#questionClass').val();
+                            var questionScore = $('#questionScore').val();
+                            $.ajax({
+                                url: '/addQuestion',
+                                type: "get",
+                                contentType: "application/json;charset=UTF-8",
+                                data: {
+                                    questionName: questionName,
+                                    optionA: optionA,
+                                    optionB: optionB,
+                                    optionC: optionC,
+                                    optionD: optionD,
+                                    answer: answer,
+                                    questionScore: questionScore,
+                                    courseId: courseId,
+                                    majorId: majorId,
+                                    questionType: questionType,
+                                    questionClass: questionClass,
+
+                                },
+                                success: function () {
+                                    layer.msg('添加成功', {
+                                        icon: 1,
+                                        time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                                    }, function () {
+                                        window.location.href = "/questionShow";
+                                    });
+                                }
+                            })
+                        }
+
+                    </script>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+<script th:src="@{http://cdn.bootstrapmb.com/jquery/jquery-1.11.1.min.js}"></script>
+<script th:src="@{Wjl/js/jquery.easy-pie-chart.js}"></script>
+<!--时间js-->
+<script th:src="@{/Wjl/time/jquery.countdown.js}"></script>
 <script>
-    function queryQuestion () {
+    function queryQuestion() {
         var questionName = $('#findQuestionKey').val();
-		console.log(questionName);
+        console.log(questionName);
         $.ajax({
-            url:'/queryQuestion1',
-            type:'get',
-            data:{
-                questionName:questionName,
+            url: '/queryQuestion1',
+            type: 'get',
+            data: {
+                questionName: questionName,
             },
-            success:function () {
+            success: function () {
                 layer.msg('查询中...', {
                     time: 2000 //2秒关闭（如果不配置，默认是3秒）
                 }, function () {
-                    window.location.href="/queryShow1?questionName="+questionName;
+                    window.location.href = "/queryShow1?questionName=" + questionName;
                 });
             }
         })
     }
 </script>
 <script>
-    function deleteQuestion(obj,questionId){
+    function deleteQuestion(obj, questionId) {
         layer.confirm('确认要删除吗？',
-            function(index){
+            function (index) {
                 //发异步删除数据
                 $.get("delQuestionById",
-                    {"questionId":questionId},
+                    {"questionId": questionId},
                     function (data) {
-                        if(data == true){
-                            layer.msg('删除成功',{icon:1,time:2000});
-                            setTimeout(function () {window.location.href='/questionShow';},2000);
+                        if (data == true) {
+                            layer.msg('删除成功', {icon: 1, time: 2000});
+                            setTimeout(function () {
+                                window.location.href = '/questionShow';
+                            }, 2000);
 
-                        }else {
-                            layer.msg('删除失败',{icon:2,time:3000});
-                            setTimeout(function () {window.location.href='/questionShow';},2000);
+                        } else {
+                            layer.msg('删除失败', {icon: 2, time: 3000});
+                            setTimeout(function () {
+                                window.location.href = '/questionShow';
+                            }, 2000);
                         }
                     });
             });
@@ -410,32 +451,34 @@
 
 <script>
     //对弹出层的form 进行渲染;
-    layui.use('form', function(){
+    layui.use('form', function () {
         var form = layui.form;
-        $('#addQuestion').click(function(){
+        $('#addQuestion').click(function () {
             layer.open({
                 //layer提供了5种层类型。可传入的值有：0（信息框，默认）1（页面层）2（iframe层）3（加载层）4（tips层）
-                type:1,
-                title:"录入试题",
-                area: ['82%','82%'],
-                content:$("#popSearchRoleTest"),
+                type: 1,
+                title: "录入试题",
+                area: ['82%', '82%'],
+                content: $("#popSearchRoleTest"),
             });
             form.render();
         });
     });
 
     /*$(document).on('click', '#updateBtn', */
-    function updateIndex(obj,id) {
+    function updateIndex(obj, id) {
         layer.open({
-            type:2,
+            type: 2,
             title: "试题修改",
             area: ['82%', '82%'],
-            content: '/updateQues?questionId='+id,
+            content: '/updateQues?questionId=' + id,
 
         });
 
         /* form.render();*/
-    }/*);*/
+    }
+
+    /*);*/
 
     /* function updateIndex(id,name,optionA,optionB,optionC,optionD,answer,questionScore,courseName,majorName,questionType,questionClass){
          $('#newquestionName').val(name);
