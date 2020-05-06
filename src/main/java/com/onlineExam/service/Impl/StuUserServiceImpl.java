@@ -16,6 +16,11 @@ public class StuUserServiceImpl implements StuUserService {
     @Autowired
     private StuUserMapper usermapper;
 
+    @Override
+    public int insertUrl(String headerurl,String username) {
+        return usermapper.insertUrl(headerurl,username);
+    }
+
     //移除错题
     @Override
     public boolean removeError(Integer questionId) {

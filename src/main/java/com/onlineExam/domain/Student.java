@@ -19,6 +19,7 @@ public class Student {
     private String state;
     private int clazzId;
     private String clazzName;
+    private String headerurl;
 
     private String examName;//新添加
     private int examScore;//新添加
