@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 public interface StuUserService {
+    public int insertUrl(String headerurl,String username);
     //移除错题
     public  boolean removeError(Integer questionId);
     //查看错题

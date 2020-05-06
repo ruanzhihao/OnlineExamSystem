@@ -9,6 +9,7 @@ import java.util.List;
 //@Mapper
 @Component
 public interface StuUserMapper {
+    public int insertUrl(@Param("headerurl") String headerurl,@Param("username") String username);
     //移除错题
     public int removeError(Integer questionId);
     //查看错题

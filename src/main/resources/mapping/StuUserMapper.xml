@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.onlineExam.mapper.StuUserMapper">
+    <update id="insertUrl" parameterType="String">
+        update student set headerurl=#{headerurl} where username=#{username}
+    </update>
     <!--移除错题-->
     <update id="removeError" parameterType="com.onlineExam.domain.StuAnswer">
        update t_stuanswer set isWrong=1 where questionId=#{questionId}
