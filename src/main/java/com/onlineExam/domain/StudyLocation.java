@@ -42,4 +42,15 @@ public class StudyLocation {
     private String state;
     private int clazzId;
     private String clazzName;
+
+
+    //评论
+    int StudyLocationId;//社区tgId
+    /*    int questionId;//对应question的Id
+        int stuId;//回复人的学号*/
+    String stuName;
+    String tgStuName;
+    int tgStuId;//提问被回复人的stuId
+    String comments;//评论内容
+    String publicTime;//评论回复的时间
 }

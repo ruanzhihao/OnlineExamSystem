@@ -1,10 +1,7 @@
 package com.onlineExam.service;
 
 
-import com.onlineExam.domain.Exam;
-import com.onlineExam.domain.Question;
-import com.onlineExam.domain.ReleaseExam;
-import com.onlineExam.domain.StuAnswer;
+import com.onlineExam.domain.*;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -55,4 +52,11 @@ public interface StudentFunctionService {
     int updateIsCheck(@Param("releaseExamId") Integer releaseExamId,@Param("stuId") Integer stuId);
     int getSumScore(Map<String,Object> scoreMap);
     List<Question> getShortAnsScoreIntoPap(@Param("releaseExamId") Integer releaseExamId);
+
+    //评论存储
+    int insertComment(@Param("studyId") int studyId, @Param("tgStuId") int tgStuId, @Param("stuId") int stuId, @Param("comments")String comments,@Param("publicTime")String publicTime);
+    //获取学生资料
+    Student studentById(@Param("stuId") int stuId);
+    //评论显示
+    List<Comment> showComment(@Param("studyId")int studyId,@Param("tgStuId")int tgStuId,@Param("stuId")int stuId);
 }

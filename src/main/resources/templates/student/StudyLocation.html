@@ -96,16 +96,6 @@
                                                     <span><img th:src="@{Wjl/images/clock.png}" alt="" th:text="${study.sharetime}"></span>
                                                 </div>
                                             </div>
-                                            <!--<div class="ed-opts">
-                                                <a href="#" title="" class="ed-opts-open"><i class="la la-ellipsis-v"></i></a>
-                                                <ul class="ed-options">
-                                                    <li><a href="#" title="">Edit Post</a></li>
-                                                    <li><a href="#" title="">Unsaved</a></li>
-                                                    <li><a href="#" title="">Unbid</a></li>
-                                                    <li><a href="#" title="">Close</a></li>
-                                                    <li><a href="#" title="">Hide</a></li>
-                                                </ul>
-                                            </div>-->
                                         </div>
                                         <div class="epi-sec">
                                             <ul class="descp">
@@ -116,7 +106,6 @@
                                         <div class="job_descp">
                                             <ul class="job-dt">
                                                 <li><a href="#" title="">求助</a></li>
-                                                <!--<li><span>$30 / hr</span></li>-->
                                             </ul>
                                             <p th:text="${study.questionName}"></p>
                                             <span>A：<span th:text="${study.optionA}"></span></span>&nbsp;&nbsp;&nbsp;&nbsp;
@@ -131,14 +120,12 @@
                                         </div>
                                         <div class="job-status-bar">
                                             <ul class="like-com">
-                                                <!--<li>
-                                                    <a href="#"><i class="la la-heart"></i> Like</a>
-                                                    <img th:src="@{Wjl/images/liked-img.png}" alt="">
-                                                    <span>25</span>
-                                                </li>-->
-                                                <li><a href="#" title="" class="com"><img th:src="@{Wjl/images/com.png}" alt=""> Comment 15</a></li>
                                             </ul>
-                                            <a>views 50</a>
+                                            <input type="hidden" name="studyId" id="studyId" th:value="${study.id}"/>
+                                            <input type="hidden" name="tgStuId" id="tgStuId" th:value="${study.stuId}"/>
+                                            <input type="hidden" name="stuId" id="stuId" th:value="${session.stuid}"/>
+                                            <input type="hidden" name="questionId" id="questionId" th:value="${study.questionId}"/>
+                                            <button type="button" style="float: right" class="btn btn-default"  id="show">查看</button>
                                         </div>
                                     </div><!--post-bar end-->
 
@@ -217,9 +204,23 @@
                 </div><!-- main-section-data end-->
             </div>
         </div>
+        </div>
     </main>
 </div><!--theme-layout end-->
+<script th:src="@{https://code.jquery.com/jquery-3.3.1.min.js}"></script>
+<script>
+    $('#show').click(
+        function publicComment(){
+            var studyId=$('#studyId').val()
+            var tgStuId=$('#tgStuId').val()
+            var stuId=$('#stuId').val()
+            var questionId=$('#questionId').val()
+            window.location.href="./analyseComment?studyId="+studyId+"&tgStuId="+tgStuId+"&stuId="+stuId+"&questionId="+questionId;
+        }
+    )
 
+
+</script>
 
 
 <script type="text/javascript" th:src="@{Wjl/js2/jquery.min.js}"></script>

@@ -61,4 +61,11 @@ public interface StudentFunctionMapper {
     int getSumScore(Map<String,Object> scoreMap);
     List<Question> getShortAnsScoreIntoPap(@Param("releaseExamId") Integer releaseExamId);
 
+
+    //评论存储
+    int insertComment(@Param("studyId") int studyId, @Param("tgStuId") int tgStuId, @Param("stuId") int stuId, @Param("comments")String comments,@Param("publicTime")String publicTime);
+    //获取学生资料
+    Student studentById(@Param("stuId") int stuId);
+    //评论显示
+    List<Comment> showComment(@Param("studyId")int studyId,@Param("tgStuId")int tgStuId,@Param("stuId")int stuId);
 }

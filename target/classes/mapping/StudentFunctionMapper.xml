@@ -186,4 +186,17 @@ update t_stuanswer set isCheck='已批阅' where  releaseExamId=#{releaseExamId}
  SELECT t_question.questionId,t_question.questionScore from t_question,t_realpaper,t_releaseexam
 where  t_realpaper.questionId=t_question.questionId  and t_releaseexam.paperId=t_realpaper.paperId and t_releaseexam.releaseExamId=#{releaseExamId} and t_question.questionType='简答'
     </select>
+
+    <insert id="insertComment" parameterType="com.onlineExam.domain.Comment">
+        insert into t_comment(studyId, tgStuId, stuId, comments, publicTime) value(#{studyId},#{tgStuId},#{stuId},#{comments},#{publicTime})
+    </insert>
+
+    <select id="studentById" parameterType="java.lang.Integer" resultType="com.onlineExam.domain.Student">
+select * from student,t_clazz,t_depart where student.clazzId=t_clazz.clazzId and student.departId=t_depart.departId and student.stuid=#{stuId}
+    </select>
+
+    <select id="showComment" parameterType="java.lang.Integer" resultType="com.onlineExam.domain.Comment">
+        select * from t_comment,student where t_comment.studyId=#{studyId} and student.stuid=#{tgStuId} and t_comment.tgStuId=#{tgStuId}
+    </select>
+
 </mapper>

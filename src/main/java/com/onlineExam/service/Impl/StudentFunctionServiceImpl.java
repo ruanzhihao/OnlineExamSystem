@@ -2,9 +2,7 @@ package com.onlineExam.service.Impl;
 
 
 
-import com.onlineExam.domain.Question;
-import com.onlineExam.domain.ReleaseExam;
-import com.onlineExam.domain.StuAnswer;
+import com.onlineExam.domain.*;
 import com.onlineExam.mapper.StudentFunctionMapper;
 import com.onlineExam.service.StudentFunctionService;
 
@@ -174,5 +172,20 @@ public class StudentFunctionServiceImpl implements StudentFunctionService {
     @Override
     public int getShortAnswerScore(Integer paperId) {
         return studentFunctionMapper.getShortAnswerScore(paperId);
+    }
+
+    @Override
+    public int insertComment(int studyId, int tgStuId, int stuId, String comments, String publicTime) {
+        return studentFunctionMapper.insertComment(studyId, tgStuId, stuId, comments, publicTime);
+    }
+
+    @Override
+    public Student studentById(int stuId) {
+        return studentFunctionMapper.studentById(stuId);
+    }
+
+    @Override
+    public List<Comment> showComment(int studyId, int tgStuId, int stuId) {
+        return studentFunctionMapper.showComment(studyId, tgStuId, stuId);
     }
 }

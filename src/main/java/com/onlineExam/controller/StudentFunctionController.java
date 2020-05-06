@@ -578,5 +578,32 @@ public List<CountModel> getResourceInfo(){
         return 0;
     }
 
+    //评论的实现
+    @RequestMapping(value = "/publicComment",method = RequestMethod.POST)
+    @ResponseBody
+    public String connments(@RequestParam("studyId") int studyId, @RequestParam("tgStuId") int tgStuId,
+                            @RequestParam("stuId") int stuId, @RequestParam("comments")String comments){
+        String publicTime=new Date().toLocaleString();
+        int i=studentFunctionService.insertComment(studyId,tgStuId,stuId,comments,publicTime);
+        return "Success";
+    }
+
+    //评论详情的实现
+    @RequestMapping(value = "/analyseComment",method = RequestMethod.GET)
+    public  String analyse(@RequestParam("studyId") int studyId, @RequestParam("tgStuId") int tgStuId,
+                           @RequestParam("stuId") int stuId, @RequestParam("questionId")int questionId,Model model){
+        Student student =studentFunctionService.studentById(tgStuId);
+        model.addAttribute("student",student);
+
+        Question question=questionService.showQuestion(questionId);
+        model.addAttribute("question",question);
+
+        List<Comment> comment=studentFunctionService.showComment(studyId, tgStuId, stuId);
+        model.addAttribute("commentList",comment);
+        System.out.println(comment);
+
+        model.addAttribute("studyId",studyId);
+        return "student/AnalyseComment";
+    }
 
 }

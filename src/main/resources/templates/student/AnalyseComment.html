@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>学习论坛</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <link rel="stylesheet" type="text/css" th:href="@{Wjl/css2/animate.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{Wjl/css2/bootstrap.min.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{Wjl/css2/line-awesome.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{Wjl/css2/line-awesome-font-awesome.min.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{Wjl/css2/font-awesome.min.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{Wjl/css2/jquery.mCustomScrollbar.min.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{Wjl/lib/slick/slick.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{Wjl/lib/slick/slick-theme.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{Wjl/css2/style.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{Wjl/css2/responsive.css}">
+</head>
+
+
+<body>
+
+
+<div class="wrapper">
+
+
+
+    <header>
+        <div class="container">
+        </div>
+    </header><!--header end-->
+    <main>
+        <div class="main-section">
+            <div class="container">
+                <div class="main-section-data">
+                   <!-- <div class="row">-->
+                       <!-- <div class="col-lg-6 col-md-8 no-pd">-->
+                            <div class="main-ws-sec">
+                                <div class="posts-section" >
+                                    <div class="post-bar" style="width: 100%">
+                                        <div class="post_topbar">
+                                            <div class="usy-dt">
+                                                <img th:src="@{Wjl/images/resources/us-pic.png}" alt="">
+                                                <div class="usy-name">
+                                                    <h3 th:text="${student.stuname}"></h3>
+                                                    <!--<span><img th:src="@{Wjl/images/clock.png}" alt="" >1</span>-->
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="epi-sec">
+                                            <ul class="descp">
+                                                <li><img th:src="@{Wjl/images/icon8.png}" alt=""><span th:text="${student.departName}">1</span></li>
+                                                <li><img th:src="@{Wjl/images/icon9.png}" alt=""><span th:text="${student.clazzName}">1</span></li>
+                                            </ul>
+                                        </div>
+                                        <div class="job_descp">
+                                            <ul class="job-dt">
+                                                <li><a href="#" title="">求助</a></li>
+                                                <!--<li><span>$30 / hr</span></li>-->
+                                            </ul>
+                                            <p th:text="${question.questionName}"></p>
+                                            <span>A：<span th:text="${question.optionA}"></span></span>&nbsp;&nbsp;&nbsp;&nbsp;
+                                            <span>B：<span th:text="${question.optionB}"></span></span>&nbsp;&nbsp;&nbsp;&nbsp;
+                                            <span>C：<span th:text="${question.optionC}"></span></span>&nbsp;&nbsp;&nbsp;&nbsp;
+                                            <span>D：<span th:text="${question.optionD}"></span></span>&nbsp;&nbsp;&nbsp;&nbsp;
+                                        </div>
+
+                                        <div class="comment-section">
+                                            <div class="comment-sec">
+                                                 <ul >
+                                                     <li th:each="comment22 :${commentList}">
+                                                         <div class="comment-list">
+                                                             <div class="bg-img">
+                                                                 <img th:src="@{Wjl/images/resources/bg-img1.png}" alt="">
+                                                             </div>
+                                                             <div class="comment" >
+                                                                 <h3 th:text="${comment22.username}">a</h3>
+                                                                 <span><img th:src="@{Wjl/images/clock.png}"   th:text="${comment22.publicTime}"></span>
+                                                                 <p th:text="${comment22.comments}"></p>
+                                                             </div>
+                                                         </div>
+                                                     </li>
+                                                 </ul>
+                                            </div><!--comment-sec end-->
+                                            <div class="post-comment">
+                                                <div class="cm_img">
+                                                    <img th:src="@{Wjl/images/resources/bg-img4.png}" alt="">
+                                                </div>
+                                                <div class="comment_box">
+                                                     <form>
+                                                         <input type="hidden" name="studyId" id="studyId" th:value="${studyId}" />
+                                                         <input type="hidden" name="tgStuId" id="tgStuId" th:value="${student.stuid}"/>
+                                                         <input type="hidden" name="stuId" id="stuId" th:value="${session.stuid}"/>
+                                                         <input type="text" placeholder="回复内容" id="comments" name="comments"/>
+                                                         <button type="button" id="publicComment">提交评论</button>
+
+
+                                                     </form>
+
+                                                 </div>
+                                            </div><!--post-comment end-->
+                                        </div><!--comment-section end-->
+                                    </div><!--post-bar end-->
+
+                                </div><!--posts-section end-->
+                            </div><!--main-ws-sec end-->
+                       <!-- </div>-->
+                    <!--</div>--><!-- main-section-data end-->
+                </div>
+            </div>
+        </div>
+    </main>
+</div><!--theme-layout end-->
+
+
+
+<script th:src="@{https://code.jquery.com/jquery-3.3.1.min.js}"></script>
+<script>
+    $('#publicComment').click(
+        function publicComment(){
+            var studyId=$('#studyId').val()
+            var tgStuId=$('#tgStuId').val()
+            var stuId=$('#stuId').val()
+            var comments=$('#comments').val()
+            $.ajax({
+                url:'./publicComment',
+                type:'post',
+                data:{
+                    studyId:studyId,
+                    stuId:stuId,
+                    tgStuId:tgStuId,
+                    comments:comments
+                },
+                success:function(){
+                    window.location.reload();
+                }
+
+            })
+
+        }
+    )
+
+
+</script>
+<script type="text/javascript" th:src="@{Wjl/js2/jquery.min.js}"></script>
+<script type="text/javascript" th:src="@{Wjl/js2/popper.js}"></script>
+<script type="text/javascript" th:src="@{Wjl/js2/bootstrap.min.js}"></script>
+<script type="text/javascript" th:src="@{Wjl/js2/jquery.mCustomScrollbar.js}"></script>
+<script type="text/javascript" th:src="@{Wjl/lib/slick/slick.min.js}"></script>
+<script type="text/javascript" th:src="@{Wjl/js2/scrollbar.js}"></script>
+<script type="text/javascript" th:src="@{Wjl/js2/script.js}"></script>
+
+</body>
+</html>
