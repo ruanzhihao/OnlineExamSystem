@@ -55,11 +55,11 @@
         select * from teacher,t_major,t_depart,t_state,t_clazz where teachername=#{teachername} and teacher.majorId=t_major.majorId and teacher.departId=t_depart.departId and teacher.stateId=t_state.stateId and teacher.clazzId=t_clazz.clazzId
     </select>
     <select id="getQuestion" resultType="com.onlineExam.domain.StuAnswer">
-        select * from t_stuanswer,t_question where stuId=#{stuId} and paperId=#{paperId} and releaseExamId=#{releaseExamId} and t_stuanswer.questionId=t_question.questionId
+        select  * from t_stuanswer,t_question where stuId=#{stuId} and paperId=#{paperId} and releaseExamId=#{releaseExamId} and t_stuanswer.questionId=t_question.questionId and t_question.questionType="单选" or t_question.questionType="多选" group  by t_question.questionName
     </select>
     <!--获取试题-->
     <select id="getQuestion1" resultType="com.onlineExam.domain.Question">
-        SELECT * from teacher,t_paper,t_realpaper,t_question where teacher.majorId=t_paper.majorId and t_paper.paperId=t_realpaper.paperId and t_realpaper.questionId=t_question.questionId and teacher.majorId=#{majorId} and teacher.teachername=#{teachername}
+        SELECT * from teacher,t_paper,t_realpaper,t_question where teacher.majorId=t_paper.majorId and t_paper.paperId=t_realpaper.paperId and t_realpaper.questionId=t_question.questionId and teacher.majorId=#{majorId} and teacher.teachername=#{teachername} and t_question.questionType!="简答"  order by t_paper.paperName
     </select>
     <select id="showanalyze" resultType="com.onlineExam.domain.StuAnswer">
         select stuname,stuAnswer,questionId,type from t_stuanswer,t_type,student,t_paper where t_stuanswer.paperId=t_paper.paperId and t_paper.paperName=#{paperName} and questionId=#{questionId} and t_type.isWrong=t_stuanswer.isWrong and t_stuanswer.stuId=student.stuid GROUP BY t_stuanswer.stuId
