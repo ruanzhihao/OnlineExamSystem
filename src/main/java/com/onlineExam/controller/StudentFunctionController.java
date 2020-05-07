@@ -492,6 +492,30 @@ public List<CountModel> getResourceInfo(){
    model.addAttribute("count",a);
    List<Course> courseList=questionService.getCourse();
    model.addAttribute("courseList",courseList);
+
+   List<StudyLocation> list3=studyService.getAllByOwn(stuId);
+        int b =list3.size();
+        model.addAttribute("count2",b);
+
+     return "student/StudyLocation";
+    }
+
+    //我的话题显示
+    @RequestMapping(value = "/myOwn",method = RequestMethod.GET)
+    public String myOwn(@RequestParam("stuId") int stuId,Model model){
+
+     List<StudyLocation> list3=studyService.getAllByOwn(stuId);
+     model.addAttribute("list",list3);
+
+        List<StudyLocation> list=studyService.getallList();
+        int a =list.size();
+        model.addAttribute("count",a);
+
+        int b =list3.size();
+        model.addAttribute("count2",b);
+
+        List<Course> courseList=questionService.getCourse();
+        model.addAttribute("courseList",courseList);
      return "student/StudyLocation";
     }
 

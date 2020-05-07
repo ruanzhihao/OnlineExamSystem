@@ -41,7 +41,7 @@
                                     <div class="post-bar" style="width: 100%">
                                         <div class="post_topbar">
                                             <div class="usy-dt">
-                                                <img th:src="@{Wjl/images/resources/us-pic.png}" alt="">
+                                                <img th:src="${student.headerurl}"  style="width: 60px;height: 60px" alt="">
                                                 <div class="usy-name">
                                                     <h3 th:text="${student.stuname}"></h3>
                                                     <!--<span><img th:src="@{Wjl/images/clock.png}" alt="" >1</span>-->
@@ -72,7 +72,7 @@
                                                      <li th:each="comment22 :${commentList}">
                                                          <div class="comment-list">
                                                              <div class="bg-img">
-                                                                 <img th:src="@{Wjl/images/resources/bg-img1.png}" alt="">
+                                                                 <img th:src="${comment22.headerurl}" style="width: 60px;height: 60px;" alt="">
                                                              </div>
                                                              <div class="comment" >
                                                                  <h3 th:text="${comment22.username}">a</h3>
@@ -85,7 +85,7 @@
                                             </div><!--comment-sec end-->
                                             <div class="post-comment">
                                                 <div class="cm_img">
-                                                    <img th:src="@{Wjl/images/resources/bg-img4.png}" alt="">
+                                                    <img th:src="${session.headerurl}" style="width: 50px;height: 40px" alt="">
                                                 </div>
                                                 <div class="comment_box">
                                                      <form>

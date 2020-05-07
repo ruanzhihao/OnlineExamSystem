@@ -11,4 +11,11 @@
      where t_study.questionId = t_question.questionId and t_study.stuId=student.stuid
      and student.departId=t_depart.departId and student.clazzId=t_clazz.clazzId and student.majorId=t_major.majorId
     </select>
+
+<select id="getAllByOwn" parameterType="int" resultType="com.onlineExam.domain.StudyLocation">
+     select * from t_study,t_question,student,t_depart,t_clazz,t_major
+     where t_study.questionId = t_question.questionId and t_study.stuId=student.stuid
+     and student.departId=t_depart.departId and student.clazzId=t_clazz.clazzId and student.majorId=t_major.majorId
+     and t_study.stuId=#{stuId}
+</select>
 </mapper>

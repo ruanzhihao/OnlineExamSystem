@@ -31,5 +31,6 @@ public class Comment {
     private String state;
     private int clazzId;
     private String clazzName;
+    private String headerurl;
 
 }

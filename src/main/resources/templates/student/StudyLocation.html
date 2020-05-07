@@ -41,7 +41,7 @@
                                     <div class="user-profile">
                                         <div class="username-dt">
                                             <div class="usr-pic">
-                                                <img th:src="@{Wjl/images/resources/user-pic.png}" alt="">
+                                                <img th:src="${session.headerurl}" style="height: 120px" alt="">
                                             </div>
                                         </div><!--username-dt end-->
                                         <div class="user-specs">
@@ -55,9 +55,11 @@
                                             <span th:text="${count}"></span>
                                         </li>
                                         <li>
-                                            <h4>我参与的话题</h4>
-                                            <span>a</span>
+                                            <!--th:onclick="|javascript:show(this,${session.stuid})|"-->
+                                            <h4><a id="myOwn" th:href="@{/myOwn(stuId=${session.stuid})}" > 我参与的话题</a></h4>
+                                            <span th:text="${count2}"></span>
                                         </li>
+
                                        <!-- <li>
                                             <a href="#" title="">View Profile</a>
                                         </li>-->
@@ -86,13 +88,13 @@
                                    <!-- </div>-->
 
                                 </div>
-                                <div class="posts-section">
+                                <div class="posts-section" >
                                     <div class="post-bar" th:each="study:${list}">
                                         <div class="post_topbar">
                                             <div class="usy-dt">
-                                                <img th:src="@{Wjl/images/resources/us-pic.png}" alt="">
+                                                <img th:src="${study.headerurl}" style="width:60px ;height: 60px" alt="">
                                                 <div class="usy-name">
-                                                    <h3 th:text="${study.username}"></h3>
+                                                    <h3 th:text="${study.stuname}"></h3>
                                                     <span><img th:src="@{Wjl/images/clock.png}" alt="" th:text="${study.sharetime}"></span>
                                                 </div>
                                             </div>
