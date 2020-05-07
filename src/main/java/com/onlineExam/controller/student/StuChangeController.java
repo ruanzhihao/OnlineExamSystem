@@ -124,9 +124,9 @@ public class StuChangeController {
         boolean flag= stuUserService.removeError(questionId);
         return "student/errorQuestion";
     }
-    @RequestMapping(value="/uploadFile")
+    @RequestMapping(value="/uploadImg")
     //@ResponseBody
-    public String uploadFile(@RequestParam("fileName") MultipartFile file, HttpSession session, HttpServletRequest request, Model model) {
+    public String uploadFile(@RequestParam("imgName") MultipartFile file, HttpSession session, HttpServletRequest request, Model model) {
 
         System.out.print("上传文件==="+"\n");
         //判断文件是否为空
@@ -168,9 +168,9 @@ public class StuChangeController {
         } catch (IOException e) {
             return "error";
         }
-
         return "student/personInfo";
     }
+
 
 
 

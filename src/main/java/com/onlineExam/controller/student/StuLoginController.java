@@ -56,6 +56,7 @@ public class StuLoginController {
         Integer departId=student.getDepartId();
         Integer stateId=student.getStateId();
         Integer majorId=student.getMajorId();
+        String headerurl=student.getHeaderurl();
 
         request.getSession().setAttribute("stuid",stuid);
         request.getSession().setAttribute("stuname",stuname);
@@ -66,6 +67,7 @@ public class StuLoginController {
         request.getSession().setAttribute("departId",departId);
         request.getSession().setAttribute("stateId",stateId);
         request.getSession().setAttribute("majorId",majorId);
+        request.getSession().setAttribute("headerurl",headerurl);
 
         Md5Hash md5registepassword=new Md5Hash( password, username,5);
          String md5password=md5registepassword.toString();

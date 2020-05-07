@@ -124,6 +124,12 @@
                     </a>
                     <dl class="layui-nav-child">
                         <dd>
+                            <a href="./stuchaxun" data-url="myloginfo.html" id="studytasks">
+                                <i class="iconfont icon-piliangicon" data-icon='icon-piliangicon'></i>
+                                <span>学习任务</span>
+                            </a>
+                        </dd>
+                        <dd>
                             <a href="./myerror" data-url="myloginfo.html" id="myerror">
                                 <i class="iconfont icon-piliangicon" data-icon='icon-piliangicon'></i>
                                 <span>我的错题本</span>
@@ -338,6 +344,10 @@
             e.preventDefault();
             var stuId=$('#stuId').val()
             $("#iframeMain").attr("src",$(this).attr("href")+'?stuId='+stuId);
+        });
+        $("#studytasks").click(function (e) {
+            e.preventDefault();
+            $("#iframeMain").attr("src",$(this).attr("href"));
         });
 
 

@@ -25,17 +25,17 @@
 </style>
 <body>
 <div class="layui-col-md2">
-    <div class="header">
-    <header style="font-size: 15px;color: #007DDB;text-align: center">修改头像</header><br>
-    <form action="uploadFile" method="post" enctype="multipart/form-data">
-        <input type="file" name="fileName" style="color: #00c2ff;font-size: 12px;margin-left: 10px" >
-        <br>
-        <input type="submit" id="headerimg" value="点击上传" style="margin-left:  48px;"class="layui-btn layui-btn-sm  layui-btn-normal">
-    </form>
-    [[${fileName}]]
-    <br>
-    <img th:src="${session.headerurl}" alt="图片" onerror="this.src='https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1586926099989&di=a6bece0c9ca8663ec07055b7ace1949e&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201607%2F22%2F20160722180244_4QYLN.jpeg'" style="margin-left: 36px;  width: 105px;height: 105px">
-</div>
+	<div class="header">
+		<header style="font-size: 15px;color: #007DDB;text-align: center">修改头像</header><br>
+		<form action="uploadImg" method="post" enctype="multipart/form-data">
+			<input type="file" name="imgName" style="color: #00c2ff;font-size: 12px;margin-left: 10px" >
+			<br>
+			<input type="submit" id="headerimg" value="点击上传" style="margin-left:  48px;"class="layui-btn layui-btn-sm  layui-btn-normal">
+		</form>
+		[[${fileName}]]
+		<br>
+		<img th:src="${session.headerurl}" alt="图片" onerror="this.src='https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1586926099989&di=a6bece0c9ca8663ec07055b7ace1949e&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201607%2F22%2F20160722180244_4QYLN.jpeg'" style="margin-left: 36px;  width: 105px;height: 105px">
+	</div>
 </div>
 <div class="layui-col-md10">
 	<div class="larry-personal">

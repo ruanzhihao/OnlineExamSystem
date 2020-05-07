@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>文件列表</title>
+    <link rel="stylesheet" th:href="@{/layui/css/layui.css}" media="all" />
+    <script th:src="@{/layui/layui.js}"></script>
+    <script th:src="@{/js/jquery-3.4.1.js}"></script>
+</head>
+<body>
+<table lay-filter="demo">
+    <thead>
+    <tr>
+        <th lay-data="{field:'1',width:180,align: 'center'}">序号</th>
+        <th lay-data="{field:'2',width:300, align: 'center'}">文件名</th>
+        <th lay-data="{field:'3', align: 'center'}">上传时间</th>
+        <th lay-data="{field:'4', align: 'center'}">上传者</th>
+        <th lay-data="{field:'5', align: 'center'}">状态</th>
+        <th lay-data="{field:'6', align: 'center'}">操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="File,FileState:${Files}">
+        <!--<td><i class="layui-icon">&#xe652;</i></td>-->
+        <td th:text="${FileState.index+1}"></td>
+        <td th:text="${File.getTitle()}"></td>
+        <td th:text="${File.getCreatetime()}"></td>
+        <td th:text="${File.getUploader()}"></td>
+        <td th:text="${File.getState()}"></td>
+        <td><a th:href="${File.getUrl()}"><button 	class="layui-btn layui-btn-sm layui-btn-normal">去查看</button></a></td>
+    </tr>
+    </tbody>
+</table>
+<script type="text/javascript" th:src="@{/layui/layui.js}"></script>
+<script th:src="@{/js/jquery-3.4.1.js}"></script>
+<script>
+    //静态表格
+    layui.use(['table','form','layer'],function(){
+        var table = layui.table;//加载表格模块
+        var form=layui.form;
+        table.init('demo',{
+            height:500,
+            page:true
+        });
+    });
+</script>
+</body>
+</html>
