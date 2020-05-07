@@ -141,8 +141,8 @@ public class StuChangeController {
         System.out.print("（加个时间戳，尽量避免文件名称重复）保存的文件名为: "+fileName+"\n");
         model.addAttribute("fileName",fileName);
         //加个时间戳，尽量避免文件名称重复
-        String path = "D:/fileUpload/" +fileName;
-        //String path = "D:/fileUpload/" + new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()) + "_" + fileName;
+        String path = "C:/fileUpload/" +fileName;
+        //String path = "C:/fileUpload/" + new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()) + "_" + fileName;
         //文件绝对路径
         System.out.print("保存文件绝对路径"+path+"\n");
 
