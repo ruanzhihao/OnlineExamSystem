@@ -7,4 +7,10 @@
     <select id="fileList" resultType="com.onlineExam.domain.FileEntity">
         select * from t_file order by createtime desc;
     </select>
+    <delete id="removeFile">
+        delete from t_file where id=#{id}
+    </delete>
+    <update id="stuState" parameterType="Integer">
+        update t_file set state="已完成" where id=#{id}
+    </update>
 </mapper>

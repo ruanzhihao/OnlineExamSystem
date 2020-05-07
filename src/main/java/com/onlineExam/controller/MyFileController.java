@@ -101,7 +101,18 @@ public class MyFileController {
         List<FileEntity> files=fileService.fileList();
         System.out.print("查询到的视频数量=="+files.size()+"\n");
         model.addAttribute("Files", files);
-
+        return "student/studytasks";
+    }
+    //删除
+    @RequestMapping("/removefile")
+    public String removeFile(Integer id){
+        int rs=fileService.removeFile(id);
+        return "filelist";
+    }
+    //状态
+    @RequestMapping("/stustate")
+    public String stuState(Integer id){
+        int result=fileService.stuState(id);
         return "student/studytasks";
     }
 

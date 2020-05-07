@@ -12,7 +12,7 @@
     <form action="uploadFile" method="post" enctype="multipart/form-data">
         <input type="file" style="margin-top: 25px;margin-left: 12px;color: #2aabd2;font-size: 16px" name="fileName"/><br>
         <!--<input type="submit" style="margin-top: 25px;margin-left: 12px;color: #2aabd2" value="上传视频"/>-->
-        <button class="layui-btn layui-btn-warm" style="margin-top: 15px;margin-left: 12px">上传视频</button>
+        <button class="layui-btn layui-btn-warm" style="margin-top: 15px;margin-left: 12px">上传文件</button>
     </form>
 </div>
     <!--<form action="chaxun" >
@@ -38,7 +38,7 @@
         <td th:text="${File.getCreatetime()}"></td>
         <td th:text="${File.getUploader()}"></td>
         <td><a th:href="${File.getUrl()}"><button 	class="layui-btn layui-btn-sm layui-btn-normal">去查看</button></a></td>
-        <td><button class="layui-btn layui-btn-sm layui-btn-danger">删除</button></td>
+        <td><button class="layui-btn layui-btn-sm layui-btn-danger" th:onclick="|javascript:removeFile(${File.getId()})|">删除</button></td>
     </tr>
     </tbody>
 </table>
@@ -54,6 +54,25 @@
             page:true
         });
     });
+    function removeFile(id){
+        layui.use('layer',function(){
+            layer.confirm('确定删除该文件？',{btn: ['确定', '取消'], title: "提示"},function(){
+                $.ajax({
+                    url:'removefile',
+                    data:{'id':id},
+                    success:function (data) {
+                        layer.msg("删除成功");
+                        setTimeout(function (){window.location.href="chaxun"},1000);
+                    },
+                    error:function (data) {
+                        layer.msg("删除失败");
+                        setTimeout(function (){window.location.href="chaxun"},1000);
+                    }
+
+                })
+            })
+        })
+    }
 </script>
 </body>
 </html>

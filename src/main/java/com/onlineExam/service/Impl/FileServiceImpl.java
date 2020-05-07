@@ -21,4 +21,13 @@ public class FileServiceImpl implements FileService {
     public List<FileEntity> fileList() {
         return fileMapper.fileList();
     }
+
+    @Override
+    public int removeFile(Integer id) {
+        return fileMapper.removeFile(id);
+    }
+    @Override
+    public int stuState(Integer id) {
+        return fileMapper.stuState(id);
+    }
 }
