@@ -519,7 +519,31 @@ public List<CountModel> getResourceInfo(){
      return "student/StudyLocation";
     }
 
+//分类显示标签
+    @RequestMapping(value = "/fenlei",method = RequestMethod.POST)
+    public String fenlei(HttpServletRequest request,Model model){
+     String tgid=request.getParameter("tgcourse");
+     int courseId=Integer.parseInt(tgid);
 
+     String stuId2=request.getParameter("stuId");
+
+     int stuId=Integer.parseInt(stuId2);
+        List<StudyLocation> list3=studyService.getAllByOwn(stuId);
+
+        List<StudyLocation> list=studyService.getallList();
+        int a =list.size();
+        model.addAttribute("count",a);
+
+        int b =list3.size();
+        model.addAttribute("count2",b);
+
+        List<Course> courseList=questionService.getCourse();
+        model.addAttribute("courseList",courseList);
+
+        List<StudyLocation> list4=studyService.getAllFenlei(courseId);
+        model.addAttribute("list",list4);
+     return "student/StudyLocation";
+    }
 //分享论坛
     @RequestMapping(value = "/toShare",method = RequestMethod.POST)
     @ResponseBody

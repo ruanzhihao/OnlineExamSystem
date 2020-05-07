@@ -18,4 +18,9 @@
      and student.departId=t_depart.departId and student.clazzId=t_clazz.clazzId and student.majorId=t_major.majorId
      and t_study.stuId=#{stuId}
 </select>
+
+    <select id="getAllFenlei" parameterType="int" resultType="com.onlineExam.domain.StudyLocation">
+        select * from t_question,t_study,t_course,student,t_depart,t_clazz,t_major where t_study.questionId=t_question.questionId and t_question.courseId=#{courseId} and t_question.courseId =t_course.courseId
+    and  t_study.stuId=student.stuid and  student.departId=t_depart.departId and student.clazzId=t_clazz.clazzId and student.majorId=t_major.majorId
+    </select>
 </mapper>

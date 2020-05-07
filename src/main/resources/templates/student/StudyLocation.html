@@ -75,12 +75,13 @@
                                     </div>-->
                                  <!--   <div class="post-st">-->
                                         <div class="search-bar">
-                                            <form role="form">
+                                            <form role="form" th:action="@{/fenlei}" method="Post">
+                                                <input type="hidden" name="stuId" th:value="${session.stuid}"/>
                                                 <select name="tgcourse" id="tgcourse" class="form-control">
                                                     <option value=""></option>
                                                     <option  th:each="course :${courseList}" th:text="${course.courseName}" th:value="${course.courseId}"></option>
                                                 </select>
-                                                <button type="button" class="btn btn-default">Go</button>
+                                                <button type="submit"  class="btn btn-default">Go</button>
                                             </form>
 
                                         </div>

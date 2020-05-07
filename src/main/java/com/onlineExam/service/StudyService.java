@@ -10,4 +10,6 @@ public interface StudyService {
     List<StudyLocation> getallList();//获取所有论坛内容
     //我的话题
     List<StudyLocation> getAllByOwn(@Param("stuId") int stuId);
+    //分类显示
+    List<StudyLocation> getAllFenlei(@Param("courseId") int courseId);
 }

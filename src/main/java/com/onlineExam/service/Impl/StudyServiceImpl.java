@@ -27,4 +27,9 @@ public class StudyServiceImpl implements StudyService {
     public List<StudyLocation> getAllByOwn(int stuId) {
         return studyMapper.getAllByOwn(stuId);
     }
+
+    @Override
+    public List<StudyLocation> getAllFenlei(int courseId) {
+        return studyMapper.getAllFenlei(courseId);
+    }
 }
