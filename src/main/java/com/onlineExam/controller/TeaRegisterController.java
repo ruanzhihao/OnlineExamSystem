@@ -21,7 +21,7 @@ public class TeaRegisterController {
 
     @RequestMapping("/teacherRegister")
     public String register(){
-        return "teacherregister";
+        return "teacher/teacherregister";
         //return   "student/sturegister";
 
     }

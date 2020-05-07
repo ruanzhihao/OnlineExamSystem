@@ -136,4 +136,8 @@ public class TeacherServiceImpl implements TeacherService {
             return true;
         }
     }
+    @Override
+    public int insertUrl(String teaheader, String username) {
+        return teacherMapper.insertUrl(teaheader,username);
+    }
 }
