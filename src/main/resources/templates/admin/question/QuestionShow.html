@@ -38,7 +38,7 @@
 
 
 <body>
-<div class="main" style="text-align: center">
+<div class="main">
     <!--nr start-->
     <div class="test_main">
 
@@ -240,14 +240,63 @@
                             </ul>
                         </div>
                     </form>
+
                 </div>
+            </div>
+        </div>
+        <div class="nr_right">
+            <div class="nr_rt_main">
+                <div class="rt_nr1">
+                    <div class="rt_nr1_title">
+                        <h1>
+                            <i class="icon iconfont">&#xe692;</i>答题卡
+                        </h1>
 
-                <div class="foot"></div>
+                    </div>
 
+                    <div class="rt_content">
+                        <div class="rt_content_tt">
+                            <h2>单选题</h2>
+
+                        </div>
+                        <div class="rt_content_nr answerSheet">
+                            <ul>
+                                <li th:each="question,state1:${radioList}"><a
+                                        th:href="'#qu_0_'+${state1.index}"><span
+                                        th:text="${state1.index+1}">1</span></a></li>
+
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="rt_content">
+                        <div class="rt_content_tt">
+                            <h2>多选题</h2>
+
+                        </div>
+                        <div class="rt_content_nr answerSheet">
+                            <ul>
+                                <li th:each="cquestion,state:${checkBoxList}"><a
+                                        th:href="'#qu_1_'+${state.index}"><span th:text="${state.index+1}">1</span></a>
+                                </li>
+                            </ul>
+
+                        </div>
+
+                    </div>
+                </div>
 
             </div>
         </div>
+
+        <div class="foot">
+
+        </div>
+
+
     </div>
+</div>
+</div>
 </div>
 <div class="layui-row" id="popSearchRoleTest" style="display:none;">
     <div class="layui-col-md11">

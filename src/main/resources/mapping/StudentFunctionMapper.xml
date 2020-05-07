@@ -157,6 +157,7 @@ GROUP BY t_stuanswer.stuId
     t_stuanswer.releaseExamId,
 	t_stuanswer.questionId,
 	t_question.questionName,
+	t_question.answer,
 	t_question.questionScore,
 	t_stuanswer.stuId,
 	t_stuanswer.stuAnswer

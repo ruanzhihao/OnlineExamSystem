@@ -48,7 +48,8 @@
                             <li th:each="shortAnswerQuestion,state:${shortAnswerQuestion}"
                                 th:id="'qu_2_'+${state.index}">
                                 <div class="test_content_nr_tt">
-                                    <input type="hidden" id="releaseExamId" th:value="${shortAnswerQuestion.releaseExamId}">
+                                    <input type="hidden" id="releaseExamId"
+                                           th:value="${shortAnswerQuestion.releaseExamId}">
                                     <input type="hidden" id="stuId" th:value="${shortAnswerQuestion.stuId}">
                                     <input type="hidden" th:name="'squestion'+${state.index+1}"
                                            th:value="${shortAnswerQuestion.questionId}">
@@ -59,20 +60,33 @@
                                 </div>
                                 <div class="test_content_nr_main">
                                     <ul>
-                                        <li >
+                                        <li>
                                             <label>
-                                                <p class="ue" style="display: inline;">
-                                               <textarea id="answer"class="layui-input"
-                                                th:name="'sanswer'+${state.index+1}"
-                                                style="border:1px solid #9f9f9f;width: 796px; height: 86px;outline: none;"
-                                              th:text="${shortAnswerQuestion.stuAnswer}" ></textarea>
+                                                <p class="ue" style="display: inline;">参考答案:
+                                                     <textarea id="refanswer" class="layui-input"
+                                                               th:utext="${shortAnswerQuestion.answer}"
+                                                               style="border:1px solid #9f9f9f;width: 796px; height: 86px;outline: none;" readonly></textarea>
+                                                    <br>
+                                                    学生答案:
+                                                    <textarea id="answer" class="layui-input"
+                                                              th:name="'sanswer'+${state.index+1}"
+                                                              style="border:1px solid #9f9f9f;width: 796px; height: 86px;outline: none;"
+                                                              th:text="${shortAnswerQuestion.stuAnswer}"></textarea>
                                                 </p>
                                             </label>
-                                            <label >
-                                             <p class="ue" style="display: inline;">得分:<input type="number" class="layui-input" th:name="'teaCheckScore'+${state.index+1}" style="border:1px solid #9f9f9f;width: 86px; outline: none;" min="0"  /></p>
+
+                                            <label>
+                                                <p class="ue" style="display: inline;">得分:<input type="number"
+                                                   class="layui-input"
+                                                     th:name="'teaCheckScore'+${state.index+1}"
+                                                    style="border:1px solid #9f9f9f;width: 86px; outline: none;" min="0"/></p>
                                             </label>
-                                            <label >
-                                               <p class="ue" style="display: inline;">批改意见：<input type="text" class="layui-input" th:name="'teaSuggest'+${state.index+1}" style="border:1px solid #9f9f9f;width: 796px;outline: none;"></p>
+                                            <label>
+                                                <p class="ue" style="display: inline;">批改意见：<input type="text"
+                                                                                                   class="layui-input"
+                                                                                                   th:name="'teaSuggest'+${state.index+1}"
+                                                                                                   style="border:1px solid #9f9f9f;width: 796px;outline: none;">
+                                                </p>
                                             </label>
                                         </li>
                                     </ul>
@@ -142,8 +156,10 @@
     $(function () {
         $('li.option label').click(function () {
             debugger;
-            var examId = $(this).closest('.test_content_nr_main').closest('li').attr('id'); /*得到题目ID*/
-            var cardLi = $('a[href=#' + examId + ']'); /*根据题目ID找到对应答题卡*/
+            var examId = $(this).closest('.test_content_nr_main').closest('li').attr('id');
+            /*得到题目ID*/
+            var cardLi = $('a[href=#' + examId + ']');
+            /*根据题目ID找到对应答题卡*/
             /*设置已答题*/
             if (!cardLi.hasClass('hasBeenAnswer')) {
                 cardLi.addClass('hasBeenAnswer');
@@ -152,20 +168,20 @@
         });
     });
 </script>
-<script type="text/javascript"  th:inline="none">
-    function getAll(){
+<script type="text/javascript" th:inline="none">
+    function getAll() {
         var length2 = Number($("#shortAnswerCount").val());
         console.log(typeof (length2));
-        questionId=[];
-        teaSuggest=[];
-        teaCheckScore=[];
-        var releaseExamId=Number($("#releaseExamId").val());
-        var stuId=Number($("#stuId").val());
+        questionId = [];
+        teaSuggest = [];
+        teaCheckScore = [];
+        var releaseExamId = Number($("#releaseExamId").val());
+        var stuId = Number($("#stuId").val());
         var s;
         for (s = 1; s < length2 + 1; s++) {
             squestion = document.getElementsByName("squestion" + s);
             steaCheckScore = document.getElementsByName("teaCheckScore" + s);
-            steaSuggest= document.getElementsByName("teaSuggest" + s);
+            steaSuggest = document.getElementsByName("teaSuggest" + s);
             questionId.push(squestion[0].value);
             teaCheckScore.push(steaCheckScore[0].value);
             teaSuggest.push(steaSuggest[0].value);
@@ -173,23 +189,29 @@
         console.log(questionId);
         console.log(teaSuggest);
         console.log(teaCheckScore);
-        var TeaSuggests=JSON.stringify(teaSuggest);
-        var QuestionIds=JSON.stringify(questionId);
-        var TeaCheckScores=JSON.stringify(teaCheckScore);
+        var TeaSuggests = JSON.stringify(teaSuggest);
+        var QuestionIds = JSON.stringify(questionId);
+        var TeaCheckScores = JSON.stringify(teaCheckScore);
         console.log(TeaSuggests);
         console.log(QuestionIds);
         console.log(TeaCheckScores);
         console.log(releaseExamId);
         $.ajax({
-            url:'getShortAnswerScore',
-            type:'get',
-            data:{'teaSuggests':TeaSuggests,'questionIds':QuestionIds,'teaCheckScores':TeaCheckScores,'releaseExamId':releaseExamId,'stuId':stuId},
-            dataType:'json',
-            contentType:'application/json',
-            success:function (res) {
-                if(res==1){
-                    layer.msg("提交成功",{icon: 1, time: 2000},function () {
-                        window.location.href="/checkShortAnswerList?releaseExamId="+releaseExamId;
+            url: 'getShortAnswerScore',
+            type: 'get',
+            data: {
+                'teaSuggests': TeaSuggests,
+                'questionIds': QuestionIds,
+                'teaCheckScores': TeaCheckScores,
+                'releaseExamId': releaseExamId,
+                'stuId': stuId
+            },
+            dataType: 'json',
+            contentType: 'application/json',
+            success: function (res) {
+                if (res == 1) {
+                    layer.msg("提交成功", {icon: 1, time: 2000}, function () {
+                        window.location.href = "/checkShortAnswerList?releaseExamId=" + releaseExamId;
                     });
                 }
             }
