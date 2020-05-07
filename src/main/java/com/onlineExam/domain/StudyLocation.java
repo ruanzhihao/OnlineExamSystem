@@ -42,7 +42,7 @@ public class StudyLocation {
     private String state;
     private int clazzId;
     private String clazzName;
-
+    private String headerurl;
 
     //评论
     int StudyLocationId;//社区tgId

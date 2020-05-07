@@ -59,4 +59,7 @@ public interface StudentFunctionService {
     Student studentById(@Param("stuId") int stuId);
     //评论显示
     List<Comment> showComment(@Param("studyId")int studyId,@Param("tgStuId")int tgStuId,@Param("stuId")int stuId);
+
+    //考试记录简答题题目的详情
+    List<StuAnswer> getShortAnswerAll(@Param("paperId")int paperId,@Param("stuId")int stuId);
 }

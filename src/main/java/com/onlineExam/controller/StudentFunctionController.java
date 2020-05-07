@@ -443,6 +443,7 @@ public  String goExam(Model model,HttpSession session){
     public String Gohistory(Model model,@RequestParam("paperId") int paperId,@RequestParam("stuId") int stuId,@RequestParam("examTime") String examTime){
         //获取单选题目详情
         List<StuAnswer> list=studentFunctionService.getHistory(paperId, stuId);
+        System.out.println(list);
         model.addAttribute("HistoryList",list);
         model.addAttribute("stuId",stuId);
         model.addAttribute("paperId",paperId);
@@ -450,6 +451,10 @@ public  String goExam(Model model,HttpSession session){
         //获取多选题目详情
         List<StuAnswer> list2=studentFunctionService.getCheckHistory(paperId, stuId);
         model.addAttribute("CheckHistory",list2);
+        System.out.println(list2);
+        //获取简答题详情
+        List<StuAnswer> shortAnswerQuestion=studentFunctionService.getShortAnswerAll(paperId, stuId);
+        model.addAttribute("shortAnswerQuestion",shortAnswerQuestion);
         return "student/history/historyImpl";
     }
 

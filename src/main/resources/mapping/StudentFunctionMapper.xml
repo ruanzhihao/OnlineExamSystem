@@ -68,12 +68,16 @@ ORDER BY examStateName DESC
         SELECT examTime from t_exam where t_exam.stuId=#{stuId} and t_exam.releaseExamId=#{releaseExamId}
     </select>
     <select id="getHistory" parameterType="java.lang.Integer" resultType="com.onlineExam.domain.StuAnswer">
-        select * from t_question,t_stuanswer,t_paper where t_stuanswer.questionId=t_question.questionId and t_stuanswer.stuId=#{stuId} and t_stuanswer.paperId=#{paperId} and t_question.questionType='单选'
+        select * from t_question,t_stuanswer,t_realpaper where  t_realpaper.questionId=t_question.questionId and t_realpaper.paperId=#{paperId} and t_stuanswer.paperId=#{paperId} and t_stuanswer.stuId=#{stuId} and  t_stuanswer.questionId=t_question.questionId and t_question.questionType='单选'
     </select>
 
     <select id="getCheckHistory" parameterType="java.lang.Integer" resultType="com.onlineExam.domain.StuAnswer">
-       select * from t_question,t_stuanswer,t_paper where t_stuanswer.questionId=t_question.questionId and t_stuanswer.stuId=#{stuId} and t_stuanswer.paperId=#{paperId} and t_question.questionType='多选'
+       select * from t_question,t_stuanswer,t_realpaper where t_realpaper.questionId=t_question.questionId and t_realpaper.paperId=#{paperId} and  t_stuanswer.questionId=t_question.questionId and t_stuanswer.stuId=#{stuId} and t_stuanswer.paperId=#{paperId} and t_question.questionType='多选'
     </select>
+    <select id="getShortAnswerAll" parameterType="java.lang.Integer" resultType="com.onlineExam.domain.StuAnswer">
+       select * from t_question,t_stuanswer,t_realpaper where t_realpaper.questionId=t_question.questionId and t_realpaper.paperId=#{paperId} and  t_stuanswer.questionId=t_question.questionId and t_stuanswer.stuId=#{stuId} and t_stuanswer.paperId=#{paperId} and t_question.questionType='简答'
+    </select>
+
     <select id="getShortAnswerCount" resultType="int">
     SELECT COUNT(questionType)  from t_question,t_realpaper
 where  t_realpaper.questionId=t_question.questionId and  questionType='简答' and t_realpaper.paperId=#{paperId}

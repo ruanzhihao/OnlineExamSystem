@@ -48,10 +48,12 @@
         <!--  <th lay-data="{field:'1', width:40, sort:true}">ID</th>-->
         <th lay-data="{field:'2', width:130}">学生姓名</th>
         <th lay-data="{field:'3', width:220}">学院</th>
-        <th lay-data="{field:'4', width:200}">班级</th>
+        <th lay-data="{field:'4', width:120}">班级</th>
         <th lay-data="{field:'5', width:200}">考试科目</th>
-        <th lay-data="{field:'6', width:220}">考试时间</th>
-        <th lay-data="{field:'7', width:130}">考试分数</th>
+        <th lay-data="{field:'6', width:190}">考试时间</th>
+        <th lay-data="{field:'7', width:80}">客观题分数</th>
+        <th lay-data="{field:'8', width:100}">主观题分数</th>
+        <th lay-data="{field:'9', width:100}">总分</th>
       <!--  <th lay-data="{field:'8', width:80}">答题详情</th>-->
         <th lay-data="{field:'13'}">&nbsp;&nbsp;
             &nbsp;&nbsp;&nbsp;&nbsp;
@@ -69,6 +71,8 @@
         <td th:text="${exam.examName}"></td>
         <td th:text="${exam.examTime}"></td>
         <td th:text="${exam.examScore}"></td>
+        <td th:text="${exam.shortAnswerScore}"></td>
+        <td th:text="${exam.sumScore}"></td>
         <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <button class="layui-btn layui-btn-sm layui-btn-warm" th:onclick="|javascript:show(this,${exam.paperId},${exam.stuId},'${exam.examTime}')|">详情</button>
 

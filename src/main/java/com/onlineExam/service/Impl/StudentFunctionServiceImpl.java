@@ -188,4 +188,9 @@ public class StudentFunctionServiceImpl implements StudentFunctionService {
     public List<Comment> showComment(int studyId, int tgStuId, int stuId) {
         return studentFunctionMapper.showComment(studyId, tgStuId, stuId);
     }
+
+    @Override
+    public List<StuAnswer> getShortAnswerAll(int paperId, int stuId) {
+        return studentFunctionMapper.getShortAnswerAll(paperId,stuId);
+    }
 }

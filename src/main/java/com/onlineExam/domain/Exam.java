@@ -24,6 +24,8 @@ public class Exam {
     Integer releaseExamId;
     int countClass;
     int avgScore;
+    String shortAnswerScore;
+    String sumScore;
 
     public Exam(int examid, String examName, int stuId, String stuName, int departId, String stuDept, int courseId, String stuCourse, int majorId, String stuClazz, String stuMajor, String examTime, int examScore, int paperId) {
         this.examid = examid;

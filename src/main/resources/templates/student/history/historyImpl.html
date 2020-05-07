@@ -185,11 +185,58 @@
                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <a style="color: darkred" th:onclick="|javascript:share(this,${Cquestion.questionId})|">不懂？论坛求助</a>
+                                    <a style="color: darkred" th:onclick="|javascript:share(this,${Cquestion.questionId},${session.stuid})|">不懂？论坛求助</a>
                                 </div>
                             </li>
                         </ul>
                     </div>
+
+                    <div class="test_content">
+                        <div class="test_content_title">
+                            <h2>简答题
+                            </h2>
+                        </div>
+                    </div>
+                    <div class="test_content_nr">
+                        <ul>
+                            <li th:each="shortAnswer,state:${shortAnswerQuestion}"
+                                th:id="'qu_2_'+${state.index}">
+                                <div class="test_content_nr_tt">
+                                    <i th:text="${state.index+1}"></i><span th:text="${shortAnswer.questionName}"></span>
+                                </div>
+                                <div class="test_content_nr_main">
+                                    <ul>
+                                        <li class="option">
+                                            <label>
+                                                <p class="ue" style="display: inline;">
+                                                    <textarea id="answer" class="layui-input" th:name="'sanswer'+${state.index+1}" style="width: 796px; height: 86px;outline: none;" th:text="${shortAnswer.stuAnswer}" readonly></textarea>
+                                                </p>
+                                            </label>
+                                        </li>
+                                    </ul>
+                                    <hr>
+                                    <span th:if="${shortAnswer.stuAnswer} eq ''">
+                                         <span>你的答案：<span style="color: red">未作答</span></span>
+                                    </span>
+                                    <span th:if="${shortAnswer.stuAnswer} ne ''">
+                                        <span>你的答案：<span style="color: green">已作答</span></span>
+                                    </span>
+
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <span th:if="${shortAnswer.isWrong} eq '1' "><span>你的得分：</span><span style="color: red" th:text="${shortAnswer.teaCheckScore}"></span><span style="color: red">分</span></span>
+                                    <span th:if="${shortAnswer.isWrong} eq '2'"><span>你的得分：</span><span style="color: red">0</span><span style="color: red">分</span></span>
+                                    <span th:if="${shortAnswer.isWrong} eq '3'"><span>你的得分：</span><span style="color: red">未批阅</span><span style="color: red"></span></span>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <a style="color: darkred" th:onclick="|javascript:share(this,${shortAnswer.questionId},${session.stuid})|">不懂？论坛求助</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+
                 </form>
             </div>
         </div>
@@ -228,6 +275,20 @@
                         </div>
                     </div>
 
+
+                    <div class="rt_content">
+                        <div class="rt_content_tt">
+                            <h2>简答题</h2>
+
+                        </div>
+                        <div class="rt_content_nr answerSheet">
+                            <ul>
+                                <li th:each="shortAnswerQuestion,state:${shortAnswerQuestion}"><a
+                                        th:href="'#qu_2_'+${state.index}"><span th:text="${state.index+1}">1</span></a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
 
             </div>
