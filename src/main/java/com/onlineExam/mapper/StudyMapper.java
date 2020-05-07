@@ -1,6 +1,7 @@
 package com.onlineExam.mapper;
 
 import com.onlineExam.domain.StudyLocation;
+import com.onlineExam.domain.StudyLocationA;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
 
@@ -14,5 +15,6 @@ public interface StudyMapper {
     List<StudyLocation> getAllByOwn(@Param("stuId") int stuId);
     //分类显示
     List<StudyLocation> getAllFenlei(@Param("courseId") int courseId);
+    List<StudyLocationA> getTop();//排行榜
 
 }

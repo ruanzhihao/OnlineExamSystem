@@ -1,6 +1,7 @@
 package com.onlineExam.service.Impl;
 
 import com.onlineExam.domain.StudyLocation;
+import com.onlineExam.domain.StudyLocationA;
 import com.onlineExam.mapper.StudyMapper;
 import com.onlineExam.service.StudyService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,5 +32,10 @@ public class StudyServiceImpl implements StudyService {
     @Override
     public List<StudyLocation> getAllFenlei(int courseId) {
         return studyMapper.getAllFenlei(courseId);
+    }
+
+    @Override
+    public List<StudyLocationA> getTop() {
+        return studyMapper.getTop();
     }
 }

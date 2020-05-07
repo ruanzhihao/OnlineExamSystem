@@ -1,6 +1,7 @@
 package com.onlineExam.service;
 
 import com.onlineExam.domain.StudyLocation;
+import com.onlineExam.domain.StudyLocationA;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -12,4 +13,5 @@ public interface StudyService {
     List<StudyLocation> getAllByOwn(@Param("stuId") int stuId);
     //分类显示
     List<StudyLocation> getAllFenlei(@Param("courseId") int courseId);
+    List<StudyLocationA> getTop();
 }

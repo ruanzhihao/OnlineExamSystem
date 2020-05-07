@@ -23,4 +23,7 @@
         select * from t_question,t_study,t_course,student,t_depart,t_clazz,t_major where t_study.questionId=t_question.questionId and t_question.courseId=#{courseId} and t_question.courseId =t_course.courseId
     and  t_study.stuId=student.stuid and  student.departId=t_depart.departId and student.clazzId=t_clazz.clazzId and student.majorId=t_major.majorId
     </select>
+    <select id="getTop" resultType="com.onlineExam.domain.StudyLocationA">
+        SELECT student.stuname as name, COUNT(*) as number from t_study,student WHERE student.stuid=t_study.stuId GROUP BY t_study.stuId order by number desc limit 5
+    </select>
 </mapper>

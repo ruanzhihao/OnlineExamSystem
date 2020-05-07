@@ -492,7 +492,8 @@ public List<CountModel> getResourceInfo(){
    model.addAttribute("count",a);
    List<Course> courseList=questionService.getCourse();
    model.addAttribute("courseList",courseList);
-
+   List<StudyLocationA> studyLocationAList=studyService.getTop();
+   model.addAttribute("studyLocationAList",studyLocationAList);
    List<StudyLocation> list3=studyService.getAllByOwn(stuId);
         int b =list3.size();
         model.addAttribute("count2",b);
