@@ -111,4 +111,8 @@
 		INSERT INTO teacher(username,teachername,teacherpassword,teacherphoneNumber,teacheremail,majorId,departId,stateId,clazzId)
 		VALUES(#{username},#{teachername},#{teacherpassword},#{teacherphoneNumberx},#{teacheremail},#{majorId},#{departId},#{stateId},#{clazzId})
 	</insert>
+    <!--头像-->
+    <update id="insertUrl" parameterType="String">
+        update teacher set teaheader=#{teaheader} where username=#{username}
+    </update>
 </mapper>

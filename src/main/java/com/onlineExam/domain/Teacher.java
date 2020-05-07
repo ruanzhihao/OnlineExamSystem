@@ -19,5 +19,6 @@ public class Teacher {
     private String state;
     private int clazzId;
     private String clazzName;
+    private String teaheader;
 
 }

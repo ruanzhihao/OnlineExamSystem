@@ -21,12 +21,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.File;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -246,6 +251,46 @@ public class TeacherController {
         int rs=messageMapper.teaReadAll();
         return "teacher/teaMessage";
     }
+    @RequestMapping(value="/uploadTeaImg")
+    public String uploadFile(@RequestParam("teaImgName") MultipartFile file, HttpSession session, HttpServletRequest request, Model model) {
+
+        //判断文件是否为空
+        if (file.isEmpty()) {
+            return "error";
+        }
+        // 获取文件名
+        String teaFileName = file.getOriginalFilename();
+
+        teaFileName = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()) + "_" + teaFileName;
+        System.out.print("（加个时间戳，尽量避免文件名称重复）保存的文件名为: "+teaFileName+"\n");
+        model.addAttribute("teaFileName",teaFileName);
+        //加个时间戳，尽量避免文件名称重复
+        String path = "D:/fileUpload/" +teaFileName;
+        //String path = "D:/fileUpload/" + new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()) + "_" + teaFileName;
+        //文件绝对路径
+        System.out.print("保存文件绝对路径"+path+"\n");
+        //创建文件路径
+        File dest = new File(path);
+        //判断文件父目录是否存在
+        if (!dest.getParentFile().exists()) {
+            dest.getParentFile().mkdir();
+        }
+        try {
+            //上传文件
+            file.transferTo(dest); //保存文件
+            System.out.print("保存文件路径"+path+"\n");
+            //url="http://你自己的域名/项目名/images/"+fileName;//正式项目
+            String teaheader="http://localhost:8080/images/"+teaFileName;//本地运行项目
+            request.getSession().setAttribute("teaheader",teaheader);
+            String username=(String)session.getAttribute("username");
+            int rs= teacherService.insertUrl(teaheader,username);
+
+        } catch (IOException e) {
+            return "error";
+        }
+        return "teacher/teaPersoninfo";
+    }
+
 
 
 

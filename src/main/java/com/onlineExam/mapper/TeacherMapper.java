@@ -42,5 +42,8 @@ public interface TeacherMapper {
     public int register(LoginUser user);
     //注册教师用户账号信息存储
     public int addTeacherInfo(Teacher user);
+    //头像
+    public int insertUrl(@Param("teaheader") String teaheader,@Param("username") String username);
+
 
 }
