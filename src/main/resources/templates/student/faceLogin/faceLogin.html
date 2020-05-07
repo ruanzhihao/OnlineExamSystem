@@ -57,7 +57,7 @@
                         },
                         success:function(data){
                             layer.msg('登录成功',{icon:1,time:2000});
-                            setTimeout(function () {window.parent.location.href='/goStudent?stuId='+data;},2000);
+                            setTimeout(function () {window.parent.location.href='/FacegoStudent?stuId='+data;},2000);
                         },error:function(msg){
                             layer.msg('登录失败',{icon:2,time:2000});
                             /*  setTimeout(function () {window.location.href='';},2000); */

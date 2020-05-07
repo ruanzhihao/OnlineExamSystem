@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -393,8 +394,8 @@ public  String goExam(Model model,HttpSession session){
         return "student/history/ExamHistory";
     }
 
- /*   //判分成功跳转学生主页
-    @RequestMapping(value = "/goStudent")
+    //判分成功跳转学生主页
+    @RequestMapping(value = "/FacegoStudent")
     public String goStudent(@RequestParam("stuId") int stuId, HttpServletRequest request, HttpServletResponse response, HttpSession session){
 
     Student student=teacherIndexService.getStuByStuId(stuId);
@@ -407,6 +408,7 @@ public  String goExam(Model model,HttpSession session){
         Integer departId=student.getDepartId();
         Integer stateId=student.getStateId();
         Integer majorId=student.getMajorId();
+        String headerurl=student.getHeaderurl();
 
         request.getSession().setAttribute("stuid",stuid);
         request.getSession().setAttribute("stuname",stuname);
@@ -417,8 +419,9 @@ public  String goExam(Model model,HttpSession session){
         request.getSession().setAttribute("departId",departId);
         request.getSession().setAttribute("stateId",stateId);
         request.getSession().setAttribute("majorId",majorId);
-        return "StudentIndex";
-    }*/
+        request.getSession().setAttribute("headerurl",headerurl);
+        return "student/index/StudentIndex";
+    }
  //判分成功跳转学生主页
  @RequestMapping(value = "/goStudent")
  public String goStudent(){
@@ -512,6 +515,9 @@ public List<CountModel> getResourceInfo(){
         int a =list.size();
         model.addAttribute("count",a);
 
+        List<StudyLocationA> studyLocationAList=studyService.getTop();
+        model.addAttribute("studyLocationAList",studyLocationAList);
+
         int b =list3.size();
         model.addAttribute("count2",b);
 
@@ -534,6 +540,9 @@ public List<CountModel> getResourceInfo(){
         List<StudyLocation> list=studyService.getallList();
         int a =list.size();
         model.addAttribute("count",a);
+
+        List<StudyLocationA> studyLocationAList=studyService.getTop();
+        model.addAttribute("studyLocationAList",studyLocationAList);
 
         int b =list3.size();
         model.addAttribute("count2",b);
