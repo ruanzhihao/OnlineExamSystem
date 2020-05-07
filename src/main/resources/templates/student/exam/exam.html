@@ -458,14 +458,18 @@
 <script>
     /*鼠标离开页面 自动交卷*/
     function leaveHTML() {
-        layer.msg('你已离开界面，考试自动结束！', {icon: 1, time: 2000}, function () {
+        layer.msg('你已离开界面', {icon: 2, time: 2000}, function () {
+            var paperId = $("#paperId").val();
+            var releaseExamId = $("#releaseExamId").val();
             var length = Number($("#checkBoxCount").val());
             var length1 = Number($("#radioCount").val());
             var length2 = Number($("#shortAnswerCount").val());
-
             console.log(typeof (length));
+            console.log(paperId);
+            console.log(releaseExamId);
             answers = [];
             questionIds = [];
+            var flag = false;
             var i, j, s;
             for (j = 1; j < length1 + 1; j++) {
                 robj0 = document.getElementsByName("rquestion" + j);
@@ -502,12 +506,12 @@
             $.ajax({
                 url: 'getScore',
                 type: 'get',
-                data: {'answers': answer, 'questionIds': questionId},
+                data: {'answers': answer, 'questionIds': questionId, 'paperId': paperId, 'releaseExamId': releaseExamId},
                 dataType: 'json',
                 contentType: 'application/json',
                 success: function (res) {
                     if (1) {
-                        layer.msg("你已离开页面 自动交卷中...", {icon: 2, time: 2000}, function () {
+                        layer.msg("考试结束", {icon: 2, time: 2000}, function () {
                             window.location.href = "/successSubmit?score=" + res;
                         });
                     }
