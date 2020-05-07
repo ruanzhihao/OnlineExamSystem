@@ -27,7 +27,7 @@
         <td th:text="${File.getCreatetime()}"></td>
         <td th:text="${File.getUploader()}"></td>
         <td th:text="${File.getState()}"></td>
-        <td><a th:href="${File.getUrl()}"><button 	class="layui-btn layui-btn-sm layui-btn-normal">去查看</button></a></td>
+        <td><a th:href="${File.getUrl()}"><button 	class="layui-btn layui-btn-sm layui-btn-normal" th:onclick="|javascript:stuState(${File.getId()})|">去查看</button></a></td>
     </tr>
     </tbody>
 </table>
@@ -43,6 +43,18 @@
             page:true
         });
     });
+    function stuState(id){
+        $.ajax({
+            url:"stustate",
+            data:{'id':id},
+            success:function (data) {
+                setTimeout(function (){window.location.href="stuchaxun"},1000);
+            },
+            error: function () {
+                setTimeout(function (){window.location.href="stuchaxun"},1000);
+            }
+        })
+    }
 </script>
 </body>
 </html>
